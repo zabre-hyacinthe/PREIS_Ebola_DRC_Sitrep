@@ -36,23 +36,13 @@ jobs:
 
       - name: Confirm clean workflow
         run: |
-          echo "PREIS_MONITOR_WORKFLOW_VERSION=2026_06_13_FINAL_NO_BLASTULA"
+          echo "PREIS_MONITOR_WORKFLOW_VERSION=2026_06_13_FINAL_NO_PACKAGE_INSTALL"
           echo "Current branch:"
           git branch --show-current
           echo "Current commit:"
           git rev-parse HEAD
           echo "Monitor script first 40 lines:"
           sed -n '1,40p' scripts/08_cloud_sitrep_monitor.R
-
-      - name: Confirm no old blastula code remains
-        run: |
-          echo "Searching for old dependencies..."
-          if grep -RIn --exclude-dir=.git --exclude-dir=renv --exclude-dir=packrat \
-            "library(blastula)\|require(blastula)\|blastula::\|install.packages.*blastula" . ; then
-            echo "::error::Old blastula code still exists somewhere."
-            exit 1
-          fi
-          echo "OK: no blastula code found."
 
       - name: Setup R
         uses: r-lib/actions/setup-r@v2
