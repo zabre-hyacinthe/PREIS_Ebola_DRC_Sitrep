@@ -15,108 +15,120 @@ concurrency:
 jobs:
   monitor:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 20
 
     env:
       SMTP_USER: ${{ secrets.SMTP_USER }}
       SMTP_PASS: ${{ secrets.SMTP_PASS }}
       ALERT_FROM: ${{ secrets.ALERT_FROM }}
+      ALERT_TO: ${{ secrets.ALERT_TO }}
+      ALERT_CC: ${{ secrets.ALERT_CC }}
+      ALERT_BCC: ${{ secrets.ALERT_BCC }}
       SMTP_HOST: smtp.gmail.com
       SMTP_PORT: "465"
       PREIS_DRY_RUN: "false"
-      USE_BUNDLED_LIBUV: "1"
-      R_REMOTES_NO_ERRORS_FROM_WARNINGS: "true"
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Show current commit and files
+        run: |
+          echo "Current branch:"
+          git branch --show-current
+          echo "Current commit:"
+          git rev-parse HEAD
+          echo "Repository files:"
+          ls -lah
+          echo "Scripts folder:"
+          ls -lah scripts || true
+
+      - name: Verify monitor script exists
+        run: |
+          if [ ! -f scripts/08_cloud_sitrep_monitor.R ]; then
+            echo "::error::scripts/08_cloud_sitrep_monitor.R does not exist"
+            exit 1
+          fi
+
+          echo "Monitor script line count:"
+          wc -l scripts/08_cloud_sitrep_monitor.R
+
+          echo "First 40 lines of monitor script:"
+          sed -n '1,40p' scripts/08_cloud_sitrep_monitor.R
+
+      - name: Block old blastula monitor script
+        run: |
+          echo "Checking that the monitor script does not contain old blastula dependencies..."
+
+          if grep -nE 'library\((blastula|fs|sass|bslib|rmarkdown)\)|blastula::|["'\''](blastula|fs|sass|bslib|rmarkdown)["'\'']' scripts/08_cloud_sitrep_monitor.R; then
+            echo "::error::Old script detected. The monitor still contains blastula/fs/sass/bslib/rmarkdown. Replace scripts/08_cloud_sitrep_monitor.R on main."
+            exit 1
+          fi
+
+          echo "OK: no old blastula dependency found in monitor script."
 
       - name: Setup R
         uses: r-lib/actions/setup-r@v2
         with:
           use-public-rspm: true
 
-      - name: Setup Pandoc
-        uses: r-lib/actions/setup-pandoc@v2
-
       - name: Install system dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
-            pkg-config \
-            libuv1-dev \
             libcurl4-openssl-dev \
             libssl-dev \
             libxml2-dev \
-            libfontconfig1-dev \
-            libfreetype6-dev \
-            libharfbuzz-dev \
-            libfribidi-dev \
-            libpng-dev \
-            libjpeg-dev \
-            libtiff5-dev \
-            cmake \
-            make
-
-          echo "Checking libuv installation..."
-          pkg-config --cflags --libs libuv || true
-          find /usr -name "uv.h" 2>/dev/null || true
+            ca-certificates
 
       - name: Install R packages
         run: |
           Rscript - <<'RSCRIPT'
           options(repos = c(CRAN = "https://cloud.r-project.org"))
-          Sys.setenv(USE_BUNDLED_LIBUV = "1")
 
           packages <- c(
-            "fs",
-            "sass",
-            "bslib",
-            "rmarkdown",
-            "blastula",
-            "readr",
-            "rvest",
-            "xml2",
-            "httr2",
-            "stringr",
-            "dplyr",
-            "tibble",
-            "purrr",
-            "openssl",
             "curl",
-            "jsonlite",
-            "glue",
-            "cli"
+            "xml2",
+            "openssl"
           )
 
-          missing <- packages[!vapply(packages, requireNamespace, logical(1), quietly = TRUE)]
+          missing <- packages[
+            !vapply(packages, requireNamespace, logical(1), quietly = TRUE)
+          ]
 
           if (length(missing) > 0) {
-            cat("Installing missing R packages:", paste(missing, collapse = ", "), "\n")
-            install.packages(missing, dependencies = TRUE, Ncpus = 2)
+            install.packages(
+              missing,
+              dependencies = c("Depends", "Imports", "LinkingTo"),
+              Ncpus = 2
+            )
           }
 
-          failed <- packages[!vapply(packages, requireNamespace, logical(1), quietly = TRUE)]
+          failed <- packages[
+            !vapply(packages, requireNamespace, logical(1), quietly = TRUE)
+          ]
 
           if (length(failed) > 0) {
-            stop("Missing packages after installation: ", paste(failed, collapse = ", "))
+            stop("Missing R packages: ", paste(failed, collapse = ", "))
           }
 
-          cat("All required R packages are available.\n")
+          cat("All required R packages are available: ", paste(packages, collapse = ", "), "\n")
           RSCRIPT
+
+      - name: Final anti-blastula check before running
+        run: |
+          if grep -nE 'library\((blastula|fs|sass|bslib|rmarkdown)\)|blastula::|["'\''](blastula|fs|sass|bslib|rmarkdown)["'\'']' scripts/08_cloud_sitrep_monitor.R; then
+            echo "::error::Execution stopped because old blastula code is still present."
+            exit 1
+          fi
+
+          echo "Confirmed: running no-blastula monitor script."
 
       - name: Run SitRep monitor
         run: |
-          Rscript - <<'RSCRIPT'
-          Sys.setenv(USE_BUNDLED_LIBUV = "1")
-
-          cat("R library paths:\n")
-          print(.libPaths())
-
-          cat("USE_BUNDLED_LIBUV =", Sys.getenv("USE_BUNDLED_LIBUV"), "\n")
-
-          source("scripts/08_cloud_sitrep_monitor.R")
-          RSCRIPT
+          Rscript scripts/08_cloud_sitrep_monitor.R
 
       - name: Commit monitor state if updated
         run: |
@@ -130,6 +142,6 @@ jobs:
             echo "No state change to commit."
           else
             git commit -m "Update PREIS SitRep monitor state [skip ci]"
-            git pull --rebase origin "${GITHUB_REF_NAME}" || true
-            git push origin "HEAD:${GITHUB_REF_NAME}"
+            git pull --rebase origin main || true
+            git push origin HEAD:main
           fi
