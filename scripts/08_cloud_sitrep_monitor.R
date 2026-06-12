@@ -156,16 +156,16 @@ fetch_url_text <- function(url) {
 
   if (nzchar(curl_bin)) {
     args <- c(
-      "-L",
-      "--fail",
-      "--silent",
-      "--show-error",
-      "--retry", "3",
-      "--max-time", "90",
-      "-A", "Mozilla/5.0 PREIS-Ebola-DRC-Monitor",
-      "-o", tmp,
-      url
-    )
+  "-L",
+  "--fail",
+  "--silent",
+  "--show-error",
+  "--retry", "3",
+  "--max-time", "90",
+  "--user-agent", "PREIS-Ebola-DRC-Monitor/1.0",
+  "-o", tmp,
+  url
+)
 
     res <- suppressWarnings(system2(curl_bin, args = args, stdout = TRUE, stderr = TRUE))
     status <- attr(res, "status")
@@ -193,16 +193,16 @@ download_binary <- function(url, dest) {
 
   if (nzchar(curl_bin)) {
     args <- c(
-      "-L",
-      "--fail",
-      "--silent",
-      "--show-error",
-      "--retry", "3",
-      "--max-time", "180",
-      "-A", "Mozilla/5.0 PREIS-Ebola-DRC-Monitor",
-      "-o", dest,
-      url
-    )
+  "-L",
+  "--fail",
+  "--silent",
+  "--show-error",
+  "--retry", "3",
+  "--max-time", "180",
+  "--user-agent", "PREIS-Ebola-DRC-Monitor/1.0",
+  "-o", dest,
+  url
+)
 
     res <- suppressWarnings(system2(curl_bin, args = args, stdout = TRUE, stderr = TRUE))
     status <- attr(res, "status")
