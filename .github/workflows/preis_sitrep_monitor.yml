@@ -15,7 +15,7 @@ concurrency:
 jobs:
   monitor:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
 
     env:
       SMTP_USER: ${{ secrets.SMTP_USER }}
@@ -24,7 +24,8 @@ jobs:
       SMTP_HOST: smtp.gmail.com
       SMTP_PORT: "465"
       PREIS_DRY_RUN: "false"
-      R_LIBS_USER: ${{ github.workspace }}/.R/library
+      USE_BUNDLED_LIBUV: "1"
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: "true"
 
     steps:
       - name: Checkout repository
@@ -32,18 +33,17 @@ jobs:
 
       - name: Setup R
         uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
 
       - name: Setup Pandoc
         uses: r-lib/actions/setup-pandoc@v2
 
-      - name: Create R library folder
-        run: |
-          mkdir -p "$R_LIBS_USER"
-
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y \
+          sudo apt-get install -y --no-install-recommends \
+            pkg-config \
             libuv1-dev \
             libcurl4-openssl-dev \
             libssl-dev \
@@ -52,20 +52,71 @@ jobs:
             libfreetype6-dev \
             libharfbuzz-dev \
             libfribidi-dev \
+            libpng-dev \
+            libjpeg-dev \
+            libtiff5-dev \
             cmake \
             make
 
+          echo "Checking libuv installation..."
+          pkg-config --cflags --libs libuv || true
+          find /usr -name "uv.h" 2>/dev/null || true
+
       - name: Install R packages
         run: |
-          Rscript -e 'options(repos = c(CRAN = "https://cloud.r-project.org")); packages <- c("fs", "blastula", "readr", "rvest", "xml2", "httr2", "stringr", "dplyr", "tibble", "purrr", "openssl"); missing <- packages[!vapply(packages, requireNamespace, logical(1), quietly = TRUE)]; if (length(missing) > 0) install.packages(missing, dependencies = TRUE)'
+          Rscript - <<'RSCRIPT'
+          options(repos = c(CRAN = "https://cloud.r-project.org"))
+          Sys.setenv(USE_BUNDLED_LIBUV = "1")
 
-      - name: Verify R packages
-        run: |
-          Rscript -e 'packages <- c("fs", "blastula", "readr", "rvest", "xml2", "httr2", "stringr", "dplyr", "tibble", "purrr", "openssl"); failed <- packages[!vapply(packages, requireNamespace, logical(1), quietly = TRUE)]; if (length(failed) > 0) stop("Missing packages: ", paste(failed, collapse = ", ")); cat("All required R packages are available.\n")'
+          packages <- c(
+            "fs",
+            "sass",
+            "bslib",
+            "rmarkdown",
+            "blastula",
+            "readr",
+            "rvest",
+            "xml2",
+            "httr2",
+            "stringr",
+            "dplyr",
+            "tibble",
+            "purrr",
+            "openssl",
+            "curl",
+            "jsonlite",
+            "glue",
+            "cli"
+          )
+
+          missing <- packages[!vapply(packages, requireNamespace, logical(1), quietly = TRUE)]
+
+          if (length(missing) > 0) {
+            cat("Installing missing R packages:", paste(missing, collapse = ", "), "\n")
+            install.packages(missing, dependencies = TRUE, Ncpus = 2)
+          }
+
+          failed <- packages[!vapply(packages, requireNamespace, logical(1), quietly = TRUE)]
+
+          if (length(failed) > 0) {
+            stop("Missing packages after installation: ", paste(failed, collapse = ", "))
+          }
+
+          cat("All required R packages are available.\n")
+          RSCRIPT
 
       - name: Run SitRep monitor
         run: |
-          Rscript scripts/08_cloud_sitrep_monitor.R
+          Rscript - <<'RSCRIPT'
+          Sys.setenv(USE_BUNDLED_LIBUV = "1")
+
+          cat("R library paths:\n")
+          print(.libPaths())
+
+          cat("USE_BUNDLED_LIBUV =", Sys.getenv("USE_BUNDLED_LIBUV"), "\n")
+
+          source("scripts/08_cloud_sitrep_monitor.R")
+          RSCRIPT
 
       - name: Commit monitor state if updated
         run: |
@@ -79,6 +130,6 @@ jobs:
             echo "No state change to commit."
           else
             git commit -m "Update PREIS SitRep monitor state [skip ci]"
-            git pull --rebase
-            git push
+            git pull --rebase origin "${GITHUB_REF_NAME}" || true
+            git push origin "HEAD:${GITHUB_REF_NAME}"
           fi
