@@ -91,7 +91,7 @@ html_unescape_basic <- function(x) {
 
 # ============================================================
 # PREIS EBOLA DRC — CLOUD SITREP MONITOR FOR GITHUB ACTIONS
-# Runs every 5 minutes via .github/workflows/preis_sitrep_monitor.yml
+# Runs every 30 minutes via .github/workflows/preis_sitrep_monitor_v2.yml
 # Purpose:
 # 1) Run existing PREIS production pipeline when available
 # 2) Find latest valid SitRep PDF
@@ -370,21 +370,18 @@ send_sitrep_email <- function(latest, pdf_path, recipients) {
   if (length(recipients$to) == 0) stop("No active TO recipient found in alert_recipients.csv.")
 
   body <- paste(
-    "Dear team,",
+    "Dear colleagues,",
     "",
-    paste0("Please find attached the latest DRC Ebola SitRep detected by PREIS: SitRep ", latest$sitrep_no, "."),
+    "Please find attached the latest Ebola Disease Virus SitRep for the Democratic Republic of Congo, automatically detected and retrieved from the INSP website by the PREIS Ebola DRC SitRep Monitor.",
     "",
-    paste0("Title: ", safe_chr(latest$title)),
-    paste0("INSP page: ", safe_chr(latest$post_url)),
-    "PDF source: PREIS cloud automation",
-    "",
-    "This is an automated PREIS notification. Analytical outputs will follow once generated and validated.",
+    paste0("SitRep number: SitRep ", latest$sitrep_no),
+    "Source: INSP DRC",
+    "Status: New SitRep detected and shared automatically for timely operational follow-up.",
     "",
     "Best regards,",
-    "PREIS Ebola DRC Automation",
+    "PREIS Ebola DRC SitRep Monitor",
     sep = "\n"
   )
-
   email <- compose_email(body = md(body))
   email <- add_attachment(email = email, file = pdf_path, filename = basename(pdf_path))
 
