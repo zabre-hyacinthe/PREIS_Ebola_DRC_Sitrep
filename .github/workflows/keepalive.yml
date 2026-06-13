@@ -1,0 +1,44 @@
+name: PREIS Keepalive
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Mensuel: maintient les workflows actifs sans surcharger GitHub
+    - cron: '17 9 1 * *'
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  keepalive:
+    name: Keep PREIS workflows active
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Show trigger
+        run: |
+          echo "Repository: $GITHUB_REPOSITORY"
+          echo "Event name: $GITHUB_EVENT_NAME"
+          echo "Run time UTC: $(date -u)"
+
+      - name: Re-enable workflows disabled by inactivity
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const workflows = await github.rest.actions.listRepoWorkflows({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+
+            for (const wf of workflows.data.workflows) {
+              console.log(`${wf.name}: ${wf.state}`);
+              if (wf.state === 'disabled_inactivity') {
+                await github.rest.actions.enableWorkflow({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  workflow_id: wf.id,
+                });
+                console.log(`Re-enabled: ${wf.name}`);
+              }
+            }

@@ -10,7 +10,8 @@ on:
       - 'scripts/08_cloud_sitrep_monitor.R'
       - 'scripts/00_email_smtp_base.R'
   schedule:
-    - cron: '*/5 * * * *'
+    # Toutes les 30 minutes, minutes décalées pour éviter les minutes chargées GitHub
+    - cron: '5,35 * * * *'
 
 permissions:
   contents: write
@@ -18,9 +19,11 @@ permissions:
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
+# Concurrency corrigée: séparation par type d'événement
+# Les runs schedule ne sont plus annulés par les runs push/manual.
 concurrency:
-  group: preis-sitrep-monitor-v2
-  cancel-in-progress: true
+  group: preis-sitrep-monitor-v2-${{ github.event_name }}
+  cancel-in-progress: false
 
 jobs:
   monitor:
@@ -89,5 +92,5 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git status
           git add data/monitor_state logs data/incoming/insp_sitreps || true
-          git diff --cached --quiet || git commit -m "Update PREIS SitRep monitor state"
+          git diff --cached --quiet || git commit -m "chore: update SitRep monitor state [skip ci]"
           git push || true
