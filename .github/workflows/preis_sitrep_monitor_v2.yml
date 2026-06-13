@@ -10,7 +10,7 @@ on:
       - 'scripts/08_cloud_sitrep_monitor.R'
       - 'scripts/00_email_smtp_base.R'
   schedule:
-    - cron: '3,18,33,48 * * * *'
+    - cron: '*/5 * * * *'
 
 permissions:
   contents: write
