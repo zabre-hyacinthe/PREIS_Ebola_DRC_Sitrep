@@ -314,7 +314,7 @@ fetch_url_text <- function(url) {
       "--show-error",
       "--retry", "2",
       "--connect-timeout", "20",
-      "--max-time", "75",
+      "--max-time", "25",
       "--compressed",
       "--user-agent", USER_AGENT,
       "-o", tmp,
@@ -622,7 +622,7 @@ EMAIL_BCC <- first_non_empty(c("EMAIL_BCC", "ALERT_BCC", "MAIL_BCC", "PREIS_EMAI
 FORCE_SEND <- to_bool(first_non_empty(c("PREIS_FORCE_SEND", "FORCE_SEND"), "false"))
 DRY_RUN <- to_bool(first_non_empty(c("PREIS_DRY_RUN", "DRY_RUN"), "false"))
 
-MAX_CANDIDATES <- suppressWarnings(as.integer(first_non_empty(c("PREIS_MAX_CANDIDATES"), "100")))
+MAX_CANDIDATES <- suppressWarnings(as.integer(first_non_empty(c("PREIS_MAX_CANDIDATES"), "25")))
 if (is.na(MAX_CANDIDATES) || MAX_CANDIDATES < 1) MAX_CANDIDATES <- 100
 
 MANUAL_PAGE_URL <- first_non_empty(c("INSP_LATEST_PAGE_URL", "INSP_PAGE_URL"))
