@@ -18,7 +18,7 @@ concurrency:
 jobs:
   monitor:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 45
 
     env:
       EMAIL_FROM: ${{ secrets.ALERT_FROM }}
@@ -27,6 +27,7 @@ jobs:
       SMTP_USERNAME: ${{ secrets.SMTP_USER }}
       SMTP_PASSWORD: ${{ secrets.SMTP_PASS }}
       PREIS_DRY_RUN: "false"
+      PREIS_MAX_CANDIDATES: "25"
 
     steps:
       - name: Checkout repository
