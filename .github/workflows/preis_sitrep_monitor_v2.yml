@@ -1,11 +1,16 @@
 name: PREIS Ebola DRC SitRep Monitor V2
 
-run-name: PREIS SitRep Monitor V2 - ${{ github.event_name }} - run #${{ github.run_number }}
-
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/preis_sitrep_monitor_v2.yml'
+      - 'scripts/08_cloud_sitrep_monitor.R'
+      - 'scripts/00_email_smtp_base.R'
   schedule:
-    - cron: '7,37 * * * *'
+    - cron: '3,18,33,48 * * * *'
 
 permissions:
   contents: write
@@ -15,7 +20,7 @@ env:
 
 concurrency:
   group: preis-sitrep-monitor-v2
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   monitor:
@@ -27,21 +32,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Show GitHub trigger information
-        run: |
-          echo "Event name: ${{ github.event_name }}"
-          echo "Repository: $GITHUB_REPOSITORY"
-          echo "Ref: $GITHUB_REF"
-          echo "Branch: $GITHUB_REF_NAME"
-          echo "Run number: $GITHUB_RUN_NUMBER"
-          echo "Run attempt: $GITHUB_RUN_ATTEMPT"
-          echo "UTC time: $(date -u)"
-          echo "Local runner time: $(date)"
-
       - name: Set up R
         uses: r-lib/actions/setup-r@v2
         with:
-          r-version: "release"
+          r-version: 'release'
           use-public-rspm: true
 
       - name: Install Linux system dependencies
@@ -59,8 +53,12 @@ jobs:
             libtiff5-dev \
             libjpeg-dev
 
-      - name: Show R and system environment
+      - name: Show trigger and environment
         run: |
+          echo "Repository: $GITHUB_REPOSITORY"
+          echo "Ref: $GITHUB_REF"
+          echo "Event name: $GITHUB_EVENT_NAME"
+          echo "Run time UTC: $(date -u)"
           R --version
           curl --version
           pkg-config --version || true
@@ -89,14 +87,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
           git status
-
-          git add .
-
-          if git diff --cached --quiet; then
-            echo "No monitor state change to commit."
-          else
-            git commit -m "Update PREIS SitRep monitor state"
-            git push
-          fi
+          git add data/monitor_state logs data/incoming/insp_sitreps || true
+          git diff --cached --quiet || git commit -m "Update PREIS SitRep monitor state"
+          git push || true
