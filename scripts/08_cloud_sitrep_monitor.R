@@ -1,3 +1,23 @@
+
+# ============================================================
+# PREIS EMAIL FALLBACK SOURCE — DO NOT REMOVE
+# Loads blastula-free email helper
+# ============================================================
+preis_load_email_helper <- function() {
+  roots <- unique(c(
+    getwd(),
+    dirname(getwd()),
+    "D:/GitHub_PREIS/PREIS_Ebola_DRC_Sitrep",
+    "D:/PREIS_Ebola_DRC_Sitrep_FV_12.06.26"
+  ))
+  files <- file.path(roots, "scripts", "00_email_smtp_base.R")
+  files <- files[file.exists(files)]
+  if (length(files) == 0) stop("Missing scripts/00_email_smtp_base.R")
+  source(files[1], encoding = "UTF-8")
+}
+preis_load_email_helper()
+# ============================================================
+
 # ============================================================
 # PREIS PROJECT ROOT FIX — DO NOT REMOVE
 # Ensures script works in RStudio and GitHub Actions
@@ -82,14 +102,14 @@ html_unescape_basic <- function(x) {
 
 options(warn = 1)
 
-required_packages <- c("blastula", "readr", "rvest", "xml2", "httr2", "stringr", "dplyr", "tibble", "purrr")
+required_packages <- c("readr", "rvest", "xml2", "httr2", "stringr", "dplyr", "tibble", "purrr")
 missing_packages <- required_packages[!vapply(required_packages, requireNamespace, logical(1), quietly = TRUE)]
 if (length(missing_packages) > 0) {
   install.packages(missing_packages, repos = "https://cloud.r-project.org")
 }
 
 suppressPackageStartupMessages({
-  library(blastula)
+# DISABLED_NO_BLASTULA:   library(blastula)
   library(readr)
   library(rvest)
   library(xml2)
@@ -365,17 +385,17 @@ send_sitrep_email <- function(latest, pdf_path, recipients) {
     sep = "\n"
   )
 
-  email <- blastula::compose_email(body = blastula::md(body))
-  email <- blastula::add_attachment(email = email, file = pdf_path, filename = basename(pdf_path))
+  email <- compose_email(body = md(body))
+  email <- add_attachment(email = email, file = pdf_path, filename = basename(pdf_path))
 
-  blastula::smtp_send(
+  smtp_send(
     email = email,
     from = alert_from,
     to = recipients$to,
     cc = recipients$cc,
     bcc = recipients$bcc,
     subject = paste0("[PREIS Ebola DRC] SitRep ", latest$sitrep_no, " PDF"),
-    credentials = blastula::creds(
+    credentials = creds(
       user = smtp_user,
       pass = smtp_pass,
       host = smtp_host,

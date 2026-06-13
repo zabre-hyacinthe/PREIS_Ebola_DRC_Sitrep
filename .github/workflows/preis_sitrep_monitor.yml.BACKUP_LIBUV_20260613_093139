@@ -1,0 +1,70 @@
+name: PREIS Ebola DRC SitRep Monitor
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+concurrency:
+  group: preis-sitrep-monitor
+  cancel-in-progress: false
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    env:
+      EMAIL_FROM: ${{ secrets.ALERT_FROM }}
+      EMAIL_TO: ${{ secrets.ALERT_TO }}
+      SMTP_URL: smtps://smtp.gmail.com:465
+      SMTP_USERNAME: ${{ secrets.SMTP_USER }}
+      SMTP_PASSWORD: ${{ secrets.SMTP_PASS }}
+      PREIS_DRY_RUN: "false"
+      PREIS_MAX_CANDIDATES: "25"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Confirm clean workflow
+        run: |
+          echo "PREIS_MONITOR_WORKFLOW_VERSION=2026_06_13_FINAL_NO_PACKAGE_INSTALL"
+          echo "Current branch:"
+          git branch --show-current
+          echo "Current commit:"
+          git rev-parse HEAD
+          echo "Monitor script first 40 lines:"
+          sed -n '1,40p' scripts/08_cloud_sitrep_monitor.R
+
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v2
+
+      - name: Run SitRep monitor
+        run: |
+          Rscript --vanilla scripts/08_cloud_sitrep_monitor.R
+
+      - name: Commit monitor state and downloaded files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add data/state/ || true
+          git add data/incoming/insp_sitreps/ || true
+          git add outputs/cloud_monitor/ || true
+
+          if git diff --cached --quiet; then
+            echo "No state change to commit."
+          else
+            git commit -m "Update PREIS SitRep monitor state [skip ci]"
+            git pull --rebase origin main || true
+            git push origin HEAD:main
+          fi
