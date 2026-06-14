@@ -124,7 +124,16 @@ dir.create(DIR_STATE, recursive = TRUE, showWarnings = FALSE)
 dir.create(DIR_LOG, recursive = TRUE, showWarnings = FALSE)
 
 STATE_FILE <- file.path(DIR_STATE, "preis_sitrep_email_state.csv")
-RECIPIENTS_FILE <- file.path(ROOT_DIR, "alert_recipients.csv")
+# Liste des destinataires : source unique = data/alert_recipients.csv
+# (même fichier que celui lu par 04_send_sitrep_alerts_conditional.R).
+# Repli sur la racine du repo pour compatibilité avec d'anciennes installs.
+RECIPIENTS_FILE <- local({
+  primary <- file.path(ROOT_DIR, "data", "alert_recipients.csv")
+  legacy  <- file.path(ROOT_DIR, "alert_recipients.csv")
+  if (file.exists(primary)) primary
+  else if (file.exists(legacy)) legacy
+  else primary   # défaut : on créera le fichier dans data/
+})
 LOG_FILE <- file.path(DIR_LOG, paste0("preis_cloud_sitrep_monitor_", format(Sys.Date(), "%Y%m%d"), ".log"))
 
 CATEGORY_URLS <- c(
@@ -270,9 +279,25 @@ find_latest_local_pdf <- function(sitrep_no) {
 }
 
 run_existing_pipeline <- function() {
-  pipeline_file <- file.path(ROOT_DIR, "00_RUN_ALL_PRODUCTION.R")
-  if (!file.exists(pipeline_file)) {
-    log_msg("Production pipeline not found; skipping:", pipeline_file)
+  # Le pipeline de production peut s'appeler différemment selon les installs.
+  # On cherche, dans l'ordre, plusieurs noms connus, dans scripts/ puis à la racine.
+  candidate_names <- c(
+    "00_PREIS_MASTER_AUTOMATION.R",   # nom actuel (pipeline maître)
+    "00_RUN_ALL_PRODUCTION.R"         # ancien nom (compat)
+  )
+  search_dirs <- c(file.path(ROOT_DIR, "scripts"), ROOT_DIR)
+  pipeline_file <- NA_character_
+  for (d in search_dirs) {
+    for (nm in candidate_names) {
+      fp <- file.path(d, nm)
+      if (file.exists(fp)) { pipeline_file <- fp; break }
+    }
+    if (!is.na(pipeline_file)) break
+  }
+
+  if (is.na(pipeline_file)) {
+    log_msg("Production pipeline not found in scripts/ or root; tried:",
+            paste(candidate_names, collapse = ", "))
     return(FALSE)
   }
 
@@ -288,6 +313,7 @@ run_existing_pipeline <- function() {
 
 read_recipients <- function() {
   if (!file.exists(RECIPIENTS_FILE)) {
+    dir.create(dirname(RECIPIENTS_FILE), recursive = TRUE, showWarnings = FALSE)
     default <- data.frame(
       active = TRUE,
       type = "to",
@@ -412,8 +438,30 @@ run_post_analysis <- function(latest, pdf_path, recipients) {
     ok
   }
 
+  # 0) Indicateurs journaliers (national + province + zone) depuis INRB
+  #    -> data/final/PREIS_daily_indicators.csv (lu par le dashboard)
+  safe_source("indicateurs_journaliers", "11_daily_indicators.R")
+
+  # 0bis) Couche choroplèthe zones de santé : régénérée seulement si absente
+  #       (le shapefile est volumineux et ne change pas entre SitReps)
+  geo_fp <- file.path(ROOT_DIR, "dashboard_ebola", "data", "curated",
+                      "rdc_zones_sante_est.geojson")
+  geo_fp2 <- file.path(ROOT_DIR, "data", "curated", "rdc_zones_sante_est.geojson")
+  if (!file.exists(geo_fp) && !file.exists(geo_fp2)) {
+    safe_source("zones_sante_geo", "12_build_health_zones_geo.R")
+  } else {
+    log_msg("POST-ANALYSE skip (geojson zones deja present)")
+  }
+
   # 1) Analyse consolidée (tableaux + graphiques + carte)
   safe_source("analyse_consolidee", "03_analyse_consolidee.R")
+
+  # 1bis) Graphiques publication aux couleurs Africa CDC (5 figures)
+  safe_source("graphiques_africa_cdc", "charts_7_13_june_SR29.R")
+
+  # 1ter) Restaging des données vers le dashboard (si le script est présent)
+  safe_source("prepare_dashboard", file.path("..", "dashboard_ebola",
+                                             "prepare_dashboard_data.R"))
 
   # 2) Synthèse narrative (3 niveaux) -> écrit synthese_narrative.txt
   safe_source("synthese_narrative", "05_synthese_narrative.R")
