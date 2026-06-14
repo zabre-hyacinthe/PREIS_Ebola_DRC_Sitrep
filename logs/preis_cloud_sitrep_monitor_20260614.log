@@ -302,3 +302,13 @@
 2026-06-14 22:01:20 | Reading category: https://insp.cd/category/sitrep/page/3/ 
 2026-06-14 22:01:24 | Latest online SitRep: 30 
 2026-06-14 22:01:24 | Production pipeline not found; skipping: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/00_RUN_ALL_PRODUCTION.R 
+2026-06-14 22:27:47 | ============================================================ 
+2026-06-14 22:27:47 | PREIS cloud SitRep monitor started 
+2026-06-14 22:27:47 | Reading category: https://insp.cd/category/sitrep/ 
+2026-06-14 22:27:52 | Reading category: https://insp.cd/category/sitrep/page/2/ 
+2026-06-14 22:27:55 | Reading category: https://insp.cd/category/sitrep/page/3/ 
+2026-06-14 22:27:59 | Latest online SitRep: 30 
+2026-06-14 22:27:59 | Running production pipeline: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/scripts/00_PREIS_MASTER_AUTOMATION.R 
+2026-06-14 22:28:04 | WARNING pipeline error: package or namespace load failed for ‘pdftools’ in dyn.load(file, DLLpath = DLLpath, ...):
+ unable to load shared object '/home/runner/work/_temp/Library/pdftools/libs/pdftools.so':
+  libpoppler-cpp.so.0: cannot open shared object file: No such file or directory 
