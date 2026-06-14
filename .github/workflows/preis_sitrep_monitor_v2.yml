@@ -22,7 +22,7 @@ jobs:
       SMTP_PASS: ${{ secrets.SMTP_PASS }}
       ALERT_FROM: ${{ secrets.ALERT_FROM }}
       SMTP_HOST: smtp.gmail.com
-      SMTP_PORT: "465"
+      SMTP_PORT: "587"
       PREIS_DRY_RUN: "false"
 
     steps:
@@ -47,7 +47,7 @@ jobs:
 
       - name: Install R packages
         run: |
-          Rscript -e 'pkgs <- c("blastula","readr","rvest","xml2","httr","httr2","stringr","dplyr","tibble","purrr","openssl","tidyr","ggplot2","lubridate","sf","scales","zoo","pdftools","openxlsx","readxl","glue","jsonlite","base64enc"); miss <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly = TRUE)]; if (length(miss)) install.packages(miss, repos = "https://packagemanager.posit.co/cran/__linux__/jammy/latest")'
+          Rscript -e 'pkgs <- c("blastula","readr","rvest","xml2","httr","httr2","stringr","dplyr","tibble","purrr","openssl","tidyr","ggplot2","lubridate","sf","scales","zoo","pdftools","openxlsx","readxl","glue","jsonlite","base64enc","ggrepel"); miss <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly = TRUE)]; if (length(miss)) install.packages(miss, repos = "https://packagemanager.posit.co/cran/__linux__/jammy/latest")'
 
       - name: Run SitRep monitor (full chain)
         run: |
