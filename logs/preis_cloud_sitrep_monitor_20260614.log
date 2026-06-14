@@ -96,3 +96,11 @@
 2026-06-14 06:37:14 | Reading category: https://insp.cd/category/sitrep/page/3/ 
 2026-06-14 06:37:18 | Latest online SitRep: 28 
 2026-06-14 06:37:18 | No new SitRep to send. Already sent SitRep: 28 
+2026-06-14 07:06:43 | ============================================================ 
+2026-06-14 07:06:43 | PREIS cloud SitRep monitor started 
+2026-06-14 07:06:43 | Reading category: https://insp.cd/category/sitrep/ 
+2026-06-14 07:06:45 | ERROR fetch: https://insp.cd/category/sitrep/ | HTTP 415 Unsupported Media Type. 
+2026-06-14 07:06:45 | Reading category: https://insp.cd/category/sitrep/page/2/ 
+2026-06-14 07:06:45 | ERROR fetch: https://insp.cd/category/sitrep/page/2/ | HTTP 415 Unsupported Media Type. 
+2026-06-14 07:06:45 | Reading category: https://insp.cd/category/sitrep/page/3/ 
+2026-06-14 07:06:46 | ERROR fetch: https://insp.cd/category/sitrep/page/3/ | HTTP 415 Unsupported Media Type. 
