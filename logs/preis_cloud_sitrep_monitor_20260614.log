@@ -259,3 +259,10 @@
 2026-06-14 18:06:50 | Reading category: https://insp.cd/category/sitrep/page/3/ 
 2026-06-14 18:06:54 | Latest online SitRep: 30 
 2026-06-14 18:06:54 | Production pipeline not found; skipping: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/00_RUN_ALL_PRODUCTION.R 
+2026-06-14 18:37:00 | ============================================================ 
+2026-06-14 18:37:00 | PREIS cloud SitRep monitor started 
+2026-06-14 18:37:00 | Reading category: https://insp.cd/category/sitrep/ 
+2026-06-14 18:37:05 | Reading category: https://insp.cd/category/sitrep/page/2/ 
+2026-06-14 18:37:09 | Reading category: https://insp.cd/category/sitrep/page/3/ 
+2026-06-14 18:37:13 | Latest online SitRep: 30 
+2026-06-14 18:37:13 | Production pipeline not found; skipping: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/00_RUN_ALL_PRODUCTION.R 
