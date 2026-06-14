@@ -183,18 +183,30 @@ absolute_url_one <- function(x, base = "https://insp.cd") {
   paste0(base, "/", x)
 }
 
-fetch_html_safely <- function(url) {
-  tryCatch({
-    req <- httr2::request(url)
-    req <- httr2::req_user_agent(req, "PREIS Ebola DRC GitHub Actions Monitor")
-    req <- httr2::req_timeout(req, 60)
-    resp <- httr2::req_perform(req)
-    if (httr2::resp_status(resp) >= 400) stop("HTTP ", httr2::resp_status(resp))
-    httr2::resp_body_string(resp)
-  }, error = function(e) {
-    log_msg("ERROR fetch:", url, "|", conditionMessage(e))
-    NA_character_
-  })
+fetch_html_safely <- function(url, max_try = 4) {
+  ua <- paste0("Mozilla/5.0 (Windows NT 10.0; Win64; x64) ",
+               "AppleWebKit/537.36 (KHTML, like Gecko) ",
+               "Chrome/126.0.0.0 Safari/537.36")
+  for (att in seq_len(max_try)) {
+    out <- tryCatch({
+      req <- httr2::request(url)
+      req <- httr2::req_user_agent(req, ua)
+      req <- httr2::req_headers(req,
+        "Accept" = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language" = "fr-FR,fr;q=0.9,en;q=0.8",
+        "Referer" = "https://insp.cd/")
+      req <- httr2::req_timeout(req, 60)
+      resp <- httr2::req_perform(req)
+      if (httr2::resp_status(resp) >= 400) stop("HTTP ", httr2::resp_status(resp))
+      httr2::resp_body_string(resp)
+    }, error = function(e) {
+      log_msg("fetch attempt", att, "error:", url, "|", conditionMessage(e))
+      NA_character_
+    })
+    if (!is.na(out) && nzchar(out)) return(out)
+    if (att < max_try) Sys.sleep(6)
+  }
+  NA_character_
 }
 
 get_sitrep_posts <- function() {
