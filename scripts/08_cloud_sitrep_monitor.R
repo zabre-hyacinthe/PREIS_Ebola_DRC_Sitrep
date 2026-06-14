@@ -401,6 +401,9 @@ send_sitrep_email <- function(latest, pdf_path, recipients) {
   email <- blastula::compose_email(body = blastula::md(body))
   email <- blastula::add_attachment(email = email, file = pdf_path, filename = basename(pdf_path))
 
+  # blastula::creds() n'accepte PAS d'argument 'pass'. Pour fournir le mot
+  # de passe, on utilise creds_envvar() qui lit la variable d'environnement
+  # nommée (ici SMTP_PASS, déjà définie dans le workflow).
   blastula::smtp_send(
     email = email,
     from = alert_from,
@@ -408,9 +411,9 @@ send_sitrep_email <- function(latest, pdf_path, recipients) {
     cc = recipients$cc,
     bcc = recipients$bcc,
     subject = paste0("[PREIS Ebola DRC] SitRep ", latest$sitrep_no, " PDF"),
-    credentials = blastula::creds(
+    credentials = blastula::creds_envvar(
       user = smtp_user,
-      pass = smtp_pass,
+      pass_envvar = "SMTP_PASS",
       host = smtp_host,
       port = smtp_port,
       use_ssl = TRUE
@@ -441,6 +444,10 @@ run_post_analysis <- function(latest, pdf_path, recipients) {
   # 0) Indicateurs journaliers (national + province + zone) depuis INRB
   #    -> data/final/PREIS_daily_indicators.csv (lu par le dashboard)
   safe_source("indicateurs_journaliers", "11_daily_indicators.R")
+
+  # 0ter) Détection de signaux d'alerte précoce (seuils explicites)
+  #       -> data/final/PREIS_signals.csv + texte pour l'email d'alerte
+  safe_source("detection_signaux", "13_signal_detection.R")
 
   # 0bis) Couche choroplèthe zones de santé : régénérée seulement si absente
   #       (le shapefile est volumineux et ne change pas entre SitReps)
