@@ -1,23 +1,3 @@
-
-# ============================================================
-# PREIS EMAIL FALLBACK SOURCE — DO NOT REMOVE
-# Loads blastula-free email helper
-# ============================================================
-preis_load_email_helper <- function() {
-  roots <- unique(c(
-    getwd(),
-    dirname(getwd()),
-    "D:/GitHub_PREIS/PREIS_Ebola_DRC_Sitrep",
-    "D:/PREIS_Ebola_DRC_Sitrep_FV_12.06.26"
-  ))
-  files <- file.path(roots, "scripts", "00_email_smtp_base.R")
-  files <- files[file.exists(files)]
-  if (length(files) == 0) stop("Missing scripts/00_email_smtp_base.R")
-  source(files[1], encoding = "UTF-8")
-}
-preis_load_email_helper()
-# ============================================================
-
 # ============================================================
 # PREIS PROJECT ROOT FIX — DO NOT REMOVE
 # Ensures script works in RStudio and GitHub Actions
@@ -91,7 +71,7 @@ html_unescape_basic <- function(x) {
 
 # ============================================================
 # PREIS EBOLA DRC — CLOUD SITREP MONITOR FOR GITHUB ACTIONS
-# Runs every 30 minutes via .github/workflows/preis_sitrep_monitor_v2.yml
+# Runs every 5 minutes via .github/workflows/preis_sitrep_monitor.yml
 # Purpose:
 # 1) Run existing PREIS production pipeline when available
 # 2) Find latest valid SitRep PDF
@@ -102,14 +82,14 @@ html_unescape_basic <- function(x) {
 
 options(warn = 1)
 
-required_packages <- c("readr", "rvest", "xml2", "httr2", "stringr", "dplyr", "tibble", "purrr")
+required_packages <- c("blastula", "readr", "rvest", "xml2", "httr2", "stringr", "dplyr", "tibble", "purrr")
 missing_packages <- required_packages[!vapply(required_packages, requireNamespace, logical(1), quietly = TRUE)]
 if (length(missing_packages) > 0) {
   install.packages(missing_packages, repos = "https://cloud.r-project.org")
 }
 
 suppressPackageStartupMessages({
-# DISABLED_NO_BLASTULA:   library(blastula)
+  library(blastula)
   library(readr)
   library(rvest)
   library(xml2)
@@ -121,6 +101,17 @@ suppressPackageStartupMessages({
 })
 
 ROOT_DIR <- normalizePath(getwd(), winslash = "/", mustWork = TRUE)
+
+# Module d'identité du SitRep : SEULE source de vérité pour reconnaître
+# un SitRep (web ou fichier). Garantit qu'on ne ramasse jamais un visa,
+# une facture, etc. Voir scripts/10_sitrep_identity.R.
+.identity_fp <- file.path(ROOT_DIR, "scripts", "10_sitrep_identity.R")
+if (file.exists(.identity_fp)) {
+  source(.identity_fp)
+} else {
+  stop("Module d'identité introuvable : ", .identity_fp,
+       "\nIl est requis pour identifier les SitReps de façon fiable.")
+}
 
 DIR_PDF <- file.path(ROOT_DIR, "data", "pdf")
 DIR_INCOMING <- file.path(ROOT_DIR, "data", "incoming", "insp_sitreps")
@@ -169,18 +160,9 @@ is_valid_pdf_file <- function(path) {
 }
 
 extract_sitrep_no <- function(x) {
-  x <- safe_chr(x)
-  patterns <- c(
-    "sitrep\\s*n\\s*[°ºo]*\\s*0*([0-9]{1,3})",
-    "sitrep[-_]?n?0*([0-9]{1,3})",
-    "n\\s*[°ºo]*\\s*0*([0-9]{1,3})"
-  )
-  for (p in patterns) {
-    m <- regexec(p, x, ignore.case = TRUE, perl = TRUE)
-    r <- regmatches(x, m)[[1]]
-    if (length(r) >= 2) return(as.integer(r[2]))
-  }
-  NA_integer_
+  # Délègue au module d'identité (strict : exige sitrep + mvb/mve/ebola,
+  # numéro borné 1-60). Ne se trompe plus jamais sur un titre parasite.
+  sitrep_no_from_web(safe_chr(x))
 }
 
 absolute_url_one <- function(x, base = "https://insp.cd") {
@@ -257,29 +239,34 @@ get_sitrep_posts <- function() {
 }
 
 find_latest_local_pdf <- function(sitrep_no) {
-  roots <- unique(c(DIR_PDF, DIR_INCOMING, file.path(ROOT_DIR, "data")))
+  # On cherche le PDF du SitRep demandé UNIQUEMENT dans les dossiers projet.
+  # 1) D'abord le nom canonique exact SitRep_NN_2026.pdf.
+  # 2) Sinon, tout PDF dont le module d'identité confirme le bon numéro.
+  roots <- unique(c(DIR_PDF, DIR_INCOMING))
   roots <- roots[dir.exists(roots)]
+  if (length(roots) == 0) return(NA_character_)
 
+  # 1) Nom canonique
+  canon <- sitrep_canonical_filename(sitrep_no)   # "SitRep_NN_2026.pdf"
+  for (r in roots) {
+    fp <- file.path(r, canon)
+    if (file.exists(fp) && is_valid_pdf_file(fp)) return(fp)
+  }
+
+  # 2) Recherche par identité stricte (non récursif, nom doit contenir 'sitrep')
   all_pdfs <- unique(unlist(lapply(roots, function(root) {
-    list.files(root, pattern = "\\.pdf$", recursive = TRUE, full.names = TRUE, ignore.case = TRUE)
+    list.files(root, pattern = "\\.pdf$", full.names = TRUE, ignore.case = TRUE)
   }), use.names = FALSE))
-
   if (length(all_pdfs) == 0) return(NA_character_)
 
-  b <- tolower(basename(all_pdfs))
-  score <- rep(0, length(all_pdfs))
+  matched <- all_pdfs[vapply(all_pdfs, function(p) {
+    identical(sitrep_no_from_filename(p), as.integer(sitrep_no))
+  }, logical(1))]
+  matched <- matched[vapply(matched, is_valid_pdf_file, logical(1))]
+  if (length(matched) == 0) return(NA_character_)
 
-  score[b == paste0("sitrep_", sitrep_no, "_2026.pdf")] <- score[b == paste0("sitrep_", sitrep_no, "_2026.pdf")] + 1000
-  score[grepl(paste0("sitrep.*", sitrep_no), b)] <- score[grepl(paste0("sitrep.*", sitrep_no), b)] + 500
-  score[grepl(paste0("n", sitrep_no), b)] <- score[grepl(paste0("n", sitrep_no), b)] + 200
-
-  candidates <- all_pdfs[score > 0]
-  if (length(candidates) == 0) return(NA_character_)
-
-  candidates <- candidates[order(score[score > 0], decreasing = TRUE)]
-  valid <- candidates[vapply(candidates, is_valid_pdf_file, logical(1))]
-  if (length(valid) == 0) return(NA_character_)
-  valid[1]
+  # Le plus récent si plusieurs
+  matched[order(file.info(matched)$mtime, decreasing = TRUE)][1]
 }
 
 run_existing_pipeline <- function() {
@@ -370,29 +357,32 @@ send_sitrep_email <- function(latest, pdf_path, recipients) {
   if (length(recipients$to) == 0) stop("No active TO recipient found in alert_recipients.csv.")
 
   body <- paste(
-    "Dear colleagues,",
+    "Dear team,",
     "",
-    "Please find attached the latest Ebola Disease Virus SitRep for the Democratic Republic of Congo, automatically detected and retrieved from the INSP website by the PREIS Ebola DRC SitRep Monitor.",
+    paste0("Please find attached the latest DRC Ebola SitRep detected by PREIS: SitRep ", latest$sitrep_no, "."),
     "",
-    paste0("SitRep number: SitRep ", latest$sitrep_no),
-    "Source: INSP DRC",
-    "Status: New SitRep detected and shared automatically for timely operational follow-up.",
+    paste0("Title: ", safe_chr(latest$title)),
+    paste0("INSP page: ", safe_chr(latest$post_url)),
+    "PDF source: PREIS cloud automation",
+    "",
+    "This is an automated PREIS notification. Analytical outputs will follow once generated and validated.",
     "",
     "Best regards,",
-    "PREIS Ebola DRC SitRep Monitor",
+    "PREIS Ebola DRC Automation",
     sep = "\n"
   )
-  email <- compose_email(body = md(body))
-  email <- add_attachment(email = email, file = pdf_path, filename = basename(pdf_path))
 
-  smtp_send(
+  email <- blastula::compose_email(body = blastula::md(body))
+  email <- blastula::add_attachment(email = email, file = pdf_path, filename = basename(pdf_path))
+
+  blastula::smtp_send(
     email = email,
     from = alert_from,
     to = recipients$to,
     cc = recipients$cc,
     bcc = recipients$bcc,
     subject = paste0("[PREIS Ebola DRC] SitRep ", latest$sitrep_no, " PDF"),
-    credentials = creds(
+    credentials = blastula::creds(
       user = smtp_user,
       pass = smtp_pass,
       host = smtp_host,
@@ -402,6 +392,62 @@ send_sitrep_email <- function(latest, pdf_path, recipients) {
   )
 
   TRUE
+}
+
+# ============================================================
+# POST-ANALYSE : déclenché APRÈS l'envoi du PDF brut.
+# Enchaîne analyse consolidée -> synthèse -> alerte propre.
+# TOLÉRANT AUX PANNES : chaque étape est encapsulée ; un échec
+# est journalisé mais n'interrompt pas la sauvegarde de l'état
+# (sinon le PDF serait renvoyé en boucle au run suivant).
+# ============================================================
+run_post_analysis <- function(latest, pdf_path, recipients) {
+  scripts_dir <- file.path(ROOT_DIR, "scripts")
+  safe_source <- function(label, file) {
+    fp <- file.path(scripts_dir, file)
+    if (!file.exists(fp)) { log_msg("POST-ANALYSE skip (absent):", file); return(FALSE) }
+    ok <- tryCatch({ source(fp, local = new.env()); TRUE },
+                   error = function(e) { log_msg("POST-ANALYSE ECHEC", label, ":", conditionMessage(e)); FALSE })
+    if (ok) log_msg("POST-ANALYSE OK:", label)
+    ok
+  }
+
+  # 1) Analyse consolidée (tableaux + graphiques + carte)
+  safe_source("analyse_consolidee", "03_analyse_consolidee.R")
+
+  # 2) Synthèse narrative (3 niveaux) -> écrit synthese_narrative.txt
+  safe_source("synthese_narrative", "05_synthese_narrative.R")
+
+  # 3) Alerte propre : résumé + signaux + recommandations + lien dashboard
+  #    + graphiques en pièces jointes. Réutilise le système conditionnel
+  #    (dédoublonnage indépendant via son propre sent_log).
+  alert_ok <- safe_source("alerte_propre", "04_send_sitrep_alerts_conditional.R")
+
+  # Repli : si le script conditionnel n'existe pas, on envoie au moins
+  # une alerte synthétique simple avec les graphiques disponibles.
+  if (!alert_ok) {
+    tryCatch({
+      out_dir <- file.path(ROOT_DIR, "outputs", "analyse")
+      synth_fp <- file.path(out_dir, "synthese_narrative.txt")
+      body_txt <- if (file.exists(synth_fp)) paste(readLines(synth_fp, warn = FALSE), collapse = "\n")
+                  else paste0("Analyse du SitRep ", latest$sitrep_no, " disponible.")
+      imgs <- list.files(out_dir, pattern = "\\.png$", full.names = TRUE)
+      email <- blastula::compose_email(body = blastula::md(body_txt))
+      for (im in imgs) email <- blastula::add_attachment(email, file = im, filename = basename(im))
+      blastula::smtp_send(
+        email = email,
+        from = Sys.getenv("ALERT_FROM", Sys.getenv("SMTP_USER")),
+        to = recipients$to, cc = recipients$cc, bcc = recipients$bcc,
+        subject = paste0("[PREIS Ebola DRC] SitRep ", latest$sitrep_no, " — analyse"),
+        credentials = blastula::creds(
+          user = Sys.getenv("SMTP_USER"), pass = Sys.getenv("SMTP_PASS"),
+          host = Sys.getenv("SMTP_HOST", "smtp.gmail.com"),
+          port = as.integer(Sys.getenv("SMTP_PORT", "465")), use_ssl = TRUE))
+      log_msg("POST-ANALYSE OK: alerte_propre (repli)")
+    }, error = function(e) log_msg("POST-ANALYSE ECHEC alerte repli :", conditionMessage(e)))
+  }
+
+  invisible(TRUE)
 }
 
 main <- function() {
@@ -432,6 +478,14 @@ main <- function() {
 
   log_msg("Sending SitRep", latest_no, "to:", paste(recipients$to, collapse = ", "))
   send_sitrep_email(latest[1, ], pdf_path, recipients)
+  log_msg("EMAIL_PDF_BRUT_OK SitRep:", latest_no)
+
+  # --- CHAÎNE POST-ANALYSE : analyse -> synthèse -> alerte propre ---
+  # Tolérante aux pannes : ne bloque jamais la sauvegarde de l'état.
+  tryCatch(
+    run_post_analysis(latest[1, ], pdf_path, recipients),
+    error = function(e) log_msg("POST-ANALYSE erreur globale :", conditionMessage(e))
+  )
 
   sent_row <- data.frame(
     sitrep_no = latest_no,
