@@ -274,3 +274,10 @@
 2026-06-14 19:06:55 | ERROR fetch: https://insp.cd/category/sitrep/page/2/ | HTTP 415 Unsupported Media Type. 
 2026-06-14 19:06:55 | Reading category: https://insp.cd/category/sitrep/page/3/ 
 2026-06-14 19:06:56 | ERROR fetch: https://insp.cd/category/sitrep/page/3/ | HTTP 415 Unsupported Media Type. 
+2026-06-14 19:37:06 | ============================================================ 
+2026-06-14 19:37:06 | PREIS cloud SitRep monitor started 
+2026-06-14 19:37:06 | Reading category: https://insp.cd/category/sitrep/ 
+2026-06-14 19:37:11 | Reading category: https://insp.cd/category/sitrep/page/2/ 
+2026-06-14 19:37:15 | Reading category: https://insp.cd/category/sitrep/page/3/ 
+2026-06-14 19:37:19 | Latest online SitRep: 30 
+2026-06-14 19:37:19 | Production pipeline not found; skipping: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/00_RUN_ALL_PRODUCTION.R 
