@@ -175,30 +175,30 @@ build_sitrep_body <- function(rec_name, sno) {
 
   signaux <- character(); recos <- character()
   if (!is.na(row$cfr) && row$cfr >= 15) {
-    signaux <- c(signaux, sprintf("[ROUGE] Letalite elevee : CFR %.1f%%", row$cfr))
+    signaux <- c(signaux, sprintf("[RED] High lethality: provisional CFR %.1f%%", row$cfr))
     recos <- c(recos, paste0(
-      "CFR eleve — verifier delais presentation->soins, proportion de deces ",
-      "communautaires, capacite de prise en charge dans les zones actives."))
+      "High CFR - review time from presentation to care, the share of community ",
+      "deaths, and treatment capacity in active zones."))
   }
   if (!is.na(ndeces) && ndeces > 0) {
-    signaux <- c(signaux, sprintf("[ROUGE] %d nouveau(x) deces", as.integer(ndeces)))
+    signaux <- c(signaux, sprintf("[RED] %d new death(s)", as.integer(ndeces)))
     recos <- c(recos, paste0(
-      "Nouveaux deces — investiguer chaque deces (lieu, delai, statut contact connu) ",
-      "pour distinguer transmission active vs deces communautaires."))
+      "New deaths - investigate each death (location, delay, known-contact status) ",
+      "to distinguish active transmission from community deaths."))
   }
   if (!is.na(ncas) && ncas > 0) {
-    signaux <- c(signaux, sprintf("[ORANGE] %d nouveau(x) cas confirme(s)", as.integer(ncas)))
+    signaux <- c(signaux, sprintf("[ORANGE] %d new confirmed case(s)", as.integer(ncas)))
     recos <- c(recos, paste0(
-      "Nouveaux cas — confirmer la part issue de contacts deja listes ",
-      "(transmission maitrisee) vs cas hors liste (chaines non elucidees)."))
+      "New cases - confirm the share arising from listed contacts (controlled ",
+      "transmission) versus off-list cases (unresolved chains)."))
   }
-  if (!length(signaux)) signaux <- "[VERT] Aucun signal critique sur ce SitRep."
-  if (!length(recos))   recos   <- "Poursuivre la surveillance de routine."
+  if (!length(signaux)) signaux <- "[GREEN] No critical signal on this SitRep."
+  if (!length(recos))   recos   <- "Continue routine surveillance."
 
-  delta_txt <- function(d) if (is.na(d)) "" else sprintf(" (%+d vs precedent)", as.integer(d))
+  delta_txt <- function(d) if (is.na(d)) "" else sprintf(" (%+d vs previous)", as.integer(d))
 
-  # Signaux avancés (module 13_signal_detection.R) — détection à seuils
-  # explicites avec hypothèses à investiguer. Lus depuis le fichier texte.
+  # Advanced signals (module 13_signal_detection.R) - explicit-threshold
+  # detection with hypotheses to investigate. Read from the text file.
   adv_signal_block <- character()
   adv_fp <- file.path(DATA_FINAL, "PREIS_signals_text.txt")
   if (file.exists(adv_fp)) {
@@ -207,33 +207,57 @@ build_sitrep_body <- function(rec_name, sno) {
     if (length(adv_txt)) adv_signal_block <- c("", adv_txt)
   }
 
+  # Reconstruct the INSP SitRep page URL from number + date when possible.
+  sitrep_link <- ""
+  d <- tryCatch(as.Date(row$date), error = function(e) NA)
+  if (!is.na(d)) {
+    sitrep_link <- sprintf("https://insp.cd/sitrep-n%d-mvb_%s/",
+                           sno, format(d, "%d-%m-%Y"))
+  }
+
   lines <- c(
-    sprintf("PREIS Ebola RDC — Alerte SitRep N°%d", sno),
-    sprintf("Date du rapport : %s", row$date),
-    "17e epidemie (Bundibugyo — Ituri / Nord-Kivu / Sud-Kivu)",
+    sprintf("PREIS Ebola DRC - Alert | SitRep No. %d", sno),
+    sprintf("Report date: %s", row$date),
+    "17th outbreak (Bundibugyo virus - Ituri / North Kivu / South Kivu)",
+    "==============================================================",
     "",
-    "DONNEES CLES (cumuls nationaux, source INRB validee) :",
-    sprintf("- Cas confirmes cumules : %s%s", fmt(row$cas_cumules), delta_txt(d_cas)),
-    sprintf("- Deces cumules         : %s%s", fmt(row$deces_cumules), delta_txt(d_dec)),
-    sprintf("- Nouveaux deces        : %s", fmt(ndeces)),
-    sprintf("- Letalite (CFR provis.): %s", ifelse(is.na(row$cfr),"n/d",paste0(row$cfr,"%"))),
+    "KEY FIGURES (national cumulative totals, INRB-validated source):",
+    sprintf("  - Confirmed cases (cumulative): %s%s", fmt(row$cas_cumules), delta_txt(d_cas)),
+    sprintf("  - Deaths (cumulative)         : %s%s", fmt(row$deces_cumules), delta_txt(d_dec)),
+    sprintf("  - New deaths                  : %s", fmt(ndeces)),
+    sprintf("  - Lethality (provisional CFR) : %s",
+            ifelse(is.na(row$cfr),"n/a",paste0(row$cfr,"%"))),
     "",
-    "SIGNAUX OPERATIONNELS :",
+    "--------------------------------------------------------------",
+    "OPERATIONAL SIGNALS:",
     paste0("  ", signaux),
     adv_signal_block,
     "",
-    "RECOMMANDATIONS :",
+    "--------------------------------------------------------------",
+    "SUGGESTED ACTIONS (to investigate, not directives):",
     paste0("  - ", recos),
     "",
-    if (nzchar(dash_url)) paste0("Tableau de bord : ", dash_url) else "",
+    "--------------------------------------------------------------",
+    "LINKS:",
+    if (nzchar(sitrep_link)) paste0("  - Source SitRep (INSP): ", sitrep_link) else "",
+    if (nzchar(dash_url))    paste0("  - Interactive dashboard: ", dash_url) else
+      "  - Interactive dashboard: (set PREIS_DASHBOARD_URL to display)",
     "",
-    "---",
-    "CFR provisoire : certains cas recents peuvent encore evoluer ; pas la letalite finale.",
-    "Drivers probables uniquement — pas de causalite etablie.",
-    "Cumuls nationaux = INRB valide ; details par zone = extraction PDF a valider.",
-    sprintf("Genere automatiquement le %s.", Sys.Date())
+    "==============================================================",
+    "NOTES:",
+    "  - Provisional CFR: recent cases may still evolve; not the final lethality.",
+    "  - Signals are facts plus hypotheses to investigate - no diagnosis, no",
+    "    established causality.",
+    "  - National totals are INRB-validated; zone-level detail is extracted from",
+    "    the PDF and should be validated.",
+    sprintf("  - Generated automatically on %s by the PREIS pipeline.", Sys.Date()),
+    "",
+    "--",
+    "Generated by the PREIS automated surveillance system",
+    "Developed by Dr Hyacinthe ZABRE, Epidemiologist-Biostatistician",
+    "Email: raogoz@africacdc.org | WhatsApp: +226 78 08 87 70"
   )
-  paste(lines[lines != "" | TRUE], collapse = "\n")
+  paste(lines[nzchar(lines) | TRUE], collapse = "\n")
 }
 
 # ------------------------------------------------------------
@@ -286,9 +310,9 @@ for (i in seq_len(nrow(recips))) {
     if (is.null(body)) next
 
     row <- serie %>% filter(sitrep_no == sno)
-    subject <- sprintf("[PREIS Ebola RDC] SitRep N°%d — %s cas, %s deces (CFR %s%%)",
+    subject <- sprintf("[PREIS Ebola DRC] SitRep No. %d - %s cases, %s deaths (CFR %s%%)",
                        sno, fmt(row$cas_cumules), fmt(row$deces_cumules),
-                       ifelse(is.na(row$cfr),"n/d",row$cfr))
+                       ifelse(is.na(row$cfr),"n/a",row$cfr))
 
     ok <- TRUE
     tryCatch({

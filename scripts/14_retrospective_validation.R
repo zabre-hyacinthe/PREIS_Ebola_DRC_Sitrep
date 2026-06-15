@@ -124,7 +124,7 @@ detect_at <- function(t) {
       if (ok_num(ref_cfr)) {
         jump <- last_cfr - ref_cfr
         if (ok_num(jump) && jump >= TH$cfr_jump_pts)
-          out[[length(out)+1]] <- data.frame(date=t, zone=z, type="Hausse letalite",
+          out[[length(out)+1]] <- data.frame(date=t, zone=z, type="Rising lethality",
             value=round(jump,1), detail=sprintf("CFR %.1f->%.1f", ref_cfr, last_cfr))
       }
     }
@@ -136,7 +136,7 @@ detect_at <- function(t) {
     # S4 letalite absolue elevee
     if (ok_num(last_cfr) && ok_num(last_cases) && last_cases >= TH$min_cases_cfr &&
         last_cfr >= TH$high_cfr_abs)
-      out[[length(out)+1]] <- data.frame(date=t, zone=z, type="Letalite elevee",
+      out[[length(out)+1]] <- data.frame(date=t, zone=z, type="High lethality",
         value=last_cfr, detail=sprintf("%d cas", as.integer(last_cases)))
   }
   if (length(out)) do.call(rbind, out) else NULL

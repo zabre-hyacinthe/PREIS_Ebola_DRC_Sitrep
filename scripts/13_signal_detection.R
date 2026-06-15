@@ -88,11 +88,11 @@ for (z in unique(zone_d$zone)) {
   ref <- tail(past, 1)
   jump <- last$cfr - ref$cfr
   if (!is.na(jump) && jump >= TH$cfr_jump_pts) {
-    add_signal("Hausse de létalité", "Zone", z, last$province, last$date,
-      severity = if (jump >= 25) "élevée" else "modérée",
-      detail = sprintf("Létalité provisoire %s : %.1f%% \u2192 %.1f%% (+%.1f pts en ~%d j, %d cas cumulés)",
+    add_signal("Rising lethality", "Zone", z, last$province, last$date,
+      severity = if (jump >= 25) "high" else "moderate",
+      detail = sprintf("%s provisional lethality: %.1f%% \u2192 %.1f%% (+%.1f pts in ~%d days, %d cumulative cases)",
                        z, ref$cfr, last$cfr, jump, TH$cfr_window_days, last$cum_cases),
-      hypotheses = "Détection/prise en charge tardive ? Sous-notification des cas (dénominateur sous-estimé) ? Accès aux soins difficile ? À investiguer.")
+      hypotheses = "Late detection or care? Under-reporting of cases (underestimated denominator)? Difficult access to care? To investigate.")
   }
 }
 
@@ -110,11 +110,11 @@ for (z in unique(zone_d$zone)) {
   r_now <- last$ma7_new_cases; r_old <- prev$ma7_new_cases
   if (!is.na(r_now) && !is.na(r_old) && r_old > 0 &&
       r_now >= TH$accel_min_new && r_now / r_old >= TH$accel_ratio) {
-    add_signal("Accélération localisée", "Zone", z, last$province, last$date,
-      severity = if (r_now / r_old >= 3) "élevée" else "modérée",
-      detail = sprintf("%s : moyenne 7j des nouveaux cas %.1f \u2192 %.1f/j (x%.1f)",
+    add_signal("Localized acceleration", "Zone", z, last$province, last$date,
+      severity = if (r_now / r_old >= 3) "high" else "moderate",
+      detail = sprintf("%s: 7-day average of new cases %.1f \u2192 %.1f/day (x%.1f)",
                        z, r_old, r_now, r_now / r_old),
-      hypotheses = "Chaîne de transmission active non maîtrisée ? Nouvel évènement de super-propagation (funérailles, soins) ? Renforcer la recherche de contacts. À investiguer.")
+      hypotheses = "Active uncontrolled transmission chain? New super-spreading event (funerals, care)? Strengthen contact tracing. To investigate.")
   }
 }
 
@@ -132,12 +132,12 @@ for (z in unique(zone_d$zone)) {
   if (nrow(window_before) == 0) next
   if (all(replace(window_before$new_cases, is.na(window_before$new_cases), 0) == 0) &&
       !is.na(last$new_cases) && last$new_cases >= TH$emerging_min_burst) {
-    add_signal("Réémergence", "Zone", z, last$province, last$date,
-      severity = "élevée",
-      detail = sprintf("%s : silence de %d j puis %d nouveaux cas le %s",
+    add_signal("Re-emergence", "Zone", z, last$province, last$date,
+      severity = "high",
+      detail = sprintf("%s: %d quiet day(s) then %d new case(s) on %s",
                        z, TH$emerging_zero_days, last$new_cases,
                        format(last$date, "%d/%m")),
-      hypotheses = "Nouvelle introduction depuis une zone voisine ? Réservoir/cas-source non identifié ? Vérifier les liens épidémiologiques. À investiguer.")
+      hypotheses = "New introduction from a neighbouring zone? Unidentified reservoir/source case? Check epidemiological links. To investigate.")
   }
 }
 
@@ -148,10 +148,10 @@ zlast <- zone_d %>% group_by(zone) %>% slice_tail(n = 1) %>% ungroup()
 for (i in seq_len(nrow(zlast))) {
   r <- zlast[i, ]
   if (!is.na(r$cfr) && r$cum_cases >= TH$min_cases_cfr && r$cfr >= TH$high_cfr_abs) {
-    add_signal("Létalité élevée", "Zone", r$zone, r$province, r$date,
-      severity = if (r$cfr >= 70) "élevée" else "modérée",
-      detail = sprintf("%s : létalité provisoire %.1f%% (%d cas)", r$zone, r$cfr, r$cum_cases),
-      hypotheses = "Prise en charge tardive ou insuffisante ? Sévérité particulière ? Sous-détection des cas légers (dénominateur biaisé) ? À investiguer.")
+    add_signal("High lethality", "Zone", r$zone, r$province, r$date,
+      severity = if (r$cfr >= 70) "high" else "moderate",
+      detail = sprintf("%s: provisional lethality %.1f%% (%d cases)", r$zone, r$cfr, r$cum_cases),
+      hypotheses = "Late or insufficient care? Particular severity? Under-detection of mild cases (biased denominator)? To investigate.")
   }
 }
 
@@ -162,11 +162,11 @@ for (i in seq_len(nrow(zlast))) {
 rev_recent <- d %>% filter(level == "National", isTRUE(revision) | revision == TRUE) %>%
   arrange(desc(date)) %>% head(1)
 if (nrow(rev_recent) == 1) {
-  add_signal("Révision de données", "National", NA, NA, rev_recent$date,
+  add_signal("Data revision", "National", NA, NA, rev_recent$date,
     severity = "info",
-    detail = sprintf("Révision à la baisse du cumul national le %s (reclassification INRB).",
+    detail = sprintf("Downward revision of the national cumulative total on %s (INRB reclassification).",
                      format(rev_recent$date, "%d/%m")),
-    hypotheses = "Harmonisation/reclassification de cas par l'INRB — comportement normal, signalé pour transparence (les tendances doivent être lues en tenant compte de ces ajustements).")
+    hypotheses = "Case harmonisation/reclassification by INRB - normal behaviour, flagged for transparency (trends should be read accounting for these adjustments).")
 }
 
 # ------------------------------------------------------------
@@ -176,10 +176,10 @@ nat <- d %>% filter(level == "National") %>% arrange(date)
 if (nrow(nat) >= 2) {
   gap <- as.integer(difftime(max(nat$date), nat$date[nrow(nat) - 1], units = "days"))
   if (!is.na(gap) && gap >= TH$silence_days) {
-    add_signal("Silence de données", "National", NA, NA, max(nat$date),
+    add_signal("Data silence", "National", NA, NA, max(nat$date),
       severity = "info",
-      detail = sprintf("Écart de %d jours depuis le point de données précédent.", gap),
-      hypotheses = "Retard de publication du SitRep ? Difficultés de remontée des données terrain ? À vérifier auprès de la source.")
+      detail = sprintf("Gap of %d days since the previous data point.", gap),
+      hypotheses = "Delayed SitRep publication? Difficulties in field data reporting? To verify with the source.")
   }
 }
 
@@ -187,34 +187,34 @@ if (nrow(nat) >= 2) {
 # CONSOLIDATION + SORTIES
 # ------------------------------------------------------------
 if (length(signals) == 0) {
-  log_sig("Aucun signal détecté au-dessus des seuils.")
-  readr::write_csv(tibble(detected_on = Sys.Date(), type = "Aucun signal",
+  log_sig("No signal detected above thresholds.")
+  readr::write_csv(tibble(detected_on = Sys.Date(), type = "No signal",
                           level = NA, zone = NA, province = NA, date = Sys.Date(),
                           severity = "info",
-                          detail = "Aucun signal au-dessus des seuils définis.",
+                          detail = "No signal above defined thresholds.",
                           hypotheses = NA), OUT_FP)
-  writeLines("Aucun signal d'alerte au-dessus des seuils définis pour ce SitRep.", TXT_FP)
+  writeLines("No alert signal above the defined thresholds for this SitRep.", TXT_FP)
   quit(save = "no", status = 0)
 }
 
 sig_df <- bind_rows(signals)
-# Ordre de présentation : sévérité élevée d'abord
-sev_rank <- c("élevée" = 1, "modérée" = 2, "info" = 3)
+# Presentation order: high severity first
+sev_rank <- c("high" = 1, "moderate" = 2, "info" = 3)
 sig_df <- sig_df %>% mutate(rk = sev_rank[severity]) %>%
   arrange(rk, type) %>% select(-rk)
 
 readr::write_csv(sig_df, OUT_FP)
-log_sig(sprintf("%d signal(aux) détecté(s) -> %s", nrow(sig_df), basename(OUT_FP)))
+log_sig(sprintf("%d signal(s) detected -> %s", nrow(sig_df), basename(OUT_FP)))
 
-# Texte prêt pour l'email d'alerte (04)
-lines <- c("SIGNAUX A INVESTIGUER (détection automatique, seuils explicites)",
-           "Le système signale des faits et propose des hypothèses ; il ne pose pas",
-           "de diagnostic. Toute létalité est provisoire.", "")
+# Text ready for the alert email (04)
+lines <- c("SIGNALS TO INVESTIGATE (automated detection, explicit thresholds)",
+           "The system reports facts and proposes hypotheses; it does not make",
+           "a diagnosis. All lethality is provisional.", "")
 for (i in seq_len(nrow(sig_df))) {
   s <- sig_df[i, ]
   lines <- c(lines,
-    sprintf("[%s | sévérité %s] %s", toupper(s$type), s$severity, s$detail),
-    sprintf("   Hypothèses : %s", s$hypotheses), "")
+    sprintf("[%s | %s severity] %s", toupper(s$type), s$severity, s$detail),
+    sprintf("   Hypotheses: %s", s$hypotheses), "")
 }
 writeLines(enc2utf8(lines), TXT_FP)
-log_sig("Texte d'alerte signaux écrit ->", basename(TXT_FP))
+log_sig("Signal alert text written ->", basename(TXT_FP))
