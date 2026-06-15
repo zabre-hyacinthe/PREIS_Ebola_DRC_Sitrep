@@ -75,5 +75,21 @@ jobs:
           else
             echo "=== Changements détectés, commit + push ==="
             git commit -m "Update PREIS SitRep monitor state + outputs [skip ci]"
-            git push && echo "PUSH RÉUSSI" || echo "ÉCHEC DU PUSH (vérifier permissions)"
+            # Push avec retry : en cas de rejet (runs concurrents, autre commit),
+            # on rebase sur le distant et on réessaie, jusqu'à 3 fois.
+            pushed=0
+            for attempt in 1 2 3; do
+              git pull --rebase --autostash origin main || true
+              if git push; then
+                echo "PUSH RÉUSSI (tentative $attempt)"
+                pushed=1
+                break
+              else
+                echo "Push rejeté (tentative $attempt), nouvelle tentative..."
+                sleep 3
+              fi
+            done
+            if [ "$pushed" -ne 1 ]; then
+              echo "ÉCHEC DU PUSH après 3 tentatives (vérifier permissions / conflits)"
+            fi
           fi
