@@ -328,7 +328,8 @@ probe_direct_sitreps <- function(base_no, lookahead = 3) {
       anchor_date <- as.Date("2026-06-11")
       est_date <- anchor_date + (n - anchor_no)
       try_dates <- est_date + (-4:4)   # fenêtre +/-4 jours
-      for (d in try_dates) {
+      for (di in seq_along(try_dates)) {
+        d <- as.Date(try_dates[di], origin = "1970-01-01")
         jj <- format(d, "%d"); mm <- format(d, "%m"); yy <- format(d, "%Y")
         for (typ in c("mvb", "mve")) {
           u <- sprintf("https://insp.cd/sitrep-n%s-%s_%s-%s-%s/",
