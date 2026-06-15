@@ -263,6 +263,11 @@ for (i in seq_len(nrow(recips))) {
            status == "sent") %>%
     pull(sitrep_no) %>% as.integer() %>% unique()
 
+  # MODE TEST : si PREIS_TEST_ALERT=true, on force le renvoi du dernier
+  # SitRep (ignore l'anti-doublon) pour vérifier l'email d'alerte.
+  test_alert <- tolower(Sys.getenv("PREIS_TEST_ALERT","false")) %in% c("true","1","yes")
+  if (test_alert) done <- integer(0)
+
   to_send <- setdiff(all_snos, done)
 
   # Par défaut : envoyer SEULEMENT le dernier SitRep non envoyé
@@ -320,9 +325,12 @@ for (i in seq_len(nrow(recips))) {
 }
 
 # ------------------------------------------------------------
-# 4) Mettre à jour le log
+# 4) Mettre à jour le log (sauf en MODE TEST, pour ne pas polluer l'historique)
 # ------------------------------------------------------------
-if (length(new_log) > 0) {
+test_alert_mode <- tolower(Sys.getenv("PREIS_TEST_ALERT","false")) %in% c("true","1","yes")
+if (test_alert_mode) {
+  cat("[alerts] MODE TEST : sent_log NON modifié (historique préservé).\n")
+} else if (length(new_log) > 0) {
   add <- bind_rows(new_log)
   sent_log <- if (nrow(sent_log) > 0) bind_rows(sent_log, add) else add
   write_csv(sent_log, SENT_LOG_FP, na = "")

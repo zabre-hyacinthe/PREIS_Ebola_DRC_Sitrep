@@ -798,6 +798,29 @@ main <- function() {
   latest_no <- as.integer(latest$sitrep_no[1])
   log_msg("Latest online SitRep:", latest_no)
 
+  # -----------------------------------------------------------------
+  # MODE TEST (PREIS_TEST_ALERT=true) : relance UNIQUEMENT l'analyse et
+  # l'email d'alerte scientifique pour le dernier SitRep, SANS renvoyer
+  # le PDF brut et SANS modifier l'état. Sert à vérifier que l'alerte
+  # avec les signaux fonctionne. Ne s'active que si explicitement demandé.
+  # -----------------------------------------------------------------
+  if (tolower(Sys.getenv("PREIS_TEST_ALERT", "false")) %in% c("true","1","yes")) {
+    log_msg(">>> MODE TEST ALERTE : analyse + email d'alerte du SitRep", latest_no,
+            "(sans renvoi du PDF, sans modif d'etat).")
+    run_existing_pipeline()
+    pdf_path <- find_latest_local_pdf(latest_no)
+    if (is.na(pdf_path) || !is_valid_pdf_file(pdf_path)) {
+      pdf_path <- download_sitrep_pdf_direct(latest_no, latest$post_url[1])
+    }
+    recipients <- read_recipients()
+    tryCatch(
+      run_post_analysis(latest[1, ], pdf_path, recipients),
+      error = function(e) log_msg("MODE TEST : erreur post-analyse :", conditionMessage(e))
+    )
+    log_msg(">>> MODE TEST terminé. Vérifie l'email d'alerte scientifique.")
+    return(invisible(TRUE))
+  }
+
   state <- read_state()
   if (nrow(state) > 0 && latest_no %in% state$sitrep_no[state$status %in% c("sent", "sent_cloud")]) {
     log_msg("No new SitRep to send. Already sent SitRep:", latest_no)
