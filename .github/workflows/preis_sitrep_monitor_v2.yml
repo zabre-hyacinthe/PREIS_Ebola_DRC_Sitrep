@@ -58,10 +58,22 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/monitor_state/preis_sitrep_email_state.csv data/pdf/ data/final/ data/curated/ outputs/analyse/ dashboard_ebola/data/ logs/ || true
-          if git diff --cached --quiet; then
-            echo "No state change to commit."
+          echo "=== État du fichier de suivi avant commit ==="
+          if [ -f data/monitor_state/preis_sitrep_email_state.csv ]; then
+            echo "Fichier d'état présent. Contenu :"
+            cat data/monitor_state/preis_sitrep_email_state.csv
           else
-            git commit -m "Update PREIS SitRep monitor state + analysis outputs [skip ci]"
-            git push
+            echo "ATTENTION : fichier d'état ABSENT après le run."
+          fi
+          echo "=== git status ==="
+          git status --short
+          git add data/monitor_state/preis_sitrep_email_state.csv \
+                  data/pdf/ data/final/ data/curated/ \
+                  outputs/ dashboard_ebola/data/ logs/ 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "Aucun changement à committer."
+          else
+            echo "=== Changements détectés, commit + push ==="
+            git commit -m "Update PREIS SitRep monitor state + outputs [skip ci]"
+            git push && echo "PUSH RÉUSSI" || echo "ÉCHEC DU PUSH (vérifier permissions)"
           fi
