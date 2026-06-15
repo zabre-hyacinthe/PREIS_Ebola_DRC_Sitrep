@@ -24,8 +24,10 @@ jobs:
       SMTP_HOST: smtp.gmail.com
       SMTP_PORT: "587"
       PREIS_DRY_RUN: "false"
-      # === TEST UNIQUEMENT : met "true" pour tester l'email d'alerte ===
-      # === REMETTRE "false" (ou supprimer la ligne) apres le test !  ===
+      # Lien du tableau de bord (NOUVEAU deploiement auto-frais, compte
+      # zrhyacinthe25), affiche dans les emails d'alerte.
+      PREIS_DASHBOARD_URL: "https://zrhyacinthe25.shinyapps.io/preis-ebola-drc-v2/"
+      # Mode test de l'alerte : "false" en production (le test a ete valide).
       PREIS_TEST_ALERT: "true"
 
     steps:
