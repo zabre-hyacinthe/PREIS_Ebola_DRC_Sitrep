@@ -25,7 +25,7 @@ I18N <- list(
   fr = c(
     app_title="PREIS Ebola RDC", map="Carte", overview="Vue d'ensemble",
     kpi="Indicateurs (KPI)", daily="Suivi journalier", cfr_tab="Analyse CFR",
-    faq="Questions fréquentes", synthesis="Synthèse narrative", zones="Zones", about="À propos",
+    faq="Questions fréquentes", signals="Détection de signaux", synthesis="Synthèse narrative", zones="Zones", about="À propos",
     province="Province", indicator="Indicateur", language="Langue",
     map_cases="Cas confirmés cumulés", map_deaths="Décès confirmés cumulés",
     map_cfr="Létalité CFR (%) — provisoire", map_newcases="Nouveaux cas (7 j)",
@@ -36,7 +36,7 @@ I18N <- list(
   en = c(
     app_title="PREIS Ebola DRC", map="Map", overview="Overview",
     kpi="Indicators (KPI)", daily="Daily tracking", cfr_tab="CFR analysis",
-    faq="Frequently asked questions", synthesis="Narrative summary", zones="Zones", about="About",
+    faq="Frequently asked questions", signals="Signal detection", synthesis="Narrative summary", zones="Zones", about="About",
     province="Province", indicator="Indicator", language="Language",
     map_cases="Cumulative confirmed cases", map_deaths="Cumulative confirmed deaths",
     map_cfr="Case-fatality ratio (%) — provisional", map_newcases="New cases (7 d)",
@@ -47,7 +47,7 @@ I18N <- list(
   pt = c(
     app_title="PREIS Ebola RDC", map="Mapa", overview="Visão geral",
     kpi="Indicadores (KPI)", daily="Acompanhamento diário", cfr_tab="Análise CFR",
-    faq="Perguntas frequentes", synthesis="Resumo narrativo", zones="Zonas", about="Sobre",
+    faq="Perguntas frequentes", signals="Detecção de sinais", synthesis="Resumo narrativo", zones="Zonas", about="Sobre",
     province="Província", indicator="Indicador", language="Idioma",
     map_cases="Casos confirmados acumulados", map_deaths="Óbitos confirmados acumulados",
     map_cfr="Taxa de letalidade (%) — provisória", map_newcases="Novos casos (7 d)",
@@ -58,7 +58,7 @@ I18N <- list(
   es = c(
     app_title="PREIS Ébola RDC", map="Mapa", overview="Resumen general",
     kpi="Indicadores (KPI)", daily="Seguimiento diario", cfr_tab="Análisis CFR",
-    faq="Preguntas frecuentes", synthesis="Resumen narrativo", zones="Zonas", about="Acerca de",
+    faq="Preguntas frecuentes", signals="Detección de señales", synthesis="Resumen narrativo", zones="Zonas", about="Acerca de",
     province="Provincia", indicator="Indicador", language="Idioma",
     map_cases="Casos confirmados acumulados", map_deaths="Muertes confirmadas acumuladas",
     map_cfr="Letalidad CFR (%) — provisional", map_newcases="Casos nuevos (7 d)",
@@ -69,7 +69,7 @@ I18N <- list(
   sw = c(
     app_title="PREIS Ebola DRC", map="Ramani", overview="Muhtasari",
     kpi="Viashiria (KPI)", daily="Ufuatiliaji wa kila siku", cfr_tab="Uchambuzi wa CFR",
-    faq="Maswali yanayoulizwa mara kwa mara", synthesis="Muhtasari wa maelezo",
+    faq="Maswali yanayoulizwa mara kwa mara", signals="Ugunduzi wa ishara", synthesis="Muhtasari wa maelezo",
     zones="Maeneo", about="Kuhusu",
     province="Jimbo", indicator="Kiashiria", language="Lugha",
     map_cases="Visa vilivyothibitishwa jumla", map_deaths="Vifo vilivyothibitishwa jumla",
@@ -81,7 +81,7 @@ I18N <- list(
   ar = c(
     app_title="PREIS إيبولا الكونغو", map="خريطة", overview="نظرة عامة",
     kpi="المؤشرات", daily="المتابعة اليومية", cfr_tab="تحليل معدل الوفيات",
-    faq="الأسئلة الشائعة", synthesis="ملخص سردي", zones="المناطق", about="حول",
+    faq="الأسئلة الشائعة", signals="كشف الإشارات", synthesis="ملخص سردي", zones="المناطق", about="حول",
     province="المقاطعة", indicator="المؤشر", language="اللغة",
     map_cases="إجمالي الحالات المؤكدة", map_deaths="إجمالي الوفيات المؤكدة",
     map_cfr="معدل الإماتة (%) — مؤقت", map_newcases="حالات جديدة (7 أيام)",
@@ -522,6 +522,37 @@ ui <- dashboardPage(
               title = "Illustration", uiOutput("faq_plot_ui"))
         )
       ),
+      # ---- Détection de signaux (validation rétrospective) ----
+      tabItem(
+        tabName = "signals",
+        fluidRow(
+          box(width = 12, status = "danger", solidHeader = TRUE,
+              title = "Détection automatique de signaux d'alerte précoce",
+              tags$p(style = "color:#555; margin-bottom:8px;",
+                "Le système détecte automatiquement des signaux épidémiologiques ",
+                "(hausse de létalité, accélération localisée, foyers de forte mortalité) ",
+                "à partir des données agrégées, avec des seuils explicites. Chaque signal ",
+                "est présenté avec sa date de première détection."),
+              tags$p(style = "color:#888; font-style:italic; font-size:13px;",
+                "Posture méthodologique : le système signale des faits et propose des ",
+                "hypothèses à investiguer ; il ne pose pas de diagnostic. Létalité provisoire."))
+        ),
+        fluidRow(
+          valueBoxOutput("sig_total", width = 4),
+          valueBoxOutput("sig_zones", width = 4),
+          valueBoxOutput("sig_earliest", width = 4)
+        ),
+        fluidRow(
+          box(width = 12, status = "primary", solidHeader = TRUE,
+              title = "Chronologie des premières détections",
+              plotlyOutput("sig_timeline", height = 380))
+        ),
+        fluidRow(
+          box(width = 12, status = "info", solidHeader = TRUE,
+              title = "Signaux détectés (détail)",
+              DTOutput("sig_table"))
+        )
+      ),
       # ---- Synthèse narrative (3 niveaux) ----
       tabItem(
         tabName = "synthese",
@@ -602,6 +633,7 @@ server <- function(input, output, session) {
       menuItem(tr("daily"),     tabName = "daily",    icon = icon("chart-line")),
       menuItem(tr("cfr_tab"),   tabName = "cfr",      icon = icon("circle-dot")),
       menuItem(tr("faq"),       tabName = "faq",      icon = icon("circle-question")),
+      menuItem(tr("signals"),   tabName = "signals",  icon = icon("triangle-exclamation")),
       menuItem(tr("synthesis"), tabName = "synthese", icon = icon("file-lines")),
       menuItem(tr("map"),       tabName = "map",      icon = icon("globe-africa")),
       menuItem(tr("zones"),     tabName = "zones",    icon = icon("table")),
@@ -1388,6 +1420,70 @@ server <- function(input, output, session) {
         layout(xaxis = list(title = "Cas confirmés cumulés"), yaxis = list(title = ""),
                margin = list(t = 20, l = 90))
     }
+  })
+
+  # ============================================================
+  # Détection de signaux — lit PREIS_validation_signals.csv
+  # ============================================================
+  sig_data <- reactive({
+    fp <- find_first(c(
+      file.path(DATA_DIR, "final", "PREIS_validation_signals.csv"),
+      file.path(ROOT_DIR, "data", "final", "PREIS_validation_signals.csv"),
+      file.path(DATA_DIR, "PREIS_validation_signals.csv")))
+    if (is.na(fp)) return(NULL)
+    d <- tryCatch(read_csv(fp, show_col_types = FALSE), error = function(e) NULL)
+    if (is.null(d) || nrow(d) == 0) return(NULL)
+    if ("first_date" %in% names(d)) d$first_date <- as.Date(d$first_date)
+    d
+  })
+
+  output$sig_total <- renderValueBox({
+    d <- sig_data()
+    valueBox(if (is.null(d)) "—" else nrow(d), "Signaux détectés",
+             icon = icon("triangle-exclamation"), color = "red")
+  })
+  output$sig_zones <- renderValueBox({
+    d <- sig_data()
+    n <- if (is.null(d)) "—" else length(unique(d$zone))
+    valueBox(n, "Zones concernées", icon = icon("location-dot"), color = "yellow")
+  })
+  output$sig_earliest <- renderValueBox({
+    d <- sig_data()
+    v <- if (is.null(d) || !"first_date" %in% names(d)) "—"
+         else format(min(d$first_date, na.rm = TRUE), "%d/%m/%Y")
+    valueBox(v, "Première alerte", icon = icon("clock"), color = "green")
+  })
+
+  output$sig_timeline <- renderPlotly({
+    d <- sig_data()
+    if (is.null(d)) return(plotly_empty() %>%
+      layout(title = list(text = "Validation non encore générée", font = list(size = 13))))
+    AU_GREEN <- "#00843E"; AU_RED <- "#E31C23"; AU_GOLD <- "#F0B323"
+    pal <- c("Hausse letalite" = AU_GOLD, "Acceleration" = AU_RED,
+             "Letalite elevee" = AU_GREEN)
+    d$lab <- paste0(d$zone, " — ", d$type)
+    d <- d %>% arrange(first_date)
+    plot_ly(d, x = ~first_date, y = ~reorder(lab, first_date),
+            type = "scatter", mode = "markers",
+            color = ~type, colors = pal,
+            marker = list(size = 12),
+            hovertext = ~paste0(zone, "<br>", type, "<br>1ère détection : ",
+                                format(first_date, "%d/%m/%Y")),
+            hoverinfo = "text") %>%
+      layout(xaxis = list(title = "Date de première détection"),
+             yaxis = list(title = ""), margin = list(t = 20, l = 140),
+             legend = list(orientation = "h"))
+  })
+
+  output$sig_table <- renderDT({
+    d <- sig_data()
+    if (is.null(d)) return(datatable(data.frame(Message = "Validation non encore générée"),
+                                     rownames = FALSE, options = list(dom = "t")))
+    show <- d %>% transmute(
+      `Date 1ère détection` = if ("first_date" %in% names(d)) format(first_date, "%d/%m/%Y") else NA,
+      Zone = zone, `Type de signal` = type,
+      Détail = if ("detail" %in% names(d)) detail else NA)
+    datatable(show, rownames = FALSE, options = list(pageLength = 10, dom = "tip"))
   })
 
   output$daily_table <- renderDT({
