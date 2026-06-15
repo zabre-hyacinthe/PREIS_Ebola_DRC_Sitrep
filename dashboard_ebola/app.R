@@ -108,32 +108,53 @@ DATA_DIR    <- file.path(ROOT_DIR, "data")
 CURATED_DIR <- file.path(DATA_DIR, "curated")
 ANALYSE_DIR <- file.path(ROOT_DIR, "outputs", "analyse")
 
-# Sources possibles pour la série & les zones (selon déploiement)
-find_first <- function(paths) { p <- paths[file.exists(paths)]; if (length(p)) p[1] else NA_character_ }
+# Base des fichiers bruts sur GitHub (depot public). Permet au tableau de
+# bord deploye (shinyapps.io) de toujours lire les DERNIERES donnees
+# produites par le pipeline, sans redeploiement. Modifiable via variable
+# d'environnement si le depot/branche change.
+GH_RAW <- Sys.getenv(
+  "PREIS_GH_RAW_BASE",
+  "https://raw.githubusercontent.com/zabre-hyacinthe/PREIS_Ebola_DRC_Sitrep/refs/heads/main")
+
+# find_first : prend le premier chemin/URL utilisable. Les fichiers locaux
+# sont prioritaires (utile en developpement) ; sinon on bascule sur GitHub.
+find_first <- function(paths) {
+  for (p in paths) {
+    if (grepl("^https?://", p)) return(p)   # URL : on tente le telechargement
+    if (file.exists(p)) return(p)
+  }
+  NA_character_
+}
 
 SERIE_FP <- find_first(c(
   file.path(ANALYSE_DIR, "serie_temporelle_nationale.csv"),
-  file.path(DATA_DIR, "serie_temporelle_nationale.csv")
+  file.path(DATA_DIR, "serie_temporelle_nationale.csv"),
+  paste0(GH_RAW, "/outputs/analyse/serie_temporelle_nationale.csv")
 ))
 ZONES_FP <- find_first(c(
   file.path(ANALYSE_DIR, "tableau_zones_sante.csv"),
-  file.path(DATA_DIR, "tableau_zones_sante.csv")
+  file.path(DATA_DIR, "tableau_zones_sante.csv"),
+  paste0(GH_RAW, "/outputs/analyse/tableau_zones_sante.csv")
 ))
 AFRICA_FP <- find_first(c(
   file.path(CURATED_DIR, "africa_countries_rcc.geojson"),
-  file.path(DATA_DIR, "africa_countries_rcc.geojson")
+  file.path(DATA_DIR, "africa_countries_rcc.geojson"),
+  paste0(GH_RAW, "/dashboard_ebola/data/curated/africa_countries_rcc.geojson")
 ))
 ZONES_GEO_FP <- find_first(c(
   file.path(CURATED_DIR, "rdc_zones_sante_est.geojson"),
-  file.path(DATA_DIR, "rdc_zones_sante_est.geojson")
+  file.path(DATA_DIR, "rdc_zones_sante_est.geojson"),
+  paste0(GH_RAW, "/dashboard_ebola/data/curated/rdc_zones_sante_est.geojson")
 ))
 LONG_FP <- find_first(c(
   file.path(DATA_DIR, "PREIS_indicators_long.csv"),
-  file.path(ROOT_DIR, "data", "final", "PREIS_indicators_long.csv")
+  file.path(ROOT_DIR, "data", "final", "PREIS_indicators_long.csv"),
+  paste0(GH_RAW, "/data/final/PREIS_indicators_long.csv")
 ))
 DAILY_FP <- find_first(c(
   file.path(DATA_DIR, "PREIS_daily_indicators.csv"),
-  file.path(ROOT_DIR, "data", "final", "PREIS_daily_indicators.csv")
+  file.path(ROOT_DIR, "data", "final", "PREIS_daily_indicators.csv"),
+  paste0(GH_RAW, "/data/final/PREIS_daily_indicators.csv")
 ))
 
 # Dictionnaire : code technique -> libellé lisible (indicateurs suivis dans le temps)
@@ -527,15 +548,15 @@ ui <- dashboardPage(
         tabName = "signals",
         fluidRow(
           box(width = 12, status = "danger", solidHeader = TRUE,
-              title = "Détection automatique de signaux d'alerte précoce",
+              title = "Automated early-warning signal detection",
               tags$p(style = "color:#555; margin-bottom:8px;",
-                "Le système détecte automatiquement des signaux épidémiologiques ",
-                "(hausse de létalité, accélération localisée, foyers de forte mortalité) ",
-                "à partir des données agrégées, avec des seuils explicites. Chaque signal ",
-                "est présenté avec sa date de première détection."),
+                "The system automatically detects epidemiological signals ",
+                "(rising lethality, localized acceleration, high-mortality foci) ",
+                "from aggregated data, using explicit thresholds. Each signal ",
+                "is shown with its first-detection date."),
               tags$p(style = "color:#888; font-style:italic; font-size:13px;",
-                "Posture méthodologique : le système signale des faits et propose des ",
-                "hypothèses à investiguer ; il ne pose pas de diagnostic. Létalité provisoire."))
+                "Methodological stance: the system reports facts and proposes ",
+                "hypotheses to investigate; it does not make a diagnosis. Lethality is provisional."))
         ),
         fluidRow(
           valueBoxOutput("sig_total", width = 4),
@@ -544,12 +565,12 @@ ui <- dashboardPage(
         ),
         fluidRow(
           box(width = 12, status = "primary", solidHeader = TRUE,
-              title = "Chronologie des premières détections",
+              title = "Timeline of first detections",
               plotlyOutput("sig_timeline", height = 380))
         ),
         fluidRow(
           box(width = 12, status = "info", solidHeader = TRUE,
-              title = "Signaux détectés (détail)",
+              title = "Detected signals (detail)",
               DTOutput("sig_table"))
         )
       ),
@@ -1215,7 +1236,8 @@ server <- function(input, output, session) {
     # Indicateurs thématiques (lus à la volée si présents)
     read_ind <- function(name, col) {
       fp <- find_first(c(file.path(DATA_DIR, "final", name),
-                         file.path(ROOT_DIR, "data", "final", name)))
+                         file.path(ROOT_DIR, "data", "final", name),
+                         paste0(GH_RAW, "/data/final/", name)))
       if (is.na(fp)) return(NULL)
       d <- tryCatch(read_csv(fp, show_col_types = FALSE), error = function(e) NULL)
       if (is.null(d) || !col %in% names(d)) return(NULL)
@@ -1377,7 +1399,8 @@ server <- function(input, output, session) {
       fp <- find_first(c(file.path(DATA_DIR, "final", "PREIS_daily_indicators.csv")))
       # suspects = série nationale séparée : lecture directe du fichier INRB stagé si présent
       sp <- find_first(c(file.path(DATA_DIR, "insp_sitrep__national_cumulative_suspected_cases__daily.csv"),
-                         file.path(ROOT_DIR, "data", "raw", "insp_sitrep__national_cumulative_suspected_cases__daily.csv")))
+                         file.path(ROOT_DIR, "data", "raw", "insp_sitrep__national_cumulative_suspected_cases__daily.csv"),
+                         paste0(GH_RAW, "/data/raw/insp_sitrep__national_cumulative_suspected_cases__daily.csv")))
       if (is.na(sp)) return(plotly_empty() %>% layout(title = "Suspected-case data not staged"))
       d <- tryCatch(read_csv(sp, show_col_types = FALSE), error = function(e) NULL)
       if (is.null(d)) return(plotly_empty())
@@ -1397,7 +1420,8 @@ server <- function(input, output, session) {
         q_poe      = c("insp_sitrep__total_poe_screened__daily.csv",
                        "total_poe_screened", "Personnes dépistées (PoE)"))[[q]]
       fp <- find_first(c(file.path(DATA_DIR, info[1]),
-                         file.path(ROOT_DIR, "data", "raw", info[1])))
+                         file.path(ROOT_DIR, "data", "raw", info[1]),
+                         paste0(GH_RAW, "/data/raw/", info[1])))
       if (is.na(fp)) return(plotly_empty() %>%
         layout(title = list(text = "Data not staged in the dashboard", font = list(size = 13))))
       d <- tryCatch(read_csv(fp, show_col_types = FALSE), error = function(e) NULL)
@@ -1429,7 +1453,8 @@ server <- function(input, output, session) {
     fp <- find_first(c(
       file.path(DATA_DIR, "final", "PREIS_validation_signals.csv"),
       file.path(ROOT_DIR, "data", "final", "PREIS_validation_signals.csv"),
-      file.path(DATA_DIR, "PREIS_validation_signals.csv")))
+      file.path(DATA_DIR, "PREIS_validation_signals.csv"),
+      paste0(GH_RAW, "/data/final/PREIS_validation_signals.csv")))
     if (is.na(fp)) return(NULL)
     d <- tryCatch(read_csv(fp, show_col_types = FALSE), error = function(e) NULL)
     if (is.null(d) || nrow(d) == 0) return(NULL)
@@ -1439,50 +1464,52 @@ server <- function(input, output, session) {
 
   output$sig_total <- renderValueBox({
     d <- sig_data()
-    valueBox(if (is.null(d)) "—" else nrow(d), "Signaux détectés",
+    valueBox(if (is.null(d)) "—" else nrow(d), "Signals detected",
              icon = icon("triangle-exclamation"), color = "red")
   })
   output$sig_zones <- renderValueBox({
     d <- sig_data()
     n <- if (is.null(d)) "—" else length(unique(d$zone))
-    valueBox(n, "Zones concernées", icon = icon("location-dot"), color = "yellow")
+    valueBox(n, "Zones concerned", icon = icon("location-dot"), color = "yellow")
   })
   output$sig_earliest <- renderValueBox({
     d <- sig_data()
     v <- if (is.null(d) || !"first_date" %in% names(d)) "—"
          else format(min(d$first_date, na.rm = TRUE), "%d/%m/%Y")
-    valueBox(v, "Première alerte", icon = icon("clock"), color = "green")
+    valueBox(v, "First alert", icon = icon("clock"), color = "green")
   })
 
   output$sig_timeline <- renderPlotly({
     d <- sig_data()
     if (is.null(d)) return(plotly_empty() %>%
-      layout(title = list(text = "Validation non encore générée", font = list(size = 13))))
+      layout(title = list(text = "Validation not yet generated", font = list(size = 13))))
     AU_GREEN <- "#00843E"; AU_RED <- "#E31C23"; AU_GOLD <- "#F0B323"
-    pal <- c("Hausse letalite" = AU_GOLD, "Acceleration" = AU_RED,
-             "Letalite elevee" = AU_GREEN)
+    pal <- c("Rising lethality" = AU_GOLD, "Acceleration" = AU_RED,
+             "High lethality" = AU_GREEN,
+             # compat anciens libelles FR au cas ou
+             "Hausse letalite" = AU_GOLD, "Letalite elevee" = AU_GREEN)
     d$lab <- paste0(d$zone, " — ", d$type)
     d <- d %>% arrange(first_date)
     plot_ly(d, x = ~first_date, y = ~reorder(lab, first_date),
             type = "scatter", mode = "markers",
             color = ~type, colors = pal,
             marker = list(size = 12),
-            hovertext = ~paste0(zone, "<br>", type, "<br>1ère détection : ",
+            hovertext = ~paste0(zone, "<br>", type, "<br>First detection: ",
                                 format(first_date, "%d/%m/%Y")),
             hoverinfo = "text") %>%
-      layout(xaxis = list(title = "Date de première détection"),
+      layout(xaxis = list(title = "First-detection date"),
              yaxis = list(title = ""), margin = list(t = 20, l = 140),
              legend = list(orientation = "h"))
   })
 
   output$sig_table <- renderDT({
     d <- sig_data()
-    if (is.null(d)) return(datatable(data.frame(Message = "Validation non encore générée"),
+    if (is.null(d)) return(datatable(data.frame(Message = "Validation not yet generated"),
                                      rownames = FALSE, options = list(dom = "t")))
     show <- d %>% transmute(
-      `Date 1ère détection` = if ("first_date" %in% names(d)) format(first_date, "%d/%m/%Y") else NA,
-      Zone = zone, `Type de signal` = type,
-      Détail = if ("detail" %in% names(d)) detail else NA)
+      `First detection` = if ("first_date" %in% names(d)) format(first_date, "%d/%m/%Y") else NA,
+      Zone = zone, `Signal type` = type,
+      Detail = if ("detail" %in% names(d)) detail else NA)
     datatable(show, rownames = FALSE, options = list(pageLength = 10, dom = "tip"))
   })
 
