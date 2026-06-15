@@ -24,6 +24,9 @@ jobs:
       SMTP_HOST: smtp.gmail.com
       SMTP_PORT: "587"
       PREIS_DRY_RUN: "false"
+      # === TEST UNIQUEMENT : met "true" pour tester l'email d'alerte ===
+      # === REMETTRE "false" (ou supprimer la ligne) apres le test !  ===
+      PREIS_TEST_ALERT: "true"
 
     steps:
       - name: Checkout repository
