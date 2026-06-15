@@ -270,8 +270,16 @@ get_sitrep_posts <- function() {
     st <- read_state()
     if (nrow(st) > 0) max(as.integer(st$sitrep_no), na.rm = TRUE) else 0
   }, error = function(e) 0)
-  base_no <- max(highest_known, state_max, na.rm = TRUE)
 
+  # PLANCHER de sécurité : l'épidémie 2026 est déjà bien avancée. On ne
+  # sonde JAMAIS en partant de zéro (sinon on teste les SitReps 1, 2, 3
+  # qui n'existent plus en ligne). Ce plancher est ajusté si besoin ;
+  # il garantit que le fallback cherche les numéros plausibles actuels.
+  KNOWN_FLOOR <- as.integer(Sys.getenv("PREIS_SITREP_FLOOR", "29"))
+  base_no <- max(highest_known, state_max, KNOWN_FLOOR, na.rm = TRUE)
+
+  # Si la catégorie a fonctionné ET donné un maximum >= plancher, on ne
+  # sonde que si rien de neuf n'a été vu (évite des requêtes inutiles).
   extra <- probe_direct_sitreps(base_no, lookahead = 3)
   if (nrow(extra) > 0) {
     log_msg("Fallback URL directe : trouve", nrow(extra),
@@ -282,52 +290,64 @@ get_sitrep_posts <- function() {
     out <- out[order(out$sitrep_no, decreasing = TRUE), , drop = FALSE]
   }
 
+  # Garde de plausibilité : on ne retient que des numéros de SitRep dans
+  # une fourchette réaliste (évite tout parasite type "SitRep 3" ou "752").
+  # Bornes ajustables via variables d'environnement.
+  SNO_MIN <- as.integer(Sys.getenv("PREIS_SITREP_MIN", "20"))
+  SNO_MAX <- as.integer(Sys.getenv("PREIS_SITREP_MAX", "80"))
+  if (nrow(out) > 0) {
+    out <- out[!is.na(out$sitrep_no) &
+               out$sitrep_no >= SNO_MIN & out$sitrep_no <= SNO_MAX, , drop = FALSE]
+  }
+
   rownames(out) <- NULL
   out
 }
 
 # Teste directement les URLs des SitReps base_no+1 .. base_no+lookahead.
-# Le slug INSP varie : on essaie plusieurs variantes plausibles.
+# Validation STRICTE : une page ne compte comme SitRep que si elle contient
+# la signature d'un PDF embarqué (pdfemb-data) OU un lien .pdf, ET que le
+# numéro attendu apparaît dans son URL/titre. Évite les faux positifs sur
+# les pages 404/menu qui contiennent le mot « sitrep ».
 probe_direct_sitreps <- function(base_no, lookahead = 3) {
   found <- list()
+
+  page_is_real_sitrep <- function(html_txt, n) {
+    if (is.na(html_txt) || !nzchar(html_txt)) return(FALSE)
+    # 1) doit contenir un PDF embarqué ou un lien PDF
+    has_pdf <- grepl("pdfemb-data=", html_txt, ignore.case = TRUE) ||
+               grepl("https?://[^\"']+?\\.pdf", html_txt, ignore.case = TRUE)
+    if (!has_pdf) return(FALSE)
+    # 2) le numéro attendu doit apparaître dans un contexte SitRep
+    nn  <- sprintf("%d", n); nnn <- sprintf("%03d", n)
+    pat <- sprintf("sitrep[^0-9]{0,4}n?%s\\b|sitrep[^0-9]{0,4}n?%s\\b|N\u00b0\\s*%s\\b|N\u00b0\\s*%s\\b",
+                   nn, nnn, nn, nnn)
+    grepl(pat, html_txt, ignore.case = TRUE)
+  }
+
   for (n in (base_no + 1):(base_no + lookahead)) {
-    nn  <- sprintf("%d", n)         # 30
-    nnn <- sprintf("%03d", n)       # 030
-    # Variantes de slug observées sur insp.cd (avec/sans date, mvb/mve).
-    # On teste d'abord les formes sans date (page d'article), puis on
-    # cherchera la date réelle dans la page si trouvée.
-    candidates <- c(
-      sprintf("https://insp.cd/sitrep-n%s-mvb_", nn),   # préfixe, complété ci-dessous
-      sprintf("https://insp.cd/sitrep-n%s-mvb_", nnn),
-      sprintf("https://insp.cd/sitrep-n%s-mve", nn),
-      sprintf("https://insp.cd/sitrep-n%s-mve", nnn)
-    )
-    # Pour les formes avec date, on balaie les jours récents (1-30 du mois 06).
+    nn  <- sprintf("%d", n)
+    nnn <- sprintf("%03d", n)
     hit_url <- NA_character_; hit_title <- NA_character_
-    # 1) formes sans date : test direct
+
+    # 1) formes sans date (slug -mve-bundibugyo)
     direct_try <- c(
       sprintf("https://insp.cd/sitrep-n%s-mve-bundibugyo/", nnn),
       sprintf("https://insp.cd/sitrep-n%s-mve-bundibugyo/", nn)
     )
     for (u in direct_try) {
       h <- fetch_html_safely(u, max_try = 1)
-      if (!is.na(h) && grepl("sitrep", h, ignore.case = TRUE) &&
-          grepl(paste0("N\u00b0", nn, "|N\u00b0", nnn, "|n", nn, "-|n", nnn, "-"),
-                h, ignore.case = TRUE)) {
+      if (page_is_real_sitrep(h, n)) {
         hit_url <- u; hit_title <- paste0("SitRep N\u00b0", n); break
       }
     }
-    # 2) formes avec date : la date de publication suit le numéro de
-    #    façon quasi-linéaire (observé : SitRep 28 = 11/06, 27 = 10/06,
-    #    26 = 09/06 ...). On estime la date attendue puis on teste une
-    #    fenêtre étroite (+/- 4 jours) autour, ce qui évite de marteler
-    #    le serveur avec des centaines de requêtes.
+
+    # 2) formes avec date : estimation autour de la date attendue (+/-4 j)
     if (is.na(hit_url)) {
-      # Ancrage : SitRep 28 publié le 11/06/2026 -> offset = n - 28 jours
       anchor_no <- 28L
       anchor_date <- as.Date("2026-06-11")
       est_date <- anchor_date + (n - anchor_no)
-      try_dates <- est_date + (-4:4)   # fenêtre +/-4 jours
+      try_dates <- est_date + (-4:4)
       for (di in seq_along(try_dates)) {
         d <- as.Date(try_dates[di], origin = "1970-01-01")
         jj <- format(d, "%d"); mm <- format(d, "%m"); yy <- format(d, "%Y")
@@ -335,19 +355,20 @@ probe_direct_sitreps <- function(base_no, lookahead = 3) {
           u <- sprintf("https://insp.cd/sitrep-n%s-%s_%s-%s-%s/",
                        nn, typ, jj, mm, yy)
           h <- fetch_html_safely(u, max_try = 1)
-          if (!is.na(h) && grepl("sitrep", h, ignore.case = TRUE)) {
+          if (page_is_real_sitrep(h, n)) {
             hit_url <- u; hit_title <- paste0("SitRep N\u00b0", n); break
           }
         }
         if (!is.na(hit_url)) break
       }
     }
+
     if (!is.na(hit_url)) {
       found[[length(found) + 1]] <- data.frame(
         sitrep_no = as.integer(n), title = hit_title,
         post_url = hit_url, stringsAsFactors = FALSE)
     } else {
-      # Si N+1 n'existe pas, inutile de tester N+2, N+3 (numéros consécutifs).
+      # N+1 introuvable -> inutile de tester N+2, N+3 (numéros consécutifs).
       break
     }
   }
@@ -768,7 +789,10 @@ main <- function() {
   log_msg("PREIS cloud SitRep monitor started")
 
   posts <- get_sitrep_posts()
-  if (nrow(posts) == 0) stop("No SitRep posts detected from INSP.")
+  if (nrow(posts) == 0) {
+    log_msg("Aucun SitRep detecte (source INSP indisponible ou rien de nouveau). Sortie propre.")
+    return(invisible(FALSE))
+  }
 
   latest <- posts[which.max(posts$sitrep_no), , drop = FALSE]
   latest_no <- as.integer(latest$sitrep_no[1])
@@ -793,7 +817,9 @@ main <- function() {
   }
 
   if (is.na(pdf_path) || !is_valid_pdf_file(pdf_path)) {
-    stop("Latest SitRep PDF not found/valid after pipeline. SitRep: ", latest_no)
+    log_msg("PDF du SitRep", latest_no, "non recuperable pour le moment.",
+            "Nouvel essai au prochain cycle. Sortie propre.")
+    return(invisible(FALSE))
   }
 
   recipients <- read_recipients()
@@ -834,4 +860,21 @@ main <- function() {
   invisible(TRUE)
 }
 
-main()
+# ============================================================
+# Point d'entrée sécurisé : le monitoring ne doit JAMAIS planter
+# pour une cause externe (INSP indisponible, page vide, réseau).
+# Il se termine proprement (exit 0). Une vraie erreur de config
+# (secrets manquants) reste signalée distinctement dans les logs,
+# mais sans bloquer le workflow en rouge de façon répétée.
+# ============================================================
+tryCatch(
+  main(),
+  error = function(e) {
+    msg <- conditionMessage(e)
+    log_msg("FIN AVEC AVERTISSEMENT (non bloquant) :", msg)
+    # Sortie 0 : on ne casse pas le workflow pour une cause transitoire.
+    # Les vraies erreurs de configuration sont visibles dans les logs
+    # ci-dessus (ex. 'SMTP_USER secret is empty').
+    quit(save = "no", status = 0)
+  }
+)
