@@ -23,7 +23,8 @@ suppressPackageStartupMessages({
 ROOT <- normalizePath(getwd(), winslash = "/", mustWork = TRUE)
 
 # Chemins (cohérents avec le pipeline PREIS Ebola)
-BASE_DIR    <- "D:/PREIS_Ebola_DRC_Sitrep_FV_12.06.26"
+BASE_DIR    <- Sys.getenv("GITHUB_WORKSPACE",
+                          unset = "D:/PREIS_Ebola_DRC_Sitrep_FV_12.06.26")
 DATA_FINAL  <- file.path(BASE_DIR, "data/final")
 OUT_DIR     <- file.path(BASE_DIR, "outputs/analyse")
 SERIE_FP    <- file.path(OUT_DIR, "serie_temporelle_nationale.csv")
@@ -34,8 +35,9 @@ if (!file.exists(SERIE_FP)) stop("Série introuvable : ", SERIE_FP,
                                  "\nLance d'abord 03_analyse_consolidee.R.")
 if (!file.exists(RECIP_FP)) stop("Destinataires introuvables : ", RECIP_FP)
 
-# Fonction d'envoi centralisée (réutilise ton infra existante).
-# Tes scripts sont dans scripts/ — on cherche 60_email.R là en priorité.
+# Fonction d'envoi : on privilégie un envoi Python robuste (pas de segfault
+# en cloud). 60_email.R reste utilisé s'il est présent ET si on n'est pas
+# en cloud, pour compatibilité locale.
 email_candidates <- c(
   file.path(BASE_DIR, "scripts", "60_email.R"),
   file.path(BASE_DIR, "scripts", "60_email_FV.R"),
@@ -43,12 +45,79 @@ email_candidates <- c(
   file.path(ROOT, "R", "60_email.R")
 )
 email_fn <- email_candidates[file.exists(email_candidates)][1]
-if (is.na(email_fn) || length(email_fn) == 0) {
-  stop("Fonction d'envoi introuvable (60_email.R cherché dans scripts/). ",
-       "Verifie le nom exact du fichier, ou utilise 04_send_email_alert.R (blastula).")
+has_local_email <- !is.na(email_fn) && length(email_fn) > 0
+if (has_local_email) {
+  source(email_fn)
+  cat("[alerts] Fonction email locale chargée depuis :", email_fn, "\n")
+} else {
+  cat("[alerts] 60_email.R absent : envoi via Python smtplib (robuste cloud).\n")
 }
-source(email_fn)
-cat("[alerts] Fonction email chargée depuis :", email_fn, "\n")
+
+# --- Envoi email robuste via Python (identique a celui de 08) ---
+withr_env <- function(vars, expr) {
+  old <- Sys.getenv(names(vars), unset = NA, names = TRUE)
+  do.call(Sys.setenv, as.list(vars))
+  on.exit({
+    set_back <- old[!is.na(old)]
+    if (length(set_back)) do.call(Sys.setenv, as.list(set_back))
+    unset <- names(old)[is.na(old)]
+    if (length(unset)) Sys.unsetenv(unset)
+  })
+  force(expr)
+}
+
+send_alert_python <- function(to, subject, body, attachments = character()) {
+  smtp_host <- Sys.getenv("SMTP_HOST", "smtp.gmail.com")
+  smtp_port <- as.integer(Sys.getenv("SMTP_PORT", "587"))
+  smtp_user <- Sys.getenv("SMTP_USER")
+  smtp_pass <- Sys.getenv("SMTP_PASS")
+  from_addr <- Sys.getenv("ALERT_FROM", smtp_user)
+  if (!nzchar(smtp_user) || !nzchar(smtp_pass)) {
+    cat("[alerts] SMTP_USER/PASS manquants : envoi Python impossible.\n"); return(FALSE)
+  }
+  att <- attachments[file.exists(attachments)]
+  py <- '
+import os, sys, smtplib, ssl
+from email.message import EmailMessage
+host=os.environ["PY_SMTP_HOST"]; port=int(os.environ["PY_SMTP_PORT"])
+user=os.environ["PY_SMTP_USER"]; pwd=os.environ["PY_SMTP_PASS"]; frm=os.environ["PY_FROM"]
+to=[x for x in os.environ.get("PY_TO","").split(",") if x]
+subject=os.environ.get("PY_SUBJECT",""); body=os.environ.get("PY_BODY","")
+atts=[x for x in os.environ.get("PY_ATT","").split("|") if x]
+msg=EmailMessage(); msg["From"]=frm; msg["To"]=", ".join(to); msg["Subject"]=subject
+msg.set_content(body)
+for a in atts:
+    if os.path.exists(a):
+        with open(a,"rb") as f: data=f.read()
+        sub="png" if a.lower().endswith(".png") else "octet-stream"
+        maintype="image" if sub=="png" else "application"
+        msg.add_attachment(data, maintype=maintype, subtype=sub, filename=os.path.basename(a))
+try:
+    if port==465:
+        with smtplib.SMTP_SSL(host,port,context=ssl.create_default_context(),timeout=60) as s:
+            s.login(user,pwd); s.send_message(msg)
+    else:
+        with smtplib.SMTP(host,port,timeout=60) as s:
+            s.ehlo(); s.starttls(context=ssl.create_default_context()); s.ehlo()
+            s.login(user,pwd); s.send_message(msg)
+    print("PYEMAIL_OK")
+except Exception as e:
+    print("PYEMAIL_ERROR:", e, file=sys.stderr); sys.exit(1)
+'
+  tmp_py <- tempfile(fileext = ".py"); writeLines(py, tmp_py)
+  res <- withr_env(
+    c(PY_SMTP_HOST=smtp_host, PY_SMTP_PORT=as.character(smtp_port),
+      PY_SMTP_USER=smtp_user, PY_SMTP_PASS=smtp_pass, PY_FROM=from_addr,
+      PY_TO=paste(to,collapse=","), PY_SUBJECT=subject, PY_BODY=body,
+      PY_ATT=paste(att,collapse="|")),
+    {
+      pin <- Sys.which("python3"); if (!nzchar(pin)) pin <- Sys.which("python")
+      if (!nzchar(pin)) { cat("[alerts] Python introuvable.\n"); return(FALSE) }
+      out <- suppressWarnings(system2(pin, shQuote(tmp_py), stdout=TRUE, stderr=TRUE))
+      any(grepl("PYEMAIL_OK", out))
+    })
+  unlink(tmp_py); isTRUE(res)
+}
 
 dash_url <- Sys.getenv("PREIS_DASHBOARD_URL", "")
 
@@ -128,6 +197,16 @@ build_sitrep_body <- function(rec_name, sno) {
 
   delta_txt <- function(d) if (is.na(d)) "" else sprintf(" (%+d vs precedent)", as.integer(d))
 
+  # Signaux avancés (module 13_signal_detection.R) — détection à seuils
+  # explicites avec hypothèses à investiguer. Lus depuis le fichier texte.
+  adv_signal_block <- character()
+  adv_fp <- file.path(DATA_FINAL, "PREIS_signals_text.txt")
+  if (file.exists(adv_fp)) {
+    adv_txt <- tryCatch(readLines(adv_fp, warn = FALSE, encoding = "UTF-8"),
+                        error = function(e) character())
+    if (length(adv_txt)) adv_signal_block <- c("", adv_txt)
+  }
+
   lines <- c(
     sprintf("PREIS Ebola RDC — Alerte SitRep N°%d", sno),
     sprintf("Date du rapport : %s", row$date),
@@ -141,6 +220,7 @@ build_sitrep_body <- function(rec_name, sno) {
     "",
     "SIGNAUX OPERATIONNELS :",
     paste0("  ", signaux),
+    adv_signal_block,
     "",
     "RECOMMANDATIONS :",
     paste0("  - ", recos),
@@ -207,7 +287,14 @@ for (i in seq_len(nrow(recips))) {
 
     ok <- TRUE
     tryCatch({
-      if (supports_attach && length(default_attach) > 0) {
+      # Cloud (ou 60_email.R absent) : envoi Python robuste en priorité.
+      use_python <- !has_local_email || nzchar(Sys.getenv("GITHUB_WORKSPACE"))
+      if (use_python) {
+        att <- if (length(default_attach) > 0) default_attach else character()
+        sent <- send_alert_python(to = addr, subject = subject,
+                                  body = body, attachments = att)
+        if (!sent) stop("envoi Python a echoue")
+      } else if (supports_attach && length(default_attach) > 0) {
         preis_send_email(to = addr, subject = subject,
                          body_text = body, attachments = default_attach,
                          dry_run = FALSE)
