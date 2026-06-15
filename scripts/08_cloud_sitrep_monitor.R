@@ -248,15 +248,112 @@ get_sitrep_posts <- function() {
     )
   }
 
-  if (length(posts) == 0) {
-    return(data.frame(sitrep_no = integer(), title = character(), post_url = character(), stringsAsFactors = FALSE))
+  out <- if (length(posts) == 0) {
+    data.frame(sitrep_no = integer(), title = character(),
+               post_url = character(), stringsAsFactors = FALSE)
+  } else {
+    o <- do.call(rbind, posts)
+    o <- o[!duplicated(paste(o$sitrep_no, o$post_url)), , drop = FALSE]
+    o[order(o$sitrep_no, decreasing = TRUE), , drop = FALSE]
   }
 
-  out <- do.call(rbind, posts)
-  out <- out[!duplicated(paste(out$sitrep_no, out$post_url)), , drop = FALSE]
-  out <- out[order(out$sitrep_no, decreasing = TRUE), , drop = FALSE]
+  # ----------------------------------------------------------
+  # FALLBACK par URL directe : l'INSP oublie parfois de ranger
+  # un SitRep dans la catégorie (ex. SitRep 30 publié mais absent
+  # de /category/sitrep/). On teste alors directement les URLs des
+  # numéros suivants à partir du plus élevé connu.
+  # ----------------------------------------------------------
+  highest_known <- if (nrow(out) > 0) max(out$sitrep_no, na.rm = TRUE) else 0
+  # On lit aussi le dernier numéro déjà traité dans l'état, pour
+  # repartir du bon endroit même si la catégorie est très en retard.
+  state_max <- tryCatch({
+    st <- read_state()
+    if (nrow(st) > 0) max(as.integer(st$sitrep_no), na.rm = TRUE) else 0
+  }, error = function(e) 0)
+  base_no <- max(highest_known, state_max, na.rm = TRUE)
+
+  extra <- probe_direct_sitreps(base_no, lookahead = 3)
+  if (nrow(extra) > 0) {
+    log_msg("Fallback URL directe : trouve", nrow(extra),
+            "SitRep(s) absent(s) de la categorie :",
+            paste(extra$sitrep_no, collapse = ", "))
+    out <- rbind(out, extra)
+    out <- out[!duplicated(out$sitrep_no), , drop = FALSE]
+    out <- out[order(out$sitrep_no, decreasing = TRUE), , drop = FALSE]
+  }
+
   rownames(out) <- NULL
   out
+}
+
+# Teste directement les URLs des SitReps base_no+1 .. base_no+lookahead.
+# Le slug INSP varie : on essaie plusieurs variantes plausibles.
+probe_direct_sitreps <- function(base_no, lookahead = 3) {
+  found <- list()
+  for (n in (base_no + 1):(base_no + lookahead)) {
+    nn  <- sprintf("%d", n)         # 30
+    nnn <- sprintf("%03d", n)       # 030
+    # Variantes de slug observées sur insp.cd (avec/sans date, mvb/mve).
+    # On teste d'abord les formes sans date (page d'article), puis on
+    # cherchera la date réelle dans la page si trouvée.
+    candidates <- c(
+      sprintf("https://insp.cd/sitrep-n%s-mvb_", nn),   # préfixe, complété ci-dessous
+      sprintf("https://insp.cd/sitrep-n%s-mvb_", nnn),
+      sprintf("https://insp.cd/sitrep-n%s-mve", nn),
+      sprintf("https://insp.cd/sitrep-n%s-mve", nnn)
+    )
+    # Pour les formes avec date, on balaie les jours récents (1-30 du mois 06).
+    hit_url <- NA_character_; hit_title <- NA_character_
+    # 1) formes sans date : test direct
+    direct_try <- c(
+      sprintf("https://insp.cd/sitrep-n%s-mve-bundibugyo/", nnn),
+      sprintf("https://insp.cd/sitrep-n%s-mve-bundibugyo/", nn)
+    )
+    for (u in direct_try) {
+      h <- fetch_html_safely(u, max_try = 1)
+      if (!is.na(h) && grepl("sitrep", h, ignore.case = TRUE) &&
+          grepl(paste0("N\u00b0", nn, "|N\u00b0", nnn, "|n", nn, "-|n", nnn, "-"),
+                h, ignore.case = TRUE)) {
+        hit_url <- u; hit_title <- paste0("SitRep N\u00b0", n); break
+      }
+    }
+    # 2) formes avec date : la date de publication suit le numéro de
+    #    façon quasi-linéaire (observé : SitRep 28 = 11/06, 27 = 10/06,
+    #    26 = 09/06 ...). On estime la date attendue puis on teste une
+    #    fenêtre étroite (+/- 4 jours) autour, ce qui évite de marteler
+    #    le serveur avec des centaines de requêtes.
+    if (is.na(hit_url)) {
+      # Ancrage : SitRep 28 publié le 11/06/2026 -> offset = n - 28 jours
+      anchor_no <- 28L
+      anchor_date <- as.Date("2026-06-11")
+      est_date <- anchor_date + (n - anchor_no)
+      try_dates <- est_date + (-4:4)   # fenêtre +/-4 jours
+      for (d in try_dates) {
+        jj <- format(d, "%d"); mm <- format(d, "%m"); yy <- format(d, "%Y")
+        for (typ in c("mvb", "mve")) {
+          u <- sprintf("https://insp.cd/sitrep-n%s-%s_%s-%s-%s/",
+                       nn, typ, jj, mm, yy)
+          h <- fetch_html_safely(u, max_try = 1)
+          if (!is.na(h) && grepl("sitrep", h, ignore.case = TRUE)) {
+            hit_url <- u; hit_title <- paste0("SitRep N\u00b0", n); break
+          }
+        }
+        if (!is.na(hit_url)) break
+      }
+    }
+    if (!is.na(hit_url)) {
+      found[[length(found) + 1]] <- data.frame(
+        sitrep_no = as.integer(n), title = hit_title,
+        post_url = hit_url, stringsAsFactors = FALSE)
+    } else {
+      # Si N+1 n'existe pas, inutile de tester N+2, N+3 (numéros consécutifs).
+      break
+    }
+  }
+  if (length(found) == 0)
+    return(data.frame(sitrep_no = integer(), title = character(),
+                      post_url = character(), stringsAsFactors = FALSE))
+  do.call(rbind, found)
 }
 
 find_latest_local_pdf <- function(sitrep_no) {
@@ -542,6 +639,10 @@ run_post_analysis <- function(latest, pdf_path, recipients) {
   # 0ter) Détection de signaux d'alerte précoce (seuils explicites)
   #       -> data/final/PREIS_signals.csv + texte pour l'email d'alerte
   safe_source("detection_signaux", "13_signal_detection.R")
+
+  # 0quater) Validation rétrospective : rejoue la détection sur toute la
+  #          série (produit les CSV + figure lus par l'onglet dashboard).
+  safe_source("validation_retro", "14_retrospective_validation.R")
 
   # 0bis) Couche choroplèthe zones de santé : régénérée seulement si absente
   #       (le shapefile est volumineux et ne change pas entre SitReps)
