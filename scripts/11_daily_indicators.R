@@ -67,10 +67,6 @@ nat_dec <- read_nat("insp_sitrep__national_cumulative_confirmed_deaths__daily.cs
 national <- full_join(
   nat_cas %>% rename(cum_cases = value),
   nat_dec %>% rename(cum_deaths = value), by = "date") %>%
-  arrange(date) %>%
-  # add SitRep 29 (13 June) if not present
-  bind_rows(if (!as.Date("2026-06-13") %in% .$date)
-    tibble(date = as.Date("2026-06-13"), cum_cases = 781, cum_deaths = 179) else NULL) %>%
   arrange(date) %>% distinct(date, .keep_all = TRUE) %>%
   mutate(level = "National", province = "National")
 

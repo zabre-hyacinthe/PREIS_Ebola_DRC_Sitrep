@@ -86,8 +86,10 @@ wide <- ind %>%
     "suspected_cases_investigation")) %>%
   dplyr::select(sitrep_no, indicator_code, value) %>%
   dplyr::distinct(sitrep_no, indicator_code, .keep_all = TRUE) %>%
+  dplyr::mutate(sitrep_no = as.integer(sitrep_no)) %>%
   tidyr::pivot_wider(names_from = indicator_code, values_from = value) %>%
-  dplyr::left_join(sitrep_dates, by = "sitrep_no") %>%
+  dplyr::left_join(sitrep_dates %>% dplyr::mutate(sitrep_no = as.integer(sitrep_no)),
+                   by = "sitrep_no") %>%
   dplyr::arrange(sitrep_no) %>%
   dplyr::rename(
     cas_cumules   = cumulative_confirmed_cases,
@@ -96,6 +98,19 @@ wide <- ind %>%
     cfr           = case_fatality_ratio,
     suspects      = dplyr::any_of("suspected_cases_investigation")
   )
+
+# Filet de securite : si une date est manquante apres le join (probleme de
+# type sur sitrep_no), on la recompose directement depuis la table de
+# reference via un dictionnaire nomme (insensible au type). Garantit que
+# chaque SitRep present a sa date.
+.date_lookup <- setNames(as.character(sitrep_dates$date),
+                         as.character(as.integer(sitrep_dates$sitrep_no)))
+wide <- wide %>%
+  dplyr::mutate(
+    date = dplyr::if_else(
+      is.na(date),
+      as.Date(.date_lookup[as.character(as.integer(sitrep_no))]),
+      date))
 
 # petite fonction moyenne mobile sans dépendance externe
 zoo_rollmean <- function(x, k = 3) {

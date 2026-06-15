@@ -107,30 +107,30 @@ safe_num <- function(x) {
 extract_sitrep_no <- function(url_or_name) {
   if (is.na(url_or_name) || url_or_name == "") return(NA_integer_)
 
-  # Post-URL format: .../sitrep-n27-mvb_10-06-2026/
-  m_post <- stringr::str_match(as.character(url_or_name), "sitrep-n(\\d+)-mvb")[, 2]
+  # Post-URL format: .../sitrep-n27-mvb_10-06-2026/  ou ...-mve...
+  m_post <- stringr::str_match(as.character(url_or_name),
+                               "sitrep-n(\\d{1,3})-(?:mvb|mve)")[, 2]
   if (!is.na(m_post)) return(as.integer(m_post))
 
   fname <- basename(as.character(url_or_name))
-  # URL-decode %C2%B0 -> ° so N°027 works
+  # Decoder les caracteres URL-encodes (%C2%B0 -> °, %20 -> espace, etc.)
   fname <- gsub("%C2%B0", "N", fname, ignore.case = TRUE)
-  fname <- gsub("%[0-9A-Fa-f]{2}", "", fname)
+  fname <- tryCatch(utils::URLdecode(fname), error = function(e) fname)
 
-  # Pattern A: SITREP / SitRep directly followed by digits
-  m <- stringr::str_match(
-    fname,
-    "(?:SITREP|SitRep|sitrep)[-_ ]?(?:MVE[-_ ]?|MVB[-_ ]?)?(?:NUM[-_ ]?|N[-_ ]?)?0*(\\d{1,3})"
-  )[, 2]
-  if (!is.na(m)) return(as.integer(m))
-
-  # Pattern B: N°NN / N0NN / NNN anywhere
-  m <- stringr::str_match(fname, "N[o\u00b0\u00ba]?0*(\\d{1,3})(?:[-_\\.]|$)")[, 2]
-  if (!is.na(m)) return(as.integer(m))
-
-  # Pattern C: NUM-NN
-  m <- stringr::str_match(fname, "NUM[-_ ]?0*(\\d{1,3})")[, 2]
-  if (!is.na(m)) return(as.integer(m))
-
+  # Strategie GENERALISEE : du plus fiable au plus general. Tolerante a
+  # tout intercalaire (MVE, RDC, Draft-Final, ...) entre les mots-cles.
+  patterns <- c(
+    # N° / No / N suivi (eventuellement separe) du numero : N°30, N027, No-31, N 16
+    "N[\u00b0\u00bao]?\\s*[-_]?\\s*0*(\\d{1,3})(?![0-9])",
+    # NUM-NN
+    "NUM[-_ ]?0*(\\d{1,3})(?![0-9])",
+    # SITREP / SR directement suivi de chiffres : SR32, SitRep_30, SITREP-23
+    "(?:SITREP|SR)[-_ ]?0*(\\d{1,3})(?![0-9])"
+  )
+  for (pat in patterns) {
+    m <- stringr::str_match(fname, stringr::regex(pat, ignore_case = TRUE))[, 2]
+    if (!is.na(m)) return(as.integer(m))
+  }
   NA_integer_
 }
 
@@ -237,7 +237,10 @@ scrape_insp_sitrep_list <- function(
     post_df <- tibble::tibble(post_url = links, post_text = texts) %>%
       dplyr::filter(
         !is.na(post_url),
-        stringr::str_detect(post_url, "sitrep-n\\d+-(?:mvb|mve)")
+        # Tolerant : tout lien de post contenant 'sitrep' (n'importe quel
+        # format de slug), pas seulement sitrep-nNN-mvb. Le numero exact
+        # est extrait ensuite par extract_sitrep_no().
+        stringr::str_detect(stringr::str_to_lower(post_url), "sitrep")
       ) %>%
       dplyr::distinct(post_url, .keep_all = TRUE)
 
@@ -265,11 +268,9 @@ scrape_insp_sitrep_list <- function(
   # e.g. https://insp.cd/sitrep-n27-mvb_10-06-2026/
   posts <- posts %>%
     dplyr::mutate(
-      sitrep_no = suppressWarnings(as.integer(
-        stringr::str_match(post_url, "sitrep-n(\\d+)-(?:mvb|mve)")[, 2]
-      )),
-      date_raw = stringr::str_match(post_url, "(?:mvb|mve)_(\\d{2}-\\d{2}-\\d{4})")[, 2],
-      epidemic = "MVB_2026_Ituri"
+      sitrep_no = vapply(post_url, extract_sitrep_no, integer(1)),
+      date_raw  = stringr::str_match(post_url, "(\\d{2}-\\d{2}-\\d{4})")[, 2],
+      epidemic  = "MVB_2026_Ituri"
     ) %>%
     dplyr::filter(!is.na(sitrep_no)) %>%
     # DEDUPLICATE: keep ONE post per sitrep_no (the category page lists
@@ -453,7 +454,16 @@ detect_new_sitreps <- function(scraped, registry) {
     cat("   Pending (not yet downloaded):", nrow(pending), "\n")
   }
 
-  dplyr::bind_rows(new_sitreps, pending) %>%
+  # Robustesse : forcer les colonnes date/heure en character des DEUX
+  # cotes avant bind_rows (evite 'Can't combine <datetime> and <character>'
+  # quand le registry relu du CSV a first_seen en POSIXct).
+  .force_chr <- function(df) {
+    for (col in c("first_seen","last_updated","scraped_at","date_raw")) {
+      if (col %in% names(df)) df[[col]] <- as.character(df[[col]])
+    }
+    df
+  }
+  dplyr::bind_rows(.force_chr(new_sitreps), .force_chr(pending)) %>%
     dplyr::distinct(pdf_url, .keep_all = TRUE)
 }
 
