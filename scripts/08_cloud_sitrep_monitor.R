@@ -357,6 +357,68 @@ probe_direct_sitreps <- function(base_no, lookahead = 3) {
   do.call(rbind, found)
 }
 
+download_sitrep_pdf_direct <- function(sitrep_no, post_url) {
+  # Télécharge le PDF d'un SitRep directement depuis sa page INSP, sans
+  # dépendre du pipeline maître. Gère l'URL encodée en base64 (pdfemb-data)
+  # et les liens .pdf directs. Robuste au blocage anti-bot (UA navigateur).
+  if (is.na(post_url) || !nzchar(post_url)) {
+    log_msg("download direct: post_url manquant.")
+    return(NA_character_)
+  }
+  html_txt <- fetch_html_safely(post_url, max_try = 3)
+  if (is.na(html_txt)) {
+    log_msg("download direct: page inaccessible:", post_url)
+    return(NA_character_)
+  }
+
+  pdf_url <- NA_character_
+  # 1) URL encodée base64 dans pdfemb-data="..."
+  m <- regmatches(html_txt, regexpr("pdfemb-data=[\"'][^\"']+[\"']", html_txt))
+  if (length(m) == 1) {
+    b64 <- sub("pdfemb-data=[\"']([^\"']+)[\"']", "\\1", m)
+    decoded <- tryCatch(
+      rawToChar(base64enc::base64decode(b64)),
+      error = function(e) NA_character_)
+    if (!is.na(decoded)) {
+      um <- regmatches(decoded, regexpr("https?:[^\"]+?\\.pdf", decoded))
+      if (length(um) == 1) pdf_url <- gsub("\\\\/", "/", um)
+    }
+  }
+  # 2) Lien .pdf direct dans la page
+  if (is.na(pdf_url)) {
+    um <- regmatches(html_txt, regexpr("https?://[^\"']+?\\.pdf", html_txt))
+    if (length(um) == 1) pdf_url <- um
+  }
+  if (is.na(pdf_url)) {
+    log_msg("download direct: aucune URL PDF trouvée dans la page.")
+    return(NA_character_)
+  }
+
+  dir.create(DIR_PDF, recursive = TRUE, showWarnings = FALSE)
+  dest <- file.path(DIR_PDF, sitrep_canonical_filename(sitrep_no))
+  ua <- paste0("Mozilla/5.0 (Windows NT 10.0; Win64; x64) ",
+               "AppleWebKit/537.36 (KHTML, like Gecko) ",
+               "Chrome/126.0.0.0 Safari/537.36")
+  ok <- tryCatch({
+    req <- httr2::request(pdf_url)
+    req <- httr2::req_user_agent(req, ua)
+    req <- httr2::req_headers(req, "Referer" = post_url)
+    req <- httr2::req_timeout(req, 120)
+    resp <- httr2::req_perform(req)
+    if (httr2::resp_status(resp) >= 400) stop("HTTP ", httr2::resp_status(resp))
+    writeBin(httr2::resp_body_raw(resp), dest)
+    TRUE
+  }, error = function(e) {
+    log_msg("download direct: échec téléchargement:", conditionMessage(e)); FALSE
+  })
+
+  if (ok && is_valid_pdf_file(dest)) {
+    log_msg("download direct: PDF récupéré ->", basename(dest))
+    return(dest)
+  }
+  NA_character_
+}
+
 find_latest_local_pdf <- function(sitrep_no) {
   # On cherche le PDF du SitRep demandé UNIQUEMENT dans les dossiers projet.
   # 1) D'abord le nom canonique exact SitRep_NN_2026.pdf.
@@ -721,6 +783,15 @@ main <- function() {
   run_existing_pipeline()
 
   pdf_path <- find_latest_local_pdf(latest_no)
+
+  # FALLBACK robuste : si le pipeline n'a pas produit le PDF (ex. scraping
+  # INSP bloqué), on le télécharge directement depuis l'URL déjà trouvée
+  # par la détection (page catégorie ou probe_direct_sitreps).
+  if (is.na(pdf_path) || !is_valid_pdf_file(pdf_path)) {
+    log_msg("PDF absent après pipeline — tentative de téléchargement direct.")
+    pdf_path <- download_sitrep_pdf_direct(latest_no, latest$post_url[1])
+  }
+
   if (is.na(pdf_path) || !is_valid_pdf_file(pdf_path)) {
     stop("Latest SitRep PDF not found/valid after pipeline. SitRep: ", latest_no)
   }

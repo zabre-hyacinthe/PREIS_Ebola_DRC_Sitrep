@@ -409,6 +409,15 @@ save_registry <- function(registry) {
 
 detect_new_sitreps <- function(scraped, registry) {
 
+  # Garde : si le scraping n'a rien retourné (ex. INSP temporairement
+  # bloqué/indisponible), on s'arrête proprement sans planter. Le
+  # téléchargement direct de 08 prendra le relais si nécessaire.
+  if (is.null(scraped) || nrow(scraped) == 0 ||
+      !("pdf_url" %in% names(scraped))) {
+    cat("   Aucun SitRep scrapé (source indisponible) — étape ignorée proprement.\n")
+    return(tibble::tibble())
+  }
+
   known_urls <- registry$pdf_url
 
   # Truly new: in scraped list but not yet in registry at all
