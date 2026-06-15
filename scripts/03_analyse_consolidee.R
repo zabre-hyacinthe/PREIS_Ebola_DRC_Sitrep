@@ -28,7 +28,9 @@ suppressPackageStartupMessages({
 })
 
 # ---- Chemins ----
-BASE_DIR    <- "D:/PREIS_Ebola_DRC_Sitrep_FV_12.06.26"
+# Chemin portable : GitHub Actions (cloud) ou Windows (local)
+BASE_DIR <- Sys.getenv("GITHUB_WORKSPACE",
+                       unset = "D:/PREIS_Ebola_DRC_Sitrep_FV_12.06.26")
 DATA_FINAL  <- file.path(BASE_DIR, "data/final")
 OUT_DIR     <- file.path(BASE_DIR, "outputs/analyse")
 dir.create(OUT_DIR, recursive = TRUE, showWarnings = FALSE)
@@ -69,7 +71,9 @@ sitrep_dates <- tibble::tribble(
   14,"2026-05-28",15,"2026-05-29",16,"2026-05-30",17,"2026-05-31",
   18,"2026-06-01",19,"2026-06-02",20,"2026-06-03",21,"2026-06-04",
   22,"2026-06-05",23,"2026-06-06",24,"2026-06-07",25,"2026-06-08",
-  26,"2026-06-09",27,"2026-06-10",28,"2026-06-11"
+  26,"2026-06-09",27,"2026-06-10",28,"2026-06-11",29,"2026-06-12",
+  30,"2026-06-13",31,"2026-06-14",32,"2026-06-15",33,"2026-06-16",
+  34,"2026-06-17",35,"2026-06-18"
 ) %>% dplyr::mutate(date = as.Date(date))
 
 # =========================================================
@@ -103,12 +107,25 @@ zoo_rollmean <- function(x, k = 3) {
   out
 }
 
-# Calculs dérivés : nouveaux décès par différence, variations, moyenne mobile
+# Calculs dérivés : nouveaux cas ET décès par DIFFÉRENCE (incidence réelle).
+# On calcule systématiquement par soustraction des cumuls car le champ
+# "nouveaux cas" extrait du PDF est souvent incomplet. C'est l'incidence
+# (allure réelle de l'épidémie), pas le cumul qui ne fait que monter.
 wide <- wide %>%
   dplyr::mutate(
-    nouveaux_deces = deces_cumules - dplyr::lag(deces_cumules),
-    var_cas        = cas_cumules - dplyr::lag(cas_cumules)
+    nouveaux_cas_calc   = cas_cumules   - dplyr::lag(cas_cumules),
+    nouveaux_deces      = deces_cumules - dplyr::lag(deces_cumules),
+    var_cas             = nouveaux_cas_calc
   )
+# Si l'extraction PDF a une valeur de nouveaux cas, on la garde en second
+# recours uniquement là où le calcul est NA (1er SitRep) ; sinon priorité
+# au calcul par différence (cohérent avec les cumuls INRB validés).
+if ("nouveaux_cas" %in% names(wide)) {
+  wide <- wide %>%
+    dplyr::mutate(nouveaux_cas = dplyr::coalesce(nouveaux_cas_calc, nouveaux_cas))
+} else {
+  wide$nouveaux_cas <- wide$nouveaux_cas_calc
+}
 wide$moy_mobile_cas <- zoo_rollmean(wide$var_cas)
 
 readr::write_csv(wide, file.path(OUT_DIR, "serie_temporelle_nationale.csv"))
@@ -119,22 +136,23 @@ cat(">> Tableau série temporelle nationale sauvegardé (",
 # 3. GRAPHIQUE 1 — COURBE ÉPIDÉMIQUE
 # =========================================================
 g1 <- ggplot(wide, aes(x = date)) +
-  geom_col(aes(y = nouveaux_cas), fill = COL_LIGHT, na.rm = TRUE) +
-  geom_line(aes(y = cas_cumules / 5), color = COL_CAS, linewidth = 1.1, na.rm = TRUE) +
-  geom_point(aes(y = cas_cumules / 5), color = COL_CAS, size = 1.5, na.rm = TRUE) +
+  geom_col(aes(y = nouveaux_cas), fill = "#E59866", alpha = 0.9, na.rm = TRUE) +
+  geom_line(aes(y = moy_mobile_cas), color = COL_CAS, linewidth = 1, na.rm = TRUE) +
+  geom_line(aes(y = cas_cumules / 12), color = COL_DECES, linewidth = 0.7,
+            linetype = "dashed", na.rm = TRUE) +
   scale_y_continuous(
-    name = "Nouveaux cas (barres)",
-    sec.axis = sec_axis(~ . * 5, name = "Cas confirmés cumulés (ligne)")
+    name = "Nouveaux cas par SitRep (barres) — incidence",
+    sec.axis = sec_axis(~ . * 12, name = "Cas cumulés (ligne pointillée)")
   ) +
   labs(
     title = "Courbe épidémique — MVE Bundibugyo RDC (17e épidémie)",
-    subtitle = "Cas confirmés cumulés et nouveaux cas par SitRep",
+    subtitle = "Barres = nouveaux cas (allure réelle) · ligne rouge = moyenne mobile 3 pts · pointillé = cumul",
     x = NULL,
-    caption = "Source : INSP/INRB. Cumuls nationaux validés INRB. Données provisoires susceptibles de révision."
+    caption = "Nouveaux cas calculés par différence des cumuls nationaux INRB. Données provisoires."
   ) +
   theme_preis +
-  theme(axis.title.y.right = element_text(color = COL_CAS),
-        axis.title.y.left  = element_text(color = "grey50"))
+  theme(axis.title.y.left  = element_text(color = "#B9770E"),
+        axis.title.y.right = element_text(color = COL_DECES))
 
 ggsave(file.path(OUT_DIR, "g1_courbe_epidemique.png"),
        g1, width = 9, height = 5, dpi = 150)

@@ -104,34 +104,40 @@ detect_at <- function(t) {
   zt <- zone %>% filter(date <= t)
   if (nrow(zt) == 0) return(NULL)
   out <- list()
+  # Helper : vrai seulement si x est une valeur unique non-NA satisfaisant cond
+  ok_num <- function(x) length(x) == 1 && !is.na(x)
   for (z in unique(zt$zone)) {
     zz <- zt %>% filter(zone == z) %>% arrange(date)
+    if (nrow(zz) == 0) next
     last <- tail(zz, 1)
+    last_cfr <- last$cfr[1]; last_cases <- last$cum_cases[1]
     # ma7 a la date t
     recent <- zz %>% filter(date > t - 7)
-    ma7_now <- mean(pmax(recent$new_cases, 0), na.rm = TRUE)
+    ma7_now <- if (nrow(recent)) mean(pmax(recent$new_cases, 0), na.rm = TRUE) else NA
     prev7 <- zz %>% filter(date <= t - 7, date > t - 14)
     ma7_old <- if (nrow(prev7)) mean(pmax(prev7$new_cases, 0), na.rm = TRUE) else NA
 
     # S1 hausse letalite
-    if (!is.na(last$cfr) && last$cum_cases >= TH$min_cases_cfr) {
+    if (ok_num(last_cfr) && ok_num(last_cases) && last_cases >= TH$min_cases_cfr) {
       ref <- zz %>% filter(date <= t - TH$cfr_window) %>% tail(1)
-      if (nrow(ref) && !is.na(ref$cfr)) {
-        jump <- last$cfr - ref$cfr
-        if (jump >= TH$cfr_jump_pts)
+      ref_cfr <- if (nrow(ref)) ref$cfr[1] else NA
+      if (ok_num(ref_cfr)) {
+        jump <- last_cfr - ref_cfr
+        if (ok_num(jump) && jump >= TH$cfr_jump_pts)
           out[[length(out)+1]] <- data.frame(date=t, zone=z, type="Hausse letalite",
-            value=round(jump,1), detail=sprintf("CFR %.1f->%.1f", ref$cfr, last$cfr))
+            value=round(jump,1), detail=sprintf("CFR %.1f->%.1f", ref_cfr, last_cfr))
       }
     }
     # S2 acceleration
-    if (!is.na(ma7_now) && !is.na(ma7_old) && ma7_old > 0 &&
+    if (ok_num(ma7_now) && ok_num(ma7_old) && ma7_old > 0 &&
         ma7_now >= TH$accel_min_new && ma7_now/ma7_old >= TH$accel_ratio)
       out[[length(out)+1]] <- data.frame(date=t, zone=z, type="Acceleration",
         value=round(ma7_now/ma7_old,1), detail=sprintf("ma7 %.1f->%.1f", ma7_old, ma7_now))
     # S4 letalite absolue elevee
-    if (!is.na(last$cfr) && last$cum_cases >= TH$min_cases_cfr && last$cfr >= TH$high_cfr_abs)
+    if (ok_num(last_cfr) && ok_num(last_cases) && last_cases >= TH$min_cases_cfr &&
+        last_cfr >= TH$high_cfr_abs)
       out[[length(out)+1]] <- data.frame(date=t, zone=z, type="Letalite elevee",
-        value=last$cfr, detail=sprintf("%d cas", last$cum_cases))
+        value=last_cfr, detail=sprintf("%d cas", as.integer(last_cases)))
   }
   if (length(out)) do.call(rbind, out) else NULL
 }

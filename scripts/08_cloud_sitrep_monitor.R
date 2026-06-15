@@ -757,8 +757,8 @@ run_post_analysis <- function(latest, pdf_path, recipients) {
   #    (dédoublonnage indépendant via son propre sent_log).
   alert_ok <- safe_source("alerte_propre", "04_send_sitrep_alerts_conditional.R")
 
-  # Repli : si le script conditionnel n'existe pas, on envoie au moins
-  # une alerte synthétique simple avec les graphiques disponibles.
+  # Repli : si le script conditionnel échoue, on envoie au moins
+  # une alerte synthétique simple via Python (robuste, pas de segfault).
   if (!alert_ok) {
     tryCatch({
       out_dir <- file.path(ROOT_DIR, "outputs", "analyse")
@@ -766,18 +766,17 @@ run_post_analysis <- function(latest, pdf_path, recipients) {
       body_txt <- if (file.exists(synth_fp)) paste(readLines(synth_fp, warn = FALSE), collapse = "\n")
                   else paste0("Analyse du SitRep ", latest$sitrep_no, " disponible.")
       imgs <- list.files(out_dir, pattern = "\\.png$", full.names = TRUE)
-      email <- blastula::compose_email(body = blastula::md(body_txt))
-      for (im in imgs) email <- blastula::add_attachment(email, file = im, filename = basename(im))
-      blastula::smtp_send(
-        email = email,
-        from = Sys.getenv("ALERT_FROM", Sys.getenv("SMTP_USER")),
+      ok_fb <- send_email_python(
+        smtp_host = Sys.getenv("SMTP_HOST", "smtp.gmail.com"),
+        smtp_port = as.integer(Sys.getenv("SMTP_PORT", "587")),
+        smtp_user = Sys.getenv("SMTP_USER"),
+        smtp_pass = Sys.getenv("SMTP_PASS"),
+        from_addr = Sys.getenv("ALERT_FROM", Sys.getenv("SMTP_USER")),
         to = recipients$to, cc = recipients$cc, bcc = recipients$bcc,
         subject = paste0("[PREIS Ebola DRC] SitRep ", latest$sitrep_no, " — analyse"),
-        credentials = blastula::creds(
-          user = Sys.getenv("SMTP_USER"), pass = Sys.getenv("SMTP_PASS"),
-          host = Sys.getenv("SMTP_HOST", "smtp.gmail.com"),
-          port = as.integer(Sys.getenv("SMTP_PORT", "465")), use_ssl = TRUE))
-      log_msg("POST-ANALYSE OK: alerte_propre (repli)")
+        body = body_txt, attachment = if (length(imgs)) imgs[1] else NULL)
+      if (ok_fb) log_msg("POST-ANALYSE OK: alerte_propre (repli Python)")
+      else log_msg("POST-ANALYSE: repli Python n'a pas confirmé l'envoi.")
     }, error = function(e) log_msg("POST-ANALYSE ECHEC alerte repli :", conditionMessage(e)))
   }
 
