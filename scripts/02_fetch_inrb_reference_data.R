@@ -19,7 +19,12 @@ suppressPackageStartupMessages({
   library(stringr); library(tidyr); library(lubridate)
 })
 
-BASE_DIR     <- "D:/PREIS_Ebola_DRC_Sitrep_FV_12.06.26"
+# Racine du projet : automatique et portable (local Windows OU cloud Linux).
+# Priorite : variable d'environnement PREIS_ROOT si definie, sinon le
+# repertoire de travail courant (racine du depot quand lance par 08/Actions
+# ou depuis RStudio a la racine du projet). Plus de chemin Windows en dur,
+# qui creait un dossier parasite "D:/" dans le runner Linux.
+BASE_DIR     <- Sys.getenv("PREIS_ROOT", unset = getwd())
 DATA_FINAL   <- file.path(BASE_DIR, "data/final")
 dir.create(DATA_FINAL, recursive = TRUE, showWarnings = FALSE)
 
