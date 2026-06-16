@@ -5,15 +5,9 @@ a diagnosis. All lethality is provisional.
 [HIGH LETHALITY | high severity] Beni: provisional lethality 71.4% (14 cases)
    Hypotheses: Late or insufficient care? Particular severity? Under-detection of mild cases (biased denominator)? To investigate.
 
-[HIGH LETHALITY | moderate severity] Katwa: provisional lethality 57.1% (21 cases)
+[HIGH LETHALITY | moderate severity] Katwa: provisional lethality 64.0% (25 cases)
    Hypotheses: Late or insufficient care? Particular severity? Under-detection of mild cases (biased denominator)? To investigate.
 
-[LOCALIZED ACCELERATION | moderate severity] Mongbwalu: 7-day average of new cases 6.4 → 12.9/day (x2.0)
-   Hypotheses: Active uncontrolled transmission chain? New super-spreading event (funerals, care)? Strengthen contact tracing. To investigate.
-
-[RISING LETHALITY | moderate severity] Mongbwalu provisional lethality: 27.2% → 44.5% (+17.3 pts in ~7 days, 164 cumulative cases)
+[RISING LETHALITY | moderate severity] Mongbwalu provisional lethality: 29.6% → 45.7% (+16.1 pts in ~7 days, 175 cumulative cases)
    Hypotheses: Late detection or care? Under-reporting of cases (underestimated denominator)? Difficult access to care? To investigate.
-
-[DATA REVISION | info severity] Downward revision of the national cumulative total on 30/05 (INRB reclassification).
-   Hypotheses: Case harmonisation/reclassification by INRB - normal behaviour, flagged for transparency (trends should be read accounting for these adjustments).
 

@@ -1,0 +1,37 @@
+date,zone,type,value,detail
+2026-05-28,Bunia,Acceleration,2.5,ma7 3.8->9.3
+2026-05-28,Mongbwalu,Rising lethality,21.3,CFR 0.0->21.3
+2026-05-28,Rwampara,Rising lethality,16.8,CFR 3.2->20.0
+2026-05-29,Mongbwalu,Rising lethality,21.3,CFR 0.0->21.3
+2026-05-30,Bunia,Acceleration,2,ma7 4.0->8.0
+2026-05-30,Mongbwalu,Rising lethality,21.3,CFR 0.0->21.3
+2026-06-01,Bunia,Acceleration,3.6,ma7 2.6->9.3
+2026-06-01,Mongbwalu,Rising lethality,21.3,CFR 0.0->21.3
+2026-06-01,Rwampara,Acceleration,2.8,ma7 2.0->5.5
+2026-06-02,Mongbwalu,Rising lethality,21.3,CFR 0.0->21.3
+2026-06-02,Rwampara,Acceleration,5.1,ma7 1.3->6.5
+2026-06-03,Bunia,Acceleration,2.7,ma7 3.7->10.0
+2026-06-03,Mongbwalu,Rising lethality,21.3,CFR 0.0->21.3
+2026-06-03,Rwampara,Rising lethality,15,CFR 6.1->21.1
+2026-06-03,Rwampara,Acceleration,5.6,ma7 1.3->7.2
+2026-06-04,Katwa,High lethality,63.6,11 cas
+2026-06-05,Katwa,High lethality,63.6,11 cas
+2026-06-06,Katwa,High lethality,72.7,11 cas
+2026-06-07,Katwa,High lethality,72.7,11 cas
+2026-06-08,Katwa,High lethality,66.7,12 cas
+2026-06-08,Mongbwalu,Acceleration,2.1,ma7 4.7->9.6
+2026-06-09,Katwa,High lethality,66.7,12 cas
+2026-06-09,Mongbwalu,Rising lethality,15.7,CFR 21.3->37.0
+2026-06-09,Mongbwalu,Acceleration,2.5,ma7 4.5->11.4
+2026-06-10,Katwa,High lethality,55.6,18 cas
+2026-06-10,Mongbwalu,Rising lethality,15.8,CFR 21.3->37.1
+2026-06-10,Mongbwalu,Acceleration,2.7,ma7 4.5->12.1
+2026-06-11,Katwa,High lethality,56.2,16 cas
+2026-06-11,Mongbwalu,Acceleration,3.6,ma7 2.8->10.3
+2026-06-11,Rwampara,Acceleration,2.3,ma7 3.5->8.0
+2026-06-13,Beni,High lethality,71.4,14 cas
+2026-06-13,Katwa,High lethality,57.1,21 cas
+2026-06-13,Mongbwalu,Rising lethality,17.3,CFR 27.2->44.5
+2026-06-14,Beni,High lethality,71.4,14 cas
+2026-06-14,Katwa,High lethality,64,25 cas
+2026-06-14,Mongbwalu,Rising lethality,16.1,CFR 29.6->45.7
