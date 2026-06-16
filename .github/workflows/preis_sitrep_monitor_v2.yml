@@ -81,19 +81,43 @@ jobs:
             if [ -f "$f" ]; then echo "--- $f ---"; cat "$f"; else echo "ABSENT: $f"; fi
           done
 
-          echo "=== git status ==="
+          echo "=== git status (avant add) ==="
           git status --short
 
-          # Ajout explicite des fichiers d'etat critiques + donnees
-          git add -f data/monitor_state/preis_sitrep_email_state.csv 2>/dev/null || true
-          git add -f data/final/sent_log_sitrep.csv 2>/dev/null || true
-          git add data/pdf/ data/final/ data/curated/ \
-                  outputs/ dashboard_ebola/data/ logs/ 2>/dev/null || true
+          # Nettoyage defensif : un script peut creer par erreur un dossier
+          # a chemin Windows absolu (ex: 'D:/') dans le runner Linux, ce qui
+          # fait echouer un 'git add' global. On l'ignore explicitement.
+          rm -rf "D:" "D:/" 2>/dev/null || true
+
+          # Ajout EXPLICITE et individuel des fichiers a persister. Chaque
+          # 'git add' est independant : l'echec de l'un ne bloque pas les
+          # autres. On cible les fichiers cles par chemin precis (la serie
+          # du dashboard et l'anti-doublon en tete).
+          for f in \
+            outputs/analyse/serie_temporelle_nationale.csv \
+            outputs/analyse/tableau_zones_sante.csv \
+            data/final/sent_log_sitrep.csv \
+            data/monitor_state/preis_sitrep_email_state.csv \
+            data/final/PREIS_indicators_long.csv \
+            data/final/PREIS_daily_indicators.csv \
+            data/final/PREIS_signals.csv \
+            data/final/PREIS_signals_text.txt \
+            data/final/INRB_reference_national.csv \
+            data/final/PREIS_validation_signals.csv ; do
+            if [ -f "$f" ]; then git add -f "$f" || echo "add skip: $f"; fi
+          done
+
+          # Ajout des dossiers de sortie volumineux (graphiques, validation,
+          # copies dashboard) : tolerant, ne bloque jamais le commit.
+          git add outputs/analyse/ outputs/validation/ dashboard_ebola/data/ 2>/dev/null || true
+
+          echo "=== git status (apres add, staged) ==="
+          git diff --cached --name-only
 
           if git diff --cached --quiet; then
             echo "Aucun changement a committer."
           else
-            git commit -m "Update PREIS state + outputs (sent_log, data) [skip ci]"
+            git commit -m "Update PREIS state + outputs (serie, sent_log, data) [skip ci]"
             pushed=0
             for attempt in 1 2 3; do
               # rebase APRES commit : nos changements sont deja captures dans
