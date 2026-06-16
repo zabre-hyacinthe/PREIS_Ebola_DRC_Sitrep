@@ -16,7 +16,6 @@ jobs:
   monitor:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-
     env:
       SMTP_USER: ${{ secrets.SMTP_USER }}
       SMTP_PASS: ${{ secrets.SMTP_PASS }}
@@ -24,21 +23,30 @@ jobs:
       SMTP_HOST: smtp.gmail.com
       SMTP_PORT: "587"
       PREIS_DRY_RUN: "false"
-      # Lien du tableau de bord (NOUVEAU deploiement auto-frais, compte
-      # zrhyacinthe25), affiche dans les emails d'alerte.
+      # Lien du tableau de bord (auto-frais, compte zrhyacinthe25),
+      # affiche dans les emails d'alerte.
       PREIS_DASHBOARD_URL: "https://zrhyacinthe25.shinyapps.io/preis-ebola-drc-v2/"
-      # Mode test de l'alerte : "false" en production (le test a ete valide).
+      # Mode test de l'alerte : "false" en production.
       PREIS_TEST_ALERT: "false"
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      # IMPORTANT : on se synchronise sur le distant AVANT de lancer le pipeline,
+      # pour que les fichiers d'etat (sent_log, monitor_state) lus par les scripts
+      # soient deja la version la plus recente du depot. Ainsi l'anti-doublon
+      # voit ce qui a deja ete envoye.
+      - name: Sync with remote (pull latest state)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase --autostash origin main || true
 
       - name: Setup R
         uses: r-lib/actions/setup-r@v2
         with:
           r-version: 'release'
-          use-public-rspm: true   # binaires précompilés = installation rapide
+          use-public-rspm: true
 
       - name: Install system dependencies
         run: |
@@ -58,43 +66,49 @@ jobs:
         run: |
           Rscript scripts/08_cloud_sitrep_monitor.R
 
-      - name: Commit monitor state + outputs if updated
+      # On commit ET push les fichiers d'etat + donnees. CLE : on commit
+      # AVANT tout pull/rebase, et on retente proprement en cas de rejet.
+      # Le sent_log_sitrep.csv (anti-doublon de l'alerte) est inclus
+      # explicitement pour garantir qu'il est persiste.
+      - name: Commit state + outputs (persist sent_log & data)
         if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          echo "=== État du fichier de suivi avant commit ==="
-          if [ -f data/monitor_state/preis_sitrep_email_state.csv ]; then
-            echo "Fichier d'état présent. Contenu :"
-            cat data/monitor_state/preis_sitrep_email_state.csv
-          else
-            echo "ATTENTION : fichier d'état ABSENT après le run."
-          fi
+
+          echo "=== Fichiers d'etat APRES le run ==="
+          for f in data/monitor_state/preis_sitrep_email_state.csv data/final/sent_log_sitrep.csv; do
+            if [ -f "$f" ]; then echo "--- $f ---"; cat "$f"; else echo "ABSENT: $f"; fi
+          done
+
           echo "=== git status ==="
           git status --short
-          git add data/monitor_state/preis_sitrep_email_state.csv \
-                  data/pdf/ data/final/ data/curated/ \
+
+          # Ajout explicite des fichiers d'etat critiques + donnees
+          git add -f data/monitor_state/preis_sitrep_email_state.csv 2>/dev/null || true
+          git add -f data/final/sent_log_sitrep.csv 2>/dev/null || true
+          git add data/pdf/ data/final/ data/curated/ \
                   outputs/ dashboard_ebola/data/ logs/ 2>/dev/null || true
+
           if git diff --cached --quiet; then
-            echo "Aucun changement à committer."
+            echo "Aucun changement a committer."
           else
-            echo "=== Changements détectés, commit + push ==="
-            git commit -m "Update PREIS SitRep monitor state + outputs [skip ci]"
-            # Push avec retry : en cas de rejet (runs concurrents, autre commit),
-            # on rebase sur le distant et on réessaie, jusqu'à 3 fois.
+            git commit -m "Update PREIS state + outputs (sent_log, data) [skip ci]"
             pushed=0
             for attempt in 1 2 3; do
+              # rebase APRES commit : nos changements sont deja captures dans
+              # le commit local, le rebase ne peut donc pas les ecraser.
               git pull --rebase --autostash origin main || true
               if git push; then
-                echo "PUSH RÉUSSI (tentative $attempt)"
+                echo "PUSH REUSSI (tentative $attempt)"
                 pushed=1
                 break
               else
-                echo "Push rejeté (tentative $attempt), nouvelle tentative..."
+                echo "Push rejete (tentative $attempt), nouvelle tentative..."
                 sleep 3
               fi
             done
             if [ "$pushed" -ne 1 ]; then
-              echo "ÉCHEC DU PUSH après 3 tentatives (vérifier permissions / conflits)"
+              echo "ECHEC DU PUSH apres 3 tentatives"
             fi
           fi
