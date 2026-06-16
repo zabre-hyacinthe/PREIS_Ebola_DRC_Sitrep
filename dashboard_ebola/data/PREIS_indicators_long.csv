@@ -316,3 +316,16 @@ sitrep_no,indicator_code,domain,value,extraction_rule
 31,recovered,cases,192,box_value_row
 31,samples_positive,laboratory,5,narr_pos
 31,suspected_cases_investigation,reference,165,INRB_reference
+32,alerts_reported,surveillance,276,tbl_alertes
+32,alerts_validated,surveillance,7,tbl_valid
+32,case_fatality_ratio,deaths,23.4,table_total_row
+32,cases_ituri,cases,767,table_ituri
+32,cases_nordkivu,cases,67,table_nk
+32,cases_sudkivu,cases,3,table_sk
+32,cumulative_confirmed_cases,cases,837,table_total_row
+32,cumulative_deaths,deaths,196,table_total_row
+32,deaths_ituri,deaths,157,table_ituri
+32,deaths_nordkivu,deaths,38,table_nk
+32,deaths_sudkivu,deaths,1,table_sk
+32,hz_affected_national,geography,31,table_total_row
+32,recovered,cases,196,box_value_row
