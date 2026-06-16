@@ -496,6 +496,20 @@ run_existing_pipeline <- function() {
 
   log_msg("Running production pipeline:", pipeline_file)
   tryCatch({
+    # IMPORTANT : regenerer d'abord la reference INRB (02) pour que 00 dispose
+    # des dernieres donnees INRB mappees aux numeros de SitRep (incl. le plus
+    # recent). Sans cela, 00 injecte une reference figee et la serie/dashboard
+    # restent bloques au SitRep precedent.
+    fetch_fp <- file.path(ROOT_DIR, "scripts", "02_fetch_inrb_reference_data.R")
+    if (file.exists(fetch_fp)) {
+      ok02 <- tryCatch({ source(fetch_fp, local = new.env()); TRUE },
+                       error = function(e) {
+                         log_msg("WARNING 02 (INRB reference) error:", conditionMessage(e)); FALSE })
+      log_msg(if (isTRUE(ok02)) "INRB reference refreshed (02 OK)"
+              else "INRB reference NOT refreshed (02 failed)")
+    } else {
+      log_msg("02_fetch_inrb_reference_data.R absent; 00 will use existing reference.")
+    }
     source(pipeline_file, local = globalenv())
     TRUE
   }, error = function(e) {
@@ -822,8 +836,37 @@ main <- function() {
 
   state <- read_state()
   if (nrow(state) > 0 && latest_no %in% state$sitrep_no[state$status %in% c("sent", "sent_cloud")]) {
-    log_msg("No new SitRep to send. Already sent SitRep:", latest_no)
-    return(invisible(FALSE))
+    # SitRep deja envoye par email. On verifie si la serie (dashboard) le
+    # contient deja ; si oui, rien a faire (sortie rapide). Sinon, on relance
+    # l'analyse pour resynchroniser le dashboard SANS renvoyer d'email.
+    serie_fp <- file.path(ROOT_DIR, "outputs", "analyse",
+                          "serie_temporelle_nationale.csv")
+    serie_has_latest <- FALSE
+    if (file.exists(serie_fp)) {
+      serie_has_latest <- tryCatch({
+        s <- readr::read_csv(serie_fp, show_col_types = FALSE)
+        latest_no %in% suppressWarnings(as.integer(s$sitrep_no))
+      }, error = function(e) FALSE)
+    }
+    if (serie_has_latest) {
+      log_msg("SitRep", latest_no, "deja envoye ET present dans la serie. Rien a faire.")
+      return(invisible(FALSE))
+    }
+    log_msg("SitRep", latest_no, "envoye mais ABSENT de la serie.",
+            "Resynchronisation de l'analyse/dashboard (sans renvoyer d'email).")
+    # L'anti-doublon de 04 (sent_log_sitrep.csv persiste) empeche tout renvoi.
+    run_existing_pipeline()
+    pdf_path <- find_latest_local_pdf(latest_no)
+    if (is.na(pdf_path) || !is_valid_pdf_file(pdf_path)) {
+      pdf_path <- download_sitrep_pdf_direct(latest_no, latest$post_url[1])
+    }
+    recipients <- read_recipients()
+    tryCatch(
+      run_post_analysis(latest[1, ], pdf_path, recipients),
+      error = function(e) log_msg("POST-ANALYSE (resync) erreur :", conditionMessage(e))
+    )
+    log_msg("Resynchronisation analyse/dashboard terminee pour SitRep", latest_no)
+    return(invisible(TRUE))
   }
 
   run_existing_pipeline()
