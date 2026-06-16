@@ -1,1 +1,2 @@
-date	recipient_name	recipient_email	message_type	sitrep_no	status
+date,recipient_name,recipient_email,message_type,sitrep_no,status
+2026-06-16 13:56:04,Dr Zabre,raogoz@africacdc.org,SITREP,31,sent
