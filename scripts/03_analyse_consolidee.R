@@ -62,19 +62,26 @@ if (!file.exists(ind_fp)) stop("Base introuvable : ", ind_fp,
 
 ind <- readr::read_csv(ind_fp, show_col_types = FALSE)
 
-# Mapping SitRep -> date (depuis la référence INRB si dispo, sinon table interne)
-sitrep_dates <- tibble::tribble(
+# Mapping SitRep -> date (AUTOMATIQUE : voir 02_fetch_inrb_reference_data.R).
+# SitReps 1-13 = calendrier irregulier (fixe). A partir du SitRep 14
+# (28 mai 2026) : 1 SitRep par jour -> calcul automatique, aucune table a
+# etendre pour les SitReps futurs.
+.SNO_ANCHOR  <- 14L
+.DATE_ANCHOR <- as.Date("2026-05-28")
+sitrep_dates_hist <- tibble::tribble(
   ~sitrep_no, ~date,
    1,"2026-05-14", 2,"2026-05-17", 4,"2026-05-18", 5,"2026-05-19",
    6,"2026-05-20", 7,"2026-05-21", 8,"2026-05-22", 9,"2026-05-23",
-  10,"2026-05-24",11,"2026-05-25",12,"2026-05-26",13,"2026-05-27",
-  14,"2026-05-28",15,"2026-05-29",16,"2026-05-30",17,"2026-05-31",
-  18,"2026-06-01",19,"2026-06-02",20,"2026-06-03",21,"2026-06-04",
-  22,"2026-06-05",23,"2026-06-06",24,"2026-06-07",25,"2026-06-08",
-  26,"2026-06-09",27,"2026-06-10",28,"2026-06-11",29,"2026-06-12",
-  30,"2026-06-13",31,"2026-06-14",32,"2026-06-15",33,"2026-06-16",
-  34,"2026-06-17",35,"2026-06-18"
+  10,"2026-05-24",11,"2026-05-25",12,"2026-05-26",13,"2026-05-27"
 ) %>% dplyr::mutate(date = as.Date(date))
+.max_sno_auto <- max(.SNO_ANCHOR + as.integer(Sys.Date() - .DATE_ANCHOR) + 2L, 40L)
+sitrep_dates_auto <- tibble::tibble(
+  sitrep_no = .SNO_ANCHOR:.max_sno_auto,
+  date      = .DATE_ANCHOR + (0:(.max_sno_auto - .SNO_ANCHOR))
+)
+sitrep_dates <- dplyr::bind_rows(sitrep_dates_hist, sitrep_dates_auto) %>%
+  dplyr::arrange(sitrep_no) %>%
+  dplyr::distinct(sitrep_no, .keep_all = TRUE)
 
 # =========================================================
 # 2. SÉRIE TEMPORELLE NATIONALE (tableau pivot)

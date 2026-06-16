@@ -72,19 +72,36 @@ for (code in names(national_files)) {
 
 ref_national <- dplyr::bind_rows(ref_long)
 
-# ---- Mapping SitRep N° -> date de rapportage (depuis rapports INRB) ----
-sitrep_dates <- tibble::tribble(
+# ---- Mapping SitRep N° -> date de rapportage (AUTOMATIQUE) ----
+# Regle : les premiers SitReps ont un calendrier irregulier (dates fixes,
+# connues, qui ne changeront jamais). A partir du SitRep 14 (28 mai 2026),
+# le rythme est strictement quotidien : 1 SitRep par jour. On calcule donc
+# automatiquement la date de tout SitRep >= 14, sans table a etendre.
+# Ancre : SitRep 14 = 2026-05-28.
+.SNO_ANCHOR   <- 14L
+.DATE_ANCHOR  <- as.Date("2026-05-28")
+
+# Dates historiques irregulieres (SitReps 1 a 13) : fixes, ne bougent pas.
+sitrep_dates_hist <- tibble::tribble(
   ~sitrep_no, ~sitrep_date,
    1, "2026-05-14",  2, "2026-05-17",  4, "2026-05-18",  5, "2026-05-19",
    6, "2026-05-20",  7, "2026-05-21",  8, "2026-05-22",  9, "2026-05-23",
-  10, "2026-05-24", 11, "2026-05-25", 12, "2026-05-26", 13, "2026-05-27",
-  14, "2026-05-28", 15, "2026-05-29", 16, "2026-05-30", 17, "2026-05-31",
-  18, "2026-06-01", 19, "2026-06-02", 20, "2026-06-03", 21, "2026-06-04",
-  22, "2026-06-05", 23, "2026-06-06", 24, "2026-06-07", 25, "2026-06-08",
-  26, "2026-06-09", 27, "2026-06-10", 28, "2026-06-11", 29, "2026-06-12",
-  30, "2026-06-13", 31, "2026-06-14", 32, "2026-06-15", 33, "2026-06-16",
-  34, "2026-06-17", 35, "2026-06-18"
+  10, "2026-05-24", 11, "2026-05-25", 12, "2026-05-26", 13, "2026-05-27"
 ) %>% dplyr::mutate(sitrep_date = as.Date(sitrep_date))
+
+# Partie automatique : SitRep 14 jusqu'a un numero large (couvre tout le
+# futur previsible). On borne par la date du jour + marge, pour ne pas
+# fabriquer de SitReps "fantomes" dans le futur lointain.
+.max_sno_auto <- .SNO_ANCHOR + as.integer(Sys.Date() - .DATE_ANCHOR) + 2L
+.max_sno_auto <- max(.max_sno_auto, 40L)   # plancher de securite
+sitrep_dates_auto <- tibble::tibble(
+  sitrep_no   = .SNO_ANCHOR:.max_sno_auto,
+  sitrep_date = .DATE_ANCHOR + (0:(.max_sno_auto - .SNO_ANCHOR))
+)
+
+sitrep_dates <- dplyr::bind_rows(sitrep_dates_hist, sitrep_dates_auto) %>%
+  dplyr::arrange(sitrep_no) %>%
+  dplyr::distinct(sitrep_no, .keep_all = TRUE)
 
 # ---- Joindre : pour chaque SitRep, les valeurs nationales INRB ----
 ref_by_sitrep <- sitrep_dates %>%
