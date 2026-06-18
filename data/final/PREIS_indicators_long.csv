@@ -341,3 +341,16 @@ sitrep_no,indicator_code,domain,value,extraction_rule
 33,deaths_sudkivu,deaths,1,table_sk
 33,hz_affected_national,geography,33,table_total_row
 33,recovered,cases,202,box_value_row
+34,alerts_reported,surveillance,266,tbl_alertes
+34,alerts_validated,surveillance,4,tbl_valid
+34,case_fatality_ratio,deaths,26.3,table_total_row
+34,cases_ituri,cases,817,table_ituri
+34,cases_nordkivu,cases,76,table_nk
+34,cases_sudkivu,cases,3,table_sk
+34,cumulative_confirmed_cases,cases,896,table_total_row
+34,cumulative_deaths,deaths,232,table_total_row
+34,deaths_ituri,deaths,186,table_ituri
+34,deaths_nordkivu,deaths,45,table_nk
+34,deaths_sudkivu,deaths,1,table_sk
+34,hz_affected_national,geography,33,table_total_row
+34,recovered,cases,232,box_value_row
