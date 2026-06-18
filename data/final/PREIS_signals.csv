@@ -1,4 +1,3 @@
 detected_on,type,level,zone,province,date,severity,detail,hypotheses
-2026-06-16,High lethality,Zone,Beni,Nord-Kivu,2026-06-14,high,Beni: provisional lethality 71.4% (14 cases),Late or insufficient care? Particular severity? Under-detection of mild cases (biased denominator)? To investigate.
-2026-06-16,High lethality,Zone,Katwa,Nord-Kivu,2026-06-14,moderate,Katwa: provisional lethality 64.0% (25 cases),Late or insufficient care? Particular severity? Under-detection of mild cases (biased denominator)? To investigate.
-2026-06-16,Rising lethality,Zone,Mongbwalu,Ituri,2026-06-14,moderate,"Mongbwalu provisional lethality: 29.6% → 45.7% (+16.1 pts in ~7 days, 175 cumulative cases)",Late detection or care? Under-reporting of cases (underestimated denominator)? Difficult access to care? To investigate.
+2026-06-18,High lethality,Zone,Beni,Nord-Kivu,2026-06-15,high,Beni: provisional lethality 71.4% (14 cases),Late or insufficient care? Particular severity? Under-detection of mild cases (biased denominator)? To investigate.
+2026-06-18,High lethality,Zone,Katwa,Nord-Kivu,2026-06-15,moderate,Katwa: provisional lethality 64.0% (25 cases),Late or insufficient care? Particular severity? Under-detection of mild cases (biased denominator)? To investigate.
