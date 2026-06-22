@@ -399,3 +399,17 @@ sitrep_no,indicator_code,domain,value,extraction_rule
 37,new_confirmed_cases,cases,47,narr_nouveaux
 37,recovered,cases,254,box_value_row
 37,samples_collected,laboratory,5,narr_echant
+38,alerts_reported,surveillance,300,tbl_alertes
+38,case_fatality_ratio,deaths,25.5,table_total_row
+38,cases_ituri,cases,954,table_ituri
+38,cases_nordkivu,cases,91,table_nk
+38,cases_sudkivu,cases,3,table_sk
+38,cumulative_confirmed_cases,cases,1048,table_total_row
+38,cumulative_deaths,deaths,267,table_total_row
+38,deaths_ituri,deaths,216,table_ituri
+38,deaths_nordkivu,deaths,50,table_nk
+38,deaths_sudkivu,deaths,1,table_sk
+38,hz_affected_national,geography,34,table_total_row
+38,new_confirmed_cases,cases,45,narr_nouveaux
+38,recovered,cases,267,box_value_row
+38,samples_collected,laboratory,3,narr_echant
