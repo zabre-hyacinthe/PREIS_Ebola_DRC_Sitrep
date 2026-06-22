@@ -43,3 +43,15 @@ date,zone,type,value,detail
 2026-06-17,Lita,Rising lethality,22.2,CFR 0.0->22.2
 2026-06-17,Nizi,Rising lethality,20,CFR 0.0->20.0
 2026-06-17,Nyankunde,Acceleration,3.7,ma7 1.6->5.8
+2026-06-18,Beni,Rising lethality,19.4,CFR 55.6->75.0
+2026-06-18,Beni,High lethality,75,16 cas
+2026-06-18,Katwa,High lethality,66.7,24 cas
+2026-06-18,Komanda,Rising lethality,30,CFR 0.0->30.0
+2026-06-18,Lita,Rising lethality,30,CFR 0.0->30.0
+2026-06-18,Nyankunde,Acceleration,4.7,ma7 1.6->7.3
+2026-06-19,Beni,Rising lethality,19.4,CFR 55.6->75.0
+2026-06-19,Beni,High lethality,75,16 cas
+2026-06-19,Katwa,High lethality,61.5,26 cas
+2026-06-19,Komanda,Rising lethality,30,CFR 0.0->30.0
+2026-06-19,Lita,Rising lethality,30,CFR 0.0->30.0
+2026-06-19,Nyankunde,Acceleration,4.4,ma7 1.5->6.6

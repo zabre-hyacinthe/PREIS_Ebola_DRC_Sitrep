@@ -1,4 +1,4 @@
 detected_on,type,level,zone,province,date,severity,detail,hypotheses
-2026-06-20,High lethality,Zone,Beni,Nord-Kivu,2026-06-17,high,Beni: provisional lethality 80.0% (15 cases),Late or insufficient care? Particular severity? Under-detection of mild cases (biased denominator)? To investigate.
-2026-06-20,Localized acceleration,Zone,Nyankunde,Ituri,2026-06-17,high,Nyankunde: 7-day average of new cases 1.6 → 5.1/day (x3.2),"Active uncontrolled transmission chain? New super-spreading event (funerals, care)? Strengthen contact tracing. To investigate."
-2026-06-20,High lethality,Zone,Katwa,Nord-Kivu,2026-06-17,moderate,Katwa: provisional lethality 66.7% (24 cases),Late or insufficient care? Particular severity? Under-detection of mild cases (biased denominator)? To investigate.
+2026-06-22,High lethality,Zone,Beni,Nord-Kivu,2026-06-19,high,Beni: provisional lethality 75.0% (16 cases),Late or insufficient care? Particular severity? Under-detection of mild cases (biased denominator)? To investigate.
+2026-06-22,Localized acceleration,Zone,Nyankunde,Ituri,2026-06-19,high,Nyankunde: 7-day average of new cases 1.6 → 6.6/day (x4.1),"Active uncontrolled transmission chain? New super-spreading event (funerals, care)? Strengthen contact tracing. To investigate."
+2026-06-22,High lethality,Zone,Katwa,Nord-Kivu,2026-06-19,moderate,Katwa: provisional lethality 61.5% (26 cases),Late or insufficient care? Particular severity? Under-detection of mild cases (biased denominator)? To investigate.

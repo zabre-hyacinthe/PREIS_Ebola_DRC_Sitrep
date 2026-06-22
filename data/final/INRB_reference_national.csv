@@ -115,3 +115,11 @@ sitrep_no,sitrep_date,indicator_code,value,source,supervisor_validated
 34,2026-06-17,national_cumulative_confirmed_deaths,232,INRB_reference,TRUE
 34,2026-06-17,national_cumulative_suspected_cases,151,INRB_reference,TRUE
 34,2026-06-17,national_suspected_cases_in_isolation,383,INRB_reference,TRUE
+35,2026-06-18,national_cumulative_confirmed_cases,933,INRB_reference,TRUE
+35,2026-06-18,national_cumulative_confirmed_deaths,245,INRB_reference,TRUE
+35,2026-06-18,national_cumulative_suspected_cases,238,INRB_reference,TRUE
+35,2026-06-18,national_suspected_cases_in_isolation,416,INRB_reference,TRUE
+36,2026-06-19,national_cumulative_confirmed_cases,956,INRB_reference,TRUE
+36,2026-06-19,national_cumulative_confirmed_deaths,247,INRB_reference,TRUE
+36,2026-06-19,national_cumulative_suspected_cases,162,INRB_reference,TRUE
+36,2026-06-19,national_suspected_cases_in_isolation,361,INRB_reference,TRUE
