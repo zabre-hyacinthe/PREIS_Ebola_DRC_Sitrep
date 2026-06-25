@@ -120,3 +120,8 @@ outputs/validation/
 outputs/checks/
 outputs/qc/
 outputs/analyse/
+
+# === outputs : bloquer tout sauf audit (regle ordonnee) ===
+/outputs/*
+/outputs/audit/
+/outputs/audit/*.txt
