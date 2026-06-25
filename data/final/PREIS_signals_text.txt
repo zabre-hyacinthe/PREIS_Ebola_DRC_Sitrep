@@ -2,12 +2,12 @@ SIGNALS TO INVESTIGATE (automated detection, explicit thresholds)
 The system reports facts and proposes hypotheses; it does not make
 a diagnosis. All lethality is provisional.
 
-[HIGH LETHALITY | moderate severity] Beni: provisional lethality 66.7% (18 cases)
+[HIGH LETHALITY | moderate severity] Beni: provisional lethality 60.0% (20 cases)
    Hypotheses: Late or insufficient care? Particular severity? Under-detection of mild cases (biased denominator)? To investigate.
 
-[HIGH LETHALITY | moderate severity] Katwa: provisional lethality 61.3% (31 cases)
+[HIGH LETHALITY | moderate severity] Katwa: provisional lethality 59.4% (32 cases)
    Hypotheses: Late or insufficient care? Particular severity? Under-detection of mild cases (biased denominator)? To investigate.
 
-[LOCALIZED ACCELERATION | moderate severity] Nyankunde: 7-day average of new cases 2.6 → 6.3/day (x2.4)
+[LOCALIZED ACCELERATION | moderate severity] Nyankunde: 7-day average of new cases 2.7 → 5.9/day (x2.2)
    Hypotheses: Active uncontrolled transmission chain? New super-spreading event (funerals, care)? Strengthen contact tracing. To investigate.
 
