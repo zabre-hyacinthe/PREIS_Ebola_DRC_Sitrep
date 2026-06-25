@@ -1,0 +1,54 @@
+iso3,country,rcc,best_geo_path,best_geo_level,readable,n_features,n_columns,geometry_type,possible_name_columns,read_error,geo_status
+CMR,Cameroon,Central Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+CAF,Central African Republic,Central Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+TCD,Chad,Central Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+COG,Congo,Central Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+COD,Democratic Republic of the Congo,Central Africa RCC,D:/PREIS_Ebola_Production/data/external/geospatial/drc_health_zones/unzipped_powershell_20260522_232217/RDC_Zones de sant‚.shp,health_zone_or_health_district,TRUE,519,13,MULTIPOLYGON,province | nom,NA,READY_HEALTH_ZONE
+GNQ,Equatorial Guinea,Central Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+GAB,Gabon,Central Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+STP,São Tomé and Príncipe,Central Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+BDI,Burundi,Eastern Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+COM,Comoros,Eastern Africa RCC,D:/Africa CDC 2024-2025/Studie proposals 2025/Système_Prévision_Epidémies/env/Lib/site-packages/jupyterlab/schemas/@jupyterlab/application-extension/commands.json,unknown,FALSE,NA,NA,NA,NA,"Cannot open ""D:\Africa CDC 2024-2025\Studie proposals 2025\Système_Prévision_Epidémies\env\Lib\site-packages\jupyterlab\schemas\@jupyterlab\application-extension\commands.json""; The source could be corrupt or not supported. See `st_drivers()` for a list of supported formats.",FOUND_BUT_NOT_READABLE
+DJI,Djibouti,Eastern Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+ERI,Eritrea,Eastern Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+ETH,Ethiopia,Eastern Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+KEN,Kenya,Eastern Africa RCC,D:/PREIS_Ebola_Production/data/external/geospatial/kenya_admin_boundaries/unzipped_20260522_235207/ke_subcounty.shp,admin2_or_equivalent,TRUE,304,9,MULTIPOLYGON,province | county | subcounty,NA,READY_ADMIN2_FALLBACK
+RWA,Rwanda,Eastern Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+SOM,Somalia,Eastern Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+SSD,South Sudan,Eastern Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+TZA,Tanzania,Eastern Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+UGA,Uganda,Eastern Africa RCC,D:/PREIS_Ebola_Production/data/external/geospatial/uganda_admin_boundaries/uganda_geobase_download_20260522_233533.geojson,unknown,TRUE,151,6,MULTIPOLYGON,shape_name,NA,CHECK_MANUALLY
+DZA,Algeria,Northern Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+EGY,Egypt,Northern Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+LBY,Libya,Northern Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+MRT,Mauritania,Northern Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+MAR,Morocco,Northern Africa RCC,D:/Africa CDC 2024-2025/Studie proposals 2025/Système_Prévision_Epidémies/env/Lib/site-packages/jsonschema/benchmarks/issue232/issue.json,unknown,FALSE,NA,NA,NA,NA,"Cannot open ""D:\Africa CDC 2024-2025\Studie proposals 2025\Système_Prévision_Epidémies\env\Lib\site-packages\jsonschema\benchmarks\issue232\issue.json""; The source could be corrupt or not supported. See `st_drivers()` for a list of supported formats.",FOUND_BUT_NOT_READABLE
+SDN,Sudan,Northern Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+TUN,Tunisia,Northern Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+ESH,Western Sahara,Northern Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+AGO,Angola,Southern Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+BWA,Botswana,Southern Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+SWZ,Eswatini,Southern Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+LSO,Lesotho,Southern Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+MDG,Madagascar,Southern Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+MWI,Malawi,Southern Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+MOZ,Mozambique,Southern Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+NAM,Namibia,Southern Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+ZAF,South Africa,Southern Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+ZMB,Zambia,Southern Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+ZWE,Zimbabwe,Southern Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+BEN,Benin,Western Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+BFA,Burkina Faso,Western Africa RCC,D:/Africa CDC 2024-2025/Missions/1.Mpox RDV 09-31 Janv2025/DG slides_S1_2025/Shaphe file BF/Routes/Burkina Faso_Roads.shp,unknown,TRUE,507,27,MULTILINESTRING,adm2_name | adm2_id | adm3_name | adm3_id | road_name | link_name,NA,CHECK_MANUALLY
+CPV,Cabo Verde,Western Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+CIV,Côte d'Ivoire,Western Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+GMB,Gambia,Western Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+GHA,Ghana,Western Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+GIN,Guinea,Western Africa RCC,D:/Africa CDC 2024-2025/Studie proposals 2025/Système_Prévision_Epidémies/env/Lib/site-packages/jupyterlab/schemas/@jupyterlab/cell-toolbar-extension/plugin.json,unknown,FALSE,NA,NA,NA,NA,"Cannot open ""D:\Africa CDC 2024-2025\Studie proposals 2025\Système_Prévision_Epidémies\env\Lib\site-packages\jupyterlab\schemas\@jupyterlab\cell-toolbar-extension\plugin.json""; The source could be corrupt or not supported. See `st_drivers()` for a list of supported formats.",FOUND_BUT_NOT_READABLE
+GNB,Guinea-Bissau,Western Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+LBR,Liberia,Western Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+MLI,Mali,Western Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+NER,Niger,Western Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+NGA,Nigeria,Western Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+SEN,Senegal,Western Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+SLE,Sierra Leone,Western Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING
+TGO,Togo,Western Africa RCC,NA,NA,NA,NA,NA,NA,NA,NA,MISSING

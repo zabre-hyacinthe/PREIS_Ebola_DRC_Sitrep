@@ -1,0 +1,26 @@
+{
+  "title": "PREIS Ebola DRC — Automated Real-Time Surveillance and Early-Warning Signal Detection Pipeline",
+  "description": "Open-source pipeline that monitors official Ebola situation reports (SitReps) during the 2026 Bundibugyo virus outbreak in the Democratic Republic of the Congo, structures aggregated surveillance data, computes epidemiological indicators, applies transparent early-warning rules at national, provincial and health-zone levels, performs retrospective validation, and disseminates source documents and analytical alerts in near real time alongside an interactive dashboard.",
+  "upload_type": "software",
+  "access_right": "open",
+  "license": "TO_COMPLETE",
+  "version": "1.0.0",
+  "publication_date": "2026-06-15",
+  "keywords": [
+    "Ebola",
+    "Bundibugyo virus",
+    "digital surveillance",
+    "early warning",
+    "event-based surveillance",
+    "signal detection",
+    "Democratic Republic of the Congo",
+    "open-source software"
+  ],
+  "creators": [
+    {
+      "name": "ZABRE, Hyacinthe",
+      "affiliation": "TO COMPLETE"
+    }
+  ],
+  "notes": "[TO COMPLETE WITH CO-AUTHORS] Add INSP / INRB co-authors in the agreed order, with affiliations and ORCID iDs. Choose and declare a license, and add a matching LICENSE file to the repository."
+}

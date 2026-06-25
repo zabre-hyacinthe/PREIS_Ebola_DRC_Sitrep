@@ -1,0 +1,4 @@
+module,source,report_id,report_date,geo_level,geo_name,geo_code,indicator,value,value_type,signal_level,provisional,source_url,extracted_at,polio_cases,polio_env,polio_virus,geo_lat,geo_lon,rcc
+polio,GPEI / Polio This Week,issue_20260610,2026-06-10,country,South Sudan,SSD,polio_events_total,2,incident,moderate,FALSE,https://polioeradication.org/about-polio/polio-this-week/,2026-06-16T21:16:19Z,0,2,cVDPV2,NA,NA,Eastern
+polio,GPEI / Polio This Week,issue_20260610,2026-06-10,country,Malawi,MWI,polio_events_total,1,incident,moderate,FALSE,https://polioeradication.org/about-polio/polio-this-week/,2026-06-16T21:16:19Z,0,1,cVDPV2,-13.204425371177711,34.2828475261884,Southern
+polio,GPEI / Polio This Week,issue_20260610,2026-06-10,country,Nigeria,NGA,polio_events_total,1,incident,high,FALSE,https://polioeradication.org/about-polio/polio-this-week/,2026-06-16T21:16:19Z,1,1,cVDPV2,9.590945570096183,8.079586854238341,Western

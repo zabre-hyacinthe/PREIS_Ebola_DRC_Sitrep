@@ -1,0 +1,875 @@
+country,iso3,rcc,facility_name,facility_type,source_osm_type,osm_id,lat,lon,source,match_key_country_facility
+Mauritius,MUS,Eastern Africa RCC,Pharmacy Pointe aux Sables,pharmacy,points,693046470,-20.1708328,57.4666916,OpenStreetMap via osmdata,mauritius | pharmacy pointe aux sables
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 2,health_facility,points,889891655,-20.2787587,57.4745754,OpenStreetMap via osmdata,mauritius | unnamed facility 2
+Mauritius,MUS,Eastern Africa RCC,London Way Pharma,pharmacy,points,1397554020,-20.3532462,57.3655849,OpenStreetMap via osmdata,mauritius | london way pharma
+Mauritius,MUS,Eastern Africa RCC,Grand Bay Pharma,pharmacy,points,1662930789,-20.013608,57.5856186,OpenStreetMap via osmdata,mauritius | grand bay pharma
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 5,health_facility,points,1670801879,-20.0958662,57.5589609,OpenStreetMap via osmdata,mauritius | unnamed facility 5
+Mauritius,MUS,Eastern Africa RCC,Pharmacie du Jardin,pharmacy,points,1757755699,-20.320864,57.519986,OpenStreetMap via osmdata,mauritius | pharmacie du jardin
+Mauritius,MUS,Eastern Africa RCC,Pharmacie Espace Santé,pharmacy,points,1793503162,-20.3233571,57.5183069,OpenStreetMap via osmdata,mauritius | pharmacie espace sante
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 8,health_facility,points,1812834524,-20.2767294,57.3700139,OpenStreetMap via osmdata,mauritius | unnamed facility 8
+Mauritius,MUS,Eastern Africa RCC,First- Aid Pharmacy,pharmacy,points,1815074700,-20.1404964,57.5250204,OpenStreetMap via osmdata,mauritius | first aid pharmacy
+Mauritius,MUS,Eastern Africa RCC,Medical Trading Cascavelle,pharmacy,points,1823089241,-20.2789361,57.4026821,OpenStreetMap via osmdata,mauritius | medical trading cascavelle
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 11,health_facility,points,1891142592,-20.2220135,57.5040674,OpenStreetMap via osmdata,mauritius | unnamed facility 11
+Mauritius,MUS,Eastern Africa RCC,Pharmacy Ducasse,pharmacy,points,2153362362,-20.0156641,57.580876,OpenStreetMap via osmdata,mauritius | pharmacy ducasse
+Mauritius,MUS,Eastern Africa RCC,Clinique du Nord,hospital,points,2153376271,-20.0085091,57.5598529,OpenStreetMap via osmdata,mauritius | clinique du nord
+Mauritius,MUS,Eastern Africa RCC,Pharmancy Decase Arsenal,pharmacy,points,2157530287,-20.1013339,57.5411418,OpenStreetMap via osmdata,mauritius | pharmancy decase arsenal
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 15,health_facility,points,2162697266,-20.1305138,57.4965886,OpenStreetMap via osmdata,mauritius | unnamed facility 15
+Mauritius,MUS,Eastern Africa RCC,Pharma Goodlands,pharmacy,points,2162892430,-20.0348878,57.6462286,OpenStreetMap via osmdata,mauritius | pharma goodlands
+Mauritius,MUS,Eastern Africa RCC,Newton Parmacy,pharmacy,points,2173164897,-20.1616147,57.5027911,OpenStreetMap via osmdata,mauritius | newton parmacy
+Mauritius,MUS,Eastern Africa RCC,Grand Bois Pharma,pharmacy,points,2177249371,-20.4191978,57.5525635,OpenStreetMap via osmdata,mauritius | grand bois pharma
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 19,health_facility,points,2330869105,-20.4043994,57.5948565,OpenStreetMap via osmdata,mauritius | unnamed facility 19
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 20,health_facility,points,2330869108,-20.4068589,57.5926057,OpenStreetMap via osmdata,mauritius | unnamed facility 20
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 21,health_facility,points,2330869111,-20.4053475,57.5907909,OpenStreetMap via osmdata,mauritius | unnamed facility 21
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 22,health_facility,points,2330869114,-20.4033741,57.5936255,OpenStreetMap via osmdata,mauritius | unnamed facility 22
+Mauritius,MUS,Eastern Africa RCC,Petite Farmacy,pharmacy,points,2601372375,-20.0230642,57.6295245,OpenStreetMap via osmdata,mauritius | petite farmacy
+Mauritius,MUS,Eastern Africa RCC,Pharmacy Cadress,pharmacy,points,2601381563,-20.0386085,57.6513858,OpenStreetMap via osmdata,mauritius | pharmacy cadress
+Mauritius,MUS,Eastern Africa RCC,Pharmacie Farquhar,pharmacy,points,2624972983,-20.16031,57.5028101,OpenStreetMap via osmdata,mauritius | pharmacie farquhar
+Mauritius,MUS,Eastern Africa RCC,L'Escalier Medi Clinic,hospital,points,2656293192,-20.4747703,57.6175984,OpenStreetMap via osmdata,mauritius | l escalier medi clinic
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 27,health_facility,points,2759372200,-20.2319749,57.4954379,OpenStreetMap via osmdata,mauritius | unnamed facility 27
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 28,health_facility,points,2759372209,-20.2321327,57.496087,OpenStreetMap via osmdata,mauritius | unnamed facility 28
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 29,health_facility,points,2759372215,-20.2323253,57.4953202,OpenStreetMap via osmdata,mauritius | unnamed facility 29
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 30,health_facility,points,2759372218,-20.2324297,57.4956119,OpenStreetMap via osmdata,mauritius | unnamed facility 30
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 31,health_facility,points,2759372221,-20.2325493,57.4959458,OpenStreetMap via osmdata,mauritius | unnamed facility 31
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 32,dentist,points,2999870443,-20.1943353,57.7247101,OpenStreetMap via osmdata,mauritius | unnamed facility 32
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 33,dentist,points,2999870444,-20.1977871,57.7246141,OpenStreetMap via osmdata,mauritius | unnamed facility 33
+Mauritius,MUS,Eastern Africa RCC,Medical Laboratory,clinic,points,3103743801,-20.1756797,57.4692974,OpenStreetMap via osmdata,mauritius | medical laboratory
+Mauritius,MUS,Eastern Africa RCC,Pharmacie du Port,pharmacy,points,3104081558,-20.1618332,57.5010409,OpenStreetMap via osmdata,mauritius | pharmacie du port
+Mauritius,MUS,Eastern Africa RCC,Grand Bay Medical and Diagnostic Centre,clinic,points,3215377680,-20.0195466,57.5804318,OpenStreetMap via osmdata,mauritius | grand bay medical and diagnostic centre
+Mauritius,MUS,Eastern Africa RCC,Albion Pharmacy,pharmacy,points,3658931594,-20.2140077,57.4080645,OpenStreetMap via osmdata,mauritius | albion pharmacy
+Mauritius,MUS,Eastern Africa RCC,Primary School,hospital,points,3753991177,-20.1484001,57.6840757,OpenStreetMap via osmdata,mauritius | primary school
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 39,health_facility,points,3753993215,-20.1483173,57.6839009,OpenStreetMap via osmdata,mauritius | unnamed facility 39
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 40,health_facility,points,3753993216,-20.1487053,57.6843665,OpenStreetMap via osmdata,mauritius | unnamed facility 40
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 41,health_facility,points,3753993217,-20.1486017,57.6844645,OpenStreetMap via osmdata,mauritius | unnamed facility 41
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 42,health_facility,points,3753993218,-20.1485593,57.6844137,OpenStreetMap via osmdata,mauritius | unnamed facility 42
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 43,health_facility,points,3753993219,-20.1485987,57.6843764,OpenStreetMap via osmdata,mauritius | unnamed facility 43
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 44,health_facility,points,3753993220,-20.1484395,57.6841853,OpenStreetMap via osmdata,mauritius | unnamed facility 44
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 45,health_facility,points,3753993221,-20.1483994,57.6842231,OpenStreetMap via osmdata,mauritius | unnamed facility 45
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 46,health_facility,points,3753993222,-20.1483453,57.6841581,OpenStreetMap via osmdata,mauritius | unnamed facility 46
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 47,health_facility,points,3753993223,-20.1483824,57.6841231,OpenStreetMap via osmdata,mauritius | unnamed facility 47
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 48,health_facility,points,3753993224,-20.1482502,57.6839644,OpenStreetMap via osmdata,mauritius | unnamed facility 48
+Mauritius,MUS,Eastern Africa RCC,Oxpharm,pharmacy,points,3754024943,-20.2710777,57.4749529,OpenStreetMap via osmdata,mauritius | oxpharm
+Mauritius,MUS,Eastern Africa RCC,The Vale Area Health Centre,hospital,points,3754148453,-20.0288247,57.5976273,OpenStreetMap via osmdata,mauritius | the vale area health centre
+Mauritius,MUS,Eastern Africa RCC,Triolet Medi Clinic,hospital,points,3754488545,-20.0604634,57.5553179,OpenStreetMap via osmdata,mauritius | triolet medi clinic
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 52,health_facility,points,3756814443,-19.6808621,63.4288967,OpenStreetMap via osmdata,mauritius | unnamed facility 52
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 53,health_facility,points,3756814444,-19.6805611,63.4291768,OpenStreetMap via osmdata,mauritius | unnamed facility 53
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 54,health_facility,points,3756814445,-19.6806821,63.4295128,OpenStreetMap via osmdata,mauritius | unnamed facility 54
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 55,health_facility,points,3756814446,-19.6811155,63.430008,OpenStreetMap via osmdata,mauritius | unnamed facility 55
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 56,health_facility,points,3756814447,-19.6813841,63.4297612,OpenStreetMap via osmdata,mauritius | unnamed facility 56
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 57,health_facility,points,3756814449,-19.6810278,63.4291096,OpenStreetMap via osmdata,mauritius | unnamed facility 57
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 58,health_facility,points,3756831534,-19.6791762,63.4304598,OpenStreetMap via osmdata,mauritius | unnamed facility 58
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 59,health_facility,points,3756831535,-19.6793143,63.43072,OpenStreetMap via osmdata,mauritius | unnamed facility 59
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 60,health_facility,points,3756831536,-19.6796776,63.430584,OpenStreetMap via osmdata,mauritius | unnamed facility 60
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 61,health_facility,points,3756831537,-19.6800633,63.4304506,OpenStreetMap via osmdata,mauritius | unnamed facility 61
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 62,health_facility,points,3756831538,-19.680485,63.4303132,OpenStreetMap via osmdata,mauritius | unnamed facility 62
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 63,health_facility,points,3756831539,-19.6807679,63.4302044,OpenStreetMap via osmdata,mauritius | unnamed facility 63
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 64,health_facility,points,3756831540,-19.6809768,63.4300937,OpenStreetMap via osmdata,mauritius | unnamed facility 64
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 65,health_facility,points,3756831541,-19.6810311,63.4300069,OpenStreetMap via osmdata,mauritius | unnamed facility 65
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 66,health_facility,points,3756831542,-19.6809314,63.4298865,OpenStreetMap via osmdata,mauritius | unnamed facility 66
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 67,health_facility,points,3756831543,-19.6807743,63.429717,OpenStreetMap via osmdata,mauritius | unnamed facility 67
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 68,health_facility,points,3756831544,-19.6804687,63.4294378,OpenStreetMap via osmdata,mauritius | unnamed facility 68
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 69,health_facility,points,3756831545,-19.6802337,63.4297156,OpenStreetMap via osmdata,mauritius | unnamed facility 69
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 70,health_facility,points,3756831546,-19.6801928,63.429809,OpenStreetMap via osmdata,mauritius | unnamed facility 70
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 71,health_facility,points,3756831547,-19.6801517,63.4298619,OpenStreetMap via osmdata,mauritius | unnamed facility 71
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 72,health_facility,points,3756831548,-19.6799376,63.4298686,OpenStreetMap via osmdata,mauritius | unnamed facility 72
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 73,health_facility,points,3756831549,-19.6798309,63.430002,OpenStreetMap via osmdata,mauritius | unnamed facility 73
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 74,health_facility,points,3756831550,-19.6797654,63.4300105,OpenStreetMap via osmdata,mauritius | unnamed facility 74
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 75,health_facility,points,3756831551,-19.6793195,63.4302739,OpenStreetMap via osmdata,mauritius | unnamed facility 75
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 76,health_facility,points,3765920182,-20.4062662,57.5934493,OpenStreetMap via osmdata,mauritius | unnamed facility 76
+Mauritius,MUS,Eastern Africa RCC,La Louise Pharmacy,pharmacy,points,3995063593,-20.2700184,57.4755695,OpenStreetMap via osmdata,mauritius | la louise pharmacy
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 78,health_facility,points,4149212997,-20.0599543,57.6855528,OpenStreetMap via osmdata,mauritius | unnamed facility 78
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 79,health_facility,points,4149212998,-20.0594285,57.6861727,OpenStreetMap via osmdata,mauritius | unnamed facility 79
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 80,health_facility,points,4149212999,-20.0590602,57.686032,OpenStreetMap via osmdata,mauritius | unnamed facility 80
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 81,health_facility,points,4149213000,-20.0588587,57.6859036,OpenStreetMap via osmdata,mauritius | unnamed facility 81
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 82,health_facility,points,4149213001,-20.0587742,57.6857255,OpenStreetMap via osmdata,mauritius | unnamed facility 82
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 83,health_facility,points,4149213002,-20.0586946,57.6856369,OpenStreetMap via osmdata,mauritius | unnamed facility 83
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 84,health_facility,points,4149213003,-20.0585986,57.6855397,OpenStreetMap via osmdata,mauritius | unnamed facility 84
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 85,health_facility,points,4149213004,-20.0585122,57.6854042,OpenStreetMap via osmdata,mauritius | unnamed facility 85
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 86,health_facility,points,4149213005,-20.0585256,57.6852817,OpenStreetMap via osmdata,mauritius | unnamed facility 86
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 87,health_facility,points,4149213006,-20.0587876,57.6848028,OpenStreetMap via osmdata,mauritius | unnamed facility 87
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 88,health_facility,points,4149213007,-20.0590912,57.6843583,OpenStreetMap via osmdata,mauritius | unnamed facility 88
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 89,health_facility,points,4149213009,-20.0599596,57.6849426,OpenStreetMap via osmdata,mauritius | unnamed facility 89
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 90,doctors,points,4151568709,-20.4918463,57.3778833,OpenStreetMap via osmdata,mauritius | unnamed facility 90
+Mauritius,MUS,Eastern Africa RCC,Medactiv Cascavelle Pharmacy,pharmacy,points,4151568714,-20.2784825,57.4028866,OpenStreetMap via osmdata,mauritius | medactiv cascavelle pharmacy
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 92,doctors,points,4152268990,-20.1013903,57.5411026,OpenStreetMap via osmdata,mauritius | unnamed facility 92
+Mauritius,MUS,Eastern Africa RCC,DentCare,dentist,points,4160306791,-20.0706029,57.6175102,OpenStreetMap via osmdata,mauritius | dentcare
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 94,health_facility,points,4214280535,-20.3129,57.5171387,OpenStreetMap via osmdata,mauritius | unnamed facility 94
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 95,health_facility,points,4214280536,-20.3129274,57.5171493,OpenStreetMap via osmdata,mauritius | unnamed facility 95
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 96,health_facility,points,4214280537,-20.3129138,57.5171891,OpenStreetMap via osmdata,mauritius | unnamed facility 96
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 97,health_facility,points,4214280538,-20.3135804,57.5174802,OpenStreetMap via osmdata,mauritius | unnamed facility 97
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 98,health_facility,points,4214280539,-20.3136437,57.5172939,OpenStreetMap via osmdata,mauritius | unnamed facility 98
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 99,health_facility,points,4214280540,-20.3136706,57.5173043,OpenStreetMap via osmdata,mauritius | unnamed facility 99
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 100,health_facility,points,4214280541,-20.3137051,57.517203,OpenStreetMap via osmdata,mauritius | unnamed facility 100
+Mauritius,MUS,Eastern Africa RCC,Dr Bhunjun,dentist,points,4223926261,-20.2926465,57.493417,OpenStreetMap via osmdata,mauritius | dr bhunjun
+Mauritius,MUS,Eastern Africa RCC,Cosmodent,dentist,points,4304371098,-20.3536119,57.3631179,OpenStreetMap via osmdata,mauritius | cosmodent
+Mauritius,MUS,Eastern Africa RCC,Pharmacie Boundary,pharmacy,points,4304607089,-20.2553897,57.4715305,OpenStreetMap via osmdata,mauritius | pharmacie boundary
+Mauritius,MUS,Eastern Africa RCC,Clinique Bon Pasteur,clinic,points,4304939292,-20.2425512,57.4719066,OpenStreetMap via osmdata,mauritius | clinique bon pasteur
+Mauritius,MUS,Eastern Africa RCC,Pharmacie Notre Dame Des Victoires,pharmacy,points,4305046313,-20.2444586,57.4748092,OpenStreetMap via osmdata,mauritius | pharmacie notre dame des victoires
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 106,health_facility,points,4353463758,-20.069329,57.5683434,OpenStreetMap via osmdata,mauritius | unnamed facility 106
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 107,health_facility,points,4362137417,-20.2760653,57.4767207,OpenStreetMap via osmdata,mauritius | unnamed facility 107
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 108,health_facility,points,4362137424,-20.2795013,57.4779841,OpenStreetMap via osmdata,mauritius | unnamed facility 108
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 109,health_facility,points,4426415588,-20.2837079,57.6616741,OpenStreetMap via osmdata,mauritius | unnamed facility 109
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 110,health_facility,points,4426415889,-20.2837341,57.6618048,OpenStreetMap via osmdata,mauritius | unnamed facility 110
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 111,health_facility,points,4426415890,-20.2838185,57.6617651,OpenStreetMap via osmdata,mauritius | unnamed facility 111
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 112,health_facility,points,4426415891,-20.2838152,57.6617371,OpenStreetMap via osmdata,mauritius | unnamed facility 112
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 113,health_facility,points,4426415892,-20.2837889,57.6617359,OpenStreetMap via osmdata,mauritius | unnamed facility 113
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 114,health_facility,points,4426415893,-20.2837615,57.6616402,OpenStreetMap via osmdata,mauritius | unnamed facility 114
+Mauritius,MUS,Eastern Africa RCC,C-Care Clinic Grand Baie La Croisette,clinic,points,4601420291,-20.0219317,57.5800737,OpenStreetMap via osmdata,mauritius | c care clinic grand baie la croisette
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 116,pharmacy,points,4610789689,-20.2558777,57.7564385,OpenStreetMap via osmdata,mauritius | unnamed facility 116
+Mauritius,MUS,Eastern Africa RCC,Mahebourg Hospital,hospital,points,4612335549,-20.4112976,57.7031815,OpenStreetMap via osmdata,mauritius | mahebourg hospital
+Mauritius,MUS,Eastern Africa RCC,Primary Health Care,hospital,points,4621711885,-20.1483065,57.6844591,OpenStreetMap via osmdata,mauritius | primary health care
+Mauritius,MUS,Eastern Africa RCC,Pharmacy,pharmacy,points,4622176512,-20.169533,57.6553335,OpenStreetMap via osmdata,mauritius | pharmacy
+Mauritius,MUS,Eastern Africa RCC,Forme,pharmacy,points,4623186368,-20.1099492,57.6884404,OpenStreetMap via osmdata,mauritius | forme
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 121,pharmacy,points,4623226590,-20.1087546,57.6924182,OpenStreetMap via osmdata,mauritius | unnamed facility 121
+Mauritius,MUS,Eastern Africa RCC,Baroda Pharmacy,pharmacy,points,4623226593,-20.1083695,57.6928722,OpenStreetMap via osmdata,mauritius | baroda pharmacy
+Mauritius,MUS,Eastern Africa RCC,Devika Pharmacy,pharmacy,points,4623226598,-20.1076368,57.6921436,OpenStreetMap via osmdata,mauritius | devika pharmacy
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 124,pharmacy,points,4624252891,-20.2424803,57.4668653,OpenStreetMap via osmdata,mauritius | unnamed facility 124
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 125,pharmacy,points,4624252894,-20.25028,57.4678878,OpenStreetMap via osmdata,mauritius | unnamed facility 125
+Mauritius,MUS,Eastern Africa RCC,Pharmacie Edward VII,pharmacy,points,4624285293,-20.244397,57.4746832,OpenStreetMap via osmdata,mauritius | pharmacie edward vii
+Mauritius,MUS,Eastern Africa RCC,Chemin Grenier Dispensary,hospital,points,4625704622,-20.4925313,57.4709686,OpenStreetMap via osmdata,mauritius | chemin grenier dispensary
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 128,doctors,points,4634114391,-20.328952,57.516158,OpenStreetMap via osmdata,mauritius | unnamed facility 128
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 129,health_facility,points,4662942946,-20.1670645,57.6541916,OpenStreetMap via osmdata,mauritius | unnamed facility 129
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 130,health_facility,points,4662942947,-20.1670398,57.6542356,OpenStreetMap via osmdata,mauritius | unnamed facility 130
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 131,health_facility,points,4662942948,-20.1671296,57.6542928,OpenStreetMap via osmdata,mauritius | unnamed facility 131
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 132,health_facility,points,4662942949,-20.1671543,57.6542488,OpenStreetMap via osmdata,mauritius | unnamed facility 132
+Mauritius,MUS,Eastern Africa RCC,Dodo Pharmacy,pharmacy,points,4662964999,-20.4317501,57.6615629,OpenStreetMap via osmdata,mauritius | dodo pharmacy
+Mauritius,MUS,Eastern Africa RCC,Doorgakanth Pharmacy,pharmacy,points,4662965004,-20.4320837,57.6613485,OpenStreetMap via osmdata,mauritius | doorgakanth pharmacy
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 135,doctors,points,4664917092,-20.2911999,57.5081305,OpenStreetMap via osmdata,mauritius | unnamed facility 135
+Mauritius,MUS,Eastern Africa RCC,Ebene Pharmacy,pharmacy,points,4676442335,-20.243465,57.487901,OpenStreetMap via osmdata,mauritius | ebene pharmacy
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 137,pharmacy,points,4694809668,-20.0564622,57.5525685,OpenStreetMap via osmdata,mauritius | unnamed facility 137
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 138,health_facility,points,4873904658,-20.1625106,57.5142112,OpenStreetMap via osmdata,mauritius | unnamed facility 138
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 139,health_facility,points,4873904659,-20.1622452,57.5145099,OpenStreetMap via osmdata,mauritius | unnamed facility 139
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 140,health_facility,points,4873904661,-20.1628496,57.5145531,OpenStreetMap via osmdata,mauritius | unnamed facility 140
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 141,health_facility,points,4874970916,-20.3133935,57.5035399,OpenStreetMap via osmdata,mauritius | unnamed facility 141
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 142,health_facility,points,4874970917,-20.3131402,57.5033968,OpenStreetMap via osmdata,mauritius | unnamed facility 142
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 143,health_facility,points,4874970918,-20.3131898,57.503297,OpenStreetMap via osmdata,mauritius | unnamed facility 143
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 144,health_facility,points,4874970919,-20.3134576,57.5034109,OpenStreetMap via osmdata,mauritius | unnamed facility 144
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 145,health_facility,points,4874970920,-20.3133418,57.5033454,OpenStreetMap via osmdata,mauritius | unnamed facility 145
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 146,health_facility,points,4874971121,-20.3133273,57.5033746,OpenStreetMap via osmdata,mauritius | unnamed facility 146
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 147,doctors,points,4875657927,-20.1634822,57.5034294,OpenStreetMap via osmdata,mauritius | unnamed facility 147
+Mauritius,MUS,Eastern Africa RCC,Eiman Pharmacy,pharmacy,points,4875789053,-20.1599497,57.5029653,OpenStreetMap via osmdata,mauritius | eiman pharmacy
+Mauritius,MUS,Eastern Africa RCC,Phamacy Farquar,pharmacy,points,4875789091,-20.1599004,57.5031783,OpenStreetMap via osmdata,mauritius | phamacy farquar
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 150,health_facility,points,4875806805,-20.0194228,57.5802047,OpenStreetMap via osmdata,mauritius | unnamed facility 150
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 151,health_facility,points,4875806806,-20.019313,57.5803337,OpenStreetMap via osmdata,mauritius | unnamed facility 151
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 152,health_facility,points,4875806807,-20.0197177,57.5807238,OpenStreetMap via osmdata,mauritius | unnamed facility 152
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 153,health_facility,points,4875806808,-20.0198275,57.5805948,OpenStreetMap via osmdata,mauritius | unnamed facility 153
+Mauritius,MUS,Eastern Africa RCC,Pharmacie Carbone,pharmacy,points,4875889466,-20.1633096,57.49936,OpenStreetMap via osmdata,mauritius | pharmacie carbone
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 155,health_facility,points,4875896597,-20.280539,57.4839506,OpenStreetMap via osmdata,mauritius | unnamed facility 155
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 156,health_facility,points,4875896598,-20.2819575,57.4844924,OpenStreetMap via osmdata,mauritius | unnamed facility 156
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 157,health_facility,points,4875896599,-20.2816388,57.4851429,OpenStreetMap via osmdata,mauritius | unnamed facility 157
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 158,health_facility,points,4875896600,-20.2803211,57.4847461,OpenStreetMap via osmdata,mauritius | unnamed facility 158
+Mauritius,MUS,Eastern Africa RCC,Fayyad Joomun,dentist,points,4876323779,-20.0190605,57.5796084,OpenStreetMap via osmdata,mauritius | fayyad joomun
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 160,health_facility,points,4898024983,-20.1688802,57.5009625,OpenStreetMap via osmdata,mauritius | unnamed facility 160
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 161,health_facility,points,4898024984,-20.1680305,57.5019629,OpenStreetMap via osmdata,mauritius | unnamed facility 161
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 162,health_facility,points,4898024986,-20.1690765,57.5030934,OpenStreetMap via osmdata,mauritius | unnamed facility 162
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 163,health_facility,points,4898024987,-20.1699758,57.5021595,OpenStreetMap via osmdata,mauritius | unnamed facility 163
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 164,pharmacy,points,4901462716,-20.0131163,57.5856946,OpenStreetMap via osmdata,mauritius | unnamed facility 164
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 165,pharmacy,points,4901467332,-20.0122225,57.5871004,OpenStreetMap via osmdata,mauritius | unnamed facility 165
+Mauritius,MUS,Eastern Africa RCC,Cabinet Medical,clinic,points,4976278428,-20.4064428,57.7060599,OpenStreetMap via osmdata,mauritius | cabinet medical
+Mauritius,MUS,Eastern Africa RCC,Blue Bay Pharmacy,pharmacy,points,4976284444,-20.4098337,57.7092386,OpenStreetMap via osmdata,mauritius | blue bay pharmacy
+Mauritius,MUS,Eastern Africa RCC,Al-Shafa Medical Centre,clinic,points,4977549506,-20.4095978,57.7081549,OpenStreetMap via osmdata,mauritius | al shafa medical centre
+Mauritius,MUS,Eastern Africa RCC,Al-Shafa Pharmacy,pharmacy,points,4977549507,-20.4096153,57.7080948,OpenStreetMap via osmdata,mauritius | al shafa pharmacy
+Mauritius,MUS,Eastern Africa RCC,Pharmacie de Mahebourg,pharmacy,points,4977564362,-20.4076542,57.7057431,OpenStreetMap via osmdata,mauritius | pharmacie de mahebourg
+Mauritius,MUS,Eastern Africa RCC,All in One Pharmacy,pharmacy,points,4977946943,-20.4125294,57.7054564,OpenStreetMap via osmdata,mauritius | all in one pharmacy
+Mauritius,MUS,Eastern Africa RCC,Green Cross,clinic,points,4977946951,-20.4127235,57.7053794,OpenStreetMap via osmdata,mauritius | green cross
+Mauritius,MUS,Eastern Africa RCC,Pharmacie D'Arifat,pharmacy,points,4977976119,-20.3186219,57.5294248,OpenStreetMap via osmdata,mauritius | pharmacie d arifat
+Mauritius,MUS,Eastern Africa RCC,R.A.R. Pharmacy,pharmacy,points,4978082266,-20.4140781,57.7053213,OpenStreetMap via osmdata,mauritius | r a r pharmacy
+Mauritius,MUS,Eastern Africa RCC,Pharmacie Jhugroo,pharmacy,points,4978159864,-20.3151558,57.5249279,OpenStreetMap via osmdata,mauritius | pharmacie jhugroo
+Mauritius,MUS,Eastern Africa RCC,Pharmacie,pharmacy,points,4978294569,-20.3158259,57.5230209,OpenStreetMap via osmdata,mauritius | pharmacie
+Mauritius,MUS,Eastern Africa RCC,Active Care Pharmacy,pharmacy,points,4978365509,-20.3069614,57.5253475,OpenStreetMap via osmdata,mauritius | active care pharmacy
+Mauritius,MUS,Eastern Africa RCC,Zenquil Pharma,pharmacy,points,4978376624,-20.3058021,57.5302261,OpenStreetMap via osmdata,mauritius | zenquil pharma
+Mauritius,MUS,Eastern Africa RCC,Pharmacie Hermes,pharmacy,points,4978376631,-20.3055797,57.5303785,OpenStreetMap via osmdata,mauritius | pharmacie hermes
+Mauritius,MUS,Eastern Africa RCC,Pharmacie D'Epinay,pharmacy,points,4978393618,-20.3131051,57.5238761,OpenStreetMap via osmdata,mauritius | pharmacie d epinay
+Mauritius,MUS,Eastern Africa RCC,Cabinet Medicale,clinic,points,4979802928,-20.432312,57.6605751,OpenStreetMap via osmdata,mauritius | cabinet medicale
+Mauritius,MUS,Eastern Africa RCC,Pharmacie Jeetpharm,pharmacy,points,4979802937,-20.4319502,57.6609022,OpenStreetMap via osmdata,mauritius | pharmacie jeetpharm
+Mauritius,MUS,Eastern Africa RCC,Biosante Medical Laboratories,clinic,points,4979841757,-20.4318373,57.6629954,OpenStreetMap via osmdata,mauritius | biosante medical laboratories
+Mauritius,MUS,Eastern Africa RCC,Pharmacy Biladams,pharmacy,points,4979966752,-20.3113939,57.5137298,OpenStreetMap via osmdata,mauritius | pharmacy biladams
+Mauritius,MUS,Eastern Africa RCC,Floreal Pharmacy,pharmacy,points,4980088245,-20.3127275,57.5165081,OpenStreetMap via osmdata,mauritius | floreal pharmacy
+Mauritius,MUS,Eastern Africa RCC,Pharmacy Berthaud,pharmacy,points,4980155201,-20.3272933,57.5073802,OpenStreetMap via osmdata,mauritius | pharmacy berthaud
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 187,health_facility,points,4980295694,-20.3787295,57.571881,OpenStreetMap via osmdata,mauritius | unnamed facility 187
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 188,health_facility,points,4980295695,-20.3788199,57.5719414,OpenStreetMap via osmdata,mauritius | unnamed facility 188
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 189,health_facility,points,4980295696,-20.378759,57.5720453,OpenStreetMap via osmdata,mauritius | unnamed facility 189
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 190,health_facility,points,4980295697,-20.3786686,57.5719849,OpenStreetMap via osmdata,mauritius | unnamed facility 190
+Mauritius,MUS,Eastern Africa RCC,Nouvelle France Pharmacy,pharmacy,points,4980295702,-20.3779238,57.5711878,OpenStreetMap via osmdata,mauritius | nouvelle france pharmacy
+Mauritius,MUS,Eastern Africa RCC,Rose Pharmacy,pharmacy,points,4980458857,-20.3439801,57.5460859,OpenStreetMap via osmdata,mauritius | rose pharmacy
+Mauritius,MUS,Eastern Africa RCC,Health Star Pharmacy,pharmacy,points,4980574249,-20.3232064,57.5327671,OpenStreetMap via osmdata,mauritius | health star pharmacy
+Mauritius,MUS,Eastern Africa RCC,Care 4u Pharmacy,pharmacy,points,4980664097,-20.3240994,57.5276103,OpenStreetMap via osmdata,mauritius | care 4u pharmacy
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 195,health_facility,points,4980710958,-20.3295246,57.526099,OpenStreetMap via osmdata,mauritius | unnamed facility 195
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 196,health_facility,points,4980710959,-20.3295663,57.526007,OpenStreetMap via osmdata,mauritius | unnamed facility 196
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 197,health_facility,points,4980710960,-20.3297001,57.5260759,OpenStreetMap via osmdata,mauritius | unnamed facility 197
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 198,health_facility,points,4980710961,-20.3296585,57.5261679,OpenStreetMap via osmdata,mauritius | unnamed facility 198
+Mauritius,MUS,Eastern Africa RCC,Ahmud Pharmacy,pharmacy,points,4980852279,-20.3292378,57.5273054,OpenStreetMap via osmdata,mauritius | ahmud pharmacy
+Mauritius,MUS,Eastern Africa RCC,Flic en Flac Pharmacy,pharmacy,points,4981754251,-20.2798993,57.3687131,OpenStreetMap via osmdata,mauritius | flic en flac pharmacy
+Mauritius,MUS,Eastern Africa RCC,Dr. Leutéritz,clinic,points,4981754256,-20.280567,57.3686646,OpenStreetMap via osmdata,mauritius | dr leuteritz
+Mauritius,MUS,Eastern Africa RCC,Pharmacie de L'Occident,pharmacy,points,4981968903,-20.276516,57.3699204,OpenStreetMap via osmdata,mauritius | pharmacie de l occident
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 203,health_facility,points,4981968904,-20.2765839,57.3697527,OpenStreetMap via osmdata,mauritius | unnamed facility 203
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 204,health_facility,points,4981968905,-20.2765157,57.3697987,OpenStreetMap via osmdata,mauritius | unnamed facility 204
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 205,health_facility,points,4981968906,-20.2765124,57.3698718,OpenStreetMap via osmdata,mauritius | unnamed facility 205
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 206,health_facility,points,4981968907,-20.2765181,57.369882,OpenStreetMap via osmdata,mauritius | unnamed facility 206
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 207,health_facility,points,4981968908,-20.2764734,57.3699103,OpenStreetMap via osmdata,mauritius | unnamed facility 207
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 208,health_facility,points,4981968909,-20.2765764,57.3700955,OpenStreetMap via osmdata,mauritius | unnamed facility 208
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 209,health_facility,points,4982946940,-20.1660391,57.5172739,OpenStreetMap via osmdata,mauritius | unnamed facility 209
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 210,health_facility,points,4982946941,-20.1659696,57.5173586,OpenStreetMap via osmdata,mauritius | unnamed facility 210
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 211,health_facility,points,4982946942,-20.1660864,57.5174674,OpenStreetMap via osmdata,mauritius | unnamed facility 211
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 212,health_facility,points,4982946943,-20.1661866,57.5173454,OpenStreetMap via osmdata,mauritius | unnamed facility 212
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 213,health_facility,points,4982946944,-20.1661089,57.517273,OpenStreetMap via osmdata,mauritius | unnamed facility 213
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 214,health_facility,points,4982946945,-20.1659553,57.5173718,OpenStreetMap via osmdata,mauritius | unnamed facility 214
+Mauritius,MUS,Eastern Africa RCC,Noush Pharmacy,pharmacy,points,4983032372,-20.3127585,57.4879037,OpenStreetMap via osmdata,mauritius | noush pharmacy
+Mauritius,MUS,Eastern Africa RCC,Green Cross Medical Laboratory,clinic,points,4983103584,-20.3205957,57.4845279,OpenStreetMap via osmdata,mauritius | green cross medical laboratory
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 217,health_facility,points,4983131474,-20.275809,57.3762001,OpenStreetMap via osmdata,mauritius | unnamed facility 217
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 218,health_facility,points,4983131475,-20.2758393,57.3767866,OpenStreetMap via osmdata,mauritius | unnamed facility 218
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 219,health_facility,points,4983131476,-20.2757312,57.3767929,OpenStreetMap via osmdata,mauritius | unnamed facility 219
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 220,health_facility,points,4983131477,-20.2757009,57.3762064,OpenStreetMap via osmdata,mauritius | unnamed facility 220
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 221,health_facility,points,4983148887,-20.3221686,57.4845594,OpenStreetMap via osmdata,mauritius | unnamed facility 221
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 222,health_facility,points,4983148888,-20.3222421,57.4845679,OpenStreetMap via osmdata,mauritius | unnamed facility 222
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 223,health_facility,points,4983148889,-20.322229,57.4846961,OpenStreetMap via osmdata,mauritius | unnamed facility 223
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 224,health_facility,points,4983148890,-20.3221555,57.4846876,OpenStreetMap via osmdata,mauritius | unnamed facility 224
+Mauritius,MUS,Eastern Africa RCC,Pharmacie de Moka,pharmacy,points,4983213389,-20.2217706,57.5024576,OpenStreetMap via osmdata,mauritius | pharmacie de moka
+Mauritius,MUS,Eastern Africa RCC,Cabinet Medical,clinic,points,4983213391,-20.2216524,57.5023868,OpenStreetMap via osmdata,mauritius | cabinet medical
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 227,health_facility,points,4983361109,-20.1593888,57.5097169,OpenStreetMap via osmdata,mauritius | unnamed facility 227
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 228,health_facility,points,4983361110,-20.1596057,57.5099488,OpenStreetMap via osmdata,mauritius | unnamed facility 228
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 229,health_facility,points,4983361111,-20.1595355,57.5100234,OpenStreetMap via osmdata,mauritius | unnamed facility 229
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 230,health_facility,points,4983361112,-20.1593185,57.5097915,OpenStreetMap via osmdata,mauritius | unnamed facility 230
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 231,health_facility,points,4983363411,-20.2808508,57.3679608,OpenStreetMap via osmdata,mauritius | unnamed facility 231
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 232,health_facility,points,4983363412,-20.2808563,57.3679984,OpenStreetMap via osmdata,mauritius | unnamed facility 232
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 233,health_facility,points,4983363413,-20.2809147,57.3679888,OpenStreetMap via osmdata,mauritius | unnamed facility 233
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 234,health_facility,points,4983363414,-20.2809093,57.3679512,OpenStreetMap via osmdata,mauritius | unnamed facility 234
+Mauritius,MUS,Eastern Africa RCC,Pharmacie Du Centre,pharmacy,points,4983392220,-20.1618065,57.5071707,OpenStreetMap via osmdata,mauritius | pharmacie du centre
+Mauritius,MUS,Eastern Africa RCC,Pharmexpert Pharmacy,pharmacy,points,4983398684,-20.2211261,57.5344525,OpenStreetMap via osmdata,mauritius | pharmexpert pharmacy
+Mauritius,MUS,Eastern Africa RCC,Medical Care Pharmacy,pharmacy,points,4983458155,-20.1549068,57.5181056,OpenStreetMap via osmdata,mauritius | medical care pharmacy
+Mauritius,MUS,Eastern Africa RCC,Pharmacy Good Heart,pharmacy,points,4983601224,-20.1474855,57.521037,OpenStreetMap via osmdata,mauritius | pharmacy good heart
+Mauritius,MUS,Eastern Africa RCC,Cabinet Medical,clinic,points,4983601246,-20.1468172,57.5225008,OpenStreetMap via osmdata,mauritius | cabinet medical
+Mauritius,MUS,Eastern Africa RCC,Cabinet Medical,clinic,points,4983649668,-20.140531,57.5250014,OpenStreetMap via osmdata,mauritius | cabinet medical
+Mauritius,MUS,Eastern Africa RCC,Cabinet Dentaire,dentist,points,4983696505,-20.1344115,57.5277288,OpenStreetMap via osmdata,mauritius | cabinet dentaire
+Mauritius,MUS,Eastern Africa RCC,J. Smile Dental Clinic,dentist,points,4983717986,-20.1311117,57.5292202,OpenStreetMap via osmdata,mauritius | j smile dental clinic
+Mauritius,MUS,Eastern Africa RCC,Pharmacie 15 cantons,pharmacy,points,4985260483,-20.307247,57.485237,OpenStreetMap via osmdata,mauritius | pharmacie 15 cantons
+Mauritius,MUS,Eastern Africa RCC,Pharmacy,pharmacy,points,4985735301,-20.2626324,57.4167954,OpenStreetMap via osmdata,mauritius | pharmacy
+Mauritius,MUS,Eastern Africa RCC,Cabinet Medical Pharmacy,pharmacy,points,4985849490,-20.2569221,57.417912,OpenStreetMap via osmdata,mauritius | cabinet medical pharmacy
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 246,health_facility,points,4985899997,-20.2571724,57.4132414,OpenStreetMap via osmdata,mauritius | unnamed facility 246
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 247,health_facility,points,4985899998,-20.2573801,57.4132151,OpenStreetMap via osmdata,mauritius | unnamed facility 247
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 248,health_facility,points,4985899999,-20.257391,57.4133124,OpenStreetMap via osmdata,mauritius | unnamed facility 248
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 249,health_facility,points,4985900000,-20.2571833,57.4133387,OpenStreetMap via osmdata,mauritius | unnamed facility 249
+Mauritius,MUS,Eastern Africa RCC,Pharmacie La Caverne,pharmacy,points,4990207220,-20.3014356,57.4802538,OpenStreetMap via osmdata,mauritius | pharmacie la caverne
+Mauritius,MUS,Eastern Africa RCC,Omnitronics;Pharmacie Visitation,clinic,points,4990225817,-20.3017268,57.4847121,OpenStreetMap via osmdata,mauritius | omnitronics pharmacie visitation
+Mauritius,MUS,Eastern Africa RCC,Green Cross Pharmacy,pharmacy,points,4990226731,-20.3017267,57.4849331,OpenStreetMap via osmdata,mauritius | green cross pharmacy
+Mauritius,MUS,Eastern Africa RCC,Pharmacy Petit Rivière,pharmacy,points,4990255664,-20.1958603,57.4463629,OpenStreetMap via osmdata,mauritius | pharmacy petit riviere
+Mauritius,MUS,Eastern Africa RCC,Jhugroos Bros,pharmacy,points,4990272035,-20.2993391,57.4913788,OpenStreetMap via osmdata,mauritius | jhugroos bros
+Mauritius,MUS,Eastern Africa RCC,Pharmacie Moraby,pharmacy,points,4990304266,-20.2959211,57.4930955,OpenStreetMap via osmdata,mauritius | pharmacie moraby
+Mauritius,MUS,Eastern Africa RCC,Clinique Dentaire,dentist,points,4990452204,-20.1461238,57.5236802,OpenStreetMap via osmdata,mauritius | clinique dentaire
+Mauritius,MUS,Eastern Africa RCC,Abercrombie Pharmacy,pharmacy,points,4990471952,-20.1475294,57.5233082,OpenStreetMap via osmdata,mauritius | abercrombie pharmacy
+Mauritius,MUS,Eastern Africa RCC,New Pharmacy Burtally Ltee,pharmacy,points,4990471967,-20.148468,57.5231036,OpenStreetMap via osmdata,mauritius | new pharmacy burtally ltee
+Mauritius,MUS,Eastern Africa RCC,Sky Labs,clinic,points,4990501717,-20.1523476,57.5212597,OpenStreetMap via osmdata,mauritius | sky labs
+Mauritius,MUS,Eastern Africa RCC,St. Criox Pharmacy,pharmacy,points,4990514632,-20.152634,57.5209246,OpenStreetMap via osmdata,mauritius | st criox pharmacy
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 261,health_facility,points,4990567252,-20.1660662,57.5174674,OpenStreetMap via osmdata,mauritius | unnamed facility 261
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 262,health_facility,points,4990567253,-20.165988,57.5175705,OpenStreetMap via osmdata,mauritius | unnamed facility 262
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 263,health_facility,points,4990567254,-20.1658771,57.5174749,OpenStreetMap via osmdata,mauritius | unnamed facility 263
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 264,health_facility,points,4990668744,-20.1627056,57.5147159,OpenStreetMap via osmdata,mauritius | unnamed facility 264
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 265,health_facility,points,4990668745,-20.1625987,57.5148314,OpenStreetMap via osmdata,mauritius | unnamed facility 265
+Mauritius,MUS,Eastern Africa RCC,Port Louis Pharmacy,pharmacy,points,4990685141,-20.1584658,57.5049137,OpenStreetMap via osmdata,mauritius | port louis pharmacy
+Mauritius,MUS,Eastern Africa RCC,Life Care Pharmacy,pharmacy,points,4990686430,-20.1601803,57.5124117,OpenStreetMap via osmdata,mauritius | life care pharmacy
+Mauritius,MUS,Eastern Africa RCC,Pharmacie la Plaine Verte,pharmacy,points,4990686435,-20.1590451,57.5111426,OpenStreetMap via osmdata,mauritius | pharmacie la plaine verte
+Mauritius,MUS,Eastern Africa RCC,Le Santé Pharmacie,pharmacy,points,4990745585,-20.1602252,57.5132711,OpenStreetMap via osmdata,mauritius | le sante pharmacie
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 270,health_facility,points,4990803634,-20.1685818,57.50137,OpenStreetMap via osmdata,mauritius | unnamed facility 270
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 271,health_facility,points,4990803635,-20.1684225,57.5012016,OpenStreetMap via osmdata,mauritius | unnamed facility 271
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 272,health_facility,points,4990803636,-20.1685312,57.5010848,OpenStreetMap via osmdata,mauritius | unnamed facility 272
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 273,health_facility,points,4990803637,-20.1685612,57.5011164,OpenStreetMap via osmdata,mauritius | unnamed facility 273
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 274,health_facility,points,4990803638,-20.1686262,57.5010466,OpenStreetMap via osmdata,mauritius | unnamed facility 274
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 275,health_facility,points,4990803639,-20.1687181,57.5011301,OpenStreetMap via osmdata,mauritius | unnamed facility 275
+Mauritius,MUS,Eastern Africa RCC,Solferino Pharmacy,pharmacy,points,4990808920,-20.2864934,57.4806724,OpenStreetMap via osmdata,mauritius | solferino pharmacy
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 277,health_facility,points,4990815321,-20.2855785,57.4803172,OpenStreetMap via osmdata,mauritius | unnamed facility 277
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 278,health_facility,points,4990815322,-20.285501,57.4802665,OpenStreetMap via osmdata,mauritius | unnamed facility 278
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 279,health_facility,points,4990815323,-20.2855749,57.4801381,OpenStreetMap via osmdata,mauritius | unnamed facility 279
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 280,health_facility,points,4990815324,-20.2856524,57.4801888,OpenStreetMap via osmdata,mauritius | unnamed facility 280
+Mauritius,MUS,Eastern Africa RCC,Primecare,pharmacy,points,4990816694,-20.1624682,57.5064721,OpenStreetMap via osmdata,mauritius | primecare
+Mauritius,MUS,Eastern Africa RCC,Jian Wu Tang,clinic,points,4990935407,-20.2789957,57.4780017,OpenStreetMap via osmdata,mauritius | jian wu tang
+Mauritius,MUS,Eastern Africa RCC,Clinic Candos,clinic,points,4990935416,-20.2787273,57.477894,OpenStreetMap via osmdata,mauritius | clinic candos
+Mauritius,MUS,Eastern Africa RCC,Pharmacie Care Plus,pharmacy,points,4990935418,-20.2787836,57.4779118,OpenStreetMap via osmdata,mauritius | pharmacie care plus
+Mauritius,MUS,Eastern Africa RCC,Pharmacie Capucines,pharmacy,points,4990972832,-20.2766175,57.4771307,OpenStreetMap via osmdata,mauritius | pharmacie capucines
+Mauritius,MUS,Eastern Africa RCC,Skylabs,clinic,points,4991102082,-20.271463,57.4751047,OpenStreetMap via osmdata,mauritius | skylabs
+Mauritius,MUS,Eastern Africa RCC,Bassin Pharmacy,pharmacy,points,4991120969,-20.2790164,57.4685073,OpenStreetMap via osmdata,mauritius | bassin pharmacy
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 288,dentist,points,4991120970,-20.2790511,57.4684661,OpenStreetMap via osmdata,mauritius | unnamed facility 288
+Mauritius,MUS,Eastern Africa RCC,Much Better Life,clinic,points,4991236109,-20.1597614,57.5025784,OpenStreetMap via osmdata,mauritius | much better life
+Mauritius,MUS,Eastern Africa RCC,Get Well Pharma,pharmacy,points,4991299095,-20.1732075,57.5095111,OpenStreetMap via osmdata,mauritius | get well pharma
+Mauritius,MUS,Eastern Africa RCC,Bell Village Pharmacy,pharmacy,points,4991397211,-20.166057,57.4887686,OpenStreetMap via osmdata,mauritius | bell village pharmacy
+Mauritius,MUS,Eastern Africa RCC,Pharmacie D'Hotman,pharmacy,points,4991397654,-20.1664566,57.4888043,OpenStreetMap via osmdata,mauritius | pharmacie d hotman
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 293,health_facility,points,4991579496,-20.1652206,57.4939181,OpenStreetMap via osmdata,mauritius | unnamed facility 293
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 294,health_facility,points,4991579497,-20.1653473,57.4939226,OpenStreetMap via osmdata,mauritius | unnamed facility 294
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 295,health_facility,points,4991579498,-20.1653442,57.4940237,OpenStreetMap via osmdata,mauritius | unnamed facility 295
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 296,health_facility,points,4991579499,-20.1652174,57.4940192,OpenStreetMap via osmdata,mauritius | unnamed facility 296
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 297,health_facility,points,4992651990,-20.2843162,57.4644871,OpenStreetMap via osmdata,mauritius | unnamed facility 297
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 298,health_facility,points,4992651991,-20.2844185,57.4645954,OpenStreetMap via osmdata,mauritius | unnamed facility 298
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 299,health_facility,points,4992651992,-20.284372,57.4646454,OpenStreetMap via osmdata,mauritius | unnamed facility 299
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 300,health_facility,points,4992651993,-20.2843565,57.464629,OpenStreetMap via osmdata,mauritius | unnamed facility 300
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 301,health_facility,points,4992651994,-20.2843354,57.4646516,OpenStreetMap via osmdata,mauritius | unnamed facility 301
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 302,health_facility,points,4992651995,-20.2842486,57.4645597,OpenStreetMap via osmdata,mauritius | unnamed facility 302
+Mauritius,MUS,Eastern Africa RCC,Green Cross Pharmacie,pharmacy,points,4993350020,-20.2721014,57.4727608,OpenStreetMap via osmdata,mauritius | green cross pharmacie
+Mauritius,MUS,Eastern Africa RCC,Pharmacy Pharmak,pharmacy,points,4993350128,-20.2715157,57.4738799,OpenStreetMap via osmdata,mauritius | pharmacy pharmak
+Mauritius,MUS,Eastern Africa RCC,Pharmasave,pharmacy,points,4993447219,-20.2741895,57.4680298,OpenStreetMap via osmdata,mauritius | pharmasave
+Mauritius,MUS,Eastern Africa RCC,Pharmacie,pharmacy,points,4993466587,-20.1654657,57.4948048,OpenStreetMap via osmdata,mauritius | pharmacie
+Mauritius,MUS,Eastern Africa RCC,St. Jean Pharmacy,pharmacy,points,4995043029,-20.2638561,57.4805295,OpenStreetMap via osmdata,mauritius | st jean pharmacy
+Mauritius,MUS,Eastern Africa RCC,Suptar Vit Pharmacy,pharmacy,points,4995069685,-20.2462337,57.4681048,OpenStreetMap via osmdata,mauritius | suptar vit pharmacy
+Mauritius,MUS,Eastern Africa RCC,Cabinet Dentaire,dentist,points,4995069716,-20.2533047,57.4718199,OpenStreetMap via osmdata,mauritius | cabinet dentaire
+Mauritius,MUS,Eastern Africa RCC,Bonne-Terre Pharmacy,pharmacy,points,4995103577,-20.2943442,57.4830162,OpenStreetMap via osmdata,mauritius | bonne terre pharmacy
+Mauritius,MUS,Eastern Africa RCC,Pharmacie Boundary,pharmacy,points,4995110309,-20.2563662,57.4691407,OpenStreetMap via osmdata,mauritius | pharmacie boundary
+Mauritius,MUS,Eastern Africa RCC,Bright Smile,dentist,points,4995114161,-20.2678475,57.4772963,OpenStreetMap via osmdata,mauritius | bright smile
+Mauritius,MUS,Eastern Africa RCC,Pharmacie Ideale,pharmacy,points,4995152701,-20.2641316,57.4803303,OpenStreetMap via osmdata,mauritius | pharmacie ideale
+Mauritius,MUS,Eastern Africa RCC,St Jean Pharmacy,pharmacy,points,4995164300,-20.2635554,57.4807872,OpenStreetMap via osmdata,mauritius | st jean pharmacy
+Mauritius,MUS,Eastern Africa RCC,Trochetia Pharmacy,pharmacy,points,4995167682,-20.2859964,57.5077169,OpenStreetMap via osmdata,mauritius | trochetia pharmacy
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 316,dentist,points,4995167688,-20.2861889,57.5078905,OpenStreetMap via osmdata,mauritius | unnamed facility 316
+Mauritius,MUS,Eastern Africa RCC,Pharmacie Glaieul,pharmacy,points,4995180235,-20.2617025,57.482372,OpenStreetMap via osmdata,mauritius | pharmacie glaieul
+Mauritius,MUS,Eastern Africa RCC,Pharmacie Tropicale,pharmacy,points,4995234827,-20.2702406,57.4755638,OpenStreetMap via osmdata,mauritius | pharmacie tropicale
+Mauritius,MUS,Eastern Africa RCC,Pharmacy Mont Roches,pharmacy,points,4995237045,-20.2316204,57.4630473,OpenStreetMap via osmdata,mauritius | pharmacy mont roches
+Mauritius,MUS,Eastern Africa RCC,Fla Pharmacie New Stanley,pharmacy,points,4995247264,-20.2443252,57.4668277,OpenStreetMap via osmdata,mauritius | fla pharmacie new stanley
+Mauritius,MUS,Eastern Africa RCC,Pharmaplus,pharmacy,points,4995275218,-20.2634323,57.4811362,OpenStreetMap via osmdata,mauritius | pharmaplus
+Mauritius,MUS,Eastern Africa RCC,Phoenix Pharmacy,pharmacy,points,4995298293,-20.2835692,57.5051263,OpenStreetMap via osmdata,mauritius | phoenix pharmacy
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 323,health_facility,points,4995312442,-20.2253486,57.4677254,OpenStreetMap via osmdata,mauritius | unnamed facility 323
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 324,health_facility,points,4995312443,-20.2253647,57.4679105,OpenStreetMap via osmdata,mauritius | unnamed facility 324
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 325,health_facility,points,4995312444,-20.2252601,57.4679208,OpenStreetMap via osmdata,mauritius | unnamed facility 325
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 326,health_facility,points,4995312445,-20.225244,57.4677357,OpenStreetMap via osmdata,mauritius | unnamed facility 326
+Mauritius,MUS,Eastern Africa RCC,Pharmacie Medichem,pharmacy,points,4995312473,-20.2236051,57.4681324,OpenStreetMap via osmdata,mauritius | pharmacie medichem
+Mauritius,MUS,Eastern Africa RCC,Pharmacie Miopharm,pharmacy,points,4995356602,-20.2902308,57.5126253,OpenStreetMap via osmdata,mauritius | pharmacie miopharm
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 329,dentist,points,4995356603,-20.2902526,57.5126683,OpenStreetMap via osmdata,mauritius | unnamed facility 329
+Mauritius,MUS,Eastern Africa RCC,Pharmacy S.N. Beeharry,pharmacy,points,4995489441,-20.2841158,57.505389,OpenStreetMap via osmdata,mauritius | pharmacy s n beeharry
+Mauritius,MUS,Eastern Africa RCC,Pharmacie De Coromandel,pharmacy,points,4995491471,-20.1940486,57.4698176,OpenStreetMap via osmdata,mauritius | pharmacie de coromandel
+Mauritius,MUS,Eastern Africa RCC,Pharmacie Biorharm,pharmacy,points,4995521461,-20.2208725,57.4687812,OpenStreetMap via osmdata,mauritius | pharmacie biorharm
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 333,health_facility,points,4995555995,-20.2174449,57.4692932,OpenStreetMap via osmdata,mauritius | unnamed facility 333
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 334,health_facility,points,4995555996,-20.2175257,57.4692765,OpenStreetMap via osmdata,mauritius | unnamed facility 334
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 335,health_facility,points,4995555997,-20.2175446,57.4693809,OpenStreetMap via osmdata,mauritius | unnamed facility 335
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 336,health_facility,points,4995555998,-20.2174639,57.4693976,OpenStreetMap via osmdata,mauritius | unnamed facility 336
+Mauritius,MUS,Eastern Africa RCC,Nupharm Pharmacy,pharmacy,points,4995560247,-20.2135834,57.4698948,OpenStreetMap via osmdata,mauritius | nupharm pharmacy
+Mauritius,MUS,Eastern Africa RCC,St Jean Clinic,clinic,points,4995730718,-20.2542306,57.4861308,OpenStreetMap via osmdata,mauritius | st jean clinic
+Mauritius,MUS,Eastern Africa RCC,Pharmacy Pharmalead,pharmacy,points,4995787160,-20.2456839,57.4787281,OpenStreetMap via osmdata,mauritius | pharmacy pharmalead
+Mauritius,MUS,Eastern Africa RCC,Standard Pharmacy,pharmacy,points,4995889277,-20.2420042,57.4737438,OpenStreetMap via osmdata,mauritius | standard pharmacy
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 341,health_facility,points,4997963226,-20.2368362,57.4716848,OpenStreetMap via osmdata,mauritius | unnamed facility 341
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 342,health_facility,points,4997963227,-20.2370448,57.4717498,OpenStreetMap via osmdata,mauritius | unnamed facility 342
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 343,health_facility,points,4997963228,-20.2370139,57.4718625,OpenStreetMap via osmdata,mauritius | unnamed facility 343
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 344,health_facility,points,4997963229,-20.2368053,57.4717975,OpenStreetMap via osmdata,mauritius | unnamed facility 344
+Mauritius,MUS,Eastern Africa RCC,Azm Pharmacy,pharmacy,points,4997963230,-20.2368745,57.4717184,OpenStreetMap via osmdata,mauritius | azm pharmacy
+Mauritius,MUS,Eastern Africa RCC,Centre Medical Clinique Dentaire,dentist,points,4997963231,-20.2369092,57.4717276,OpenStreetMap via osmdata,mauritius | centre medical clinique dentaire
+Mauritius,MUS,Eastern Africa RCC,Rogan Clinic,clinic,points,4997963233,-20.2369887,57.4717523,OpenStreetMap via osmdata,mauritius | rogan clinic
+Mauritius,MUS,Eastern Africa RCC,Cabinet Cardiologie,doctors,points,4997963234,-20.2369482,57.4717384,OpenStreetMap via osmdata,mauritius | cabinet cardiologie
+Mauritius,MUS,Eastern Africa RCC,Pharmacy,pharmacy,points,4998024770,-20.2339456,57.470278,OpenStreetMap via osmdata,mauritius | pharmacy
+Mauritius,MUS,Eastern Africa RCC,Pharmacie Impériale,pharmacy,points,4998029030,-20.2277832,57.4678912,OpenStreetMap via osmdata,mauritius | pharmacie imperiale
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 351,pharmacy,points,5033523521,-20.0482343,57.5854795,OpenStreetMap via osmdata,mauritius | unnamed facility 351
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 352,pharmacy,points,5068602788,-20.168588,57.5141233,OpenStreetMap via osmdata,mauritius | unnamed facility 352
+Mauritius,MUS,Eastern Africa RCC,Pharmacy Rose,pharmacy,points,5106618424,-20.1839327,57.7229783,OpenStreetMap via osmdata,mauritius | pharmacy rose
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 354,health_facility,points,5224548355,-20.0597131,57.6853278,OpenStreetMap via osmdata,mauritius | unnamed facility 354
+Mauritius,MUS,Eastern Africa RCC,The Medicine Shop,pharmacy,points,5225994871,-19.9923814,57.5928718,OpenStreetMap via osmdata,mauritius | the medicine shop
+Mauritius,MUS,Eastern Africa RCC,Flacq Echography and X-Ray Centre,doctors,points,5310627623,-20.193179,57.724076,OpenStreetMap via osmdata,mauritius | flacq echography and x ray centre
+Mauritius,MUS,Eastern Africa RCC,Orthodondiste Dr Yan Luk Patrice,dentist,points,5408126624,-20.2431787,57.4726583,OpenStreetMap via osmdata,mauritius | orthodondiste dr yan luk patrice
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 358,health_facility,points,5409225598,-20.4055447,57.5940912,OpenStreetMap via osmdata,mauritius | unnamed facility 358
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 359,health_facility,points,5486676369,-19.6815937,63.4293763,OpenStreetMap via osmdata,mauritius | unnamed facility 359
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 360,health_facility,points,5486676370,-19.68159,63.4294742,OpenStreetMap via osmdata,mauritius | unnamed facility 360
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 361,health_facility,points,5486676371,-19.6815445,63.4296016,OpenStreetMap via osmdata,mauritius | unnamed facility 361
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 362,health_facility,points,5486676527,-19.6800822,63.4298846,OpenStreetMap via osmdata,mauritius | unnamed facility 362
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 363,health_facility,points,5486676528,-19.6800393,63.4298846,OpenStreetMap via osmdata,mauritius | unnamed facility 363
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 364,health_facility,points,5486676529,-19.6791945,63.4303822,OpenStreetMap via osmdata,mauritius | unnamed facility 364
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 365,health_facility,points,5486676530,-19.6791692,63.4304197,OpenStreetMap via osmdata,mauritius | unnamed facility 365
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 366,health_facility,points,5486676531,-19.6792273,63.4306222,OpenStreetMap via osmdata,mauritius | unnamed facility 366
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 367,health_facility,points,5486676532,-19.6792564,63.4306826,OpenStreetMap via osmdata,mauritius | unnamed facility 367
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 368,health_facility,points,5486676533,-19.6810242,63.4300496,OpenStreetMap via osmdata,mauritius | unnamed facility 368
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 369,health_facility,points,5486676534,-19.6806429,63.4295721,OpenStreetMap via osmdata,mauritius | unnamed facility 369
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 370,health_facility,points,5486676535,-19.6805393,63.4294769,OpenStreetMap via osmdata,mauritius | unnamed facility 370
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 371,health_facility,points,5486676536,-19.6815458,63.42932,OpenStreetMap via osmdata,mauritius | unnamed facility 371
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 372,health_facility,points,5486676537,-19.6804901,63.429084,OpenStreetMap via osmdata,mauritius | unnamed facility 372
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 373,health_facility,points,5486676538,-19.6802476,63.4292771,OpenStreetMap via osmdata,mauritius | unnamed facility 373
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 374,health_facility,points,5486676539,-19.6802918,63.4293066,OpenStreetMap via osmdata,mauritius | unnamed facility 374
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 375,health_facility,points,5486676540,-19.6803487,63.4293307,OpenStreetMap via osmdata,mauritius | unnamed facility 375
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 376,health_facility,points,5486676541,-19.6804661,63.4293549,OpenStreetMap via osmdata,mauritius | unnamed facility 376
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 377,health_facility,points,5486676542,-19.6805242,63.429379,OpenStreetMap via osmdata,mauritius | unnamed facility 377
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 378,health_facility,points,5513170720,-20.19141,57.6678411,OpenStreetMap via osmdata,mauritius | unnamed facility 378
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 379,health_facility,points,5513170721,-20.1913624,57.668009,OpenStreetMap via osmdata,mauritius | unnamed facility 379
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 380,health_facility,points,5513170722,-20.1914962,57.6680723,OpenStreetMap via osmdata,mauritius | unnamed facility 380
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 381,health_facility,points,5513170723,-20.1915527,57.6679044,OpenStreetMap via osmdata,mauritius | unnamed facility 381
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 382,dentist,points,5513197333,-20.1925068,57.6680469,OpenStreetMap via osmdata,mauritius | unnamed facility 382
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 383,health_facility,points,5573772747,-19.6812832,63.4292133,OpenStreetMap via osmdata,mauritius | unnamed facility 383
+Mauritius,MUS,Eastern Africa RCC,For Me,pharmacy,points,5594495759,-20.021114,57.578836,OpenStreetMap via osmdata,mauritius | for me
+Mauritius,MUS,Eastern Africa RCC,Pharmacie Cap Malheureux,pharmacy,points,5623646894,-19.9879599,57.6168001,OpenStreetMap via osmdata,mauritius | pharmacie cap malheureux
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 386,clinic,points,5741686222,-20.1562648,57.5170408,OpenStreetMap via osmdata,mauritius | unnamed facility 386
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 387,health_facility,points,5855859539,-20.3129424,57.5170142,OpenStreetMap via osmdata,mauritius | unnamed facility 387
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 388,health_facility,points,5855859540,-20.3128667,57.5169849,OpenStreetMap via osmdata,mauritius | unnamed facility 388
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 389,health_facility,points,5855859541,-20.3128877,57.516923,OpenStreetMap via osmdata,mauritius | unnamed facility 389
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 390,health_facility,points,5855859542,-20.312964,57.5169525,OpenStreetMap via osmdata,mauritius | unnamed facility 390
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 391,health_facility,points,5855859543,-20.3130015,57.5168424,OpenStreetMap via osmdata,mauritius | unnamed facility 391
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 392,health_facility,points,5855859544,-20.3130358,57.5168557,OpenStreetMap via osmdata,mauritius | unnamed facility 392
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 393,health_facility,points,5855859545,-20.3130538,57.516803,OpenStreetMap via osmdata,mauritius | unnamed facility 393
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 394,health_facility,points,5855859546,-20.3136754,57.5171915,OpenStreetMap via osmdata,mauritius | unnamed facility 394
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 395,health_facility,points,5855859547,-20.3133122,57.5169031,OpenStreetMap via osmdata,mauritius | unnamed facility 395
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 396,health_facility,points,5855859548,-20.3133244,57.5168673,OpenStreetMap via osmdata,mauritius | unnamed facility 396
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 397,health_facility,points,5855859549,-20.313732,57.5170251,OpenStreetMap via osmdata,mauritius | unnamed facility 397
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 398,health_facility,points,5855859550,-20.3131487,57.5173133,OpenStreetMap via osmdata,mauritius | unnamed facility 398
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 399,health_facility,points,5855859551,-20.3131587,57.5172837,OpenStreetMap via osmdata,mauritius | unnamed facility 399
+Mauritius,MUS,Eastern Africa RCC,Pharmacie Helvétia,pharmacy,points,5981041612,-20.2248612,57.525867,OpenStreetMap via osmdata,mauritius | pharmacie helvetia
+Mauritius,MUS,Eastern Africa RCC,St Pierre Pharmacy,pharmacy,points,5981233804,-20.2244748,57.5370026,OpenStreetMap via osmdata,mauritius | st pierre pharmacy
+Mauritius,MUS,Eastern Africa RCC,Pharmachic,pharmacy,points,5981235532,-20.2247366,57.5379894,OpenStreetMap via osmdata,mauritius | pharmachic
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 403,health_facility,points,5981797228,-20.2424325,57.4660513,OpenStreetMap via osmdata,mauritius | unnamed facility 403
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 404,health_facility,points,5981797229,-20.2423333,57.4662607,OpenStreetMap via osmdata,mauritius | unnamed facility 404
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 405,health_facility,points,5981797230,-20.2426575,57.4664355,OpenStreetMap via osmdata,mauritius | unnamed facility 405
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 406,health_facility,points,5981797231,-20.2427586,57.466222,OpenStreetMap via osmdata,mauritius | unnamed facility 406
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 407,health_facility,points,6084091838,-20.0980054,57.5586413,OpenStreetMap via osmdata,mauritius | unnamed facility 407
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 408,health_facility,points,6084091839,-20.097504700000002,57.5604402,OpenStreetMap via osmdata,mauritius | unnamed facility 408
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 409,health_facility,points,6084091840,-20.0970727,57.5604992,OpenStreetMap via osmdata,mauritius | unnamed facility 409
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 410,health_facility,points,6084091841,-20.0970123,57.5604925,OpenStreetMap via osmdata,mauritius | unnamed facility 410
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 411,health_facility,points,6084091842,-20.0962654,57.5602122,OpenStreetMap via osmdata,mauritius | unnamed facility 411
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 412,health_facility,points,6084091843,-20.0956483,57.5599587,OpenStreetMap via osmdata,mauritius | unnamed facility 412
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 413,health_facility,points,6084091844,-20.0955223,57.5598903,OpenStreetMap via osmdata,mauritius | unnamed facility 413
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 414,health_facility,points,6084091845,-20.0956684,57.559547,OpenStreetMap via osmdata,mauritius | unnamed facility 414
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 415,health_facility,points,6084091846,-20.0958171,57.559154,OpenStreetMap via osmdata,mauritius | unnamed facility 415
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 416,health_facility,points,6084091847,-20.0959241,57.5586565,OpenStreetMap via osmdata,mauritius | unnamed facility 416
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 417,health_facility,points,6084091848,-20.0960274,57.5581831,OpenStreetMap via osmdata,mauritius | unnamed facility 417
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 418,health_facility,points,6084091849,-20.0976596,57.5603946,OpenStreetMap via osmdata,mauritius | unnamed facility 418
+Mauritius,MUS,Eastern Africa RCC,Orthodentist Toofany,dentist,points,6123853385,-20.2672,57.4851464,OpenStreetMap via osmdata,mauritius | orthodentist toofany
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 420,health_facility,points,6347036498,-20.1817492,57.7725688,OpenStreetMap via osmdata,mauritius | unnamed facility 420
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 421,health_facility,points,6347036499,-20.1817016,57.7726878,OpenStreetMap via osmdata,mauritius | unnamed facility 421
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 422,health_facility,points,6347036500,-20.1818594,57.7727171,OpenStreetMap via osmdata,mauritius | unnamed facility 422
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 423,health_facility,points,6347036501,-20.1818869,57.7726109,OpenStreetMap via osmdata,mauritius | unnamed facility 423
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 424,health_facility,points,6347036502,-20.1817395,57.7726948,OpenStreetMap via osmdata,mauritius | unnamed facility 424
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 425,health_facility,points,6347039266,-20.197089,57.7750336,OpenStreetMap via osmdata,mauritius | unnamed facility 425
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 426,health_facility,points,6347039274,-20.1972688,57.7749194,OpenStreetMap via osmdata,mauritius | unnamed facility 426
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 427,health_facility,points,6347039275,-20.197363,57.7750945,OpenStreetMap via osmdata,mauritius | unnamed facility 427
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 428,health_facility,points,6347039276,-20.1971614,57.7751459,OpenStreetMap via osmdata,mauritius | unnamed facility 428
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 429,health_facility,points,6347039277,-20.197137,57.775108,OpenStreetMap via osmdata,mauritius | unnamed facility 429
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 430,health_facility,points,6347039282,-20.1973035,57.7749839,OpenStreetMap via osmdata,mauritius | unnamed facility 430
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 431,dentist,points,6433937535,-20.2439477,57.4783963,OpenStreetMap via osmdata,mauritius | unnamed facility 431
+Mauritius,MUS,Eastern Africa RCC,Pharmarcie Ollier,pharmacy,points,6434088687,-20.250285,57.478329,OpenStreetMap via osmdata,mauritius | pharmarcie ollier
+Mauritius,MUS,Eastern Africa RCC,Pharmacie la confiance,pharmacy,points,6518841515,-20.2180436,57.4689929,OpenStreetMap via osmdata,mauritius | pharmacie la confiance
+Mauritius,MUS,Eastern Africa RCC,Vincent Perdreau,doctors,points,6534827186,-20.213997,57.4717408,OpenStreetMap via osmdata,mauritius | vincent perdreau
+Mauritius,MUS,Eastern Africa RCC,A. N. Emritte,doctors,points,6568466481,-20.2186148,57.4729828,OpenStreetMap via osmdata,mauritius | a n emritte
+Mauritius,MUS,Eastern Africa RCC,Docteur Reshad Sumodhee,doctors,points,6579472785,-20.2326623,57.4717782,OpenStreetMap via osmdata,mauritius | docteur reshad sumodhee
+Mauritius,MUS,Eastern Africa RCC,VIP Laser Clinic Med Spa,clinic,points,6579472786,-20.2317954,57.4716014,OpenStreetMap via osmdata,mauritius | vip laser clinic med spa
+Mauritius,MUS,Eastern Africa RCC,Dr Parmessur,doctors,points,6681138959,-20.224701,57.4704332,OpenStreetMap via osmdata,mauritius | dr parmessur
+Mauritius,MUS,Eastern Africa RCC,Dove Dental,dentist,points,6694271852,-20.4076238,57.7046071,OpenStreetMap via osmdata,mauritius | dove dental
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 440,health_facility,points,6902192657,-20.1683846,57.5065084,OpenStreetMap via osmdata,mauritius | unnamed facility 440
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 441,health_facility,points,6902192658,-20.168471,57.5065915,OpenStreetMap via osmdata,mauritius | unnamed facility 441
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 442,health_facility,points,6902192659,-20.1683372,57.5067495,OpenStreetMap via osmdata,mauritius | unnamed facility 442
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 443,health_facility,points,6902192660,-20.1685265,57.5069314,OpenStreetMap via osmdata,mauritius | unnamed facility 443
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 444,health_facility,points,6902192661,-20.1686465,57.5067897,OpenStreetMap via osmdata,mauritius | unnamed facility 444
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 445,health_facility,points,6902192662,-20.1687769,57.506915,OpenStreetMap via osmdata,mauritius | unnamed facility 445
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 446,health_facility,points,6902192663,-20.1688819,57.5067911,OpenStreetMap via osmdata,mauritius | unnamed facility 446
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 447,health_facility,points,6902192664,-20.1684759,57.5064007,OpenStreetMap via osmdata,mauritius | unnamed facility 447
+Mauritius,MUS,Eastern Africa RCC,Cabinet Medical,doctors,points,6953678367,-20.4088056,57.7059929,OpenStreetMap via osmdata,mauritius | cabinet medical
+Mauritius,MUS,Eastern Africa RCC,Pharmacity Mahebourg,pharmacy,points,6953678383,-20.4087828,57.7060436,OpenStreetMap via osmdata,mauritius | pharmacity mahebourg
+Mauritius,MUS,Eastern Africa RCC,Dr. Peerbux,dentist,points,6953931987,-20.4077382,57.705784,OpenStreetMap via osmdata,mauritius | dr peerbux
+Mauritius,MUS,Eastern Africa RCC,Dr. Dhooboreea,dentist,points,6953931989,-20.406464,57.7069021,OpenStreetMap via osmdata,mauritius | dr dhooboreea
+Mauritius,MUS,Eastern Africa RCC,Medical Centre,doctors,points,6953932005,-20.4076473,57.7055337,OpenStreetMap via osmdata,mauritius | medical centre
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 453,health_facility,points,6966161636,-20.1696798,57.502468,OpenStreetMap via osmdata,mauritius | unnamed facility 453
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 454,health_facility,points,6966161637,-20.1699487,57.5021854,OpenStreetMap via osmdata,mauritius | unnamed facility 454
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 455,health_facility,points,6966161646,-20.1692061,57.5029606,OpenStreetMap via osmdata,mauritius | unnamed facility 455
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 456,health_facility,points,6966161647,-20.1691199,57.5030488,OpenStreetMap via osmdata,mauritius | unnamed facility 456
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 457,health_facility,points,6966161674,-20.1688588,57.5028556,OpenStreetMap via osmdata,mauritius | unnamed facility 457
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 458,health_facility,points,6966161698,-20.1682247,57.5021691,OpenStreetMap via osmdata,mauritius | unnamed facility 458
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 459,health_facility,points,6966161705,-20.1689554,57.5010447,OpenStreetMap via osmdata,mauritius | unnamed facility 459
+Mauritius,MUS,Eastern Africa RCC,Neurobalance and ENT clinic,doctors,points,7005683285,-20.2288025,57.4668249,OpenStreetMap via osmdata,mauritius | neurobalance and ent clinic
+Mauritius,MUS,Eastern Africa RCC,Buckingham pharmacy,pharmacy,points,7254457015,-20.2439206,57.4663153,OpenStreetMap via osmdata,mauritius | buckingham pharmacy
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 462,doctors,points,7282493186,-20.4947956,57.3816166,OpenStreetMap via osmdata,mauritius | unnamed facility 462
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 463,health_facility,points,7325631683,-20.280321,57.4751829,OpenStreetMap via osmdata,mauritius | unnamed facility 463
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 464,health_facility,points,7325675545,-20.2218726,57.5033593,OpenStreetMap via osmdata,mauritius | unnamed facility 464
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 465,health_facility,points,7325675546,-20.2221142,57.5033995,OpenStreetMap via osmdata,mauritius | unnamed facility 465
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 466,health_facility,points,7325675548,-20.2219758,57.5040942,OpenStreetMap via osmdata,mauritius | unnamed facility 466
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 467,health_facility,points,7325675549,-20.2218625,57.5040566,OpenStreetMap via osmdata,mauritius | unnamed facility 467
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 468,health_facility,points,7325675550,-20.2218625,57.5040271,OpenStreetMap via osmdata,mauritius | unnamed facility 468
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 469,health_facility,points,7325675551,-20.2218096,57.504003,OpenStreetMap via osmdata,mauritius | unnamed facility 469
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 470,health_facility,points,7325675552,-20.2217543,57.5039842,OpenStreetMap via osmdata,mauritius | unnamed facility 470
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 471,health_facility,points,7325694988,-20.0085878,57.5597171,OpenStreetMap via osmdata,mauritius | unnamed facility 471
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 472,health_facility,points,7325694989,-20.0087011,57.5598794,OpenStreetMap via osmdata,mauritius | unnamed facility 472
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 473,health_facility,points,7325694990,-20.008497,57.5600322,OpenStreetMap via osmdata,mauritius | unnamed facility 473
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 474,health_facility,points,7325694991,-20.008387,57.5598594,OpenStreetMap via osmdata,mauritius | unnamed facility 474
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 475,health_facility,points,7325708380,-20.1308377,57.49727,OpenStreetMap via osmdata,mauritius | unnamed facility 475
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 476,health_facility,points,7325708381,-20.1305167,57.4972715,OpenStreetMap via osmdata,mauritius | unnamed facility 476
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 477,health_facility,points,7325878958,-20.0606347,57.5551832,OpenStreetMap via osmdata,mauritius | unnamed facility 477
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 478,health_facility,points,7325878959,-20.0602215,57.555328,OpenStreetMap via osmdata,mauritius | unnamed facility 478
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 479,health_facility,points,7325878960,-20.0604054,57.5557518,OpenStreetMap via osmdata,mauritius | unnamed facility 479
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 480,health_facility,points,7325878961,-20.0608161,57.5555721,OpenStreetMap via osmdata,mauritius | unnamed facility 480
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 481,health_facility,points,7325898902,-20.0288678,57.5975254,OpenStreetMap via osmdata,mauritius | unnamed facility 481
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 482,health_facility,points,7325898903,-20.0287797,57.5976127,OpenStreetMap via osmdata,mauritius | unnamed facility 482
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 483,health_facility,points,7325898904,-20.0288658,57.5977113,OpenStreetMap via osmdata,mauritius | unnamed facility 483
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 484,health_facility,points,7325898905,-20.0289539,57.597624,OpenStreetMap via osmdata,mauritius | unnamed facility 484
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 485,health_facility,points,7325937551,-20.4115563,57.7034329,OpenStreetMap via osmdata,mauritius | unnamed facility 485
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 486,health_facility,points,7325937552,-20.4110588,57.7035087,OpenStreetMap via osmdata,mauritius | unnamed facility 486
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 487,health_facility,points,7325937553,-20.4109381,57.702983,OpenStreetMap via osmdata,mauritius | unnamed facility 487
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 488,health_facility,points,7325937554,-20.4112373,57.7028704,OpenStreetMap via osmdata,mauritius | unnamed facility 488
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 489,health_facility,points,7325937555,-20.4114258,57.7030313,OpenStreetMap via osmdata,mauritius | unnamed facility 489
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 490,health_facility,points,7325938411,-20.1484068,57.6844457,OpenStreetMap via osmdata,mauritius | unnamed facility 490
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 491,health_facility,points,7325938412,-20.148304,57.6845479,OpenStreetMap via osmdata,mauritius | unnamed facility 491
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 492,health_facility,points,7325938413,-20.148186,57.6844133,OpenStreetMap via osmdata,mauritius | unnamed facility 492
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 493,health_facility,points,7325938414,-20.1482887,57.6843111,OpenStreetMap via osmdata,mauritius | unnamed facility 493
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 494,health_facility,points,7325942762,-20.0693164,57.5680296,OpenStreetMap via osmdata,mauritius | unnamed facility 494
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 495,health_facility,points,7325942763,-20.0694273,57.5682897,OpenStreetMap via osmdata,mauritius | unnamed facility 495
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 496,health_facility,points,7325942765,-20.0692131,57.5680886,OpenStreetMap via osmdata,mauritius | unnamed facility 496
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 497,health_facility,points,7325964029,-20.1780953,57.6617303,OpenStreetMap via osmdata,mauritius | unnamed facility 497
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 498,health_facility,points,7325964030,-20.1779477,57.6621093,OpenStreetMap via osmdata,mauritius | unnamed facility 498
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 499,health_facility,points,7325964031,-20.1781686,57.6622069,OpenStreetMap via osmdata,mauritius | unnamed facility 499
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 500,health_facility,points,7325964032,-20.1783161,57.661828,OpenStreetMap via osmdata,mauritius | unnamed facility 500
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 501,pharmacy,points,8085300018,-20.0629891,57.5508962,OpenStreetMap via osmdata,mauritius | unnamed facility 501
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 502,pharmacy,points,8091417974,-20.3275402,57.3840742,OpenStreetMap via osmdata,mauritius | unnamed facility 502
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 503,hospital,points,8093889424,-19.7225923,63.3777187,OpenStreetMap via osmdata,mauritius | unnamed facility 503
+Mauritius,MUS,Eastern Africa RCC,Pharmacie d'arcy,pharmacy,points,8093933400,-19.6815234,63.4211487,OpenStreetMap via osmdata,mauritius | pharmacie d arcy
+Mauritius,MUS,Eastern Africa RCC,Port Mathurin pharmacy,pharmacy,points,8093957212,-19.6803821,63.4235921,OpenStreetMap via osmdata,mauritius | port mathurin pharmacy
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 506,dentist,points,8925562290,-20.1953237,57.7228775,OpenStreetMap via osmdata,mauritius | unnamed facility 506
+Mauritius,MUS,Eastern Africa RCC,Dr S. Sibartie,doctors,points,9103899272,-20.2636433,57.488333,OpenStreetMap via osmdata,mauritius | dr s sibartie
+Mauritius,MUS,Eastern Africa RCC,Dr S. Mudoo,doctors,points,9107967218,-20.269227,57.4845564,OpenStreetMap via osmdata,mauritius | dr s mudoo
+Mauritius,MUS,Eastern Africa RCC,Dr. M. Dauhoo,doctors,points,9107967219,-20.2692974,57.4852189,OpenStreetMap via osmdata,mauritius | dr m dauhoo
+Mauritius,MUS,Eastern Africa RCC,Healthland Pharmacy,pharmacy,points,9263546065,-20.0492405,57.663448699999996,OpenStreetMap via osmdata,mauritius | healthland pharmacy
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 511,health_facility,points,9277382166,-20.2642979,57.4807747,OpenStreetMap via osmdata,mauritius | unnamed facility 511
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 512,health_facility,points,9277382167,-20.2643566,57.4808542,OpenStreetMap via osmdata,mauritius | unnamed facility 512
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 513,health_facility,points,9277382168,-20.2645237,57.4807141,OpenStreetMap via osmdata,mauritius | unnamed facility 513
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 514,health_facility,points,9277382169,-20.264465,57.4806345,OpenStreetMap via osmdata,mauritius | unnamed facility 514
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 515,health_facility,points,9280593885,-20.1308348,57.4965871,OpenStreetMap via osmdata,mauritius | unnamed facility 515
+Mauritius,MUS,Eastern Africa RCC,Princess Margaret Orthopaedic Centre,hospital,points,9282312806,-20.2786876,57.4773386,OpenStreetMap via osmdata,mauritius | princess margaret orthopaedic centre
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 517,health_facility,points,9284981521,-20.1725558,57.4459414,OpenStreetMap via osmdata,mauritius | unnamed facility 517
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 518,health_facility,points,9284981522,-20.1724989,57.4460909,OpenStreetMap via osmdata,mauritius | unnamed facility 518
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 519,health_facility,points,9284981523,-20.172605,57.4461394,OpenStreetMap via osmdata,mauritius | unnamed facility 519
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 520,health_facility,points,9284981524,-20.1726299,57.4460658,OpenStreetMap via osmdata,mauritius | unnamed facility 520
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 521,health_facility,points,9284981525,-20.1726698,57.4460841,OpenStreetMap via osmdata,mauritius | unnamed facility 521
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 522,health_facility,points,9284981526,-20.1727004,57.4460036,OpenStreetMap via osmdata,mauritius | unnamed facility 522
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 523,health_facility,points,9287963136,-20.2696672,57.4753906,OpenStreetMap via osmdata,mauritius | unnamed facility 523
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 524,health_facility,points,9287963137,-20.2697683,57.4755371,OpenStreetMap via osmdata,mauritius | unnamed facility 524
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 525,health_facility,points,9287963138,-20.2698497,57.4754732,OpenStreetMap via osmdata,mauritius | unnamed facility 525
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 526,health_facility,points,9287963139,-20.2697487,57.4753267,OpenStreetMap via osmdata,mauritius | unnamed facility 526
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 527,health_facility,points,9287979893,-20.2692788,57.4740956,OpenStreetMap via osmdata,mauritius | unnamed facility 527
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 528,health_facility,points,9287979894,-20.2693663,57.474022,OpenStreetMap via osmdata,mauritius | unnamed facility 528
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 529,health_facility,points,9287979895,-20.2694353,57.4741186,OpenStreetMap via osmdata,mauritius | unnamed facility 529
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 530,health_facility,points,9287979896,-20.2693476,57.4741892,OpenStreetMap via osmdata,mauritius | unnamed facility 530
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 531,health_facility,points,9290013212,-20.2668497,57.4777881,OpenStreetMap via osmdata,mauritius | unnamed facility 531
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 532,health_facility,points,9290013213,-20.2668931,57.4777525,OpenStreetMap via osmdata,mauritius | unnamed facility 532
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 533,health_facility,points,9290013214,-20.2668818,57.4777312,OpenStreetMap via osmdata,mauritius | unnamed facility 533
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 534,health_facility,points,9290013215,-20.2669723,57.4776607,OpenStreetMap via osmdata,mauritius | unnamed facility 534
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 535,health_facility,points,9290013216,-20.2670497,57.477782,OpenStreetMap via osmdata,mauritius | unnamed facility 535
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 536,health_facility,points,9290013217,-20.26691,57.4778866,OpenStreetMap via osmdata,mauritius | unnamed facility 536
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 537,health_facility,points,9306874053,-20.2625015,57.4821665,OpenStreetMap via osmdata,mauritius | unnamed facility 537
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 538,health_facility,points,9306874054,-20.2625901,57.4820904,OpenStreetMap via osmdata,mauritius | unnamed facility 538
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 539,health_facility,points,9306874055,-20.2626487,57.4821679,OpenStreetMap via osmdata,mauritius | unnamed facility 539
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 540,health_facility,points,9306874056,-20.2625602,57.482244,OpenStreetMap via osmdata,mauritius | unnamed facility 540
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 541,health_facility,points,9407089514,-19.7157767,63.4282717,OpenStreetMap via osmdata,mauritius | unnamed facility 541
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 542,health_facility,points,9407148786,-19.7157746,63.4281903,OpenStreetMap via osmdata,mauritius | unnamed facility 542
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 543,health_facility,points,9407148788,-19.7156135,63.4282765,OpenStreetMap via osmdata,mauritius | unnamed facility 543
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 544,health_facility,points,9407148789,-19.7156113,63.4281951,OpenStreetMap via osmdata,mauritius | unnamed facility 544
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 545,health_facility,points,9407192422,-19.7433918,63.4121618,OpenStreetMap via osmdata,mauritius | unnamed facility 545
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 546,health_facility,points,9407192423,-19.7435051,63.4121971,OpenStreetMap via osmdata,mauritius | unnamed facility 546
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 547,health_facility,points,9407192424,-19.7434762,63.4123018,OpenStreetMap via osmdata,mauritius | unnamed facility 547
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 548,health_facility,points,9407192425,-19.7433628,63.4122665,OpenStreetMap via osmdata,mauritius | unnamed facility 548
+Mauritius,MUS,Eastern Africa RCC,Port Sud Est Health Care Centre,doctors,points,9409903536,-19.7389802,63.4532472,OpenStreetMap via osmdata,mauritius | port sud est health care centre
+Mauritius,MUS,Eastern Africa RCC,Pharmalink,pharmacy,points,9410624817,-20.1615707,57.4998754,OpenStreetMap via osmdata,mauritius | pharmalink
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 551,health_facility,points,9524620135,-20.1660907,57.481534,OpenStreetMap via osmdata,mauritius | unnamed facility 551
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 552,health_facility,points,9524620136,-20.1662637,57.4815345,OpenStreetMap via osmdata,mauritius | unnamed facility 552
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 553,health_facility,points,9524620137,-20.1662636,57.4816068,OpenStreetMap via osmdata,mauritius | unnamed facility 553
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 554,health_facility,points,9524620138,-20.1660906,57.4816064,OpenStreetMap via osmdata,mauritius | unnamed facility 554
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 555,health_facility,points,9820504738,-20.1661649,57.4815342,OpenStreetMap via osmdata,mauritius | unnamed facility 555
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 556,health_facility,points,9974174803,-20.1783347,57.4380112,OpenStreetMap via osmdata,mauritius | unnamed facility 556
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 557,health_facility,points,9974174804,-20.1783166,57.4379418,OpenStreetMap via osmdata,mauritius | unnamed facility 557
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 558,health_facility,points,9974174805,-20.1782853,57.4379512,OpenStreetMap via osmdata,mauritius | unnamed facility 558
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 559,health_facility,points,9974174806,-20.1783028,57.4380203,OpenStreetMap via osmdata,mauritius | unnamed facility 559
+Mauritius,MUS,Eastern Africa RCC,Pharmacy Kestrel,pharmacy,points,10107550975,-20.321101,57.5258536,OpenStreetMap via osmdata,mauritius | pharmacy kestrel
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 561,health_facility,points,10696548478,-20.403801,57.594012,OpenStreetMap via osmdata,mauritius | unnamed facility 561
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 562,health_facility,points,10696548479,-20.4036602,57.5938672,OpenStreetMap via osmdata,mauritius | unnamed facility 562
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 563,health_facility,points,10696548480,-20.4039242,57.5941864,OpenStreetMap via osmdata,mauritius | unnamed facility 563
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 564,health_facility,points,10696548481,-20.4045149,57.5919735,OpenStreetMap via osmdata,mauritius | unnamed facility 564
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 565,health_facility,points,10696548482,-20.4040926,57.5916329,OpenStreetMap via osmdata,mauritius | unnamed facility 565
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 566,health_facility,points,10696548483,-20.4038488,57.5920057,OpenStreetMap via osmdata,mauritius | unnamed facility 566
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 567,health_facility,points,10696548484,-20.4040976,57.5922284,OpenStreetMap via osmdata,mauritius | unnamed facility 567
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 568,health_facility,points,10696548485,-20.4038261,57.5926521,OpenStreetMap via osmdata,mauritius | unnamed facility 568
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 569,health_facility,points,10696548486,-20.4039443,57.5927862,OpenStreetMap via osmdata,mauritius | unnamed facility 569
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 570,health_facility,points,10696548506,-20.4060224,57.5937013,OpenStreetMap via osmdata,mauritius | unnamed facility 570
+Mauritius,MUS,Eastern Africa RCC,Central Pharmacy,pharmacy,points,10709155657,-20.0372945,57.5471729,OpenStreetMap via osmdata,mauritius | central pharmacy
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 572,health_facility,points,10806648861,-20.2852723,57.5240403,OpenStreetMap via osmdata,mauritius | unnamed facility 572
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 573,health_facility,points,10806648862,-20.2853535,57.5241278,OpenStreetMap via osmdata,mauritius | unnamed facility 573
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 574,health_facility,points,10806648863,-20.2854017,57.5240593,OpenStreetMap via osmdata,mauritius | unnamed facility 574
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 575,health_facility,points,10806648864,-20.2853239,57.5239682,OpenStreetMap via osmdata,mauritius | unnamed facility 575
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 576,health_facility,points,10814091768,-20.292998,57.5179303,OpenStreetMap via osmdata,mauritius | unnamed facility 576
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 577,health_facility,points,10814091769,-20.2930549,57.5179986,OpenStreetMap via osmdata,mauritius | unnamed facility 577
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 578,health_facility,points,10814091770,-20.2931104,57.5178909,OpenStreetMap via osmdata,mauritius | unnamed facility 578
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 579,health_facility,points,10814091771,-20.293045,57.5178423,OpenStreetMap via osmdata,mauritius | unnamed facility 579
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 580,health_facility,points,10852654385,-20.291116,57.5147887,OpenStreetMap via osmdata,mauritius | unnamed facility 580
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 581,health_facility,points,10852654386,-20.2911905,57.514895,OpenStreetMap via osmdata,mauritius | unnamed facility 581
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 582,health_facility,points,10852654387,-20.291096,57.5149703,OpenStreetMap via osmdata,mauritius | unnamed facility 582
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 583,health_facility,points,10852654388,-20.2910215,57.514864,OpenStreetMap via osmdata,mauritius | unnamed facility 583
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 584,health_facility,points,10857369222,-20.0235554,57.5763178,OpenStreetMap via osmdata,mauritius | unnamed facility 584
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 585,health_facility,points,10857369223,-20.0237811,57.5762367,OpenStreetMap via osmdata,mauritius | unnamed facility 585
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 586,health_facility,points,10857369224,-20.0239026,57.5760514,OpenStreetMap via osmdata,mauritius | unnamed facility 586
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 587,health_facility,points,10857369225,-20.0241507,57.5759447,OpenStreetMap via osmdata,mauritius | unnamed facility 587
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 588,health_facility,points,10857369226,-20.0240077,57.5753942,OpenStreetMap via osmdata,mauritius | unnamed facility 588
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 589,health_facility,points,10857369227,-20.0232602,57.5757199,OpenStreetMap via osmdata,mauritius | unnamed facility 589
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 590,health_facility,points,10857369228,-20.0232317,57.5757891,OpenStreetMap via osmdata,mauritius | unnamed facility 590
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 591,health_facility,points,10857369229,-20.0233454,57.5759228,OpenStreetMap via osmdata,mauritius | unnamed facility 591
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 592,health_facility,points,10859640171,-20.0076321,57.6423608,OpenStreetMap via osmdata,mauritius | unnamed facility 592
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 593,health_facility,points,10859640172,-20.0077476,57.6422763,OpenStreetMap via osmdata,mauritius | unnamed facility 593
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 594,health_facility,points,10859640173,-20.0077224,57.6422433,OpenStreetMap via osmdata,mauritius | unnamed facility 594
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 595,health_facility,points,10859640174,-20.0076122,57.642332,OpenStreetMap via osmdata,mauritius | unnamed facility 595
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 596,health_facility,points,10860244526,-20.3088732,57.5122942,OpenStreetMap via osmdata,mauritius | unnamed facility 596
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 597,health_facility,points,10860244527,-20.3088284,57.5121991,OpenStreetMap via osmdata,mauritius | unnamed facility 597
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 598,health_facility,points,10860244528,-20.3085917,57.5119393,OpenStreetMap via osmdata,mauritius | unnamed facility 598
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 599,health_facility,points,10860244529,-20.3082345,57.5122537,OpenStreetMap via osmdata,mauritius | unnamed facility 599
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 600,health_facility,points,10860244530,-20.3086646,57.5128867,OpenStreetMap via osmdata,mauritius | unnamed facility 600
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 601,health_facility,points,10860244531,-20.3088729,57.512388,OpenStreetMap via osmdata,mauritius | unnamed facility 601
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 602,pharmacy,points,10881738693,-20.1637968,57.4989162,OpenStreetMap via osmdata,mauritius | unnamed facility 602
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 603,health_facility,points,10905055095,-20.1263193,57.5425087,OpenStreetMap via osmdata,mauritius | unnamed facility 603
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 604,health_facility,points,10905055096,-20.1267249,57.5425485,OpenStreetMap via osmdata,mauritius | unnamed facility 604
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 605,health_facility,points,10905055097,-20.1267491,57.5423043,OpenStreetMap via osmdata,mauritius | unnamed facility 605
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 606,health_facility,points,10905055098,-20.1263366,57.5422867,OpenStreetMap via osmdata,mauritius | unnamed facility 606
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 607,pharmacy,points,10913798499,-20.2442886,57.4760148,OpenStreetMap via osmdata,mauritius | unnamed facility 607
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 608,health_facility,points,10915460115,-20.276843,57.3953546,OpenStreetMap via osmdata,mauritius | unnamed facility 608
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 609,health_facility,points,10915460116,-20.2766066,57.3953953,OpenStreetMap via osmdata,mauritius | unnamed facility 609
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 610,health_facility,points,10915460117,-20.2765647,57.3952042,OpenStreetMap via osmdata,mauritius | unnamed facility 610
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 611,health_facility,points,10915460118,-20.2768316,57.3951717,OpenStreetMap via osmdata,mauritius | unnamed facility 611
+Mauritius,MUS,Eastern Africa RCC,Dr.Rameez Hussain Ophthalmologist,clinic,points,10946046615,-20.2545287,57.4945108,OpenStreetMap via osmdata,mauritius | dr rameez hussain ophthalmologist
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 613,health_facility,points,10957487796,-20.3104989,57.5244007,OpenStreetMap via osmdata,mauritius | unnamed facility 613
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 614,health_facility,points,10957487797,-20.3111362,57.524263,OpenStreetMap via osmdata,mauritius | unnamed facility 614
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 615,health_facility,points,10957487798,-20.3109544,57.5240318,OpenStreetMap via osmdata,mauritius | unnamed facility 615
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 616,health_facility,points,10957487799,-20.3106237,57.5239547,OpenStreetMap via osmdata,mauritius | unnamed facility 616
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 617,health_facility,points,10957487800,-20.3104989,57.5240108,OpenStreetMap via osmdata,mauritius | unnamed facility 617
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 618,health_facility,points,10959403888,-20.2299569,57.4717771,OpenStreetMap via osmdata,mauritius | unnamed facility 618
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 619,health_facility,points,10959403889,-20.2303189,57.4717912,OpenStreetMap via osmdata,mauritius | unnamed facility 619
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 620,health_facility,points,10959403890,-20.2303089,57.47154,OpenStreetMap via osmdata,mauritius | unnamed facility 620
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 621,health_facility,points,10959403891,-20.2299503,57.4715541,OpenStreetMap via osmdata,mauritius | unnamed facility 621
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 622,health_facility,points,10959776702,-20.1595217,57.5095457,OpenStreetMap via osmdata,mauritius | unnamed facility 622
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 623,health_facility,points,10959776703,-20.1595849,57.5094555,OpenStreetMap via osmdata,mauritius | unnamed facility 623
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 624,health_facility,points,10959776704,-20.1597593,57.5096483,OpenStreetMap via osmdata,mauritius | unnamed facility 624
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 625,health_facility,points,10959783905,-20.1596845,57.5097581,OpenStreetMap via osmdata,mauritius | unnamed facility 625
+Mauritius,MUS,Eastern Africa RCC,Flic-en-Flac Pharmacy,pharmacy,points,11061520910,-20.2794924,57.3687287,OpenStreetMap via osmdata,mauritius | flic en flac pharmacy
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 627,health_facility,points,11061520940,-20.2827803,57.3737613,OpenStreetMap via osmdata,mauritius | unnamed facility 627
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 628,health_facility,points,11061520941,-20.2830202,57.373715,OpenStreetMap via osmdata,mauritius | unnamed facility 628
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 629,health_facility,points,11061520942,-20.2829855,57.373524,OpenStreetMap via osmdata,mauritius | unnamed facility 629
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 630,health_facility,points,11061520943,-20.2827341,57.3735918,OpenStreetMap via osmdata,mauritius | unnamed facility 630
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 631,health_facility,points,11125058096,-20.3318653,57.3848665,OpenStreetMap via osmdata,mauritius | unnamed facility 631
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 632,health_facility,points,11125058097,-20.3319836,57.3851884,OpenStreetMap via osmdata,mauritius | unnamed facility 632
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 633,health_facility,points,11125058098,-20.3326486,57.3848674,OpenStreetMap via osmdata,mauritius | unnamed facility 633
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 634,health_facility,points,11125058099,-20.332577,57.3846342,OpenStreetMap via osmdata,mauritius | unnamed facility 634
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 635,health_facility,points,11129067699,-20.0038671,57.6189904,OpenStreetMap via osmdata,mauritius | unnamed facility 635
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 636,health_facility,points,11129067700,-20.0041099,57.6189409,OpenStreetMap via osmdata,mauritius | unnamed facility 636
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 637,health_facility,points,11129067701,-20.0040301,57.6186648,OpenStreetMap via osmdata,mauritius | unnamed facility 637
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 638,health_facility,points,11129067702,-20.0037807,57.6187108,OpenStreetMap via osmdata,mauritius | unnamed facility 638
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 639,health_facility,points,11129787893,-20.3201038,57.5150385,OpenStreetMap via osmdata,mauritius | unnamed facility 639
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 640,health_facility,points,11129787894,-20.3204047,57.5152207,OpenStreetMap via osmdata,mauritius | unnamed facility 640
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 641,health_facility,points,11129787895,-20.3204965,57.5150654,OpenStreetMap via osmdata,mauritius | unnamed facility 641
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 642,health_facility,points,11129787896,-20.3201912,57.5148884,OpenStreetMap via osmdata,mauritius | unnamed facility 642
+Mauritius,MUS,Eastern Africa RCC,Cabinet médical Dr. Bholah,clinic,points,11138924989,-20.323109,57.5181996,OpenStreetMap via osmdata,mauritius | cabinet medical dr bholah
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 644,health_facility,points,11242855705,-20.1692144,57.5045118,OpenStreetMap via osmdata,mauritius | unnamed facility 644
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 645,health_facility,points,11242855706,-20.1691581,57.5045756,OpenStreetMap via osmdata,mauritius | unnamed facility 645
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 646,health_facility,points,11242855707,-20.1692179,57.5046347,OpenStreetMap via osmdata,mauritius | unnamed facility 646
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 647,health_facility,points,11242855708,-20.1692752,57.504571,OpenStreetMap via osmdata,mauritius | unnamed facility 647
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 648,health_facility,points,11243327034,-20.2997657,57.4959473,OpenStreetMap via osmdata,mauritius | unnamed facility 648
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 649,health_facility,points,11243327035,-20.2997944,57.495894,OpenStreetMap via osmdata,mauritius | unnamed facility 649
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 650,health_facility,points,11243327036,-20.2997843,57.4958879,OpenStreetMap via osmdata,mauritius | unnamed facility 650
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 651,health_facility,points,11243339537,-20.2998085,57.4958428,OpenStreetMap via osmdata,mauritius | unnamed facility 651
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 652,health_facility,points,11243339538,-20.2996889,57.4957697,OpenStreetMap via osmdata,mauritius | unnamed facility 652
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 653,health_facility,points,11243339539,-20.2996348,57.4958703,OpenStreetMap via osmdata,mauritius | unnamed facility 653
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 654,health_facility,points,11243339540,-20.2996592,57.4958852,OpenStreetMap via osmdata,mauritius | unnamed facility 654
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 655,health_facility,points,11243339541,-20.299646,57.4959099,OpenStreetMap via osmdata,mauritius | unnamed facility 655
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 656,health_facility,points,11243339542,-20.2997068,57.4959471,OpenStreetMap via osmdata,mauritius | unnamed facility 656
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 657,health_facility,points,11243339543,-20.2997373,57.4959299,OpenStreetMap via osmdata,mauritius | unnamed facility 657
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 658,health_facility,points,11243362825,-20.3006276,57.4867518,OpenStreetMap via osmdata,mauritius | unnamed facility 658
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 659,health_facility,points,11243362826,-20.3006719,57.4867761,OpenStreetMap via osmdata,mauritius | unnamed facility 659
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 660,health_facility,points,11243362827,-20.3006926,57.4867334,OpenStreetMap via osmdata,mauritius | unnamed facility 660
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 661,health_facility,points,11243362828,-20.3007307,57.4867543,OpenStreetMap via osmdata,mauritius | unnamed facility 661
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 662,health_facility,points,11243362829,-20.3007122,57.4867925,OpenStreetMap via osmdata,mauritius | unnamed facility 662
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 663,health_facility,points,11243362830,-20.3007852,57.4868327,OpenStreetMap via osmdata,mauritius | unnamed facility 663
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 664,health_facility,points,11243362831,-20.3007203,57.486967,OpenStreetMap via osmdata,mauritius | unnamed facility 664
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 665,health_facility,points,11243362832,-20.3006132,57.4869081,OpenStreetMap via osmdata,mauritius | unnamed facility 665
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 666,health_facility,points,11243362833,-20.3006447,57.4868429,OpenStreetMap via osmdata,mauritius | unnamed facility 666
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 667,health_facility,points,11243362834,-20.3005964,57.4868164,OpenStreetMap via osmdata,mauritius | unnamed facility 667
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 668,health_facility,points,11243417138,-20.3005401,57.488826,OpenStreetMap via osmdata,mauritius | unnamed facility 668
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 669,health_facility,points,11243417139,-20.3004842,57.4889293,OpenStreetMap via osmdata,mauritius | unnamed facility 669
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 670,health_facility,points,11243417140,-20.3006257,57.4890096,OpenStreetMap via osmdata,mauritius | unnamed facility 670
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 671,health_facility,points,11243417141,-20.3006652,57.4889315,OpenStreetMap via osmdata,mauritius | unnamed facility 671
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 672,health_facility,points,11243417142,-20.3006518,57.4888977,OpenStreetMap via osmdata,mauritius | unnamed facility 672
+Mauritius,MUS,Eastern Africa RCC,Z-click pharmacy,pharmacy,points,11243417143,-20.30057,57.4889123,OpenStreetMap via osmdata,mauritius | z click pharmacy
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 674,health_facility,points,11251688333,-20.3015968,57.4884436,OpenStreetMap via osmdata,mauritius | unnamed facility 674
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 675,health_facility,points,11251688334,-20.3015307,57.4885747,OpenStreetMap via osmdata,mauritius | unnamed facility 675
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 676,health_facility,points,11251688335,-20.301621,57.4886264,OpenStreetMap via osmdata,mauritius | unnamed facility 676
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 677,health_facility,points,11251688336,-20.301687,57.4884952,OpenStreetMap via osmdata,mauritius | unnamed facility 677
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 678,health_facility,points,11252224205,-20.2982238,57.4958505,OpenStreetMap via osmdata,mauritius | unnamed facility 678
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 679,health_facility,points,11252224206,-20.2984684,57.4960071,OpenStreetMap via osmdata,mauritius | unnamed facility 679
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 680,health_facility,points,11252224207,-20.2983848,57.4961555,OpenStreetMap via osmdata,mauritius | unnamed facility 680
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 681,health_facility,points,11252224208,-20.2981402,57.4959988,OpenStreetMap via osmdata,mauritius | unnamed facility 681
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 682,health_facility,points,11252224209,-20.2980557,57.4958067,OpenStreetMap via osmdata,mauritius | unnamed facility 682
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 683,health_facility,points,11252224210,-20.2981013,57.4958295,OpenStreetMap via osmdata,mauritius | unnamed facility 683
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 684,health_facility,points,11252224211,-20.2981238,57.4957783,OpenStreetMap via osmdata,mauritius | unnamed facility 684
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 685,health_facility,points,11252224212,-20.2981917,57.4958123,OpenStreetMap via osmdata,mauritius | unnamed facility 685
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 686,health_facility,points,11252224213,-20.2982292,57.495727,OpenStreetMap via osmdata,mauritius | unnamed facility 686
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 687,health_facility,points,11252224214,-20.2981158,57.4956703,OpenStreetMap via osmdata,mauritius | unnamed facility 687
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 688,health_facility,points,11259107786,-20.2926854,57.493301,OpenStreetMap via osmdata,mauritius | unnamed facility 688
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 689,health_facility,points,11259107787,-20.2926194,57.493448,OpenStreetMap via osmdata,mauritius | unnamed facility 689
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 690,health_facility,points,11259107788,-20.2927245,57.4935016,OpenStreetMap via osmdata,mauritius | unnamed facility 690
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 691,health_facility,points,11259107789,-20.2927905,57.4933547,OpenStreetMap via osmdata,mauritius | unnamed facility 691
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 692,health_facility,points,11259126953,-20.2923006,57.5051003,OpenStreetMap via osmdata,mauritius | unnamed facility 692
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 693,health_facility,points,11259126954,-20.2922706,57.505203,OpenStreetMap via osmdata,mauritius | unnamed facility 693
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 694,health_facility,points,11259126955,-20.2924219,57.505327,OpenStreetMap via osmdata,mauritius | unnamed facility 694
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 695,health_facility,points,11259126956,-20.2924732,57.5052763,OpenStreetMap via osmdata,mauritius | unnamed facility 695
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 696,health_facility,points,11259126957,-20.2923957,57.5051937,OpenStreetMap via osmdata,mauritius | unnamed facility 696
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 697,health_facility,points,11259126958,-20.2924069,57.5051697,OpenStreetMap via osmdata,mauritius | unnamed facility 697
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 698,health_facility,points,11259274424,-20.3000495,57.489558100000004,OpenStreetMap via osmdata,mauritius | unnamed facility 698
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 699,health_facility,points,11259274425,-20.2999864,57.4896776,OpenStreetMap via osmdata,mauritius | unnamed facility 699
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 700,health_facility,points,11259274426,-20.3000501,57.4897159,OpenStreetMap via osmdata,mauritius | unnamed facility 700
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 701,health_facility,points,11259274427,-20.3000653,57.4896872,OpenStreetMap via osmdata,mauritius | unnamed facility 701
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 702,health_facility,points,11259274428,-20.3002356,57.4897895,OpenStreetMap via osmdata,mauritius | unnamed facility 702
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 703,health_facility,points,11259274429,-20.3002835,57.4896987,OpenStreetMap via osmdata,mauritius | unnamed facility 703
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 704,health_facility,points,11259282587,-20.2935671,57.4883067,OpenStreetMap via osmdata,mauritius | unnamed facility 704
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 705,health_facility,points,11259282588,-20.2936468,57.4883512,OpenStreetMap via osmdata,mauritius | unnamed facility 705
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 706,health_facility,points,11259282589,-20.2937036,57.4882355,OpenStreetMap via osmdata,mauritius | unnamed facility 706
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 707,health_facility,points,11259282590,-20.2936239,57.488191,OpenStreetMap via osmdata,mauritius | unnamed facility 707
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 708,dentist,points,11259660066,-20.2992219,57.4917347,OpenStreetMap via osmdata,mauritius | unnamed facility 708
+Mauritius,MUS,Eastern Africa RCC,Dentalign Clinics Ltd(Mauritius),dentist,points,11259831371,-20.2995602,57.4919729,OpenStreetMap via osmdata,mauritius | dentalign clinics ltd mauritius
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 710,health_facility,points,11338171704,-20.3110523,57.5128271,OpenStreetMap via osmdata,mauritius | unnamed facility 710
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 711,health_facility,points,11338171705,-20.3110248,57.5128965,OpenStreetMap via osmdata,mauritius | unnamed facility 711
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 712,health_facility,points,11338171706,-20.311151,57.5129604,OpenStreetMap via osmdata,mauritius | unnamed facility 712
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 713,health_facility,points,11338171707,-20.3111796,57.5128846,OpenStreetMap via osmdata,mauritius | unnamed facility 713
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 714,health_facility,points,11339359804,-20.2902748,57.509201,OpenStreetMap via osmdata,mauritius | unnamed facility 714
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 715,health_facility,points,11339359805,-20.2903263,57.5091119,OpenStreetMap via osmdata,mauritius | unnamed facility 715
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 716,health_facility,points,11339359806,-20.2904556,57.5091772,OpenStreetMap via osmdata,mauritius | unnamed facility 716
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 717,health_facility,points,11339359807,-20.2904128,57.5092736,OpenStreetMap via osmdata,mauritius | unnamed facility 717
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 718,health_facility,points,11343222570,-20.2871932,57.509198,OpenStreetMap via osmdata,mauritius | unnamed facility 718
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 719,health_facility,points,11343222571,-20.2872255,57.5093051,OpenStreetMap via osmdata,mauritius | unnamed facility 719
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 720,health_facility,points,11343222572,-20.2873738,57.5092542,OpenStreetMap via osmdata,mauritius | unnamed facility 720
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 721,health_facility,points,11343222573,-20.2873979,57.5092347,OpenStreetMap via osmdata,mauritius | unnamed facility 721
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 722,health_facility,points,11343222574,-20.2874564,57.509317,OpenStreetMap via osmdata,mauritius | unnamed facility 722
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 723,health_facility,points,11343222575,-20.2875172,57.509268,OpenStreetMap via osmdata,mauritius | unnamed facility 723
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 724,health_facility,points,11343222576,-20.2874509,57.5091747,OpenStreetMap via osmdata,mauritius | unnamed facility 724
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 725,health_facility,points,11343222577,-20.2875108,57.5091694,OpenStreetMap via osmdata,mauritius | unnamed facility 725
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 726,health_facility,points,11343222578,-20.2875044,57.5090853,OpenStreetMap via osmdata,mauritius | unnamed facility 726
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 727,health_facility,points,11343222579,-20.2874588,57.5090893,OpenStreetMap via osmdata,mauritius | unnamed facility 727
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 728,health_facility,points,11343222580,-20.2874542,57.5090288,OpenStreetMap via osmdata,mauritius | unnamed facility 728
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 729,health_facility,points,11343222581,-20.28738,57.5090353,OpenStreetMap via osmdata,mauritius | unnamed facility 729
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 730,health_facility,points,11343222582,-20.2873873,57.5091313,OpenStreetMap via osmdata,mauritius | unnamed facility 730
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 731,health_facility,points,11343366456,-20.2900017,57.5105408,OpenStreetMap via osmdata,mauritius | unnamed facility 731
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 732,health_facility,points,11343366457,-20.2900382,57.5104646,OpenStreetMap via osmdata,mauritius | unnamed facility 732
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 733,health_facility,points,11343366458,-20.2901913,57.5105408,OpenStreetMap via osmdata,mauritius | unnamed facility 733
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 734,health_facility,points,11343366459,-20.2901301,57.5106511,OpenStreetMap via osmdata,mauritius | unnamed facility 734
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 735,health_facility,points,11343439689,-20.2908971,57.5101376,OpenStreetMap via osmdata,mauritius | unnamed facility 735
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 736,health_facility,points,11343439690,-20.2909538,57.5100349,OpenStreetMap via osmdata,mauritius | unnamed facility 736
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 737,health_facility,points,11343439691,-20.2910512,57.510096,OpenStreetMap via osmdata,mauritius | unnamed facility 737
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 738,health_facility,points,11343439692,-20.2909945,57.5101987,OpenStreetMap via osmdata,mauritius | unnamed facility 738
+Mauritius,MUS,Eastern Africa RCC,Mrs  H.B. Peerally,doctors,points,11373276114,-20.3026521,57.4851443,OpenStreetMap via osmdata,mauritius | mrs h b peerally
+Mauritius,MUS,Eastern Africa RCC,Love Life Pharmacy,pharmacy,points,11721879694,-20.279163,57.3682245,OpenStreetMap via osmdata,mauritius | love life pharmacy
+Mauritius,MUS,Eastern Africa RCC,Circonstance Saint-Pierre Pharmacy,pharmacy,points,12047294943,-20.2230329,57.5404035,OpenStreetMap via osmdata,mauritius | circonstance saint pierre pharmacy
+Mauritius,MUS,Eastern Africa RCC,Dr V. Siraz,doctors,points,12069727905,-20.2234331,57.5361032,OpenStreetMap via osmdata,mauritius | dr v siraz
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 743,health_facility,points,12218685556,-20.2333653,57.5012341,OpenStreetMap via osmdata,mauritius | unnamed facility 743
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 744,health_facility,points,12218685557,-20.2344695,57.5019159,OpenStreetMap via osmdata,mauritius | unnamed facility 744
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 745,health_facility,points,12218685558,-20.2348901,57.5009259,OpenStreetMap via osmdata,mauritius | unnamed facility 745
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 746,health_facility,points,12218685559,-20.234005,57.5005616,OpenStreetMap via osmdata,mauritius | unnamed facility 746
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 747,health_facility,points,12318129712,-20.2425179,57.471766,OpenStreetMap via osmdata,mauritius | unnamed facility 747
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 748,health_facility,points,12318129713,-20.2424589,57.4718671,OpenStreetMap via osmdata,mauritius | unnamed facility 748
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 749,health_facility,points,12318129714,-20.2424877,57.4718908,OpenStreetMap via osmdata,mauritius | unnamed facility 749
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 750,health_facility,points,12318129715,-20.2424537,57.4719313,OpenStreetMap via osmdata,mauritius | unnamed facility 750
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 751,health_facility,points,12318129716,-20.2425021,57.4719843,OpenStreetMap via osmdata,mauritius | unnamed facility 751
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 752,health_facility,points,12318129717,-20.2425295,57.4719382,OpenStreetMap via osmdata,mauritius | unnamed facility 752
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 753,health_facility,points,12318129718,-20.242595,57.4719787,OpenStreetMap via osmdata,mauritius | unnamed facility 753
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 754,health_facility,points,12318129719,-20.2426577,57.4718658,OpenStreetMap via osmdata,mauritius | unnamed facility 754
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 755,health_facility,points,12456244668,-20.1696054,57.4680936,OpenStreetMap via osmdata,mauritius | unnamed facility 755
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 756,health_facility,points,12456244669,-20.1697084,57.4682334,OpenStreetMap via osmdata,mauritius | unnamed facility 756
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 757,health_facility,points,12456244670,-20.1698363,57.4680741,OpenStreetMap via osmdata,mauritius | unnamed facility 757
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 758,health_facility,points,12456244671,-20.1697666,57.4679397,OpenStreetMap via osmdata,mauritius | unnamed facility 758
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 759,health_facility,points,12480195990,-20.3083753,57.5124737,OpenStreetMap via osmdata,mauritius | unnamed facility 759
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 760,health_facility,points,12480196036,-20.3086422,57.5128771,OpenStreetMap via osmdata,mauritius | unnamed facility 760
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 761,health_facility,points,12480196037,-20.3086891,57.5128824,OpenStreetMap via osmdata,mauritius | unnamed facility 761
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 762,health_facility,points,12480196038,-20.3087027,57.51286,OpenStreetMap via osmdata,mauritius | unnamed facility 762
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 763,health_facility,points,12480196039,-20.3086233,57.5128615,OpenStreetMap via osmdata,mauritius | unnamed facility 763
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 764,health_facility,points,12480196040,-20.3088484,57.5124705,OpenStreetMap via osmdata,mauritius | unnamed facility 764
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 765,health_facility,points,12480196041,-20.3087207,57.5120538,OpenStreetMap via osmdata,mauritius | unnamed facility 765
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 766,health_facility,points,12553733027,-20.3476873,57.3649385,OpenStreetMap via osmdata,mauritius | unnamed facility 766
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 767,health_facility,points,12553733028,-20.3479676,57.3649666,OpenStreetMap via osmdata,mauritius | unnamed facility 767
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 768,health_facility,points,12553733029,-20.3479879,57.3645531,OpenStreetMap via osmdata,mauritius | unnamed facility 768
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 769,health_facility,points,12553733030,-20.3477098,57.3645324,OpenStreetMap via osmdata,mauritius | unnamed facility 769
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 770,health_facility,points,12597691965,-20.0918743,57.5521068,OpenStreetMap via osmdata,mauritius | unnamed facility 770
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 771,health_facility,points,12597691966,-20.0919711,57.5720367,OpenStreetMap via osmdata,mauritius | unnamed facility 771
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 772,health_facility,points,12597691967,-20.1011439,57.5718135,OpenStreetMap via osmdata,mauritius | unnamed facility 772
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 773,health_facility,points,12597691968,-20.1012728,57.552021,OpenStreetMap via osmdata,mauritius | unnamed facility 773
+Mauritius,MUS,Eastern Africa RCC,Laserostop,doctors,points,13140792169,-20.2398602,57.4854561,OpenStreetMap via osmdata,mauritius | laserostop
+Mauritius,MUS,Eastern Africa RCC,Long Mountain Hospital,hospital,points,13422296001,-20.1517941,57.5713108,OpenStreetMap via osmdata,mauritius | long mountain hospital
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 776,health_facility,points,13428267432,-20.0236308,57.5754853,OpenStreetMap via osmdata,mauritius | unnamed facility 776
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 777,health_facility,points,13428267433,-20.023272,57.5758719,OpenStreetMap via osmdata,mauritius | unnamed facility 777
+Mauritius,MUS,Eastern Africa RCC,Dr B. RAMTOHUL,doctors,points,13468095269,-20.2396549,57.4662374,OpenStreetMap via osmdata,mauritius | dr b ramtohul
+Mauritius,MUS,Eastern Africa RCC,Nuclear Medicine,hospital,points,13595382682,-20.4051087,57.5922384,OpenStreetMap via osmdata,mauritius | nuclear medicine
+Mauritius,MUS,Eastern Africa RCC,New Moka Eye Hospital,hospital,points,13849831854,-20.2342773,57.5012871,OpenStreetMap via osmdata,mauritius | new moka eye hospital
+Mauritius,MUS,Eastern Africa RCC,Artemis Cascavelle Hospital,hospital,points,13853107038,-20.276775,57.4038405,OpenStreetMap via osmdata,mauritius | artemis cascavelle hospital
+Mauritius,MUS,Eastern Africa RCC,Jawaharnal Nehru Hospital,hospital,polygons,224268361,-20.404931200562608,57.59294167333885,OpenStreetMap via osmdata,mauritius | jawaharnal nehru hospital
+Mauritius,MUS,Eastern Africa RCC,Clinique Mauricienne,hospital,polygons,270988980,-20.232229000029832,57.49570345400976,OpenStreetMap via osmdata,mauritius | clinique mauricienne
+Mauritius,MUS,Eastern Africa RCC,Primary School,hospital,polygons,371851055,-20.14849940001149,57.68418831121801,OpenStreetMap via osmdata,mauritius | primary school
+Mauritius,MUS,Eastern Africa RCC,Dr Abdool Gaffoor Jeetoo Hospital,hospital,polygons,372014045,-20.16901595001175,57.502069055460375,OpenStreetMap via osmdata,mauritius | dr abdool gaffoor jeetoo hospital
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 5,health_facility,polygons,372150144,-19.68094495002142,63.42940814027609,OpenStreetMap via osmdata,mauritius | unnamed facility 5
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 6,health_facility,polygons,372151024,-19.680116950003768,63.43015318477939,OpenStreetMap via osmdata,mauritius | unnamed facility 6
+Mauritius,MUS,Eastern Africa RCC,Poudre d'Or Hospital,hospital,polygons,413639896,-20.059259850090637,57.685290023389356,OpenStreetMap via osmdata,mauritius | poudre d or hospital
+Mauritius,MUS,Eastern Africa RCC,C-Care Darné,clinic,polygons,421671909,-20.313235450019036,57.51711010337802,OpenStreetMap via osmdata,mauritius | c care darne
+Mauritius,MUS,Eastern Africa RCC,Health Center Montagne Blanche,hospital,polygons,445169724,-20.28377520000061,57.66173675870972,OpenStreetMap via osmdata,mauritius | health center montagne blanche
+Mauritius,MUS,Eastern Africa RCC,Dental Clinc,dentist,polygons,472054429,-20.1670970500034,57.65424219999835,OpenStreetMap via osmdata,mauritius | dental clinc
+Mauritius,MUS,Eastern Africa RCC,City Clinic,clinic,polygons,495657120,-20.16255465000622,57.51452348215608,OpenStreetMap via osmdata,mauritius | city clinic
+Mauritius,MUS,Eastern Africa RCC,Florial medi clinic,clinic,polygons,495764618,-20.31325855001527,57.50339973047731,OpenStreetMap via osmdata,mauritius | florial medi clinic
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 13,clinic,polygons,495848204,-20.019570250069133,57.580464249950374,OpenStreetMap via osmdata,mauritius | unnamed facility 13
+Mauritius,MUS,Eastern Africa RCC,New Cancer Centre,hospital,polygons,495859065,-20.281088900975163,57.48456897184522,OpenStreetMap via osmdata,mauritius | new cancer centre
+Mauritius,MUS,Eastern Africa RCC,Unilab LTD,clinic,polygons,508782865,-20.378744250000707,57.57196314999805,OpenStreetMap via osmdata,mauritius | unilab ltd
+Mauritius,MUS,Eastern Africa RCC,Muscular Dystrophy Association,clinic,polygons,508815021,-20.329612400006862,57.52608745886128,OpenStreetMap via osmdata,mauritius | muscular dystrophy association
+Mauritius,MUS,Eastern Africa RCC,Clinique de L'Occident,clinic,polygons,508882349,-20.276656650017067,57.36996800000046,OpenStreetMap via osmdata,mauritius | clinique de l occident
+Mauritius,MUS,Eastern Africa RCC,City Care Pharmacy,pharmacy,polygons,509003819,-20.166062750001796,57.51735948245771,OpenStreetMap via osmdata,mauritius | city care pharmacy
+Mauritius,MUS,Eastern Africa RCC,St. Patrick Clinic,clinic,polygons,509022817,-20.275770100004873,57.37649650000022,OpenStreetMap via osmdata,mauritius | st patrick clinic
+Mauritius,MUS,Eastern Africa RCC,Pharmacie Royale,pharmacy,polygons,509025249,-20.322198800002944,57.484627749999845,OpenStreetMap via osmdata,mauritius | pharmacie royale
+Mauritius,MUS,Eastern Africa RCC,Esthétique,clinic,polygons,509044660,-20.28088280000227,57.36797479627685,OpenStreetMap via osmdata,mauritius | esthetique
+Mauritius,MUS,Eastern Africa RCC,Desforges Pharmacy,pharmacy,polygons,509045374,-20.159462150017237,57.50987016805208,OpenStreetMap via osmdata,mauritius | desforges pharmacy
+Mauritius,MUS,Eastern Africa RCC,Bambous Area Health Centre,clinic,polygons,509340467,-20.25728170003118,57.41327690000043,OpenStreetMap via osmdata,mauritius | bambous area health centre
+Mauritius,MUS,Eastern Africa RCC,Vallee Pitot Pharmacy,pharmacy,polygons,509945249,-20.165971650000852,57.51747114999647,OpenStreetMap via osmdata,mauritius | vallee pitot pharmacy
+Mauritius,MUS,Eastern Africa RCC,Green Cross Pharmacie,pharmacy,polygons,509977637,-20.285576700000007,57.480227649999726,OpenStreetMap via osmdata,mauritius | green cross pharmacie
+Mauritius,MUS,Eastern Africa RCC,Pharmacie De L'ouest,pharmacy,polygons,510058789,-20.165282400012245,57.4939709008655,OpenStreetMap via osmdata,mauritius | pharmacie de l ouest
+Mauritius,MUS,Eastern Africa RCC,Bassin Community Health Centre,clinic,polygons,510217508,-20.2843258000003,57.46456934949481,OpenStreetMap via osmdata,mauritius | bassin community health centre
+Mauritius,MUS,Eastern Africa RCC,Pharmacie De Beau Bassin,pharmacy,polygons,510536614,-20.225304350006297,57.46782310000023,OpenStreetMap via osmdata,mauritius | pharmacie de beau bassin
+Mauritius,MUS,Eastern Africa RCC,Pharmacie Confiance,pharmacy,polygons,510563259,-20.217494800003067,57.46933704604344,OpenStreetMap via osmdata,mauritius | pharmacie confiance
+Mauritius,MUS,Eastern Africa RCC,Medical Centre,clinic,polygons,510821930,-20.23692505002541,57.47177364999725,OpenStreetMap via osmdata,mauritius | medical centre
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 31,pharmacy,polygons,574313289,-20.191453100005976,57.667956064137584,OpenStreetMap via osmdata,mauritius | unnamed facility 31
+Mauritius,MUS,Eastern Africa RCC,Dispensaire de Buckingham,clinic,polygons,633713779,-20.242545000040725,57.46624251605202,OpenStreetMap via osmdata,mauritius | dispensaire de buckingham
+Mauritius,MUS,Eastern Africa RCC,Sir Seewoosagur Ramgoolam National Hospital,hospital,polygons,647952709,-20.09663885044531,57.55933854536692,OpenStreetMap via osmdata,mauritius | sir seewoosagur ramgoolam national hospital
+Mauritius,MUS,Eastern Africa RCC,Sterilisation clinic,clinic,polygons,677854653,-20.181804300009738,57.77264624907814,OpenStreetMap via osmdata,mauritius | sterilisation clinic
+Mauritius,MUS,Eastern Africa RCC,Belle Mare Community Health Centre,hospital,polygons,677855079,-20.197215100009256,57.7750428581035,OpenStreetMap via osmdata,mauritius | belle mare community health centre
+Mauritius,MUS,Eastern Africa RCC,Chisty Shifa Clinic,clinic,polygons,737240209,-20.16858650001154,57.50668380012761,OpenStreetMap via osmdata,mauritius | chisty shifa clinic
+Mauritius,MUS,Eastern Africa RCC,Victoria Hospital,hospital,polygons,784216854,-20.277412005847367,57.47643196183152,OpenStreetMap via osmdata,mauritius | victoria hospital
+Mauritius,MUS,Eastern Africa RCC,Moka eye hospital,hospital,polygons,784220266,-20.22192420000856,57.503722480830945,OpenStreetMap via osmdata,mauritius | moka eye hospital
+Mauritius,MUS,Eastern Africa RCC,Clinique du Nord,hospital,polygons,784223084,-20.008542400006558,57.559873742300425,OpenStreetMap via osmdata,mauritius | clinique du nord
+Mauritius,MUS,Eastern Africa RCC,Clinique du Nord,hospital,polygons,784225078,-20.13067575008093,57.4969293,OpenStreetMap via osmdata,mauritius | clinique du nord
+Mauritius,MUS,Eastern Africa RCC,The Vale Area Health Centre,hospital,polygons,784242066,-20.028866800000003,57.597618350000275,OpenStreetMap via osmdata,mauritius | the vale area health centre
+Mauritius,MUS,Eastern Africa RCC,Triolet Medi Clinic,hospital,polygons,784244087,-20.060520050041887,57.555462506443845,OpenStreetMap via osmdata,mauritius | triolet medi clinic
+Mauritius,MUS,Eastern Africa RCC,Health Centre,hospital,polygons,784246258,-20.06932270000013,57.5681869627595,OpenStreetMap via osmdata,mauritius | health centre
+Mauritius,MUS,Eastern Africa RCC,Mahebourg Hospital,hospital,polygons,784247368,-20.411331550028855,57.70320899667126,OpenStreetMap via osmdata,mauritius | mahebourg hospital
+Mauritius,MUS,Eastern Africa RCC,Primary Health Care,hospital,polygons,784247534,-20.148296350000194,57.68442949630273,OpenStreetMap via osmdata,mauritius | primary health care
+Mauritius,MUS,Eastern Africa RCC,Lady Sushil Ramgoolam medi clinic,hospital,polygons,784247848,-20.17813195000431,57.6619686119586,OpenStreetMap via osmdata,mauritius | lady sushil ramgoolam medi clinic
+Mauritius,MUS,Eastern Africa RCC,Pro Care Pharmacy,pharmacy,polygons,1005534804,-20.26441080000947,57.480744366226425,OpenStreetMap via osmdata,mauritius | pro care pharmacy
+Mauritius,MUS,Eastern Africa RCC,Pointe aux Sables Medical Dispensary,pharmacy,polygons,1006363949,-20.17258040000194,57.446040068342796,OpenStreetMap via osmdata,mauritius | pointe aux sables medical dispensary
+Mauritius,MUS,Eastern Africa RCC,Dr.Raj Roy,doctors,polygons,1006710065,-20.269758500000314,57.47543190702636,OpenStreetMap via osmdata,mauritius | dr raj roy
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 50,pharmacy,polygons,1006710093,-20.269356950000294,57.4741057688896,OpenStreetMap via osmdata,mauritius | unnamed facility 50
+Mauritius,MUS,Eastern Africa RCC,Pharmacie de Quatre Bornes,pharmacy,polygons,1006964709,-20.266941150003127,57.47777412127562,OpenStreetMap via osmdata,mauritius | pharmacie de quatre bornes
+Mauritius,MUS,Eastern Africa RCC,Labo OI Mauritius,dentist,polygons,1008686301,-20.262575150000725,57.48216719274774,OpenStreetMap via osmdata,mauritius | labo oi mauritius
+Mauritius,MUS,Eastern Africa RCC,Petit Gabriel Dispensary,doctors,polygons,1019960310,-19.715694050020296,63.42823339927462,OpenStreetMap via osmdata,mauritius | petit gabriel dispensary
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 54,doctors,polygons,1019962182,-19.743434000005582,63.41223180579595,OpenStreetMap via osmdata,mauritius | unnamed facility 54
+Mauritius,MUS,Eastern Africa RCC,Sihha Medical Centre,hospital,polygons,1033859389,-20.166214250007815,57.481570517872036,OpenStreetMap via osmdata,mauritius | sihha medical centre
+Mauritius,MUS,Eastern Africa RCC,Pharmacie La Pointe,pharmacy,polygons,1088721083,-20.17830970000015,57.43798110193307,OpenStreetMap via osmdata,mauritius | pharmacie la pointe
+Mauritius,MUS,Eastern Africa RCC,PHARMACY CAMP FOUQUEREUX,pharmacy,polygons,1161965999,-20.285338700000707,57.52404869089795,OpenStreetMap via osmdata,mauritius | pharmacy camp fouquereux
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 58,pharmacy,polygons,1162751516,-20.293049950000086,57.51791931834944,OpenStreetMap via osmdata,mauritius | unnamed facility 58
+Mauritius,MUS,Eastern Africa RCC,Pharmacie Mesnil,pharmacy,polygons,1167100848,-20.291106000000326,57.51487950000191,OpenStreetMap via osmdata,mauritius | pharmacie mesnil
+Mauritius,MUS,Eastern Africa RCC,C-Care,clinic,polygons,1167471731,-20.023705950017963,57.57586541950101,OpenStreetMap via osmdata,mauritius | c care
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 61,pharmacy,polygons,1167665319,-20.007677250006484,57.642303704714976,OpenStreetMap via osmdata,mauritius | unnamed facility 61
+Mauritius,MUS,Eastern Africa RCC,Mediclinique Floreal,hospital,polygons,1167730094,-20.308483500037816,57.51233871439974,OpenStreetMap via osmdata,mauritius | mediclinique floreal
+Mauritius,MUS,Eastern Africa RCC,Florida,pharmacy,polygons,1173674266,-20.126530750120555,57.54241221626178,OpenStreetMap via osmdata,mauritius | florida
+Mauritius,MUS,Eastern Africa RCC,SPARC Medical Centre,doctors,polygons,1174703249,-20.2767191000408,57.395280665149315,OpenStreetMap via osmdata,mauritius | sparc medical centre
+Mauritius,MUS,Eastern Africa RCC,ARTEMIS HOSPITAL,clinic,polygons,1179758469,-20.310789050088317,57.52416562899156,OpenStreetMap via osmdata,mauritius | artemis hospital
+Mauritius,MUS,Eastern Africa RCC,Surgery gynaecology,clinic,polygons,1179979977,-20.230132900099623,57.471665437746964,OpenStreetMap via osmdata,mauritius | surgery gynaecology
+Mauritius,MUS,Eastern Africa RCC,Renaissance,pharmacy,polygons,1180021382,-20.159634700007945,57.50960184081026,OpenStreetMap via osmdata,mauritius | renaissance
+Mauritius,MUS,Eastern Africa RCC,VIP Lazer Clinic,clinic,polygons,1191387197,-20.282882900033943,57.373646584336385,OpenStreetMap via osmdata,mauritius | vip lazer clinic
+Mauritius,MUS,Eastern Africa RCC,Life Medical Center,clinic,polygons,1199469506,-20.33228030028467,57.384888112159686,OpenStreetMap via osmdata,mauritius | life medical center
+Mauritius,MUS,Eastern Africa RCC,Vet Clinic,clinic,polygons,1200032819,-20.003948600021108,57.61882680827906,OpenStreetMap via osmdata,mauritius | vet clinic
+Mauritius,MUS,Eastern Africa RCC,Zeeva Fertility,clinic,polygons,1200155426,-20.32029795003682,57.515053175086116,OpenStreetMap via osmdata,mauritius | zeeva fertility
+Mauritius,MUS,Eastern Africa RCC,Dr. S.N.Nazir,doctors,polygons,1213510747,-20.169216150000008,57.504573237215844,OpenStreetMap via osmdata,mauritius | dr s n nazir
+Mauritius,MUS,Eastern Africa RCC,Dr Nndagopen Narayanen,hospital,polygons,1213566565,-20.299722050000753,57.495864230703916,OpenStreetMap via osmdata,mauritius | dr nndagopen narayanen
+Mauritius,MUS,Eastern Africa RCC,Dr.(Mrs).P Gowreesunkur,doctors,polygons,1213571790,-20.300682250000346,57.486850412135944,OpenStreetMap via osmdata,mauritius | dr mrs p gowreesunkur
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 75,pharmacy,polygons,1213574197,-20.300582900005917,57.488919392301625,OpenStreetMap via osmdata,mauritius | unnamed facility 75
+Mauritius,MUS,Eastern Africa RCC,JMR | Clinique Dentaire. (Dr. Jaumeer),hospital,polygons,1214403419,-20.30160890000047,57.48853499713139,OpenStreetMap via osmdata,mauritius | jmr clinique dentaire dr jaumeer
+Mauritius,MUS,Eastern Africa RCC,Clinique du Sommeil et du Stresse,hospital,polygons,1214458326,-20.298304300020916,57.49600298353065,OpenStreetMap via osmdata,mauritius | clinique du sommeil et du stresse
+Mauritius,MUS,Eastern Africa RCC,Clinique du sommeil et stresse,hospital,polygons,1214458327,-20.298157750003725,57.495743287498506,OpenStreetMap via osmdata,mauritius | clinique du sommeil et stresse
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 79,clinic,polygons,1215226105,-20.29270495000124,57.493401309298534,OpenStreetMap via osmdata,mauritius | unnamed facility 79
+Mauritius,MUS,Eastern Africa RCC,St Paul pharmacy,pharmacy,polygons,1215229151,-20.292348150007307,57.50519895054659,OpenStreetMap via osmdata,mauritius | st paul pharmacy
+Mauritius,MUS,Eastern Africa RCC,Sri Sathya Sai Baba Centre of Vacoas,hospital,polygons,1215253180,-20.300150450023416,57.489678553135036,OpenStreetMap via osmdata,mauritius | sri sathya sai baba centre of vacoas
+Mauritius,MUS,Eastern Africa RCC,Dr.Satiss Gowry,doctors,polygons,1215254003,-20.293635350000432,57.48827109999882,OpenStreetMap via osmdata,mauritius | dr satiss gowry
+Mauritius,MUS,Eastern Africa RCC,Dr Santosh Kumar Chukowry Orthopaedics Surgeon,doctors,polygons,1222490695,-20.31110165000786,57.51289240150368,OpenStreetMap via osmdata,mauritius | dr santosh kumar chukowry orthopaedics surgeon
+Mauritius,MUS,Eastern Africa RCC,Dr Dharry Boodhun,doctors,polygons,1222586191,-20.290369550006037,57.50919229457652,OpenStreetMap via osmdata,mauritius | dr dharry boodhun
+Mauritius,MUS,Eastern Africa RCC,Dr Abbas Medical Centre,hospital,polygons,1222927163,-20.287299650017736,57.50922053490681,OpenStreetMap via osmdata,mauritius | dr abbas medical centre
+Mauritius,MUS,Eastern Africa RCC,Pharmacy Central,pharmacy,polygons,1222947130,-20.290084150006816,57.51054954866026,OpenStreetMap via osmdata,mauritius | pharmacy central
+Mauritius,MUS,Eastern Africa RCC,Dheesarajshing Jawaheer,doctors,polygons,1222947182,-20.29097415000134,57.51011679999767,OpenStreetMap via osmdata,mauritius | dheesarajshing jawaheer
+Mauritius,MUS,Eastern Africa RCC,NEW MOKA EYE HOSPITAL,hospital,polygons,1320383708,-20.23423725017351,57.50121484328565,OpenStreetMap via osmdata,mauritius | new moka eye hospital
+Mauritius,MUS,Eastern Africa RCC,Unnamed facility 89,clinic,polygons,1331315165,-20.24256225000346,57.47187805521811,OpenStreetMap via osmdata,mauritius | unnamed facility 89
+Mauritius,MUS,Eastern Africa RCC,Dr Ashwin Domun,doctors,polygons,1346665230,-20.16973750000272,57.468082319019075,OpenStreetMap via osmdata,mauritius | dr ashwin domun
+Mauritius,MUS,Eastern Africa RCC,C-Care,clinic,polygons,1356391390,-20.34783870005378,57.36474783615316,OpenStreetMap via osmdata,mauritius | c care
+Mauritius,MUS,Eastern Africa RCC,ssrn hospital,hospital,polygons,1360829132,-20.096557567162957,57.56199457327642,OpenStreetMap via osmdata,mauritius | ssrn hospital
+Mauritius,MUS,Eastern Africa RCC,Hôpital de Crève-Cœur,hospital,multipolygons,8125062,-19.680116950003768,63.43015318477939,OpenStreetMap via osmdata,mauritius | hopital de creve c ur

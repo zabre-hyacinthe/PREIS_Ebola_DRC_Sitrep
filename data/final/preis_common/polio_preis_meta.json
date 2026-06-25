@@ -1,0 +1,42 @@
+{
+  "module": "polio",
+  "module_label": "Polio — Afrique (cVDPV & WPV)",
+  "source": "GPEI / Polio This Week",
+  "last_report_id": "issue_20260610",
+  "last_report_date": "2026-06-10",
+  "last_extracted_at": "2026-06-16T21:16:19Z",
+  "system_status": "alert",
+  "n_series_rows": 3,
+  "n_countries": 3,
+  "n_signals": 3,
+  "signals_by_level": {
+    "critical": 0,
+    "high": 1,
+    "moderate": 2,
+    "info": 0
+  },
+  "virus_summary": {
+    "cVDPV2": {
+      "n_events": 4,
+      "n_countries": 3
+    }
+  },
+  "countries_alert": [
+    "Nigeria"
+  ],
+  "source_url": "https://polioeradication.org/about-polio/polio-this-week/",
+  "geographic_scope": {
+    "region": "Africa",
+    "geo_level": "country",
+    "n_countries": 3,
+    "rcc_covered": ["Northern", "Southern", "Eastern", "Western", "Central"]
+  },
+  "methodology_notes": {
+    "signal_rule": "WPV = critical ; cVDPV + cas humain = high ; cVDPV environnement seul = moderate",
+    "data_source": "GPEI Polio This Week — données validées GPEI/OMS",
+    "provisional": "FALSE — source officielle GPEI",
+    "update_freq": "Hebdomadaire (mardi/mercredi)"
+  },
+  "schema_version": "1.0",
+  "adapter_version": "00_preis_adapter_polio.R v1.0"
+}

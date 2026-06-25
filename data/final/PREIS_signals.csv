@@ -1,0 +1,6 @@
+detected_on,type,level,zone,province,date,severity,detail,hypotheses
+2026-06-15,High lethality,Zone,Beni,Nord-Kivu,2026-06-13,high,Beni: provisional lethality 71.4% (14 cases),Late or insufficient care? Particular severity? Under-detection of mild cases (biased denominator)? To investigate.
+2026-06-15,High lethality,Zone,Katwa,Nord-Kivu,2026-06-13,moderate,Katwa: provisional lethality 57.1% (21 cases),Late or insufficient care? Particular severity? Under-detection of mild cases (biased denominator)? To investigate.
+2026-06-15,Localized acceleration,Zone,Mongbwalu,Ituri,2026-06-13,moderate,Mongbwalu: 7-day average of new cases 6.4 → 12.9/day (x2.0),"Active uncontrolled transmission chain? New super-spreading event (funerals, care)? Strengthen contact tracing. To investigate."
+2026-06-15,Rising lethality,Zone,Mongbwalu,Ituri,2026-06-13,moderate,"Mongbwalu provisional lethality: 27.2% → 44.5% (+17.3 pts in ~7 days, 164 cumulative cases)",Late detection or care? Under-reporting of cases (underestimated denominator)? Difficult access to care? To investigate.
+2026-06-15,Data revision,National,NA,NA,2026-05-30,info,Downward revision of the national cumulative total on 30/05 (INRB reclassification).,"Case harmonisation/reclassification by INRB - normal behaviour, flagged for transparency (trends should be read accounting for these adjustments)."

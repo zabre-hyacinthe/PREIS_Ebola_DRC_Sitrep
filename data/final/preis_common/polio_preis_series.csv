@@ -1,0 +1,4 @@
+module,source,report_id,report_date,geo_level,geo_name,geo_code,indicator,value,value_type,signal_level,provisional,source_url,extracted_at
+polio,GPEI / Polio This Week,issue_20260610,2026-06-10,country,Malawi,MWI,cvdpv2_env_samples,1,incident,moderate,FALSE,https://polioeradication.org/about-polio/polio-this-week/,2026-06-16T21:16:19Z
+polio,GPEI / Polio This Week,issue_20260610,2026-06-10,country,Nigeria,NGA,cvdpv2_cases_and_env,1,incident,high,FALSE,https://polioeradication.org/about-polio/polio-this-week/,2026-06-16T21:16:19Z
+polio,GPEI / Polio This Week,issue_20260610,2026-06-10,country,South Sudan,SSD,cvdpv2_env_samples,2,incident,moderate,FALSE,https://polioeradication.org/about-polio/polio-this-week/,2026-06-16T21:16:19Z

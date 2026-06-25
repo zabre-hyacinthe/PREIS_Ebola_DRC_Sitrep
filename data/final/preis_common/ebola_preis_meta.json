@@ -1,0 +1,40 @@
+{
+  "module": "ebola_drc",
+  "module_label": "Ebola DRC (Bundibugyo)",
+  "source": "INSP/INRB",
+  "last_report_id": "sitrep_30",
+  "last_report_date": "2026-06-13",
+  "last_extracted_at": "2026-06-16T21:15:42Z",
+  "system_status": "alert",
+  "n_sitreps": 21,
+  "n_series_rows": 183,
+  "n_zones": 29,
+  "n_signals": 5,
+  "signals_by_level": {
+    "critical": 0,
+    "high": 1,
+    "moderate": 3,
+    "info": 1
+  },
+  "kpi": {
+    "cases_cumulative": null,
+    "deaths_cumulative": null,
+    "cfr_provisional": null,
+    "new_cases_last": null
+  },
+  "source_url": "https://insp.cd/wp-content/uploads/2026/06/Draft-Final_SitRep_MVE_RDC_N°30_13_06_2026-FD-1-1.pdf",
+  "geographic_scope": {
+    "country": "DRC",
+    "geo_code": "COD",
+    "provinces": ["Ituri", "Nord-Kivu", "Sud-Kivu"],
+    "geo_level_detail": "zone_sante"
+  },
+  "methodology_notes": {
+    "cfr_status": "provisional — données non finalisées",
+    "signals_note": "Signaux = hypothèses épidémiologiques, pas un diagnostic",
+    "data_source": "Totaux nationaux INRB (validés); détail zones extrait PDF SitRep",
+    "cosignature": "Co-signature INSP/INRB requise avant publication officielle"
+  },
+  "schema_version": "1.0",
+  "adapter_version": "00_preis_adapter_ebola.R v1.0"
+}

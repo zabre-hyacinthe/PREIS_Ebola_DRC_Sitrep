@@ -1,0 +1,3 @@
+sitrep_no,indicator_code,pdf_value,inrb_value,diff,match
+30,cumulative_confirmed_cases,782,782,0,OK
+30,cumulative_deaths,181,181,0,OK

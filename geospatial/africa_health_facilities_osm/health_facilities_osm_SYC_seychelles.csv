@@ -1,0 +1,212 @@
+country,iso3,rcc,facility_name,facility_type,source_osm_type,osm_id,lat,lon,source,match_key_country_facility
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 1,health_facility,points,302655491,-4.3387884,55.7559942,OpenStreetMap via osmdata,seychelles | unnamed facility 1
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 2,health_facility,points,302655492,-4.3387554,55.7563984,OpenStreetMap via osmdata,seychelles | unnamed facility 2
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 3,health_facility,points,302655494,-4.3386781,55.7566573,OpenStreetMap via osmdata,seychelles | unnamed facility 3
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 4,health_facility,points,302655496,-4.338535,55.7568021,OpenStreetMap via osmdata,seychelles | unnamed facility 4
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 5,health_facility,points,302655831,-4.338121,55.7571362,OpenStreetMap via osmdata,seychelles | unnamed facility 5
+Seychelles,SYC,Eastern Africa RCC,Health Centre,clinic,points,765251897,-4.3281333,55.7171259,OpenStreetMap via osmdata,seychelles | health centre
+Seychelles,SYC,Eastern Africa RCC,Medical & Health Center / Hospital,hospital,points,765251909,-4.3385232,55.7562857,OpenStreetMap via osmdata,seychelles | medical health center hospital
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 8,dentist,points,773554563,-4.6229325,55.4556105,OpenStreetMap via osmdata,seychelles | unnamed facility 8
+Seychelles,SYC,Eastern Africa RCC,Behram's Pharmacy,pharmacy,points,773554574,-4.619824,55.4545832,OpenStreetMap via osmdata,seychelles | behram s pharmacy
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 10,health_facility,points,1231323745,-4.6313654,55.4551824,OpenStreetMap via osmdata,seychelles | unnamed facility 10
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 11,health_facility,points,1231323835,-4.6313507,55.4558942,OpenStreetMap via osmdata,seychelles | unnamed facility 11
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 12,health_facility,points,2010535039,-4.3380618,55.7568672,OpenStreetMap via osmdata,seychelles | unnamed facility 12
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 13,health_facility,points,2010535040,-4.3381153,55.7563522,OpenStreetMap via osmdata,seychelles | unnamed facility 13
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 14,health_facility,points,2010535041,-4.3382972,55.7559982,OpenStreetMap via osmdata,seychelles | unnamed facility 14
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 15,health_facility,points,2012366865,-4.6312263,55.4555583,OpenStreetMap via osmdata,seychelles | unnamed facility 15
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 16,health_facility,points,2012366866,-4.631356,55.4556836,OpenStreetMap via osmdata,seychelles | unnamed facility 16
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 17,health_facility,points,2012366867,-4.6314011,55.4553762,OpenStreetMap via osmdata,seychelles | unnamed facility 17
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 18,health_facility,points,2012366868,-4.6315308,55.4555015,OpenStreetMap via osmdata,seychelles | unnamed facility 18
+Seychelles,SYC,Eastern Africa RCC,Panacea Healthcare,pharmacy,points,2800303349,-4.739722,55.5178104,OpenStreetMap via osmdata,seychelles | panacea healthcare
+Seychelles,SYC,Eastern Africa RCC,DentalNClinic,hospital,points,2810347276,-4.6409531,55.4762295,OpenStreetMap via osmdata,seychelles | dentalnclinic
+Seychelles,SYC,Eastern Africa RCC,Medical Clinic,hospital,points,2810651232,-4.3363622,55.7600722,OpenStreetMap via osmdata,seychelles | medical clinic
+Seychelles,SYC,Eastern Africa RCC,Euromedical Family Clinic,hospital,points,2917558083,-4.6407882,55.4759601,OpenStreetMap via osmdata,seychelles | euromedical family clinic
+Seychelles,SYC,Eastern Africa RCC,Eureka Specialist Medical Clinic,hospital,points,3092794671,-4.5939888,55.4556547,OpenStreetMap via osmdata,seychelles | eureka specialist medical clinic
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 24,health_facility,points,3488091714,-4.7799423,55.5118931,OpenStreetMap via osmdata,seychelles | unnamed facility 24
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 25,health_facility,points,3488091715,-4.7799847,55.5118036,OpenStreetMap via osmdata,seychelles | unnamed facility 25
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 26,health_facility,points,3488091716,-4.7800621,55.5119503,OpenStreetMap via osmdata,seychelles | unnamed facility 26
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 27,health_facility,points,3488091717,-4.7801045,55.5118609,OpenStreetMap via osmdata,seychelles | unnamed facility 27
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 28,health_facility,points,3676491176,-4.7394124,55.5164172,OpenStreetMap via osmdata,seychelles | unnamed facility 28
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 29,health_facility,points,3676491177,-4.7399363,55.5176175,OpenStreetMap via osmdata,seychelles | unnamed facility 29
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 30,health_facility,points,3676491178,-4.7399978,55.5175544,OpenStreetMap via osmdata,seychelles | unnamed facility 30
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 31,health_facility,points,3676491179,-4.7404856,55.516967,OpenStreetMap via osmdata,seychelles | unnamed facility 31
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 32,health_facility,points,3676491180,-4.7401461,55.5160591,OpenStreetMap via osmdata,seychelles | unnamed facility 32
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 33,health_facility,points,3676491181,-4.7404402,55.5167484,OpenStreetMap via osmdata,seychelles | unnamed facility 33
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 34,health_facility,points,4313591699,-4.4833737,55.250166,OpenStreetMap via osmdata,seychelles | unnamed facility 34
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 35,health_facility,points,4313591700,-4.4834226,55.2501039,OpenStreetMap via osmdata,seychelles | unnamed facility 35
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 36,health_facility,points,4313591701,-4.4834931,55.2501598,OpenStreetMap via osmdata,seychelles | unnamed facility 36
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 37,health_facility,points,4313591702,-4.4835157,55.2501312,OpenStreetMap via osmdata,seychelles | unnamed facility 37
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 38,health_facility,points,4313591704,-4.4835596,55.2502125,OpenStreetMap via osmdata,seychelles | unnamed facility 38
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 39,health_facility,points,4313591705,-4.4835821,55.2501839,OpenStreetMap via osmdata,seychelles | unnamed facility 39
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 40,health_facility,points,4313591708,-4.4836055,55.250249,OpenStreetMap via osmdata,seychelles | unnamed facility 40
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 41,health_facility,points,4313591709,-4.4836298,55.2502181,OpenStreetMap via osmdata,seychelles | unnamed facility 41
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 42,health_facility,points,4313591711,-4.4836616,55.2503945,OpenStreetMap via osmdata,seychelles | unnamed facility 42
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 43,health_facility,points,4313591712,-4.4837349,55.2503015,OpenStreetMap via osmdata,seychelles | unnamed facility 43
+Seychelles,SYC,Eastern Africa RCC,Euromedical Family Clinic (Providence branch),hospital,points,4397223784,-4.6512526,55.4838853,OpenStreetMap via osmdata,seychelles | euromedical family clinic providence branch
+Seychelles,SYC,Eastern Africa RCC,Behram's Pharmacy,pharmacy,points,4438684169,-4.6170063,55.4297045,OpenStreetMap via osmdata,seychelles | behram s pharmacy
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 46,health_facility,points,4547397786,-4.6217854,55.4491712,OpenStreetMap via osmdata,seychelles | unnamed facility 46
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 47,health_facility,points,4547397787,-4.6216274,55.4491655,OpenStreetMap via osmdata,seychelles | unnamed facility 47
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 48,health_facility,points,4547397788,-4.6216246,55.4494458,OpenStreetMap via osmdata,seychelles | unnamed facility 48
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 49,health_facility,points,4547397889,-4.6216725,55.449443,OpenStreetMap via osmdata,seychelles | unnamed facility 49
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 50,health_facility,points,4547397890,-4.6216754,55.4494685,OpenStreetMap via osmdata,seychelles | unnamed facility 50
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 51,health_facility,points,4547397891,-4.6217374,55.4494628,OpenStreetMap via osmdata,seychelles | unnamed facility 51
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 52,health_facility,points,4547397892,-4.6217318,55.4494373,OpenStreetMap via osmdata,seychelles | unnamed facility 52
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 53,health_facility,points,4547397893,-4.6217798,55.4494373,OpenStreetMap via osmdata,seychelles | unnamed facility 53
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 54,health_facility,points,4547440579,-4.6211329,55.4501562,OpenStreetMap via osmdata,seychelles | unnamed facility 54
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 55,health_facility,points,4547440580,-4.6211436,55.4499953,OpenStreetMap via osmdata,seychelles | unnamed facility 55
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 56,health_facility,points,4547440581,-4.6208067,55.4499953,OpenStreetMap via osmdata,seychelles | unnamed facility 56
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 57,health_facility,points,4547440582,-4.6208013,55.4501508,OpenStreetMap via osmdata,seychelles | unnamed facility 57
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 58,health_facility,points,4547453819,-4.6310038,55.4555568,OpenStreetMap via osmdata,seychelles | unnamed facility 58
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 59,health_facility,points,4547483852,-4.644199,55.4688653,OpenStreetMap via osmdata,seychelles | unnamed facility 59
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 60,health_facility,points,4547483853,-4.6439523,55.4690869,OpenStreetMap via osmdata,seychelles | unnamed facility 60
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 61,health_facility,points,4547483854,-4.6441231,55.4692782,OpenStreetMap via osmdata,seychelles | unnamed facility 61
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 62,health_facility,points,4547483855,-4.6442601,55.4691552,OpenStreetMap via osmdata,seychelles | unnamed facility 62
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 63,health_facility,points,4547483856,-4.644216,55.4691058,OpenStreetMap via osmdata,seychelles | unnamed facility 63
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 64,health_facility,points,4547483857,-4.6442485,55.4690765,OpenStreetMap via osmdata,seychelles | unnamed facility 64
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 65,health_facility,points,4547483858,-4.6441951,55.4690166,OpenStreetMap via osmdata,seychelles | unnamed facility 65
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 66,health_facility,points,4547483859,-4.6442722,55.4689474,OpenStreetMap via osmdata,seychelles | unnamed facility 66
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 67,health_facility,points,4557841137,-4.6314883,55.4553019,OpenStreetMap via osmdata,seychelles | unnamed facility 67
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 68,pharmacy,points,4592899424,-4.6206835,55.4521555,OpenStreetMap via osmdata,seychelles | unnamed facility 68
+Seychelles,SYC,Eastern Africa RCC,Eden Pharmacy,pharmacy,points,4708721746,-4.6407405,55.4760824,OpenStreetMap via osmdata,seychelles | eden pharmacy
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 70,health_facility,points,5004539989,-4.6326187,55.4615161,OpenStreetMap via osmdata,seychelles | unnamed facility 70
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 71,health_facility,points,5004539990,-4.6324904,55.4615171,OpenStreetMap via osmdata,seychelles | unnamed facility 71
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 72,health_facility,points,5004539995,-4.6323944,55.4614223,OpenStreetMap via osmdata,seychelles | unnamed facility 72
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 73,health_facility,points,5004539998,-4.6325837,55.4614181,OpenStreetMap via osmdata,seychelles | unnamed facility 73
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 74,health_facility,points,5004539999,-4.632528,55.4615573,OpenStreetMap via osmdata,seychelles | unnamed facility 74
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 75,health_facility,points,5004540001,-4.6324119,55.4614935,OpenStreetMap via osmdata,seychelles | unnamed facility 75
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 76,health_facility,points,5004540002,-4.63243,55.4614828,OpenStreetMap via osmdata,seychelles | unnamed facility 76
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 77,health_facility,points,5004540017,-4.6326882,55.4614753,OpenStreetMap via osmdata,seychelles | unnamed facility 77
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 78,health_facility,points,5004540018,-4.6325027,55.461538,OpenStreetMap via osmdata,seychelles | unnamed facility 78
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 79,health_facility,points,5004540019,-4.6324547,55.4615663,OpenStreetMap via osmdata,seychelles | unnamed facility 79
+Seychelles,SYC,Eastern Africa RCC,Good Health Pharmacy,pharmacy,points,5004542630,-4.6326402,55.4615983,OpenStreetMap via osmdata,seychelles | good health pharmacy
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 81,health_facility,points,5004561521,-4.6325674,55.4615815,OpenStreetMap via osmdata,seychelles | unnamed facility 81
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 82,health_facility,points,5004561522,-4.6325008,55.461511,OpenStreetMap via osmdata,seychelles | unnamed facility 82
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 83,health_facility,points,5004561526,-4.6325366,55.4613381,OpenStreetMap via osmdata,seychelles | unnamed facility 83
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 84,health_facility,points,5004561528,-4.632634,55.4615424,OpenStreetMap via osmdata,seychelles | unnamed facility 84
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 85,health_facility,points,5004561529,-4.6325468,55.4615463,OpenStreetMap via osmdata,seychelles | unnamed facility 85
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 86,health_facility,points,5004561531,-4.6326366,55.4613869,OpenStreetMap via osmdata,seychelles | unnamed facility 86
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 87,pharmacy,points,5109370021,-4.6397342,55.4654791,OpenStreetMap via osmdata,seychelles | unnamed facility 87
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 88,pharmacy,points,5508452026,-4.3489607,55.8290888,OpenStreetMap via osmdata,seychelles | unnamed facility 88
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 89,pharmacy,points,5761355866,-4.342499,55.7580388,OpenStreetMap via osmdata,seychelles | unnamed facility 89
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 90,health_facility,points,5827179719,-4.6897587,55.5253096,OpenStreetMap via osmdata,seychelles | unnamed facility 90
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 91,health_facility,points,5827179720,-4.6897702,55.5253258,OpenStreetMap via osmdata,seychelles | unnamed facility 91
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 92,health_facility,points,5827179721,-4.6897913,55.5253133,OpenStreetMap via osmdata,seychelles | unnamed facility 92
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 93,health_facility,points,5827179722,-4.6898114,55.5253476,OpenStreetMap via osmdata,seychelles | unnamed facility 93
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 94,health_facility,points,5827179723,-4.6897914,55.5253591,OpenStreetMap via osmdata,seychelles | unnamed facility 94
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 95,health_facility,points,5827179724,-4.6898048,55.525383,OpenStreetMap via osmdata,seychelles | unnamed facility 95
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 96,health_facility,points,5827179725,-4.6897111,55.5254413,OpenStreetMap via osmdata,seychelles | unnamed facility 96
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 97,health_facility,points,5827179726,-4.6896641,55.5253689,OpenStreetMap via osmdata,seychelles | unnamed facility 97
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 98,health_facility,points,5827184620,-4.6512781,55.4837003,OpenStreetMap via osmdata,seychelles | unnamed facility 98
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 99,health_facility,points,5827184624,-4.6514804,55.4841891,OpenStreetMap via osmdata,seychelles | unnamed facility 99
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 100,health_facility,points,5827225901,-4.7046534,55.4780472,OpenStreetMap via osmdata,seychelles | unnamed facility 100
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 101,health_facility,points,5827225902,-4.7046202,55.4780129,OpenStreetMap via osmdata,seychelles | unnamed facility 101
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 102,health_facility,points,5827225903,-4.7045899,55.4780449,OpenStreetMap via osmdata,seychelles | unnamed facility 102
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 103,health_facility,points,5827225904,-4.7046249,55.4780766,OpenStreetMap via osmdata,seychelles | unnamed facility 103
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 104,health_facility,points,5827225905,-4.7044594,55.4779311,OpenStreetMap via osmdata,seychelles | unnamed facility 104
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 105,health_facility,points,5827225906,-4.7045198,55.4779803,OpenStreetMap via osmdata,seychelles | unnamed facility 105
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 106,health_facility,points,5827225907,-4.7045499,55.4779481,OpenStreetMap via osmdata,seychelles | unnamed facility 106
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 107,health_facility,points,5827225908,-4.7045413,55.4779417,OpenStreetMap via osmdata,seychelles | unnamed facility 107
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 108,health_facility,points,5827225909,-4.7045957,55.47788,OpenStreetMap via osmdata,seychelles | unnamed facility 108
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 109,health_facility,points,5827225910,-4.7047129,55.4779906,OpenStreetMap via osmdata,seychelles | unnamed facility 109
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 110,health_facility,points,5827225911,-4.7047301,55.4779727,OpenStreetMap via osmdata,seychelles | unnamed facility 110
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 111,health_facility,points,5827225913,-4.7047589,55.4779884,OpenStreetMap via osmdata,seychelles | unnamed facility 111
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 112,health_facility,points,5827225914,-4.7047834,55.4780198,OpenStreetMap via osmdata,seychelles | unnamed facility 112
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 113,health_facility,points,5827225915,-4.7047669,55.478037,OpenStreetMap via osmdata,seychelles | unnamed facility 113
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 114,health_facility,points,5827225916,-4.7048467,55.4781141,OpenStreetMap via osmdata,seychelles | unnamed facility 114
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 115,health_facility,points,5827225917,-4.704788,55.4781779,OpenStreetMap via osmdata,seychelles | unnamed facility 115
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 116,health_facility,points,5827225918,-4.7047132,55.4781073,OpenStreetMap via osmdata,seychelles | unnamed facility 116
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 117,health_facility,points,5827225919,-4.7046752,55.4781424,OpenStreetMap via osmdata,seychelles | unnamed facility 117
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 118,health_facility,points,5827225920,-4.7047493,55.4782174,OpenStreetMap via osmdata,seychelles | unnamed facility 118
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 119,health_facility,points,5827225921,-4.7046942,55.4782776,OpenStreetMap via osmdata,seychelles | unnamed facility 119
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 120,health_facility,points,5827225922,-4.7046201,55.4782084,OpenStreetMap via osmdata,seychelles | unnamed facility 120
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 121,health_facility,points,5827225923,-4.7045671,55.4782593,OpenStreetMap via osmdata,seychelles | unnamed facility 121
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 122,health_facility,points,5827225924,-4.7045261,55.4782264,OpenStreetMap via osmdata,seychelles | unnamed facility 122
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 123,health_facility,points,5827225925,-4.7045769,55.4781669,OpenStreetMap via osmdata,seychelles | unnamed facility 123
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 124,health_facility,points,5827225926,-4.7043957,55.4779978,OpenStreetMap via osmdata,seychelles | unnamed facility 124
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 125,health_facility,points,5827645941,-4.6175921,55.4274816,OpenStreetMap via osmdata,seychelles | unnamed facility 125
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 126,health_facility,points,5827645942,-4.6176287,55.4274849,OpenStreetMap via osmdata,seychelles | unnamed facility 126
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 127,health_facility,points,5827645943,-4.6176245,55.4275297,OpenStreetMap via osmdata,seychelles | unnamed facility 127
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 128,health_facility,points,5827645944,-4.6176333,55.4275305,OpenStreetMap via osmdata,seychelles | unnamed facility 128
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 129,health_facility,points,5827645945,-4.6176495,55.4273621,OpenStreetMap via osmdata,seychelles | unnamed facility 129
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 130,health_facility,points,5827645946,-4.617605,55.4273578,OpenStreetMap via osmdata,seychelles | unnamed facility 130
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 131,health_facility,points,5827645947,-4.6174503,55.4274848,OpenStreetMap via osmdata,seychelles | unnamed facility 131
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 132,health_facility,points,5827645948,-4.6174883,55.4274888,OpenStreetMap via osmdata,seychelles | unnamed facility 132
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 133,health_facility,points,5827645949,-4.6174988,55.4273875,OpenStreetMap via osmdata,seychelles | unnamed facility 133
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 134,health_facility,points,5827645950,-4.6174592,55.4273834,OpenStreetMap via osmdata,seychelles | unnamed facility 134
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 135,health_facility,points,5827645951,-4.6174657,55.427321,OpenStreetMap via osmdata,seychelles | unnamed facility 135
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 136,health_facility,points,5827645952,-4.6175053,55.4273251,OpenStreetMap via osmdata,seychelles | unnamed facility 136
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 137,health_facility,points,5827645953,-4.6175142,55.4272397,OpenStreetMap via osmdata,seychelles | unnamed facility 137
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 138,health_facility,points,5827645954,-4.6177847,55.4272662,OpenStreetMap via osmdata,seychelles | unnamed facility 138
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 139,health_facility,points,5827645955,-4.6177602,55.4275124,OpenStreetMap via osmdata,seychelles | unnamed facility 139
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 140,health_facility,points,5827645956,-4.6178148,55.4275176,OpenStreetMap via osmdata,seychelles | unnamed facility 140
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 141,health_facility,points,5827645957,-4.6178039,55.4276311,OpenStreetMap via osmdata,seychelles | unnamed facility 141
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 142,health_facility,points,5827645958,-4.6177492000000004,55.4276258,OpenStreetMap via osmdata,seychelles | unnamed facility 142
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 143,health_facility,points,5827645959,-4.617732,55.4278039,OpenStreetMap via osmdata,seychelles | unnamed facility 143
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 144,health_facility,points,5827645960,-4.6176229,55.4277934,OpenStreetMap via osmdata,seychelles | unnamed facility 144
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 145,health_facility,points,5827645961,-4.6176414,55.4276009,OpenStreetMap via osmdata,seychelles | unnamed facility 145
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 146,health_facility,points,5827645962,-4.617595,55.4275966,OpenStreetMap via osmdata,seychelles | unnamed facility 146
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 147,health_facility,points,5827645963,-4.6175747,55.4277914,OpenStreetMap via osmdata,seychelles | unnamed facility 147
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 148,health_facility,points,5827645964,-4.617458,55.4277797,OpenStreetMap via osmdata,seychelles | unnamed facility 148
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 149,health_facility,points,5827645965,-4.6174766,55.4276003,OpenStreetMap via osmdata,seychelles | unnamed facility 149
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 150,health_facility,points,5827645966,-4.6174387,55.4275964,OpenStreetMap via osmdata,seychelles | unnamed facility 150
+Seychelles,SYC,Eastern Africa RCC,vision care,clinic,points,5870471685,-4.326427,55.7152379,OpenStreetMap via osmdata,seychelles | vision care
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 152,health_facility,points,5992480417,-4.6920699,55.5237161,OpenStreetMap via osmdata,seychelles | unnamed facility 152
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 153,health_facility,points,5992480418,-4.692358,55.5236169,OpenStreetMap via osmdata,seychelles | unnamed facility 153
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 154,health_facility,points,5992480419,-4.6923687,55.5236256,OpenStreetMap via osmdata,seychelles | unnamed facility 154
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 155,health_facility,points,5992480420,-4.6925003,55.5236276,OpenStreetMap via osmdata,seychelles | unnamed facility 155
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 156,health_facility,points,5992480422,-4.6925711,55.5236578,OpenStreetMap via osmdata,seychelles | unnamed facility 156
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 157,health_facility,points,5992480423,-4.6924468,55.5241922,OpenStreetMap via osmdata,seychelles | unnamed facility 157
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 158,health_facility,points,5992480424,-4.6922851,55.5241701,OpenStreetMap via osmdata,seychelles | unnamed facility 158
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 159,health_facility,points,5992480425,-4.6922223,55.5241218,OpenStreetMap via osmdata,seychelles | unnamed facility 159
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 160,health_facility,points,5992480426,-4.6918267,55.5237691,OpenStreetMap via osmdata,seychelles | unnamed facility 160
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 161,health_facility,points,6424417944,-4.6925563,55.5236482,OpenStreetMap via osmdata,seychelles | unnamed facility 161
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 162,health_facility,points,6436857929,-4.594,55.4562177,OpenStreetMap via osmdata,seychelles | unnamed facility 162
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 163,health_facility,points,6436857930,-4.5938944,55.4562056,OpenStreetMap via osmdata,seychelles | unnamed facility 163
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 164,health_facility,points,6465655157,-4.3387247,55.7565486,OpenStreetMap via osmdata,seychelles | unnamed facility 164
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 165,health_facility,points,6564945442,-4.651262,55.4842695,OpenStreetMap via osmdata,seychelles | unnamed facility 165
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 166,health_facility,points,6564946019,-4.6510725,55.483787,OpenStreetMap via osmdata,seychelles | unnamed facility 166
+Seychelles,SYC,Eastern Africa RCC,Lanka,doctors,points,6595518886,-4.6245048,55.4526111,OpenStreetMap via osmdata,seychelles | lanka
+Seychelles,SYC,Eastern Africa RCC,Central point,pharmacy,points,6595548186,-4.6267191,55.4542667,OpenStreetMap via osmdata,seychelles | central point
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 169,health_facility,points,7325309617,-4.5942139,55.456272,OpenStreetMap via osmdata,seychelles | unnamed facility 169
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 170,health_facility,points,7325309618,-4.5944176,55.4555474,OpenStreetMap via osmdata,seychelles | unnamed facility 170
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 171,health_facility,points,7325309619,-4.5939854,55.4554182,OpenStreetMap via osmdata,seychelles | unnamed facility 171
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 172,health_facility,points,7325309620,-4.5939043,55.455758,OpenStreetMap via osmdata,seychelles | unnamed facility 172
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 173,health_facility,points,7492935518,-4.3383048,55.7559205,OpenStreetMap via osmdata,seychelles | unnamed facility 173
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 174,health_facility,points,9336265069,-4.631587,55.4556057,OpenStreetMap via osmdata,seychelles | unnamed facility 174
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 175,health_facility,points,9336265070,-4.631607,55.4555207,OpenStreetMap via osmdata,seychelles | unnamed facility 175
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 176,health_facility,points,9336265071,-4.631639,55.4555518,OpenStreetMap via osmdata,seychelles | unnamed facility 176
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 177,health_facility,points,9336265072,-4.6315057,55.4552838,OpenStreetMap via osmdata,seychelles | unnamed facility 177
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 178,health_facility,points,9336265073,-4.6316089,55.455627,OpenStreetMap via osmdata,seychelles | unnamed facility 178
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 179,health_facility,points,9336265074,-4.631676,55.4554493,OpenStreetMap via osmdata,seychelles | unnamed facility 179
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 180,health_facility,points,9424235645,-4.3387611,55.7563291,OpenStreetMap via osmdata,seychelles | unnamed facility 180
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 181,dentist,points,9983215287,-4.7506735,55.4807948,OpenStreetMap via osmdata,seychelles | unnamed facility 181
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 182,pharmacy,points,11838855745,-4.3378351,55.7584113,OpenStreetMap via osmdata,seychelles | unnamed facility 182
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 183,health_facility,points,11922177721,-4.3604002,55.8253851,OpenStreetMap via osmdata,seychelles | unnamed facility 183
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 184,health_facility,points,11922177722,-4.3608322,55.8253225,OpenStreetMap via osmdata,seychelles | unnamed facility 184
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 185,health_facility,points,11922177723,-4.3611593,55.8253966,OpenStreetMap via osmdata,seychelles | unnamed facility 185
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 186,health_facility,points,11922177724,-4.3612535,55.8260494,OpenStreetMap via osmdata,seychelles | unnamed facility 186
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 187,health_facility,points,11922177725,-4.3605114,55.826157,OpenStreetMap via osmdata,seychelles | unnamed facility 187
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 188,pharmacy,points,12047122907,-4.6295472,55.4606809,OpenStreetMap via osmdata,seychelles | unnamed facility 188
+Seychelles,SYC,Eastern Africa RCC,Pharmacy,pharmacy,points,13437240601,-4.6098185,55.4312997,OpenStreetMap via osmdata,seychelles | pharmacy
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 1,health_facility,polygons,107100414,-4.631177250021281,55.45555135508942,OpenStreetMap via osmdata,seychelles | unnamed facility 1
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 2,health_facility,polygons,190590572,-4.631378550000365,55.45552990000216,OpenStreetMap via osmdata,seychelles | unnamed facility 2
+Seychelles,SYC,Eastern Africa RCC,Takamaka Health Centre,doctors,polygons,341693424,-4.780023400001095,55.51187696615135,OpenStreetMap via osmdata,seychelles | takamaka health centre
+Seychelles,SYC,Eastern Africa RCC,Anse Royale Hospital,hospital,polygons,363488742,-4.739967050000693,55.516866219855174,OpenStreetMap via osmdata,seychelles | anse royale hospital
+Seychelles,SYC,Eastern Africa RCC,Silhouette Island clinic,clinic,polygons,432246935,-4.4835376500003346,55.2502223723579,OpenStreetMap via osmdata,seychelles | silhouette island clinic
+Seychelles,SYC,Eastern Africa RCC,Dr Chetty's Clinic,clinic,polygons,458790531,-4.621703600000556,55.44931707820328,OpenStreetMap via osmdata,seychelles | dr chetty s clinic
+Seychelles,SYC,Eastern Africa RCC,Dr Murthy's Clinic,clinic,polygons,458794379,-4.620969800018768,55.45007442198431,OpenStreetMap via osmdata,seychelles | dr murthy s clinic
+Seychelles,SYC,Eastern Africa RCC,Les Mamelles Clinic,clinic,polygons,458800158,-4.644037700005176,55.46909636942849,OpenStreetMap via osmdata,seychelles | les mamelles clinic
+Seychelles,SYC,Eastern Africa RCC,Jivan Clinic,clinic,polygons,511670857,-4.632541700000024,55.46144802323137,OpenStreetMap via osmdata,seychelles | jivan clinic
+Seychelles,SYC,Eastern Africa RCC,Hope and Trust Care,clinic,polygons,616314461,-4.689734900000405,55.52537550535202,OpenStreetMap via osmdata,seychelles | hope and trust care
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 11,hospital,polygons,616315049,-4.65127005000005,55.48398511558241,OpenStreetMap via osmdata,seychelles | unnamed facility 11
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 12,health_facility,polygons,616319706,-4.704622550000008,55.47804489971638,OpenStreetMap via osmdata,seychelles | unnamed facility 12
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 13,health_facility,polygons,616319709,-4.70464765000055,55.47808157634551,OpenStreetMap via osmdata,seychelles | unnamed facility 13
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 14,health_facility,polygons,616368468,-4.617632150000066,55.42742564897726,OpenStreetMap via osmdata,seychelles | unnamed facility 14
+Seychelles,SYC,Eastern Africa RCC,Unnamed facility 15,health_facility,polygons,616368469,-4.6176147500000715,55.427421192173966,OpenStreetMap via osmdata,seychelles | unnamed facility 15
+Seychelles,SYC,Eastern Africa RCC,Anse Aux Pins clinic,clinic,polygons,635192111,-4.692146100004159,55.523871862890566,OpenStreetMap via osmdata,seychelles | anse aux pins clinic
+Seychelles,SYC,Eastern Africa RCC,Medical & Health Center / Hospital,hospital,polygons,784178201,-4.338419900008777,55.75641651367604,OpenStreetMap via osmdata,seychelles | medical health center hospital
+Seychelles,SYC,Eastern Africa RCC,Eureka Specialist Medical Clinic,hospital,polygons,784186207,-4.594106950008029,55.455849692813075,OpenStreetMap via osmdata,seychelles | eureka specialist medical clinic
+Seychelles,SYC,Eastern Africa RCC,St Mary's Hospital,hospital,polygons,1285176984,-4.360671800017123,55.82573974306452,OpenStreetMap via osmdata,seychelles | st mary s hospital
+Seychelles,SYC,Eastern Africa RCC,Victoria Hospital,hospital,multipolygons,2572369,-4.631288500002733,55.45537776227107,OpenStreetMap via osmdata,seychelles | victoria hospital
+Seychelles,SYC,Eastern Africa RCC,Health Centre of Anse Boileau,hospital,multipolygons,8526443,-4.704622550000008,55.47814257978023,OpenStreetMap via osmdata,seychelles | health centre of anse boileau
+Seychelles,SYC,Eastern Africa RCC,Beau Vallon Health Centre,clinic,multipolygons,8526795,-4.6176266000000075,55.427305299325,OpenStreetMap via osmdata,seychelles | beau vallon health centre

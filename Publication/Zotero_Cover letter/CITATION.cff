@@ -1,0 +1,38 @@
+cff-version: 1.2.0
+title: >-
+  PREIS Ebola DRC — Automated Real-Time Surveillance and
+  Early-Warning Signal Detection Pipeline
+message: >-
+  If you use this software, please cite it using the metadata
+  from this file.
+type: software
+authors:
+  - given-names: Hyacinthe
+    family-names: ZABRE
+    email: raogoz@africacdc.org
+    affiliation: "[TO COMPLETE]"
+    # orcid: "https://orcid.org/0000-0000-0000-0000"  # TO COMPLETE
+  # [TO COMPLETE WITH CO-AUTHORS] Add INSP / INRB co-authors here,
+  # in the agreed order, each with affiliation and ORCID.
+abstract: >-
+  Open-source pipeline that monitors official Ebola situation
+  reports (SitReps) during the 2026 Bundibugyo virus outbreak in
+  the Democratic Republic of the Congo, structures aggregated
+  surveillance data, computes epidemiological indicators, applies
+  transparent early-warning rules at national, provincial and
+  health-zone levels, performs retrospective validation, and
+  disseminates source documents and analytical alerts in near
+  real time alongside an interactive dashboard.
+keywords:
+  - Ebola
+  - Bundibugyo virus
+  - digital surveillance
+  - early warning
+  - event-based surveillance
+  - signal detection
+  - Democratic Republic of the Congo
+  - open-source software
+license: "[TO COMPLETE]"   # e.g. MIT, GPL-3.0 — choose and add a LICENSE file
+repository-code: "https://github.com/zabre-hyacinthe/PREIS_Ebola_DRC_Sitrep"
+version: "1.0.0"
+date-released: "2026-06-15"

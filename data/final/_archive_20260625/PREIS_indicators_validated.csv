@@ -1,0 +1,25 @@
+sitrep_no,indicator_code,domain,value,value_source,source_type,extraction_rule,priority,evidence,extracted_at,candidate_flag,qc_valid,qc_note
+23,alerts_reported,surveillance,134,observed,text_line,tbl_alerts_reported,3,Alertes remontées 134 208 3 345,2026-06-12 21:20:02.514175,candidate_ok,TRUE,selected_observed_candidate
+23,alerts_validated,surveillance,86,observed,text_line,tbl_alerts_validated,3,Alertes validées 86 30 1 117,2026-06-12 21:20:02.635414,candidate_ok,TRUE,selected_observed_candidate
+23,case_fatality_ratio,deaths,17.7,observed,text_line,total_row_cases_deaths_cfr_hz,1,"Total 515 91 17,7% 25 sur 104 (24,0 %) 27",2026-06-12 21:19:59.552755,candidate_ok,TRUE,selected_observed_candidate
+23,cases_ituri,cases,487,observed,text_line,province_row_ituri,2,"Ituri 487 74 15,2% 17 sur 36 (47,2 %) 27",2026-06-12 21:19:59.368547,candidate_ok,TRUE,selected_observed_candidate
+23,cases_nordkivu,cases,699,observed,text_line,province_row_nordkivu,2,"Nord-Kivu 699 577 82,5%",2026-06-12 21:20:02.983562,candidate_ok,TRUE,selected_observed_candidate
+23,cases_sudkivu,cases,223,observed,text_line,province_row_sudkivu,2,"Sud-Kivu 223 179 80,3%",2026-06-12 21:20:03.047146,candidate_ok,TRUE,selected_observed_candidate
+23,cumulative_confirmed_cases,cases,515,observed,text_line,total_row_cases_deaths_cfr_hz,1,"Total 515 91 17,7% 25 sur 104 (24,0 %) 27",2026-06-12 21:19:59.520497,candidate_ok,TRUE,selected_observed_candidate
+23,cumulative_deaths,deaths,91,observed,text_line,total_row_cases_deaths_cfr_hz,1,"Total 515 91 17,7% 25 sur 104 (24,0 %) 27",2026-06-12 21:19:59.532707,candidate_ok,TRUE,selected_observed_candidate
+23,deaths_ituri,deaths,118,observed,text_line,province_row_ituri,2,"Ituri 4 118 1 779 43,2%",2026-06-12 21:20:02.935032,candidate_ok,TRUE,selected_observed_candidate
+23,deaths_nordkivu,deaths,577,observed,text_line,province_row_nordkivu,2,"Nord-Kivu 699 577 82,5%",2026-06-12 21:20:02.997716,candidate_ok,TRUE,selected_observed_candidate
+23,deaths_sudkivu,deaths,179,observed,text_line,province_row_sudkivu,2,"Sud-Kivu 223 179 80,3%",2026-06-12 21:20:03.064541,candidate_ok,TRUE,selected_observed_candidate
+23,hz_affected_national,geography,25,observed,text_line,total_row_cases_deaths_cfr_hz,1,"Total 515 91 17,7% 25 sur 104 (24,0 %) 27",2026-06-12 21:19:59.569503,candidate_ok,TRUE,selected_observed_candidate
+28,alerts_reported,surveillance,143,observed,text_line,tbl_alerts_reported,3,Alertes remontées 143 266 10 419,2026-06-12 21:19:36.806398,candidate_ok,TRUE,selected_observed_candidate
+28,alerts_validated,surveillance,3,observed,text_line,tbl_alerts_validated,3,Nombre d'alertes validées 3,2026-06-12 21:19:38.032726,candidate_ok,TRUE,selected_observed_candidate
+28,case_fatality_ratio,deaths,20.2,observed,text_line,total_row_cases_deaths_cfr_hz,1,"Total 689 139 20,2% 29 sur 104 (27,9 %) 17",2026-06-12 21:19:35.180197,candidate_ok,TRUE,selected_observed_candidate
+28,cases_ituri,cases,646,observed,text_line,province_row_ituri,2,"Ituri 646 114 17,6% 19 sur 36 (52,8 %) 17",2026-06-12 21:19:35.12133,candidate_ok,TRUE,selected_observed_candidate
+28,cases_nordkivu,cases,1037,observed,text_line,province_row_nordkivu,2,"Nord-Kivu 1037 700 67,5%",2026-06-12 21:19:37.361447,candidate_ok,TRUE,selected_observed_candidate
+28,cases_sudkivu,cases,224,observed,text_line,province_row_sudkivu,2,"Sud-Kivu 224 185 82,6%",2026-06-12 21:19:37.419834,candidate_ok,TRUE,selected_observed_candidate
+28,cumulative_confirmed_cases,cases,689,observed,text_line,total_row_cases_deaths_cfr_hz,1,"Total 689 139 20,2% 29 sur 104 (27,9 %) 17",2026-06-12 21:19:35.17251,candidate_ok,TRUE,selected_observed_candidate
+28,cumulative_deaths,deaths,139,observed,text_line,total_row_cases_deaths_cfr_hz,1,"Total 689 139 20,2% 29 sur 104 (27,9 %) 17",2026-06-12 21:19:35.177056,candidate_ok,TRUE,selected_observed_candidate
+28,deaths_ituri,deaths,782,observed,text_line,province_row_ituri,2,"Ituri 4 782 830 17,4%2",2026-06-12 21:19:37.288967,candidate_ok,TRUE,selected_observed_candidate
+28,deaths_nordkivu,deaths,700,observed,text_line,province_row_nordkivu,2,"Nord-Kivu 1037 700 67,5%",2026-06-12 21:19:37.372137,candidate_ok,TRUE,selected_observed_candidate
+28,deaths_sudkivu,deaths,185,observed,text_line,province_row_sudkivu,2,"Sud-Kivu 224 185 82,6%",2026-06-12 21:19:37.433451,candidate_ok,TRUE,selected_observed_candidate
+28,hz_affected_national,geography,29,observed,text_line,total_row_cases_deaths_cfr_hz,1,"Total 689 139 20,2% 29 sur 104 (27,9 %) 17",2026-06-12 21:19:35.183955,candidate_ok,TRUE,selected_observed_candidate

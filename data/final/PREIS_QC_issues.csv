@@ -1,0 +1,245 @@
+sitrep_no,severity,issue_code,indicator_code,message,detected_at
+6,WARNING,reject_invalid_percent,case_fatality_ratio,Candidate rejected: case_fatality_ratio = 1261 via total_row_cases_deaths_cfr,2026-06-25 17:04:51.517418
+6,WARNING,reject_invalid_percent,case_fatality_ratio,Candidate rejected: case_fatality_ratio = 1881 via total_row_cases_deaths_cfr,2026-06-25 17:04:51.517418
+37,WARNING,reject_too_small_for_cumulative_cases,cumulative_confirmed_cases,Candidate rejected: cumulative_confirmed_cases = 3 via box_horizontal_cases_safe,2026-06-25 17:04:51.517418
+37,WARNING,reject_too_small_for_cumulative_cases,cumulative_confirmed_cases,Candidate rejected: cumulative_confirmed_cases = 3 via box_horizontal_cases_safe,2026-06-25 17:04:51.517418
+12,CRITICAL,cumulative_confirmed_cases_decreased,cumulative_confirmed_cases,"cumulative_confirmed_cases baisse de 1881 à 23 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.520105
+13,CRITICAL,cumulative_confirmed_cases_decreased,cumulative_confirmed_cases,"cumulative_confirmed_cases baisse de 1881 à 40 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.529636
+14,CRITICAL,cumulative_confirmed_cases_decreased,cumulative_confirmed_cases,"cumulative_confirmed_cases baisse de 1881 à 51 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.532063
+15,CRITICAL,cumulative_confirmed_cases_decreased,cumulative_confirmed_cases,"cumulative_confirmed_cases baisse de 1881 à 60 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.534555
+16,CRITICAL,cumulative_confirmed_cases_decreased,cumulative_confirmed_cases,"cumulative_confirmed_cases baisse de 1881 à 23 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.538752
+17,CRITICAL,cumulative_confirmed_cases_decreased,cumulative_confirmed_cases,"cumulative_confirmed_cases baisse de 1881 à 321 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.543768
+18,CRITICAL,cumulative_confirmed_cases_decreased,cumulative_confirmed_cases,"cumulative_confirmed_cases baisse de 1881 à 344 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.548124
+19,CRITICAL,cumulative_confirmed_cases_decreased,cumulative_confirmed_cases,"cumulative_confirmed_cases baisse de 1881 à 363 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.551071
+20,CRITICAL,cumulative_confirmed_cases_decreased,cumulative_confirmed_cases,"cumulative_confirmed_cases baisse de 1881 à 381 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.555158
+21,CRITICAL,cumulative_confirmed_cases_decreased,cumulative_confirmed_cases,"cumulative_confirmed_cases baisse de 1881 à 452 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.560521
+22,CRITICAL,cumulative_confirmed_cases_decreased,cumulative_confirmed_cases,"cumulative_confirmed_cases baisse de 1881 à 488 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.564053
+23,CRITICAL,cumulative_confirmed_cases_decreased,cumulative_confirmed_cases,"cumulative_confirmed_cases baisse de 1881 à 515 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.566806
+24,CRITICAL,cumulative_confirmed_cases_decreased,cumulative_confirmed_cases,"cumulative_confirmed_cases baisse de 1881 à 550 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.56966
+25,CRITICAL,cumulative_confirmed_cases_decreased,cumulative_confirmed_cases,"cumulative_confirmed_cases baisse de 1881 à 598 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.571966
+26,CRITICAL,cumulative_confirmed_cases_decreased,cumulative_confirmed_cases,"cumulative_confirmed_cases baisse de 1881 à 635 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.57416
+27,CRITICAL,cumulative_confirmed_cases_decreased,cumulative_confirmed_cases,"cumulative_confirmed_cases baisse de 1881 à 676 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.575974
+28,CRITICAL,cumulative_confirmed_cases_decreased,cumulative_confirmed_cases,"cumulative_confirmed_cases baisse de 1881 à 689 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.594178
+30,CRITICAL,cumulative_confirmed_cases_decreased,cumulative_confirmed_cases,"cumulative_confirmed_cases baisse de 1881 à 782 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.597369
+31,CRITICAL,cumulative_confirmed_cases_decreased,cumulative_confirmed_cases,"cumulative_confirmed_cases baisse de 1881 à 808 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.60193
+32,CRITICAL,cumulative_confirmed_cases_decreased,cumulative_confirmed_cases,"cumulative_confirmed_cases baisse de 1881 à 837 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.607053
+33,CRITICAL,cumulative_confirmed_cases_decreased,cumulative_confirmed_cases,"cumulative_confirmed_cases baisse de 1881 à 875 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.611964
+34,CRITICAL,cumulative_confirmed_cases_decreased,cumulative_confirmed_cases,"cumulative_confirmed_cases baisse de 1881 à 896 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.615423
+35,CRITICAL,cumulative_confirmed_cases_decreased,cumulative_confirmed_cases,"cumulative_confirmed_cases baisse de 1881 à 933 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.618282
+36,CRITICAL,cumulative_confirmed_cases_decreased,cumulative_confirmed_cases,"cumulative_confirmed_cases baisse de 1881 à 956 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.622543
+37,CRITICAL,cumulative_confirmed_cases_decreased,cumulative_confirmed_cases,"cumulative_confirmed_cases baisse de 1881 à 1003 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.627227
+38,CRITICAL,cumulative_confirmed_cases_decreased,cumulative_confirmed_cases,"cumulative_confirmed_cases baisse de 1881 à 1048 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.63268
+39,CRITICAL,cumulative_confirmed_cases_decreased,cumulative_confirmed_cases,"cumulative_confirmed_cases baisse de 1881 à 1094 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.638189
+40,CRITICAL,cumulative_confirmed_cases_decreased,cumulative_confirmed_cases,"cumulative_confirmed_cases baisse de 1881 à 1118 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.643015
+14,CRITICAL,cumulative_deaths_decreased,cumulative_deaths,"cumulative_deaths baisse de 1881 à 33 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.647634
+15,CRITICAL,cumulative_deaths_decreased,cumulative_deaths,"cumulative_deaths baisse de 1881 à 13 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.649968
+16,CRITICAL,cumulative_deaths_decreased,cumulative_deaths,"cumulative_deaths baisse de 1881 à 19 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.652693
+17,CRITICAL,cumulative_deaths_decreased,cumulative_deaths,"cumulative_deaths baisse de 1881 à 48 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.655103
+18,CRITICAL,cumulative_deaths_decreased,cumulative_deaths,"cumulative_deaths baisse de 1881 à 60 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.657836
+19,CRITICAL,cumulative_deaths_decreased,cumulative_deaths,"cumulative_deaths baisse de 1881 à 62 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.660382
+20,CRITICAL,cumulative_deaths_decreased,cumulative_deaths,"cumulative_deaths baisse de 1881 à 64 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.66298
+21,CRITICAL,cumulative_deaths_decreased,cumulative_deaths,"cumulative_deaths baisse de 1881 à 82 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.666566
+22,CRITICAL,cumulative_deaths_decreased,cumulative_deaths,"cumulative_deaths baisse de 1881 à 86 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.671077
+23,CRITICAL,cumulative_deaths_decreased,cumulative_deaths,"cumulative_deaths baisse de 1881 à 91 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.676131
+24,CRITICAL,cumulative_deaths_decreased,cumulative_deaths,"cumulative_deaths baisse de 1881 à 101 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.68071
+25,CRITICAL,cumulative_deaths_decreased,cumulative_deaths,"cumulative_deaths baisse de 1881 à 115 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.683879
+26,CRITICAL,cumulative_deaths_decreased,cumulative_deaths,"cumulative_deaths baisse de 1881 à 127 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.686696
+27,CRITICAL,cumulative_deaths_decreased,cumulative_deaths,"cumulative_deaths baisse de 1881 à 136 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.691531
+28,CRITICAL,cumulative_deaths_decreased,cumulative_deaths,"cumulative_deaths baisse de 1881 à 139 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.69615
+30,CRITICAL,cumulative_deaths_decreased,cumulative_deaths,"cumulative_deaths baisse de 1881 à 181 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.701288
+31,CRITICAL,cumulative_deaths_decreased,cumulative_deaths,"cumulative_deaths baisse de 1881 à 192 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.705526
+32,CRITICAL,cumulative_deaths_decreased,cumulative_deaths,"cumulative_deaths baisse de 1881 à 196 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.709625
+33,CRITICAL,cumulative_deaths_decreased,cumulative_deaths,"cumulative_deaths baisse de 1881 à 202 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.713585
+34,CRITICAL,cumulative_deaths_decreased,cumulative_deaths,"cumulative_deaths baisse de 1881 à 232 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.717998
+35,CRITICAL,cumulative_deaths_decreased,cumulative_deaths,"cumulative_deaths baisse de 1881 à 245 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.722478
+36,CRITICAL,cumulative_deaths_decreased,cumulative_deaths,"cumulative_deaths baisse de 1881 à 247 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.726811
+37,CRITICAL,cumulative_deaths_decreased,cumulative_deaths,"cumulative_deaths baisse de 1881 à 254 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.731111
+38,CRITICAL,cumulative_deaths_decreased,cumulative_deaths,"cumulative_deaths baisse de 1881 à 267 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.732995
+39,CRITICAL,cumulative_deaths_decreased,cumulative_deaths,"cumulative_deaths baisse de 1881 à 277 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.735439
+40,CRITICAL,cumulative_deaths_decreased,cumulative_deaths,"cumulative_deaths baisse de 1881 à 291 — valeur invalidée, non utilisée pour dérivations.",2026-06-25 17:04:51.737954
+2,WARNING,new_confirmed_cases_not_derived_nonconsecutive_or_missing_previous,new_confirmed_cases,new_confirmed_cases non dérivé : SitRep précédent valide manquant ou invalide.,2026-06-25 17:04:52.16547
+4,WARNING,new_confirmed_cases_not_derived_nonconsecutive_or_missing_previous,new_confirmed_cases,new_confirmed_cases non dérivé : SitRep précédent valide manquant ou invalide.,2026-06-25 17:04:52.17799
+4,WARNING,new_deaths_not_derived_nonconsecutive_or_missing_previous,new_deaths,new_deaths non dérivé : SitRep précédent valide manquant ou invalide.,2026-06-25 17:04:52.185811
+2,CRITICAL,missing_cumulative_deaths,cumulative_deaths,Indicateur absent/invalide après QC : cumulative_deaths,2026-06-25 17:04:52.428569
+2,WARNING,missing_case_fatality_ratio,case_fatality_ratio,Indicateur absent/invalide après QC : case_fatality_ratio,2026-06-25 17:04:52.431175
+2,WARNING,missing_new_confirmed_cases,new_confirmed_cases,Indicateur absent/non dérivé après QC : new_confirmed_cases,2026-06-25 17:04:52.435396
+2,WARNING,missing_new_deaths,new_deaths,Indicateur absent/non dérivé après QC : new_deaths,2026-06-25 17:04:52.438297
+2,WARNING,missing_contacts_followup_rate,contacts_followup_rate,Indicateur absent/non dérivé après QC : contacts_followup_rate,2026-06-25 17:04:52.441291
+2,WARNING,missing_alerts_investigation_rate,alerts_investigation_rate,Indicateur absent/non dérivé après QC : alerts_investigation_rate,2026-06-25 17:04:52.445393
+4,WARNING,missing_new_confirmed_cases,new_confirmed_cases,Indicateur absent/non dérivé après QC : new_confirmed_cases,2026-06-25 17:04:52.447445
+4,WARNING,missing_new_deaths,new_deaths,Indicateur absent/non dérivé après QC : new_deaths,2026-06-25 17:04:52.449868
+4,WARNING,missing_contacts_followup_rate,contacts_followup_rate,Indicateur absent/non dérivé après QC : contacts_followup_rate,2026-06-25 17:04:52.453907
+4,WARNING,missing_alerts_investigation_rate,alerts_investigation_rate,Indicateur absent/non dérivé après QC : alerts_investigation_rate,2026-06-25 17:04:52.456261
+5,WARNING,missing_contacts_followup_rate,contacts_followup_rate,Indicateur absent/non dérivé après QC : contacts_followup_rate,2026-06-25 17:04:52.460615
+5,WARNING,missing_alerts_investigation_rate,alerts_investigation_rate,Indicateur absent/non dérivé après QC : alerts_investigation_rate,2026-06-25 17:04:52.462103
+6,WARNING,missing_contacts_followup_rate,contacts_followup_rate,Indicateur absent/non dérivé après QC : contacts_followup_rate,2026-06-25 17:04:52.464819
+6,WARNING,missing_alerts_investigation_rate,alerts_investigation_rate,Indicateur absent/non dérivé après QC : alerts_investigation_rate,2026-06-25 17:04:52.46829
+12,CRITICAL,missing_cumulative_confirmed_cases,cumulative_confirmed_cases,Indicateur absent/invalide après QC : cumulative_confirmed_cases,2026-06-25 17:04:52.472295
+12,CRITICAL,missing_cumulative_deaths,cumulative_deaths,Indicateur absent/invalide après QC : cumulative_deaths,2026-06-25 17:04:52.475264
+12,WARNING,missing_case_fatality_ratio,case_fatality_ratio,Indicateur absent/invalide après QC : case_fatality_ratio,2026-06-25 17:04:52.477334
+12,WARNING,missing_new_confirmed_cases,new_confirmed_cases,Indicateur absent/non dérivé après QC : new_confirmed_cases,2026-06-25 17:04:52.481883
+12,WARNING,missing_new_deaths,new_deaths,Indicateur absent/non dérivé après QC : new_deaths,2026-06-25 17:04:52.485966
+12,WARNING,missing_contacts_followup_rate,contacts_followup_rate,Indicateur absent/non dérivé après QC : contacts_followup_rate,2026-06-25 17:04:52.488469
+12,WARNING,missing_alerts_investigation_rate,alerts_investigation_rate,Indicateur absent/non dérivé après QC : alerts_investigation_rate,2026-06-25 17:04:52.491061
+13,CRITICAL,missing_cumulative_confirmed_cases,cumulative_confirmed_cases,Indicateur absent/invalide après QC : cumulative_confirmed_cases,2026-06-25 17:04:52.492947
+13,CRITICAL,missing_cumulative_deaths,cumulative_deaths,Indicateur absent/invalide après QC : cumulative_deaths,2026-06-25 17:04:52.49488
+13,WARNING,missing_case_fatality_ratio,case_fatality_ratio,Indicateur absent/invalide après QC : case_fatality_ratio,2026-06-25 17:04:52.497268
+13,WARNING,missing_new_confirmed_cases,new_confirmed_cases,Indicateur absent/non dérivé après QC : new_confirmed_cases,2026-06-25 17:04:52.499336
+13,WARNING,missing_new_deaths,new_deaths,Indicateur absent/non dérivé après QC : new_deaths,2026-06-25 17:04:52.50178
+13,WARNING,missing_contacts_followup_rate,contacts_followup_rate,Indicateur absent/non dérivé après QC : contacts_followup_rate,2026-06-25 17:04:52.503979
+13,WARNING,missing_alerts_investigation_rate,alerts_investigation_rate,Indicateur absent/non dérivé après QC : alerts_investigation_rate,2026-06-25 17:04:52.506146
+14,CRITICAL,missing_cumulative_confirmed_cases,cumulative_confirmed_cases,Indicateur absent/invalide après QC : cumulative_confirmed_cases,2026-06-25 17:04:52.508047
+14,CRITICAL,missing_cumulative_deaths,cumulative_deaths,Indicateur absent/invalide après QC : cumulative_deaths,2026-06-25 17:04:52.509919
+14,WARNING,missing_new_confirmed_cases,new_confirmed_cases,Indicateur absent/non dérivé après QC : new_confirmed_cases,2026-06-25 17:04:52.511653
+14,WARNING,missing_new_deaths,new_deaths,Indicateur absent/non dérivé après QC : new_deaths,2026-06-25 17:04:52.513698
+14,WARNING,missing_contacts_followup_rate,contacts_followup_rate,Indicateur absent/non dérivé après QC : contacts_followup_rate,2026-06-25 17:04:52.515736
+14,WARNING,missing_alerts_investigation_rate,alerts_investigation_rate,Indicateur absent/non dérivé après QC : alerts_investigation_rate,2026-06-25 17:04:52.518442
+15,CRITICAL,missing_cumulative_confirmed_cases,cumulative_confirmed_cases,Indicateur absent/invalide après QC : cumulative_confirmed_cases,2026-06-25 17:04:52.521524
+15,CRITICAL,missing_cumulative_deaths,cumulative_deaths,Indicateur absent/invalide après QC : cumulative_deaths,2026-06-25 17:04:52.523808
+15,WARNING,missing_new_confirmed_cases,new_confirmed_cases,Indicateur absent/non dérivé après QC : new_confirmed_cases,2026-06-25 17:04:52.525738
+15,WARNING,missing_new_deaths,new_deaths,Indicateur absent/non dérivé après QC : new_deaths,2026-06-25 17:04:52.527945
+15,WARNING,missing_contacts_followup_rate,contacts_followup_rate,Indicateur absent/non dérivé après QC : contacts_followup_rate,2026-06-25 17:04:52.531175
+15,WARNING,missing_alerts_investigation_rate,alerts_investigation_rate,Indicateur absent/non dérivé après QC : alerts_investigation_rate,2026-06-25 17:04:52.533333
+16,CRITICAL,missing_cumulative_confirmed_cases,cumulative_confirmed_cases,Indicateur absent/invalide après QC : cumulative_confirmed_cases,2026-06-25 17:04:52.53683
+16,CRITICAL,missing_cumulative_deaths,cumulative_deaths,Indicateur absent/invalide après QC : cumulative_deaths,2026-06-25 17:04:52.538579
+16,WARNING,missing_new_confirmed_cases,new_confirmed_cases,Indicateur absent/non dérivé après QC : new_confirmed_cases,2026-06-25 17:04:52.540787
+16,WARNING,missing_new_deaths,new_deaths,Indicateur absent/non dérivé après QC : new_deaths,2026-06-25 17:04:52.542895
+16,WARNING,missing_contacts_followup_rate,contacts_followup_rate,Indicateur absent/non dérivé après QC : contacts_followup_rate,2026-06-25 17:04:52.544369
+16,WARNING,missing_alerts_investigation_rate,alerts_investigation_rate,Indicateur absent/non dérivé après QC : alerts_investigation_rate,2026-06-25 17:04:52.546012
+17,CRITICAL,missing_cumulative_confirmed_cases,cumulative_confirmed_cases,Indicateur absent/invalide après QC : cumulative_confirmed_cases,2026-06-25 17:04:52.548573
+17,CRITICAL,missing_cumulative_deaths,cumulative_deaths,Indicateur absent/invalide après QC : cumulative_deaths,2026-06-25 17:04:52.551537
+17,WARNING,missing_new_confirmed_cases,new_confirmed_cases,Indicateur absent/non dérivé après QC : new_confirmed_cases,2026-06-25 17:04:52.554118
+17,WARNING,missing_new_deaths,new_deaths,Indicateur absent/non dérivé après QC : new_deaths,2026-06-25 17:04:52.566169
+17,WARNING,missing_contacts_followup_rate,contacts_followup_rate,Indicateur absent/non dérivé après QC : contacts_followup_rate,2026-06-25 17:04:52.569579
+18,CRITICAL,missing_cumulative_confirmed_cases,cumulative_confirmed_cases,Indicateur absent/invalide après QC : cumulative_confirmed_cases,2026-06-25 17:04:52.571536
+18,CRITICAL,missing_cumulative_deaths,cumulative_deaths,Indicateur absent/invalide après QC : cumulative_deaths,2026-06-25 17:04:52.573632
+18,WARNING,missing_new_confirmed_cases,new_confirmed_cases,Indicateur absent/non dérivé après QC : new_confirmed_cases,2026-06-25 17:04:52.575194
+18,WARNING,missing_new_deaths,new_deaths,Indicateur absent/non dérivé après QC : new_deaths,2026-06-25 17:04:52.576897
+18,WARNING,missing_contacts_followup_rate,contacts_followup_rate,Indicateur absent/non dérivé après QC : contacts_followup_rate,2026-06-25 17:04:52.578585
+18,WARNING,missing_alerts_investigation_rate,alerts_investigation_rate,Indicateur absent/non dérivé après QC : alerts_investigation_rate,2026-06-25 17:04:52.58028
+19,CRITICAL,missing_cumulative_confirmed_cases,cumulative_confirmed_cases,Indicateur absent/invalide après QC : cumulative_confirmed_cases,2026-06-25 17:04:52.582557
+19,CRITICAL,missing_cumulative_deaths,cumulative_deaths,Indicateur absent/invalide après QC : cumulative_deaths,2026-06-25 17:04:52.585861
+19,WARNING,missing_new_confirmed_cases,new_confirmed_cases,Indicateur absent/non dérivé après QC : new_confirmed_cases,2026-06-25 17:04:52.588142
+19,WARNING,missing_new_deaths,new_deaths,Indicateur absent/non dérivé après QC : new_deaths,2026-06-25 17:04:52.589827
+19,WARNING,missing_contacts_followup_rate,contacts_followup_rate,Indicateur absent/non dérivé après QC : contacts_followup_rate,2026-06-25 17:04:52.591846
+19,WARNING,missing_alerts_investigation_rate,alerts_investigation_rate,Indicateur absent/non dérivé après QC : alerts_investigation_rate,2026-06-25 17:04:52.59421
+20,CRITICAL,missing_cumulative_confirmed_cases,cumulative_confirmed_cases,Indicateur absent/invalide après QC : cumulative_confirmed_cases,2026-06-25 17:04:52.596754
+20,CRITICAL,missing_cumulative_deaths,cumulative_deaths,Indicateur absent/invalide après QC : cumulative_deaths,2026-06-25 17:04:52.59931
+20,WARNING,missing_new_confirmed_cases,new_confirmed_cases,Indicateur absent/non dérivé après QC : new_confirmed_cases,2026-06-25 17:04:52.602249
+20,WARNING,missing_new_deaths,new_deaths,Indicateur absent/non dérivé après QC : new_deaths,2026-06-25 17:04:52.604707
+20,WARNING,missing_contacts_followup_rate,contacts_followup_rate,Indicateur absent/non dérivé après QC : contacts_followup_rate,2026-06-25 17:04:52.607187
+20,WARNING,missing_alerts_investigation_rate,alerts_investigation_rate,Indicateur absent/non dérivé après QC : alerts_investigation_rate,2026-06-25 17:04:52.609476
+21,CRITICAL,missing_cumulative_confirmed_cases,cumulative_confirmed_cases,Indicateur absent/invalide après QC : cumulative_confirmed_cases,2026-06-25 17:04:52.61191
+21,CRITICAL,missing_cumulative_deaths,cumulative_deaths,Indicateur absent/invalide après QC : cumulative_deaths,2026-06-25 17:04:52.614383
+21,WARNING,missing_new_confirmed_cases,new_confirmed_cases,Indicateur absent/non dérivé après QC : new_confirmed_cases,2026-06-25 17:04:52.617109
+21,WARNING,missing_new_deaths,new_deaths,Indicateur absent/non dérivé après QC : new_deaths,2026-06-25 17:04:52.620021
+21,WARNING,missing_contacts_followup_rate,contacts_followup_rate,Indicateur absent/non dérivé après QC : contacts_followup_rate,2026-06-25 17:04:52.621951
+21,WARNING,missing_alerts_investigation_rate,alerts_investigation_rate,Indicateur absent/non dérivé après QC : alerts_investigation_rate,2026-06-25 17:04:52.6238
+22,CRITICAL,missing_cumulative_confirmed_cases,cumulative_confirmed_cases,Indicateur absent/invalide après QC : cumulative_confirmed_cases,2026-06-25 17:04:52.625605
+22,CRITICAL,missing_cumulative_deaths,cumulative_deaths,Indicateur absent/invalide après QC : cumulative_deaths,2026-06-25 17:04:52.627363
+22,WARNING,missing_new_confirmed_cases,new_confirmed_cases,Indicateur absent/non dérivé après QC : new_confirmed_cases,2026-06-25 17:04:52.629114
+22,WARNING,missing_new_deaths,new_deaths,Indicateur absent/non dérivé après QC : new_deaths,2026-06-25 17:04:52.631159
+22,WARNING,missing_contacts_followup_rate,contacts_followup_rate,Indicateur absent/non dérivé après QC : contacts_followup_rate,2026-06-25 17:04:52.63394
+22,WARNING,missing_alerts_investigation_rate,alerts_investigation_rate,Indicateur absent/non dérivé après QC : alerts_investigation_rate,2026-06-25 17:04:52.63595
+23,CRITICAL,missing_cumulative_confirmed_cases,cumulative_confirmed_cases,Indicateur absent/invalide après QC : cumulative_confirmed_cases,2026-06-25 17:04:52.639438
+23,CRITICAL,missing_cumulative_deaths,cumulative_deaths,Indicateur absent/invalide après QC : cumulative_deaths,2026-06-25 17:04:52.641638
+23,WARNING,missing_new_confirmed_cases,new_confirmed_cases,Indicateur absent/non dérivé après QC : new_confirmed_cases,2026-06-25 17:04:52.643755
+23,WARNING,missing_new_deaths,new_deaths,Indicateur absent/non dérivé après QC : new_deaths,2026-06-25 17:04:52.646087
+23,WARNING,missing_contacts_followup_rate,contacts_followup_rate,Indicateur absent/non dérivé après QC : contacts_followup_rate,2026-06-25 17:04:52.647949
+23,WARNING,missing_alerts_investigation_rate,alerts_investigation_rate,Indicateur absent/non dérivé après QC : alerts_investigation_rate,2026-06-25 17:04:52.649502
+24,CRITICAL,missing_cumulative_confirmed_cases,cumulative_confirmed_cases,Indicateur absent/invalide après QC : cumulative_confirmed_cases,2026-06-25 17:04:52.651502
+24,CRITICAL,missing_cumulative_deaths,cumulative_deaths,Indicateur absent/invalide après QC : cumulative_deaths,2026-06-25 17:04:52.65327
+24,WARNING,missing_new_confirmed_cases,new_confirmed_cases,Indicateur absent/non dérivé après QC : new_confirmed_cases,2026-06-25 17:04:52.655024
+24,WARNING,missing_new_deaths,new_deaths,Indicateur absent/non dérivé après QC : new_deaths,2026-06-25 17:04:52.656729
+24,WARNING,missing_contacts_followup_rate,contacts_followup_rate,Indicateur absent/non dérivé après QC : contacts_followup_rate,2026-06-25 17:04:52.65844
+24,WARNING,missing_alerts_investigation_rate,alerts_investigation_rate,Indicateur absent/non dérivé après QC : alerts_investigation_rate,2026-06-25 17:04:52.660126
+25,CRITICAL,missing_cumulative_confirmed_cases,cumulative_confirmed_cases,Indicateur absent/invalide après QC : cumulative_confirmed_cases,2026-06-25 17:04:52.661573
+25,CRITICAL,missing_cumulative_deaths,cumulative_deaths,Indicateur absent/invalide après QC : cumulative_deaths,2026-06-25 17:04:52.663476
+25,WARNING,missing_new_confirmed_cases,new_confirmed_cases,Indicateur absent/non dérivé après QC : new_confirmed_cases,2026-06-25 17:04:52.665149
+25,WARNING,missing_new_deaths,new_deaths,Indicateur absent/non dérivé après QC : new_deaths,2026-06-25 17:04:52.668223
+25,WARNING,missing_contacts_followup_rate,contacts_followup_rate,Indicateur absent/non dérivé après QC : contacts_followup_rate,2026-06-25 17:04:52.671141
+25,WARNING,missing_alerts_investigation_rate,alerts_investigation_rate,Indicateur absent/non dérivé après QC : alerts_investigation_rate,2026-06-25 17:04:52.673594
+26,CRITICAL,missing_cumulative_confirmed_cases,cumulative_confirmed_cases,Indicateur absent/invalide après QC : cumulative_confirmed_cases,2026-06-25 17:04:52.676155
+26,CRITICAL,missing_cumulative_deaths,cumulative_deaths,Indicateur absent/invalide après QC : cumulative_deaths,2026-06-25 17:04:52.680092
+26,WARNING,missing_new_confirmed_cases,new_confirmed_cases,Indicateur absent/non dérivé après QC : new_confirmed_cases,2026-06-25 17:04:52.682608
+26,WARNING,missing_new_deaths,new_deaths,Indicateur absent/non dérivé après QC : new_deaths,2026-06-25 17:04:52.685743
+26,WARNING,missing_contacts_followup_rate,contacts_followup_rate,Indicateur absent/non dérivé après QC : contacts_followup_rate,2026-06-25 17:04:52.68798
+26,WARNING,missing_alerts_investigation_rate,alerts_investigation_rate,Indicateur absent/non dérivé après QC : alerts_investigation_rate,2026-06-25 17:04:52.689952
+27,CRITICAL,missing_cumulative_confirmed_cases,cumulative_confirmed_cases,Indicateur absent/invalide après QC : cumulative_confirmed_cases,2026-06-25 17:04:52.691871
+27,CRITICAL,missing_cumulative_deaths,cumulative_deaths,Indicateur absent/invalide après QC : cumulative_deaths,2026-06-25 17:04:52.693684
+27,WARNING,missing_new_confirmed_cases,new_confirmed_cases,Indicateur absent/non dérivé après QC : new_confirmed_cases,2026-06-25 17:04:52.695589
+27,WARNING,missing_new_deaths,new_deaths,Indicateur absent/non dérivé après QC : new_deaths,2026-06-25 17:04:52.697632
+27,WARNING,missing_contacts_followup_rate,contacts_followup_rate,Indicateur absent/non dérivé après QC : contacts_followup_rate,2026-06-25 17:04:52.699137
+27,WARNING,missing_alerts_investigation_rate,alerts_investigation_rate,Indicateur absent/non dérivé après QC : alerts_investigation_rate,2026-06-25 17:04:52.701228
+28,CRITICAL,missing_cumulative_confirmed_cases,cumulative_confirmed_cases,Indicateur absent/invalide après QC : cumulative_confirmed_cases,2026-06-25 17:04:52.705096
+28,CRITICAL,missing_cumulative_deaths,cumulative_deaths,Indicateur absent/invalide après QC : cumulative_deaths,2026-06-25 17:04:52.708927
+28,WARNING,missing_new_confirmed_cases,new_confirmed_cases,Indicateur absent/non dérivé après QC : new_confirmed_cases,2026-06-25 17:04:52.712945
+28,WARNING,missing_new_deaths,new_deaths,Indicateur absent/non dérivé après QC : new_deaths,2026-06-25 17:04:52.714692
+28,WARNING,missing_contacts_followup_rate,contacts_followup_rate,Indicateur absent/non dérivé après QC : contacts_followup_rate,2026-06-25 17:04:52.717213
+28,WARNING,missing_alerts_investigation_rate,alerts_investigation_rate,Indicateur absent/non dérivé après QC : alerts_investigation_rate,2026-06-25 17:04:52.720177
+30,CRITICAL,missing_cumulative_confirmed_cases,cumulative_confirmed_cases,Indicateur absent/invalide après QC : cumulative_confirmed_cases,2026-06-25 17:04:52.724117
+30,CRITICAL,missing_cumulative_deaths,cumulative_deaths,Indicateur absent/invalide après QC : cumulative_deaths,2026-06-25 17:04:52.727813
+30,WARNING,missing_new_confirmed_cases,new_confirmed_cases,Indicateur absent/non dérivé après QC : new_confirmed_cases,2026-06-25 17:04:52.731493
+30,WARNING,missing_new_deaths,new_deaths,Indicateur absent/non dérivé après QC : new_deaths,2026-06-25 17:04:52.734168
+30,WARNING,missing_contacts_followup_rate,contacts_followup_rate,Indicateur absent/non dérivé après QC : contacts_followup_rate,2026-06-25 17:04:52.73673
+30,WARNING,missing_alerts_investigation_rate,alerts_investigation_rate,Indicateur absent/non dérivé après QC : alerts_investigation_rate,2026-06-25 17:04:52.739153
+31,CRITICAL,missing_cumulative_confirmed_cases,cumulative_confirmed_cases,Indicateur absent/invalide après QC : cumulative_confirmed_cases,2026-06-25 17:04:52.741394
+31,CRITICAL,missing_cumulative_deaths,cumulative_deaths,Indicateur absent/invalide après QC : cumulative_deaths,2026-06-25 17:04:52.743406
+31,WARNING,missing_new_confirmed_cases,new_confirmed_cases,Indicateur absent/non dérivé après QC : new_confirmed_cases,2026-06-25 17:04:52.745494
+31,WARNING,missing_new_deaths,new_deaths,Indicateur absent/non dérivé après QC : new_deaths,2026-06-25 17:04:52.748185
+31,WARNING,missing_contacts_followup_rate,contacts_followup_rate,Indicateur absent/non dérivé après QC : contacts_followup_rate,2026-06-25 17:04:52.751229
+31,WARNING,missing_alerts_investigation_rate,alerts_investigation_rate,Indicateur absent/non dérivé après QC : alerts_investigation_rate,2026-06-25 17:04:52.754954
+32,CRITICAL,missing_cumulative_confirmed_cases,cumulative_confirmed_cases,Indicateur absent/invalide après QC : cumulative_confirmed_cases,2026-06-25 17:04:52.758613
+32,CRITICAL,missing_cumulative_deaths,cumulative_deaths,Indicateur absent/invalide après QC : cumulative_deaths,2026-06-25 17:04:52.760543
+32,WARNING,missing_new_confirmed_cases,new_confirmed_cases,Indicateur absent/non dérivé après QC : new_confirmed_cases,2026-06-25 17:04:52.764224
+32,WARNING,missing_new_deaths,new_deaths,Indicateur absent/non dérivé après QC : new_deaths,2026-06-25 17:04:52.767714
+32,WARNING,missing_contacts_followup_rate,contacts_followup_rate,Indicateur absent/non dérivé après QC : contacts_followup_rate,2026-06-25 17:04:52.771069
+32,WARNING,missing_alerts_investigation_rate,alerts_investigation_rate,Indicateur absent/non dérivé après QC : alerts_investigation_rate,2026-06-25 17:04:52.774941
+33,CRITICAL,missing_cumulative_confirmed_cases,cumulative_confirmed_cases,Indicateur absent/invalide après QC : cumulative_confirmed_cases,2026-06-25 17:04:52.778629
+33,CRITICAL,missing_cumulative_deaths,cumulative_deaths,Indicateur absent/invalide après QC : cumulative_deaths,2026-06-25 17:04:52.781416
+33,WARNING,missing_new_confirmed_cases,new_confirmed_cases,Indicateur absent/non dérivé après QC : new_confirmed_cases,2026-06-25 17:04:52.785622
+33,WARNING,missing_new_deaths,new_deaths,Indicateur absent/non dérivé après QC : new_deaths,2026-06-25 17:04:52.789846
+33,WARNING,missing_contacts_followup_rate,contacts_followup_rate,Indicateur absent/non dérivé après QC : contacts_followup_rate,2026-06-25 17:04:52.793562
+33,WARNING,missing_alerts_investigation_rate,alerts_investigation_rate,Indicateur absent/non dérivé après QC : alerts_investigation_rate,2026-06-25 17:04:52.797416
+34,CRITICAL,missing_cumulative_confirmed_cases,cumulative_confirmed_cases,Indicateur absent/invalide après QC : cumulative_confirmed_cases,2026-06-25 17:04:52.798982
+34,CRITICAL,missing_cumulative_deaths,cumulative_deaths,Indicateur absent/invalide après QC : cumulative_deaths,2026-06-25 17:04:52.802597
+34,WARNING,missing_new_confirmed_cases,new_confirmed_cases,Indicateur absent/non dérivé après QC : new_confirmed_cases,2026-06-25 17:04:52.806244
+34,WARNING,missing_new_deaths,new_deaths,Indicateur absent/non dérivé après QC : new_deaths,2026-06-25 17:04:52.809133
+34,WARNING,missing_contacts_followup_rate,contacts_followup_rate,Indicateur absent/non dérivé après QC : contacts_followup_rate,2026-06-25 17:04:52.811982
+34,WARNING,missing_alerts_investigation_rate,alerts_investigation_rate,Indicateur absent/non dérivé après QC : alerts_investigation_rate,2026-06-25 17:04:52.814704
+35,CRITICAL,missing_cumulative_confirmed_cases,cumulative_confirmed_cases,Indicateur absent/invalide après QC : cumulative_confirmed_cases,2026-06-25 17:04:52.818264
+35,CRITICAL,missing_cumulative_deaths,cumulative_deaths,Indicateur absent/invalide après QC : cumulative_deaths,2026-06-25 17:04:52.821127
+35,WARNING,missing_new_confirmed_cases,new_confirmed_cases,Indicateur absent/non dérivé après QC : new_confirmed_cases,2026-06-25 17:04:52.824998
+35,WARNING,missing_new_deaths,new_deaths,Indicateur absent/non dérivé après QC : new_deaths,2026-06-25 17:04:52.828904
+35,WARNING,missing_contacts_followup_rate,contacts_followup_rate,Indicateur absent/non dérivé après QC : contacts_followup_rate,2026-06-25 17:04:52.831278
+35,WARNING,missing_alerts_investigation_rate,alerts_investigation_rate,Indicateur absent/non dérivé après QC : alerts_investigation_rate,2026-06-25 17:04:52.834556
+36,CRITICAL,missing_cumulative_confirmed_cases,cumulative_confirmed_cases,Indicateur absent/invalide après QC : cumulative_confirmed_cases,2026-06-25 17:04:52.838048
+36,CRITICAL,missing_cumulative_deaths,cumulative_deaths,Indicateur absent/invalide après QC : cumulative_deaths,2026-06-25 17:04:52.841348
+36,WARNING,missing_new_confirmed_cases,new_confirmed_cases,Indicateur absent/non dérivé après QC : new_confirmed_cases,2026-06-25 17:04:52.844233
+36,WARNING,missing_new_deaths,new_deaths,Indicateur absent/non dérivé après QC : new_deaths,2026-06-25 17:04:52.846748
+36,WARNING,missing_contacts_followup_rate,contacts_followup_rate,Indicateur absent/non dérivé après QC : contacts_followup_rate,2026-06-25 17:04:52.848288
+36,WARNING,missing_alerts_investigation_rate,alerts_investigation_rate,Indicateur absent/non dérivé après QC : alerts_investigation_rate,2026-06-25 17:04:52.849861
+37,CRITICAL,missing_cumulative_confirmed_cases,cumulative_confirmed_cases,Indicateur absent/invalide après QC : cumulative_confirmed_cases,2026-06-25 17:04:52.851365
+37,CRITICAL,missing_cumulative_deaths,cumulative_deaths,Indicateur absent/invalide après QC : cumulative_deaths,2026-06-25 17:04:52.853018
+37,WARNING,missing_new_confirmed_cases,new_confirmed_cases,Indicateur absent/non dérivé après QC : new_confirmed_cases,2026-06-25 17:04:52.854761
+37,WARNING,missing_new_deaths,new_deaths,Indicateur absent/non dérivé après QC : new_deaths,2026-06-25 17:04:52.856529
+37,WARNING,missing_contacts_followup_rate,contacts_followup_rate,Indicateur absent/non dérivé après QC : contacts_followup_rate,2026-06-25 17:04:52.858313
+37,WARNING,missing_alerts_investigation_rate,alerts_investigation_rate,Indicateur absent/non dérivé après QC : alerts_investigation_rate,2026-06-25 17:04:52.860067
+38,CRITICAL,missing_cumulative_confirmed_cases,cumulative_confirmed_cases,Indicateur absent/invalide après QC : cumulative_confirmed_cases,2026-06-25 17:04:52.86173
+38,CRITICAL,missing_cumulative_deaths,cumulative_deaths,Indicateur absent/invalide après QC : cumulative_deaths,2026-06-25 17:04:52.86348
+38,WARNING,missing_new_confirmed_cases,new_confirmed_cases,Indicateur absent/non dérivé après QC : new_confirmed_cases,2026-06-25 17:04:52.865198
+38,WARNING,missing_new_deaths,new_deaths,Indicateur absent/non dérivé après QC : new_deaths,2026-06-25 17:04:52.866854
+38,WARNING,missing_contacts_followup_rate,contacts_followup_rate,Indicateur absent/non dérivé après QC : contacts_followup_rate,2026-06-25 17:04:52.868559
+38,WARNING,missing_alerts_investigation_rate,alerts_investigation_rate,Indicateur absent/non dérivé après QC : alerts_investigation_rate,2026-06-25 17:04:52.870291
+39,CRITICAL,missing_cumulative_confirmed_cases,cumulative_confirmed_cases,Indicateur absent/invalide après QC : cumulative_confirmed_cases,2026-06-25 17:04:52.871963
+39,CRITICAL,missing_cumulative_deaths,cumulative_deaths,Indicateur absent/invalide après QC : cumulative_deaths,2026-06-25 17:04:52.884167
+39,WARNING,missing_new_confirmed_cases,new_confirmed_cases,Indicateur absent/non dérivé après QC : new_confirmed_cases,2026-06-25 17:04:52.886965
+39,WARNING,missing_new_deaths,new_deaths,Indicateur absent/non dérivé après QC : new_deaths,2026-06-25 17:04:52.888803
+39,WARNING,missing_contacts_followup_rate,contacts_followup_rate,Indicateur absent/non dérivé après QC : contacts_followup_rate,2026-06-25 17:04:52.89059
+39,WARNING,missing_alerts_investigation_rate,alerts_investigation_rate,Indicateur absent/non dérivé après QC : alerts_investigation_rate,2026-06-25 17:04:52.892404
+40,CRITICAL,missing_cumulative_confirmed_cases,cumulative_confirmed_cases,Indicateur absent/invalide après QC : cumulative_confirmed_cases,2026-06-25 17:04:52.894409
+40,CRITICAL,missing_cumulative_deaths,cumulative_deaths,Indicateur absent/invalide après QC : cumulative_deaths,2026-06-25 17:04:52.895925
+40,WARNING,missing_new_confirmed_cases,new_confirmed_cases,Indicateur absent/non dérivé après QC : new_confirmed_cases,2026-06-25 17:04:52.898106
+40,WARNING,missing_new_deaths,new_deaths,Indicateur absent/non dérivé après QC : new_deaths,2026-06-25 17:04:52.900194
+40,WARNING,missing_contacts_followup_rate,contacts_followup_rate,Indicateur absent/non dérivé après QC : contacts_followup_rate,2026-06-25 17:04:52.901927
+40,WARNING,missing_alerts_investigation_rate,alerts_investigation_rate,Indicateur absent/non dérivé après QC : alerts_investigation_rate,2026-06-25 17:04:52.903458

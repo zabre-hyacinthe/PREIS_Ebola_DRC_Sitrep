@@ -1,0 +1,53 @@
+iso3,country,rcc,selected_admin_level,geo_confidence,n_features,clean_file,source
+CMR,Cameroon,Central Africa RCC,ADM2,Medium,60,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/CMR_ADM2_geoboundaries_clean.geojson,geoBoundaries
+CAF,Central African Republic,Central Africa RCC,ADM2,Medium,72,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/CAF_ADM2_geoboundaries_clean.geojson,geoBoundaries
+TCD,Chad,Central Africa RCC,ADM2,Medium,70,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/TCD_ADM2_geoboundaries_clean.geojson,geoBoundaries
+COG,Congo,Central Africa RCC,ADM2,Medium,46,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/COG_ADM2_geoboundaries_clean.geojson,geoBoundaries
+COD,Democratic Republic of the Congo,Central Africa RCC,ADM2,Medium,189,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/COD_ADM2_geoboundaries_clean.geojson,geoBoundaries
+GNQ,Equatorial Guinea,Central Africa RCC,ADM2,Medium,28,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/GNQ_ADM2_geoboundaries_clean.geojson,geoBoundaries
+GAB,Gabon,Central Africa RCC,ADM2,Medium,49,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/GAB_ADM2_geoboundaries_clean.geojson,geoBoundaries
+STP,São Tomé and Príncipe,Central Africa RCC,ADM2,Medium,7,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/STP_ADM2_geoboundaries_clean.geojson,geoBoundaries
+BDI,Burundi,Eastern Africa RCC,ADM2,Medium,119,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/BDI_ADM2_geoboundaries_clean.geojson,geoBoundaries
+COM,Comoros,Eastern Africa RCC,ADM2,Medium,17,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/COM_ADM2_geoboundaries_clean.geojson,geoBoundaries
+DJI,Djibouti,Eastern Africa RCC,ADM2,Medium,11,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/DJI_ADM2_geoboundaries_clean.geojson,geoBoundaries
+ERI,Eritrea,Eastern Africa RCC,ADM2,Medium,58,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/ERI_ADM2_geoboundaries_clean.geojson,geoBoundaries
+ETH,Ethiopia,Eastern Africa RCC,ADM2,Medium,74,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/ETH_ADM2_geoboundaries_clean.geojson,geoBoundaries
+KEN,Kenya,Eastern Africa RCC,ADM2,Medium,290,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/KEN_ADM2_geoboundaries_clean.geojson,geoBoundaries
+RWA,Rwanda,Eastern Africa RCC,ADM2,Medium,30,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/RWA_ADM2_geoboundaries_clean.geojson,geoBoundaries
+SOM,Somalia,Eastern Africa RCC,ADM2,Medium,118,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/SOM_ADM2_geoboundaries_clean.geojson,geoBoundaries
+SSD,South Sudan,Eastern Africa RCC,ADM2,Medium,78,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/SSD_ADM2_geoboundaries_clean.geojson,geoBoundaries
+TZA,Tanzania,Eastern Africa RCC,ADM2,Medium,170,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/TZA_ADM2_geoboundaries_clean.geojson,geoBoundaries
+UGA,Uganda,Eastern Africa RCC,ADM2,Medium,151,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/UGA_ADM2_geoboundaries_clean.geojson,geoBoundaries
+DZA,Algeria,Northern Africa RCC,ADM2,Medium,48,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/DZA_ADM2_geoboundaries_clean.geojson,geoBoundaries
+EGY,Egypt,Northern Africa RCC,ADM2,Medium,365,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/EGY_ADM2_geoboundaries_clean.geojson,geoBoundaries
+LBY,Libya,Northern Africa RCC,ADM1,Low,22,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM1/LBY_ADM1_geoboundaries_clean.geojson,geoBoundaries
+MRT,Mauritania,Northern Africa RCC,ADM2,Medium,57,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/MRT_ADM2_geoboundaries_clean.geojson,geoBoundaries
+MAR,Morocco,Northern Africa RCC,ADM2,Medium,75,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/MAR_ADM2_geoboundaries_clean.geojson,geoBoundaries
+SDN,Sudan,Northern Africa RCC,ADM2,Medium,189,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/SDN_ADM2_geoboundaries_clean.geojson,geoBoundaries
+TUN,Tunisia,Northern Africa RCC,ADM2,Medium,264,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/TUN_ADM2_geoboundaries_clean.geojson,geoBoundaries
+AGO,Angola,Southern Africa RCC,ADM2,Medium,157,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/AGO_ADM2_geoboundaries_clean.geojson,geoBoundaries
+BWA,Botswana,Southern Africa RCC,ADM2,Medium,25,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/BWA_ADM2_geoboundaries_clean.geojson,geoBoundaries
+SWZ,Eswatini,Southern Africa RCC,ADM2,Medium,53,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/SWZ_ADM2_geoboundaries_clean.geojson,geoBoundaries
+LSO,Lesotho,Southern Africa RCC,ADM2,Medium,78,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/LSO_ADM2_geoboundaries_clean.geojson,geoBoundaries
+MDG,Madagascar,Southern Africa RCC,ADM2,Medium,119,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/MDG_ADM2_geoboundaries_clean.geojson,geoBoundaries
+MWI,Malawi,Southern Africa RCC,ADM2,Medium,28,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/MWI_ADM2_geoboundaries_clean.geojson,geoBoundaries
+MOZ,Mozambique,Southern Africa RCC,ADM2,Medium,159,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/MOZ_ADM2_geoboundaries_clean.geojson,geoBoundaries
+NAM,Namibia,Southern Africa RCC,ADM2,Medium,109,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/NAM_ADM2_geoboundaries_clean.geojson,geoBoundaries
+ZAF,South Africa,Southern Africa RCC,ADM2,Medium,52,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/ZAF_ADM2_geoboundaries_clean.geojson,geoBoundaries
+ZMB,Zambia,Southern Africa RCC,ADM2,Medium,116,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/ZMB_ADM2_geoboundaries_clean.geojson,geoBoundaries
+ZWE,Zimbabwe,Southern Africa RCC,ADM2,Medium,91,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/ZWE_ADM2_geoboundaries_clean.geojson,geoBoundaries
+BEN,Benin,Western Africa RCC,ADM2,Medium,77,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/BEN_ADM2_geoboundaries_clean.geojson,geoBoundaries
+BFA,Burkina Faso,Western Africa RCC,ADM2,Medium,45,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/BFA_ADM2_geoboundaries_clean.geojson,geoBoundaries
+CPV,Cabo Verde,Western Africa RCC,ADM2,Medium,32,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/CPV_ADM2_geoboundaries_clean.geojson,geoBoundaries
+CIV,Côte d'Ivoire,Western Africa RCC,ADM2,Medium,33,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/CIV_ADM2_geoboundaries_clean.geojson,geoBoundaries
+GMB,Gambia,Western Africa RCC,ADM2,Medium,48,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/GMB_ADM2_geoboundaries_clean.geojson,geoBoundaries
+GHA,Ghana,Western Africa RCC,ADM2,Medium,260,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/GHA_ADM2_geoboundaries_clean.geojson,geoBoundaries
+GIN,Guinea,Western Africa RCC,ADM2,Medium,34,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/GIN_ADM2_geoboundaries_clean.geojson,geoBoundaries
+GNB,Guinea-Bissau,Western Africa RCC,ADM2,Medium,39,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/GNB_ADM2_geoboundaries_clean.geojson,geoBoundaries
+LBR,Liberia,Western Africa RCC,ADM2,Medium,136,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/LBR_ADM2_geoboundaries_clean.geojson,geoBoundaries
+MLI,Mali,Western Africa RCC,ADM2,Medium,50,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/MLI_ADM2_geoboundaries_clean.geojson,geoBoundaries
+NER,Niger,Western Africa RCC,ADM2,Medium,67,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/NER_ADM2_geoboundaries_clean.geojson,geoBoundaries
+NGA,Nigeria,Western Africa RCC,ADM2,Medium,774,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/NGA_ADM2_geoboundaries_clean.geojson,geoBoundaries
+SEN,Senegal,Western Africa RCC,ADM2,Medium,45,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/SEN_ADM2_geoboundaries_clean.geojson,geoBoundaries
+SLE,Sierra Leone,Western Africa RCC,ADM2,Medium,14,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/SLE_ADM2_geoboundaries_clean.geojson,geoBoundaries
+TGO,Togo,Western Africa RCC,ADM2,Medium,37,D:/PREIS_Ebola_Production/data/external/geospatial/geoboundaries/ADM2/TGO_ADM2_geoboundaries_clean.geojson,geoBoundaries
