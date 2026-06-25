@@ -91,3 +91,17 @@ figures/
 plots/
 www/outputs/
 www/exports/
+# === Exception : autoriser le tableau QC (agrege, public-safe) ===
+outputs/
+outputs/audit/
+outputs/audit/**
+# Garder bloques les sous-dossiers sensibles ou lourds :
+outputs/gap_tracker/
+outputs/dashboard_audit/
+outputs/figures/
+outputs/data/
+outputs/tables/
+outputs/validation/
+outputs/checks/
+outputs/qc/
+outputs/analyse/
