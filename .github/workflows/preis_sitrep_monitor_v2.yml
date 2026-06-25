@@ -27,7 +27,7 @@ jobs:
       # affiche dans les emails d'alerte.
       PREIS_DASHBOARD_URL: "https://zrhyacinthe25.shinyapps.io/preis-ebola-drc-v2/"
       # Mode test de l'alerte : "false" en production.
-      PREIS_TEST_ALERT: "false"
+      PREIS_TEST_ALERT: "true"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
