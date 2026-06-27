@@ -5,7 +5,7 @@ on:
   repository_dispatch:
     types: [preis_sitrep_monitor]
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "*/30 * * * *"
   push:
     branches: [main]
     paths:
