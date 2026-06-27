@@ -1,0 +1,73 @@
+name: PREIS Ebola DRC SitRep Monitor V2
+
+on:
+  workflow_dispatch:
+  repository_dispatch:
+    types: [preis_sitrep_monitor]
+  schedule:
+    - cron: "*/5 * * * *"
+  push:
+    branches: [main]
+    paths:
+      - "scripts/08_cloud_sitrep_monitor.R"
+      - "scripts/00_email_smtp_base.R"
+      - ".github/workflows/preis_sitrep_monitor_v2.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+
+    env:
+      PREIS_DRY_RUN: "FALSE"
+      PREIS_MAX_PAGES: "5"
+      SMTP_USER: ${{ secrets.SMTP_USER }}
+      SMTP_PASS: ${{ secrets.SMTP_PASS }}
+      SMTP_HOST: ${{ secrets.SMTP_HOST }}
+      SMTP_PORT: ${{ secrets.SMTP_PORT }}
+      ALERT_FROM: ${{ secrets.ALERT_FROM }}
+      ALERT_TO: ${{ secrets.ALERT_TO }}
+      ALERT_CC: ${{ secrets.ALERT_CC }}
+      ALERT_BCC: ${{ secrets.ALERT_BCC }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v2
+
+      - name: Setup Pandoc
+        uses: r-lib/actions/setup-pandoc@v2
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libcurl4-openssl-dev \
+            libssl-dev \
+            libxml2-dev \
+            libfontconfig1-dev \
+            libfreetype6-dev \
+            libharfbuzz-dev \
+            libfribidi-dev \
+            cmake \
+            make
+
+      - name: Install R packages
+        run: |
+          Rscript -e 'install.packages(c("httr2","rvest","xml2","stringr","dplyr","readr","digest","curl"), repos="https://cloud.r-project.org")'
+
+      - name: Run PREIS SitRep monitor
+        run: |
+          Rscript --vanilla scripts/08_cloud_sitrep_monitor.R
+
+      - name: Commit PREIS monitor outputs
+        run: |
+          git config user.name "PREIS Ebola Automation"
+          git config user.email "actions@github.com"
+          git add data/monitor_state/ data/pdf/ data/logs/ outputs/cloud_monitor/ || true
+          git commit -m "PREIS SitRep monitor state update" || echo "No changes to commit"
+          git push || echo "No changes to push"
