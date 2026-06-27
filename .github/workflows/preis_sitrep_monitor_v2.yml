@@ -9,6 +9,7 @@ on:
   push:
     branches: [main]
     paths:
+      - "00_RUN_ALL_PRODUCTION.R"
       - "scripts/08_cloud_sitrep_monitor.R"
       - "scripts/00_email_smtp_base.R"
       - ".github/workflows/preis_sitrep_monitor_v2.yml"
@@ -16,13 +17,17 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: preis-sitrep-monitor-v2
+  cancel-in-progress: false
+
 jobs:
   monitor:
     runs-on: ubuntu-latest
 
     env:
       PREIS_DRY_RUN: "FALSE"
-      PREIS_MAX_PAGES: "5"
+      PREIS_MAX_PAGES: "12"
       SMTP_USER: ${{ secrets.SMTP_USER }}
       SMTP_PASS: ${{ secrets.SMTP_PASS }}
       SMTP_HOST: ${{ secrets.SMTP_HOST }}
@@ -35,6 +40,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
 
       - name: Setup R
         uses: r-lib/actions/setup-r@v2
@@ -58,7 +66,39 @@ jobs:
 
       - name: Install R packages
         run: |
-          Rscript -e 'install.packages(c("httr2","rvest","xml2","stringr","dplyr","readr","digest","curl"), repos="https://cloud.r-project.org")'
+          Rscript -e 'install.packages(c("httr2","httr","rvest","xml2","stringr","dplyr","readr","tibble","purrr","digest","curl","base64enc","lubridate","glue","tidyr","openxlsx","pdftools"), repos="https://cloud.r-project.org")'
+
+      - name: Check PREIS email secrets
+        run: |
+          Rscript -e '
+          split_emails <- function(x) {
+            x <- unlist(strsplit(x, "[,;]"))
+            x <- trimws(x)
+            x[nzchar(x)]
+          }
+
+          required <- c("SMTP_USER", "SMTP_PASS", "ALERT_FROM", "ALERT_TO")
+          missing <- required[!nzchar(Sys.getenv(required))]
+
+          if (length(missing) > 0) {
+            stop("Secrets manquants: ", paste(missing, collapse = ", "))
+          }
+
+          to <- split_emails(Sys.getenv("ALERT_TO"))
+          cc <- split_emails(Sys.getenv("ALERT_CC"))
+          bcc <- split_emails(Sys.getenv("ALERT_BCC"))
+
+          cat("ALERT_TO count:", length(to), "\n")
+          cat("ALERT_CC count:", length(cc), "\n")
+          cat("ALERT_BCC count:", length(bcc), "\n")
+
+          if (length(to) == 0) stop("ALERT_TO est vide.")
+          if (any(!grepl("^[^@]+@[^@]+\\.[^@]+$", to))) stop("ALERT_TO contient un email invalide.")
+          '
+
+      - name: Run PREIS production runner
+        run: |
+          Rscript --vanilla 00_RUN_ALL_PRODUCTION.R
 
       - name: Run PREIS SitRep monitor
         run: |
@@ -68,6 +108,19 @@ jobs:
         run: |
           git config user.name "PREIS Ebola Automation"
           git config user.email "actions@github.com"
-          git add data/monitor_state/ data/pdf/ data/logs/ outputs/cloud_monitor/ || true
+
+          git add \
+            data/monitor_state/ \
+            data/pdf/ \
+            data/final/ \
+            data/logs/ \
+            outputs/cloud_monitor/ \
+            outputs/ \
+            || true
+
+          git status --short
+
           git commit -m "PREIS SitRep monitor state update" || echo "No changes to commit"
+
+          git pull --rebase origin main || echo "No remote changes to rebase"
           git push || echo "No changes to push"
