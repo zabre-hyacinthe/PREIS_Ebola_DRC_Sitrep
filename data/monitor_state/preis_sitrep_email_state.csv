@@ -10,3 +10,15 @@ run_id,detected_at_utc,sent_at_utc,sitrep_no,sitrep_date,page_url,pdf_url,pdf_sh
 ",,,,,,
 20260629_204730,2026-06-29 20:48:14,,44,2026-06-27,https://insp.cd/sitrep-n044-mvb_27-06-2026/,https://insp.cd/wp-content/uploads/2026/06/Final-SitRep_MVE_RDC_N°044_27_06_2026.pdf,122a15ac6296926dd1ff8c05e0c605fd8f4612943145c3097264d3df66d897f1,/home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/pdf/PREIS_DRC_Ebola_SitRep_044.pdf,failed,"Erreur envoi SMTP Python. Sortie:
 error in running command",,,,,,
+20260629_210252,2026-06-29 21:03:36,,44,2026-06-27,https://insp.cd/sitrep-n044-mvb_27-06-2026/,https://insp.cd/wp-content/uploads/2026/06/Final-SitRep_MVE_RDC_N°044_27_06_2026.pdf,122a15ac6296926dd1ff8c05e0c605fd8f4612943145c3097264d3df66d897f1,/home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/pdf/PREIS_DRC_Ebola_SitRep_044.pdf,failed,"Erreur envoi SMTP Python. Sortie:
+PYTHON_SMTP_FATAL: ValueError('ALERT_CC est vide.')
+Traceback (most recent call last):
+  File ""/tmp/Rtmpd24KKy/preis_smtp_sender_304823060cda.py"", line 136, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File ""/tmp/Rtmpd24KKy/preis_smtp_sender_304823060cda.py"", line 85, in main
+    require_email_list(alert_cc, 'ALERT_CC')
+  File ""/tmp/Rtmpd24KKy/preis_smtp_sender_304823060cda.py"", line 50, in require_email_list
+    raise ValueError(f'{name} est vide.')
+ValueError: ALERT_CC est vide.
+",,,,,,

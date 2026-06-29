@@ -94,3 +94,32 @@
 error in running command 
 [2026-06-29 20:48:14 UTC] State updated: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/monitor_state/preis_sitrep_email_state.csv 
 [2026-06-29 20:48:14 UTC] Email status: failed 
+[2026-06-29 21:02:52 UTC] ============================================================ 
+[2026-06-29 21:02:52 UTC] PREIS Ebola RDC — Cloud SitRep Monitor started 
+[2026-06-29 21:02:52 UTC] ROOT: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep 
+[2026-06-29 21:02:52 UTC] DRY_RUN: FALSE 
+[2026-06-29 21:02:52 UTC] MAX_PAGES: 6 
+[2026-06-29 21:02:52 UTC] Scanning INSP category page: https://insp.cd/category/sitrep/ 
+[2026-06-29 21:02:57 UTC] Page 1: 10 SitRep candidate(s) 
+[2026-06-29 21:03:01 UTC] Page 2: 10 SitRep candidate(s) 
+[2026-06-29 21:03:04 UTC] Page 3: 6 SitRep candidate(s) 
+[2026-06-29 21:03:33 UTC] Latest SitRep online: N44 
+[2026-06-29 21:03:33 UTC] SitRep page: https://insp.cd/sitrep-n044-mvb_27-06-2026/ 
+[2026-06-29 21:03:36 UTC] PDF URL resolved: https://insp.cd/wp-content/uploads/2026/06/Final-SitRep_MVE_RDC_N°044_27_06_2026.pdf 
+[2026-06-29 21:03:36 UTC] PDF already exists locally: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/pdf/PREIS_DRC_Ebola_SitRep_044.pdf 
+[2026-06-29 21:03:36 UTC] PDF SHA256: 122a15ac6296926dd1ff8c05e0c605fd8f4612943145c3097264d3df66d897f1 
+[2026-06-29 21:03:36 UTC] Sending email for SitRep N44 
+[2026-06-29 21:03:36 UTC] Email sending failed: Erreur envoi SMTP Python. Sortie:
+PYTHON_SMTP_FATAL: ValueError('ALERT_CC est vide.')
+Traceback (most recent call last):
+  File "/tmp/Rtmpd24KKy/preis_smtp_sender_304823060cda.py", line 136, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/tmp/Rtmpd24KKy/preis_smtp_sender_304823060cda.py", line 85, in main
+    require_email_list(alert_cc, 'ALERT_CC')
+  File "/tmp/Rtmpd24KKy/preis_smtp_sender_304823060cda.py", line 50, in require_email_list
+    raise ValueError(f'{name} est vide.')
+ValueError: ALERT_CC est vide.
+ 
+[2026-06-29 21:03:36 UTC] State updated: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/monitor_state/preis_sitrep_email_state.csv 
+[2026-06-29 21:03:36 UTC] Email status: failed 
