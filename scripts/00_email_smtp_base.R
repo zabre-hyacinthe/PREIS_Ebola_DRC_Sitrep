@@ -280,7 +280,52 @@ preis_send_email <- function(
   py_file <- tempfile(pattern = "preis_smtp_sender_", fileext = ".py")
   config_file <- tempfile(pattern = "preis_smtp_config_", fileext = ".txt")
 
-  writeLines(enc2utf8(body), body_file, useBytes = TRUE)
+  # PREIS_EMAIL_BODY_IMPROVED_V1
+  body <- enc2utf8(body)
+
+  if (grepl("A new DRC Ebola INSP SitRep has been detected by PREIS", body, fixed = TRUE)) {
+
+    body <- gsub(
+      "A new DRC Ebola INSP SitRep has been detected by PREIS\\.",
+      "PREIS has detected a new Ebola Virus Disease SitRep published by INSP DRC.",
+      body
+    )
+
+    body <- gsub(
+      "Title:\\s*\\nINSP page:",
+      "Title: Not available on the INSP page\\nINSP page:",
+      body,
+      perl = TRUE
+    )
+
+    body <- gsub(
+      "The PDF is attached as received from INSP\\.",
+      "The official PDF is attached exactly as received from INSP.",
+      body
+    )
+
+    body <- gsub(
+      "Analytical outputs will follow once generated and validated\\.",
+      "Automated analytical outputs will follow once generated and validated.",
+      body
+    )
+
+    body <- gsub(
+      "Best regards,\\s*\\nPREIS Ebola DRC Automation\\s*\\.?\\s*$",
+      "Best regards,\\nPREIS Ebola DRC Automation\\n\\nFor urgent follow-up, please contact Dr Hyacinthe Zabré on WhatsApp: +226 78 08 87 70.",
+      body,
+      perl = TRUE
+    )
+
+    if (!grepl("+226 78 08 87 70", body, fixed = TRUE)) {
+      body <- paste0(
+        body,
+        "\\n\\nFor urgent follow-up, please contact Dr Hyacinthe Zabré on WhatsApp: +226 78 08 87 70."
+      )
+    }
+  }
+
+  writeLines(body, body_file, useBytes = TRUE)
   preis_write_python_sender(py_file)
 
   preis_write_hex_config(
