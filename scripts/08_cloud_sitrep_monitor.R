@@ -1,25 +1,44 @@
-############################################################
+﻿############################################################
 # PREIS Ebola RDC — Cloud SitRep Monitor
-# GitHub Actions + cron
+# Fichier: scripts/08_cloud_sitrep_monitor.R
+#
+# Objectif:
+#   - Scanner INSP
+#   - Identifier le dernier SitRep MVB
+#   - Télécharger le PDF tel quel
+#   - Envoyer le PDF par email
+#   - Eviter les doublons via state CSV
 ############################################################
 
 suppressPackageStartupMessages({
-  library(httr2)
+  library(httr)
   library(rvest)
   library(xml2)
   library(stringr)
   library(dplyr)
   library(readr)
+  library(tibble)
+  library(purrr)
   library(digest)
+  library(base64enc)
 })
 
 ROOT <- getwd()
 
 SCRIPT_EMAIL <- file.path(ROOT, "scripts", "00_email_smtp_base.R")
+
 if (!file.exists(SCRIPT_EMAIL)) {
   stop("Helper email introuvable: scripts/00_email_smtp_base.R", call. = FALSE)
 }
+
 source(SCRIPT_EMAIL, encoding = "UTF-8")
+
+INSP_CATEGORY_PAGE <- "https://insp.cd/category/sitrep/"
+MAX_PAGES <- suppressWarnings(as.integer(Sys.getenv("PREIS_MAX_PAGES", "6")))
+
+if (is.na(MAX_PAGES) || MAX_PAGES < 1) {
+  MAX_PAGES <- 6L
+}
 
 STATE_DIR <- file.path(ROOT, "data", "monitor_state")
 PDF_DIR <- file.path(ROOT, "data", "pdf")
@@ -33,92 +52,248 @@ dir.create(OUT_DIR, recursive = TRUE, showWarnings = FALSE)
 
 STATE_FILE <- file.path(STATE_DIR, "preis_sitrep_email_state.csv")
 RUN_ID <- format(Sys.time(), "%Y%m%d_%H%M%S", tz = "UTC")
-LOG_FILE <- file.path(LOG_DIR, paste0("preis_cloud_sitrep_monitor_", format(Sys.Date(), "%Y%m%d"), ".log"))
+LOG_FILE <- file.path(
+  LOG_DIR,
+  paste0("preis_cloud_sitrep_monitor_", format(Sys.Date(), "%Y%m%d"), ".log")
+)
 
 DRY_RUN <- toupper(Sys.getenv("PREIS_DRY_RUN", "FALSE")) %in% c("TRUE", "1", "YES", "Y")
-MAX_PAGES <- suppressWarnings(as.integer(Sys.getenv("PREIS_MAX_PAGES", "5")))
-if (is.na(MAX_PAGES) || MAX_PAGES < 1) MAX_PAGES <- 5
 
 log_msg <- function(...) {
-  line <- paste0("[", format(Sys.time(), "%Y-%m-%d %H:%M:%S %Z"), "] ", paste0(..., collapse = ""))
+  line <- paste0(
+    "[",
+    format(Sys.time(), "%Y-%m-%d %H:%M:%S %Z"),
+    "] ",
+    paste0(..., collapse = "")
+  )
   message(line)
   cat(line, "\n", file = LOG_FILE, append = TRUE)
 }
 
 safe_chr <- function(x) {
-  if (is.null(x) || length(x) == 0 || all(is.na(x))) return(NA_character_)
+  if (is.null(x) || length(x) == 0 || all(is.na(x))) {
+    return(NA_character_)
+  }
   as.character(x[1])
 }
 
-normalize_url <- function(url, base = "https://insp.cd") {
-  if (is.na(url) || !nzchar(url)) return(NA_character_)
-  xml2::url_absolute(url, base)
-}
+get_with_retry <- function(url, timeout_sec = 90, max_try = 4) {
+  for (i in seq_len(max_try)) {
+    resp <- tryCatch(
+      httr::GET(
+        url,
+        httr::timeout(timeout_sec),
+        httr::add_headers(
+          "User-Agent" = "Mozilla/5.0 PREIS-Ebola-DRC-Monitor",
+          "Accept" = "text/html,application/xhtml+xml,application/pdf,*/*",
+          "Accept-Language" = "fr-FR,fr;q=0.9,en;q=0.8"
+        )
+      ),
+      error = function(e) {
+        log_msg("GET error attempt ", i, ": ", conditionMessage(e))
+        NULL
+      }
+    )
 
-fetch_html <- function(url) {
-  req <- request(url) |>
-    req_user_agent("Mozilla/5.0 PREIS-Ebola-DRC-Monitor") |>
-    req_timeout(60)
+    if (!is.null(resp) && httr::status_code(resp) == 200) {
+      return(resp)
+    }
 
-  req_perform(req) |>
-    resp_body_html()
-}
-
-fetch_binary <- function(url, dest) {
-  req <- request(url) |>
-    req_user_agent("Mozilla/5.0 PREIS-Ebola-DRC-Monitor") |>
-    req_timeout(120)
-
-  resp <- req_perform(req)
-  writeBin(resp_body_raw(resp), dest)
-  invisible(dest)
-}
-
-extract_sitrep_no <- function(x) {
-  x <- paste(x, collapse = " ")
-  x <- str_replace_all(x, "%C2%B0|°", " ")
-
-  patterns <- c(
-    "(?i)sitrep[-_[:space:]]*n[°o#]?[-_[:space:]]*0*([0-9]{1,3})",
-    "(?i)sitrep[-_[:space:]]*0*([0-9]{1,3})",
-    "(?i)n[°o#]?[-_[:space:]]*0*([0-9]{1,3})[-_[:space:]]*mv[be]",
-    "(?i)mv[be].*?0*([0-9]{1,3})"
-  )
-
-  vals <- integer()
-
-  for (p in patterns) {
-    m <- str_match_all(x, regex(p))[[1]]
-    if (nrow(m) > 0) {
-      nums <- suppressWarnings(as.integer(m[, 2]))
-      nums <- nums[!is.na(nums)]
-      vals <- c(vals, nums)
+    if (i < max_try) {
+      Sys.sleep(5)
     }
   }
 
-  if (length(vals) == 0) return(NA_integer_)
-  max(vals, na.rm = TRUE)
+  NULL
+}
+
+normalize_url <- function(url, base = "https://insp.cd") {
+  if (is.null(url) || length(url) == 0) {
+    return(character())
+  }
+
+  url <- as.character(url)
+
+  out <- rep(NA_character_, length(url))
+  ok <- !is.na(url) & nzchar(url)
+
+  if (any(ok)) {
+    out[ok] <- xml2::url_absolute(url[ok], base)
+  }
+
+  out
+}
+
+extract_sitrep_no <- function(x) {
+  if (is.null(x) || length(x) == 0 || is.na(x[1])) {
+    return(NA_integer_)
+  }
+
+  x <- paste(as.character(x), collapse = " ")
+  x <- stringr::str_to_lower(x)
+
+  m1 <- stringr::str_match(x, "sitrep-n(\\d+)-mvb")[, 2]
+  if (!is.na(m1)) {
+    return(as.integer(m1))
+  }
+
+  m2 <- stringr::str_match(x, "sitrep[^0-9]{0,12}0*(\\d{1,3})")[, 2]
+  if (!is.na(m2)) {
+    return(as.integer(m2))
+  }
+
+  NA_integer_
 }
 
 extract_sitrep_date <- function(x) {
-  x <- paste(x, collapse = " ")
-
-  m1 <- str_match(x, "([0-9]{2})[-_/]([0-9]{2})[-_/]([0-9]{4})")
-  if (!all(is.na(m1))) {
-    return(paste0(m1[4], "-", m1[3], "-", m1[2]))
+  if (is.null(x) || length(x) == 0 || is.na(x[1])) {
+    return(NA_character_)
   }
 
-  m2 <- str_match(x, "([0-9]{4})[-_/]([0-9]{2})[-_/]([0-9]{2})")
-  if (!all(is.na(m2))) {
-    return(paste0(m2[2], "-", m2[3], "-", m2[4]))
+  x <- paste(as.character(x), collapse = " ")
+
+  m1 <- stringr::str_match(x, "(\\d{2})-(\\d{2})-(\\d{4})")
+
+  if (!all(is.na(m1))) {
+    return(paste0(m1[4], "-", m1[3], "-", m1[2]))
   }
 
   NA_character_
 }
 
+resolve_pdf_url <- function(post_url) {
+  resp <- get_with_retry(post_url, timeout_sec = 90, max_try = 3)
+
+  if (is.null(resp)) {
+    return(NA_character_)
+  }
+
+  html_txt <- httr::content(resp, "text", encoding = "UTF-8")
+
+  direct <- stringr::str_extract(
+    html_txt,
+    "https://insp\\.cd/wp-content/uploads/[^\"'\\s]+\\.pdf"
+  )
+
+  if (!is.na(direct)) {
+    return(direct)
+  }
+
+  b64 <- stringr::str_match(
+    html_txt,
+    "pdfemb-data=([A-Za-z0-9+/=]+)"
+  )[, 2]
+
+  if (!is.na(b64)) {
+    decoded <- tryCatch(
+      rawToChar(base64enc::base64decode(b64)),
+      error = function(e) NA_character_
+    )
+
+    if (!is.na(decoded)) {
+      url <- stringr::str_match(
+        decoded,
+        "\"url\"\\s*:\\s*\"([^\"]+\\.pdf)\""
+      )[, 2]
+
+      if (!is.na(url)) {
+        url <- stringr::str_replace_all(url, "\\\\/", "/")
+        url <- stringr::str_replace_all(url, "\\\\u00b0", "°")
+        url <- stringr::str_replace_all(url, "\\\\u[0-9a-fA-F]{4}", "")
+        return(url)
+      }
+    }
+  }
+
+  NA_character_
+}
+
+scrape_latest_sitrep <- function() {
+  log_msg("Scanning INSP category page: ", INSP_CATEGORY_PAGE)
+
+  all_posts <- list()
+
+  for (pg in seq_len(MAX_PAGES)) {
+    page_url <- if (pg == 1) {
+      INSP_CATEGORY_PAGE
+    } else {
+      paste0(INSP_CATEGORY_PAGE, "page/", pg, "/")
+    }
+
+    resp <- get_with_retry(page_url, timeout_sec = 90, max_try = 3)
+
+    if (is.null(resp)) {
+      if (pg == 1) {
+        log_msg("Cannot reach INSP category page.")
+      }
+      break
+    }
+
+    page_html <- rvest::read_html(
+      httr::content(resp, "text", encoding = "UTF-8")
+    )
+
+    links <- page_html |>
+      rvest::html_nodes("a") |>
+      rvest::html_attr("href")
+
+    texts <- page_html |>
+      rvest::html_nodes("a") |>
+      rvest::html_text(trim = TRUE)
+
+    posts_pg <- tibble::tibble(
+      post_url = links,
+      post_text = texts
+    ) |>
+      dplyr::filter(
+        !is.na(post_url),
+        stringr::str_detect(post_url, "sitrep-n\\d+-mvb")
+      ) |>
+      dplyr::mutate(
+        post_url = normalize_url(post_url, "https://insp.cd"),
+        sitrep_no = purrr::map_int(post_url, extract_sitrep_no),
+        sitrep_date = purrr::map_chr(post_url, extract_sitrep_date)
+      ) |>
+      dplyr::filter(!is.na(sitrep_no)) |>
+      dplyr::distinct(sitrep_no, .keep_all = TRUE)
+
+    if (nrow(posts_pg) > 0) {
+      all_posts[[length(all_posts) + 1]] <- posts_pg
+      log_msg("Page ", pg, ": ", nrow(posts_pg), " SitRep candidate(s)")
+    }
+  }
+
+  posts <- dplyr::bind_rows(all_posts)
+
+  if (nrow(posts) == 0) {
+    stop("Aucun SitRep MVB détecté sur INSP.", call. = FALSE)
+  }
+
+  posts <- posts |>
+    dplyr::distinct(sitrep_no, .keep_all = TRUE) |>
+    dplyr::arrange(dplyr::desc(sitrep_no))
+
+  readr::write_csv(posts, file.path(OUT_DIR, "latest_sitrep_candidates.csv"))
+
+  latest <- posts[1, , drop = FALSE]
+
+  log_msg("Latest SitRep online: N", latest$sitrep_no)
+  log_msg("SitRep page: ", latest$post_url)
+
+  latest$pdf_url <- resolve_pdf_url(latest$post_url)
+
+  if (is.na(latest$pdf_url) || !nzchar(latest$pdf_url)) {
+    stop("PDF URL could not be resolved for SitRep N", latest$sitrep_no, call. = FALSE)
+  }
+
+  log_msg("PDF URL resolved: ", latest$pdf_url)
+
+  latest
+}
+
 read_state <- function() {
   if (!file.exists(STATE_FILE)) {
-    return(tibble(
+    return(tibble::tibble(
       run_id = character(),
       detected_at_utc = character(),
       sent_at_utc = character(),
@@ -133,224 +308,215 @@ read_state <- function() {
     ))
   }
 
-  suppressMessages(readr::read_csv(STATE_FILE, show_col_types = FALSE))
+  state <- suppressMessages(
+    readr::read_csv(
+      STATE_FILE,
+      col_types = readr::cols(.default = readr::col_character()),
+      show_col_types = FALSE
+    )
+  )
+
+  if (!"sitrep_no" %in% names(state)) {
+    state$sitrep_no <- NA_character_
+  }
+
+  state$sitrep_no <- suppressWarnings(as.integer(state$sitrep_no))
+  state
 }
 
 write_state <- function(state) {
-  readr::write_csv(state, STATE_FILE)
+  readr::write_csv(state, STATE_FILE, na = "")
 }
 
 append_state <- function(row) {
   state <- read_state()
-  state <- bind_rows(state, row)
+  state <- dplyr::bind_rows(state, row)
   write_state(state)
 }
 
-already_sent <- function(sitrep_no, pdf_sha256 = NA_character_) {
+already_sent <- function(sitrep_no) {
   state <- read_state()
 
-  if (nrow(state) == 0) return(FALSE)
-
-  state <- state |>
-    mutate(
-      sitrep_no = suppressWarnings(as.integer(sitrep_no)),
-      email_status = as.character(email_status)
-    )
+  if (nrow(state) == 0) {
+    return(FALSE)
+  }
 
   hit <- state |>
-    filter(
-      .data$sitrep_no == !!sitrep_no,
+    dplyr::mutate(
+      sitrep_no = suppressWarnings(as.integer(sitrep_no)),
+      email_status = as.character(email_status)
+    ) |>
+    dplyr::filter(
+      .data$sitrep_no == !!as.integer(sitrep_no),
       .data$email_status %in% c("sent", "dry_run")
     )
 
   nrow(hit) > 0
 }
 
-find_pdf_on_page <- function(page_url) {
-  html <- fetch_html(page_url)
-
-  hrefs <- html |>
-    html_elements("a") |>
-    html_attr("href")
-
-  hrefs <- unique(hrefs)
-  hrefs <- hrefs[!is.na(hrefs)]
-  hrefs <- normalize_url(hrefs, page_url)
-
-  pdfs <- hrefs[str_detect(pdfs <- hrefs, regex("\\.pdf($|\\?)", ignore_case = TRUE))]
-
-  if (length(pdfs) > 0) {
-    return(pdfs[1])
-  }
-
-  NA_character_
-}
-
-find_latest_sitrep <- function() {
-  search_urls <- c(
-    "https://insp.cd/?s=sitrep+mvb",
-    "https://insp.cd/?s=SitRep+MVB",
-    "https://insp.cd/?s=sitrep+ebola",
-    "https://insp.cd/?s=MVE"
+download_pdf <- function(pdf_url, sitrep_no) {
+  pdf_file <- file.path(
+    PDF_DIR,
+    paste0("PREIS_DRC_Ebola_SitRep_", sprintf("%03d", as.integer(sitrep_no)), ".pdf")
   )
 
-  candidates <- tibble(
-    sitrep_no = integer(),
-    sitrep_date = character(),
-    title = character(),
-    page_url = character()
-  )
-
-  for (url in search_urls) {
-    log_msg("Recherche INSP: ", url)
-
-    html <- tryCatch(fetch_html(url), error = function(e) {
-      log_msg("Echec lecture INSP: ", conditionMessage(e))
-      NULL
-    })
-
-    if (is.null(html)) next
-
-    a <- html_elements(html, "a")
-
-    hrefs <- html_attr(a, "href")
-    titles <- html_text2(a)
-
-    df <- tibble(
-      title = titles,
-      page_url = normalize_url(hrefs, "https://insp.cd")
-    ) |>
-      filter(!is.na(page_url), nzchar(page_url)) |>
-      mutate(
-        joined = paste(title, page_url),
-        keep = str_detect(joined, regex("sitrep", ignore_case = TRUE)) &
-          str_detect(joined, regex("mvb|mve|ebola", ignore_case = TRUE)),
-        sitrep_no = vapply(joined, extract_sitrep_no, integer(1)),
-        sitrep_date = vapply(joined, extract_sitrep_date, character(1))
-      ) |>
-      filter(keep, !is.na(sitrep_no)) |>
-      select(sitrep_no, sitrep_date, title, page_url)
-
-    candidates <- bind_rows(candidates, df)
+  if (file.exists(pdf_file) && file.info(pdf_file)$size > 10240) {
+    log_msg("PDF already exists locally: ", pdf_file)
+    return(pdf_file)
   }
 
-  candidates <- candidates |>
-    distinct(sitrep_no, page_url, .keep_all = TRUE) |>
-    arrange(desc(sitrep_no))
+  dl_url <- utils::URLencode(pdf_url, reserved = FALSE)
+  dl_url <- gsub("%25C2%25B0", "%C2%B0", dl_url)
+  dl_url <- gsub("%25", "%", dl_url)
 
-  readr::write_csv(candidates, file.path(OUT_DIR, "latest_sitrep_candidates.csv"))
+  log_msg("Downloading PDF SitRep N", sitrep_no)
 
-  if (nrow(candidates) == 0) {
-    stop("Aucun SitRep MVB/MVE/Ebola détecté sur INSP.", call. = FALSE)
+  for (attempt in 1:3) {
+    resp <- tryCatch(
+      httr::GET(
+        dl_url,
+        httr::timeout(180),
+        httr::write_disk(pdf_file, overwrite = TRUE),
+        httr::add_headers(
+          "User-Agent" = "Mozilla/5.0 PREIS-Ebola-DRC-Monitor",
+          "Referer" = INSP_CATEGORY_PAGE,
+          "Accept" = "application/pdf,*/*"
+        )
+      ),
+      error = function(e) {
+        log_msg("PDF download error attempt ", attempt, ": ", conditionMessage(e))
+        NULL
+      }
+    )
+
+    if (!is.null(resp) && httr::status_code(resp) == 200) {
+      if (file.exists(pdf_file) && file.info(pdf_file)$size > 10240) {
+        log_msg("PDF downloaded: ", pdf_file)
+        return(pdf_file)
+      }
+    }
+
+    if (attempt < 3) {
+      Sys.sleep(5)
+    }
   }
 
-  candidates[1, ]
+  stop("PDF download failed for SitRep N", sitrep_no, call. = FALSE)
 }
 
 log_msg("============================================================")
-log_msg("PREIS Ebola RDC — démarrage monitor cloud")
+log_msg("PREIS Ebola RDC — Cloud SitRep Monitor started")
 log_msg("ROOT: ", ROOT)
 log_msg("DRY_RUN: ", DRY_RUN)
+log_msg("MAX_PAGES: ", MAX_PAGES)
 
-latest <- find_latest_sitrep()
+latest <- scrape_latest_sitrep()
 
-latest_no <- latest$sitrep_no
+latest_no <- as.integer(latest$sitrep_no)
 latest_date <- safe_chr(latest$sitrep_date)
-latest_title <- safe_chr(latest$title)
-latest_page_url <- safe_chr(latest$page_url)
-
-log_msg("Dernier SitRep détecté: ", latest_no)
-log_msg("Page INSP: ", latest_page_url)
+latest_title <- safe_chr(latest$post_text)
+latest_page_url <- safe_chr(latest$post_url)
+latest_pdf_url <- safe_chr(latest$pdf_url)
 
 if (already_sent(latest_no)) {
-  log_msg("Notification déjà envoyée pour SitRep ", latest_no, ". Arrêt sans doublon.")
+  log_msg("SitRep N", latest_no, " already sent. No duplicate email.")
   quit(save = "no", status = 0)
 }
 
-pdf_url <- tryCatch(find_pdf_on_page(latest_page_url), error = function(e) {
-  log_msg("PDF non détecté sur la page: ", conditionMessage(e))
-  NA_character_
-})
-
-if (is.na(pdf_url) || !nzchar(pdf_url)) {
-  log_msg("Aucun lien PDF direct trouvé. La notification utilisera la page INSP comme source.")
-} else {
-  log_msg("PDF détecté: ", pdf_url)
-}
-
+email_status <- "not_sent"
+note <- ""
 pdf_file <- NA_character_
 pdf_sha256 <- NA_character_
 
-if (!is.na(pdf_url) && nzchar(pdf_url)) {
-  pdf_file <- file.path(PDF_DIR, paste0("PREIS_DRC_Ebola_SitRep_", sprintf("%03d", latest_no), ".pdf"))
-
-  tryCatch({
-    fetch_binary(pdf_url, pdf_file)
-
-    if (!file.exists(pdf_file) || file.info(pdf_file)$size == 0) {
-      stop("PDF téléchargé vide ou absent.")
-    }
-
+tryCatch(
+  {
+    pdf_file <- download_pdf(latest_pdf_url, latest_no)
     pdf_sha256 <- digest::digest(file = pdf_file, algo = "sha256")
-    log_msg("PDF sauvegardé: ", pdf_file)
-    log_msg("SHA256: ", pdf_sha256)
-  }, error = function(e) {
-    log_msg("Erreur téléchargement PDF: ", conditionMessage(e))
-    pdf_file <<- NA_character_
-    pdf_sha256 <<- NA_character_
-  })
-}
+    log_msg("PDF SHA256: ", pdf_sha256)
+  },
+  error = function(e) {
+    email_status <<- "failed"
+    note <<- conditionMessage(e)
 
-subject <- paste0("[PREIS Ebola DRC] SitRep ", latest_no, " PDF")
+    state_row <- tibble::tibble(
+      run_id = RUN_ID,
+      detected_at_utc = format(Sys.time(), "%Y-%m-%d %H:%M:%S", tz = "UTC"),
+      sent_at_utc = NA_character_,
+      sitrep_no = latest_no,
+      sitrep_date = latest_date,
+      page_url = latest_page_url,
+      pdf_url = latest_pdf_url,
+      pdf_sha256 = NA_character_,
+      pdf_file = NA_character_,
+      email_status = email_status,
+      note = note
+    )
+
+    append_state(state_row)
+    stop(note, call. = FALSE)
+  }
+)
+
+subject <- paste0("[PREIS Ebola DRC] Nouveau SitRep INSP — N", latest_no)
 
 body <- paste0(
-  "Dear team,\n\n",
-  "Please find attached the latest DRC Ebola SitRep detected by PREIS: SitRep ", latest_no, ".\n\n",
+  "Dear colleagues,\n\n",
+  "A new DRC Ebola INSP SitRep has been detected by PREIS.\n\n",
+  "SitRep: N", latest_no, "\n",
   "Title: ", ifelse(is.na(latest_title) || !nzchar(latest_title), "", latest_title), "\n",
   "INSP page: ", latest_page_url, "\n",
-  "PDF source: PREIS cloud automation\n\n",
-  "This is an automated PREIS notification. Analytical outputs will follow once generated and validated.\n\n",
+  "PDF source: ", latest_pdf_url, "\n\n",
+  "The PDF is attached as received from INSP.\n",
+  "Analytical outputs will follow once generated and validated.\n\n",
   "Best regards,\n",
   "PREIS Ebola DRC Automation\n"
 )
 
-writeLines(body, file.path(OUT_DIR, paste0("latest_sitrep_", latest_no, "_email_body.txt")))
-
-email_status <- "not_sent"
-note <- ""
+writeLines(
+  body,
+  file.path(OUT_DIR, paste0("latest_sitrep_", latest_no, "_email_body.txt")),
+  useBytes = TRUE
+)
 
 if (DRY_RUN) {
-  log_msg("DRY_RUN=TRUE : email non envoyé.")
+  log_msg("DRY_RUN=TRUE: email not sent.")
   email_status <- "dry_run"
   note <- "Dry run only; email not sent."
 } else {
-  log_msg("Envoi email SitRep ", latest_no, "...")
+  log_msg("Sending email for SitRep N", latest_no)
 
-  tryCatch({
-    preis_send_email(
-      subject = subject,
-      body = body,
-      attachment = if (!is.na(pdf_file) && file.exists(pdf_file)) pdf_file else NULL
-    )
+  tryCatch(
+    {
+      preis_send_email(
+        subject = subject,
+        body = body,
+        attachment = pdf_file
+      )
 
-    email_status <- "sent"
-    note <- "Email sent successfully."
-    log_msg("Email envoyé avec succès.")
-  }, error = function(e) {
-    email_status <<- "failed"
-    note <<- conditionMessage(e)
-    log_msg("Erreur envoi email: ", conditionMessage(e))
-  })
+      email_status <- "sent"
+      note <- "Email sent successfully."
+      log_msg("Email sent successfully.")
+    },
+    error = function(e) {
+      email_status <<- "failed"
+      note <<- conditionMessage(e)
+      log_msg("Email sending failed: ", note)
+    }
+  )
 }
 
-state_row <- tibble(
+state_row <- tibble::tibble(
   run_id = RUN_ID,
   detected_at_utc = format(Sys.time(), "%Y-%m-%d %H:%M:%S", tz = "UTC"),
-  sent_at_utc = if (email_status %in% c("sent", "dry_run")) format(Sys.time(), "%Y-%m-%d %H:%M:%S", tz = "UTC") else NA_character_,
+  sent_at_utc = if (email_status %in% c("sent", "dry_run")) {
+    format(Sys.time(), "%Y-%m-%d %H:%M:%S", tz = "UTC")
+  } else {
+    NA_character_
+  },
   sitrep_no = latest_no,
   sitrep_date = latest_date,
   page_url = latest_page_url,
-  pdf_url = pdf_url,
+  pdf_url = latest_pdf_url,
   pdf_sha256 = pdf_sha256,
   pdf_file = pdf_file,
   email_status = email_status,
@@ -359,11 +525,11 @@ state_row <- tibble(
 
 append_state(state_row)
 
-log_msg("Etat mis à jour: ", STATE_FILE)
-log_msg("Statut email: ", email_status)
+log_msg("State updated: ", STATE_FILE)
+log_msg("Email status: ", email_status)
 
 if (email_status == "failed") {
-  stop("Notification échouée: ", note, call. = FALSE)
+  stop("Notification failed: ", note, call. = FALSE)
 }
 
-log_msg("Fin monitor PREIS.")
+log_msg("PREIS cloud monitor finished.")

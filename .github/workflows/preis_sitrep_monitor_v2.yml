@@ -1,18 +1,17 @@
-name: PREIS Ebola DRC SitRep Monitor V2
+﻿name: PREIS Ebola DRC SitRep Monitor V2
 
 on:
   workflow_dispatch:
   repository_dispatch:
     types: [preis_sitrep_monitor]
   schedule:
-    - cron: "*/30 * * * *"
+    - cron: '*/5 * * * *'
   push:
     branches: [main]
     paths:
-      - "00_RUN_ALL_PRODUCTION.R"
-      - "scripts/08_cloud_sitrep_monitor.R"
-      - "scripts/00_email_smtp_base.R"
-      - ".github/workflows/preis_sitrep_monitor_v2.yml"
+      - 'scripts/08_cloud_sitrep_monitor.R'
+      - 'scripts/00_email_smtp_base.R'
+      - '.github/workflows/preis_sitrep_monitor_v2.yml'
 
 permissions:
   contents: write
@@ -24,10 +23,11 @@ concurrency:
 jobs:
   monitor:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     env:
-      PREIS_DRY_RUN: "FALSE"
-      PREIS_MAX_PAGES: "12"
+      PREIS_DRY_RUN: 'FALSE'
+      PREIS_MAX_PAGES: '6'
       SMTP_USER: ${{ secrets.SMTP_USER }}
       SMTP_PASS: ${{ secrets.SMTP_PASS }}
       SMTP_HOST: ${{ secrets.SMTP_HOST }}
@@ -47,80 +47,37 @@ jobs:
       - name: Setup R
         uses: r-lib/actions/setup-r@v2
 
-      - name: Setup Pandoc
-        uses: r-lib/actions/setup-pandoc@v2
-
-      - name: Install system dependencies
+      - name: Install Linux dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y \
             libcurl4-openssl-dev \
             libssl-dev \
             libxml2-dev \
-            libfontconfig1-dev \
-            libfreetype6-dev \
-            libharfbuzz-dev \
-            libfribidi-dev \
-            cmake \
             make
 
       - name: Install R packages
         run: |
-          Rscript -e 'install.packages(c("httr2","httr","rvest","xml2","stringr","dplyr","readr","tibble","purrr","digest","curl","base64enc","lubridate","glue","tidyr","openxlsx","pdftools"), repos="https://cloud.r-project.org")'
+          Rscript --vanilla -e 'install.packages(c("httr","rvest","xml2","stringr","dplyr","readr","tibble","purrr","digest","curl","base64enc"), repos="https://cloud.r-project.org")'
 
-      - name: Check PREIS email secrets
+      - name: Check email secrets
         run: |
-          Rscript -e '
-          split_emails <- function(x) {
-            x <- unlist(strsplit(x, "[,;]"))
-            x <- trimws(x)
-            x[nzchar(x)]
-          }
+          Rscript --vanilla -e 'required <- c("SMTP_USER","SMTP_PASS","ALERT_FROM","ALERT_TO"); missing <- required[!nzchar(Sys.getenv(required))]; if (length(missing) > 0) stop("Secrets manquants: ", paste(missing, collapse=", ")); cat("Email secrets OK\n")'
 
-          required <- c("SMTP_USER", "SMTP_PASS", "ALERT_FROM", "ALERT_TO")
-          missing <- required[!nzchar(Sys.getenv(required))]
-
-          if (length(missing) > 0) {
-            stop("Secrets manquants: ", paste(missing, collapse = ", "))
-          }
-
-          to <- split_emails(Sys.getenv("ALERT_TO"))
-          cc <- split_emails(Sys.getenv("ALERT_CC"))
-          bcc <- split_emails(Sys.getenv("ALERT_BCC"))
-
-          cat("ALERT_TO count:", length(to), "\n")
-          cat("ALERT_CC count:", length(cc), "\n")
-          cat("ALERT_BCC count:", length(bcc), "\n")
-
-          if (length(to) == 0) stop("ALERT_TO est vide.")
-          if (any(!grepl("^[^@]+@[^@]+\\.[^@]+$", to))) stop("ALERT_TO contient un email invalide.")
-          '
-
-      - name: Run PREIS production runner
+      - name: Parse R scripts
         run: |
-          Rscript --vanilla 00_RUN_ALL_PRODUCTION.R
+          Rscript --vanilla -e 'parse(file="scripts/00_email_smtp_base.R", encoding="UTF-8"); parse(file="scripts/08_cloud_sitrep_monitor.R", encoding="UTF-8"); cat("R parse OK\n")'
 
       - name: Run PREIS SitRep monitor
         run: |
           Rscript --vanilla scripts/08_cloud_sitrep_monitor.R
 
-      - name: Commit PREIS monitor outputs
+      - name: Commit monitor outputs
         run: |
           git config user.name "PREIS Ebola Automation"
           git config user.email "actions@github.com"
-
-          git add \
-            data/monitor_state/ \
-            data/pdf/ \
-            data/final/ \
-            data/logs/ \
-            outputs/cloud_monitor/ \
-            outputs/ \
-            || true
-
+          git add data/monitor_state/ data/pdf/ data/logs/ outputs/cloud_monitor/ || true
           git status --short
-
           git commit -m "PREIS SitRep monitor state update" || echo "No changes to commit"
-
           git pull --rebase origin main || echo "No remote changes to rebase"
           git push || echo "No changes to push"
