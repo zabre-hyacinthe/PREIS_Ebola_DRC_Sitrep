@@ -6,3 +6,5 @@ run_id,detected_at_utc,sent_at_utc,sitrep_no,sitrep_date,page_url,pdf_url,pdf_sh
 ",,,,,,
 20260629_184344,2026-06-29 18:44:29,,44,2026-06-27,https://insp.cd/sitrep-n044-mvb_27-06-2026/,https://insp.cd/wp-content/uploads/2026/06/Final-SitRep_MVE_RDC_N°044_27_06_2026.pdf,122a15ac6296926dd1ff8c05e0c605fd8f4612943145c3097264d3df66d897f1,/home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/pdf/PREIS_DRC_Ebola_SitRep_044.pdf,failed,"Erreur envoi SMTP curl. Sortie:
 ",,,,,,
+20260629_194600,2026-06-29 19:46:44,,44,2026-06-27,https://insp.cd/sitrep-n044-mvb_27-06-2026/,https://insp.cd/wp-content/uploads/2026/06/Final-SitRep_MVE_RDC_N°044_27_06_2026.pdf,122a15ac6296926dd1ff8c05e0c605fd8f4612943145c3097264d3df66d897f1,/home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/pdf/PREIS_DRC_Ebola_SitRep_044.pdf,failed,"Erreur envoi SMTP curl. Sortie:
+",,,,,,
