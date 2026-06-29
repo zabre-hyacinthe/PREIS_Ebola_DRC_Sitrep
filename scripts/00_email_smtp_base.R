@@ -2,11 +2,10 @@
 # PREIS Ebola RDC — SMTP email helper
 # Fichier: scripts/00_email_smtp_base.R
 #
-# Version finale GitHub Actions:
+# Version definitive:
+#   - aucun curl SMTP
 #   - aucun emayili
-#   - aucun curl::mime
-#   - envoi SMTP via curl CLI Linux
-#   - pièce jointe PDF encodée MIME/base64
+#   - envoi email via Python standard smtplib
 ############################################################
 
 preis_env <- function(name, default = "") {
@@ -21,7 +20,6 @@ preis_split_emails <- function(x) {
   if (is.null(x) || length(x) == 0 || is.na(x[1]) || !nzchar(trimws(x[1]))) {
     return(character())
   }
-
   x <- unlist(strsplit(as.character(x[1]), "[,;]"))
   x <- trimws(x)
   x <- x[nzchar(x)]
@@ -32,107 +30,33 @@ preis_validate_emails <- function(x, field_name) {
   if (length(x) == 0) {
     return(invisible(TRUE))
   }
-
   bad <- x[!grepl("^[^@[:space:]]+@[^@[:space:]]+[.][^@[:space:]]+$", x)]
-
   if (length(bad) > 0) {
-    stop(
-      field_name,
-      " contient email(s) invalide(s): ",
-      paste(bad, collapse = ", "),
-      call. = FALSE
-    )
+    stop(field_name, " contient email(s) invalide(s): ", paste(bad, collapse = ", "), call. = FALSE)
   }
-
   invisible(TRUE)
 }
 
-preis_base64_string <- function(x) {
-  if (!requireNamespace("base64enc", quietly = TRUE)) {
-    stop("Package base64enc manquant.", call. = FALSE)
+preis_find_python <- function() {
+  py <- Sys.which("python3")
+  if (!nzchar(py)) {
+    py <- Sys.which("python")
   }
-
-  out <- base64enc::base64encode(charToRaw(enc2utf8(x)))
-  out <- gsub("[\r\n]", "", out)
-  out
+  if (!nzchar(py)) {
+    stop("Python introuvable sur le runner.", call. = FALSE)
+  }
+  py
 }
 
-preis_encode_header <- function(x) {
-  x <- enc2utf8(as.character(x)[1])
-  if (grepl("^[ -~]+$", x)) {
-    return(x)
+preis_redact <- function(x, smtp_user, smtp_pass) {
+  x <- paste(as.character(x), collapse = "\n")
+  if (!is.na(smtp_pass) && nzchar(smtp_pass)) {
+    x <- gsub(smtp_pass, "********", x, fixed = TRUE)
   }
-  paste0("=?UTF-8?B?", preis_base64_string(x), "?=")
-}
-
-preis_make_date_header <- function() {
-  format(Sys.time(), "%a, %d %b %Y %H:%M:%S %z")
-}
-
-preis_read_attachment_base64 <- function(path) {
-  if (!requireNamespace("base64enc", quietly = TRUE)) {
-    stop("Package base64enc manquant.", call. = FALSE)
+  if (!is.na(smtp_user) && nzchar(smtp_user)) {
+    x <- gsub(smtp_user, "SMTP_USER", x, fixed = TRUE)
   }
-
-  if (!file.exists(path)) {
-    stop("Pièce jointe introuvable: ", path, call. = FALSE)
-  }
-
-  b64 <- base64enc::base64encode(path, linewidth = 76, newline = "\r\n")
-  b64 <- gsub("\n", "\r\n", b64, fixed = TRUE)
-  b64
-}
-
-preis_write_mime_message <- function(
-    subject,
-    body,
-    attachment,
-    from,
-    to,
-    cc = character(),
-    bcc = character()
-) {
-
-  boundary <- paste0("PREIS_", format(Sys.time(), "%Y%m%d%H%M%S"), "_", sample(100000:999999, 1))
-  attachment_name <- basename(attachment)
-  attachment_b64 <- preis_read_attachment_base64(attachment)
-
-  to_header <- paste(to, collapse = ", ")
-  cc_header <- if (length(cc) > 0) paste(cc, collapse = ", ") else NA_character_
-
-  body_lines <- unlist(strsplit(enc2utf8(body), "\r\n|\n|\r", perl = TRUE))
-  if (length(body_lines) == 0) body_lines <- ""
-
-  lines <- c(
-    paste0("Date: ", preis_make_date_header()),
-    paste0("From: ", from),
-    paste0("To: ", to_header),
-    if (!is.na(cc_header)) paste0("Cc: ", cc_header) else NULL,
-    paste0("Subject: ", preis_encode_header(subject)),
-    "MIME-Version: 1.0",
-    paste0("Content-Type: multipart/mixed; boundary=\"", boundary, "\""),
-    "",
-    paste0("--", boundary),
-    "Content-Type: text/plain; charset=UTF-8",
-    "Content-Transfer-Encoding: 8bit",
-    "",
-    body_lines,
-    "",
-    paste0("--", boundary),
-    paste0("Content-Type: application/pdf; name=\"", attachment_name, "\""),
-    "Content-Transfer-Encoding: base64",
-    paste0("Content-Disposition: attachment; filename=\"", attachment_name, "\""),
-    "",
-    attachment_b64,
-    "",
-    paste0("--", boundary, "--"),
-    ""
-  )
-
-  msg_file <- tempfile(pattern = "preis_email_", fileext = ".eml")
-  writeLines(lines, msg_file, sep = "\r\n", useBytes = TRUE)
-
-  msg_file
+  x
 }
 
 preis_send_email <- function(
@@ -148,99 +72,58 @@ preis_send_email <- function(
     smtp_host = preis_env("SMTP_HOST"),
     smtp_port = suppressWarnings(as.integer(preis_env("SMTP_PORT", "465")))
 ) {
-
-  if (!nzchar(from)) {
-    stop("ALERT_FROM est vide.", call. = FALSE)
-  }
-
-  if (length(to) == 0) {
-    stop("ALERT_TO est vide.", call. = FALSE)
-  }
-
-  if (!nzchar(smtp_user)) {
-    stop("SMTP_USER est vide.", call. = FALSE)
-  }
-
-  if (!nzchar(smtp_pass)) {
-    stop("SMTP_PASS est vide.", call. = FALSE)
-  }
-
-  if (!nzchar(smtp_host)) {
-    stop("SMTP_HOST est vide.", call. = FALSE)
-  }
-
-  if (is.na(smtp_port)) {
-    smtp_port <- 465L
-  }
-
-  if (is.null(attachment) || length(attachment) == 0 || !file.exists(as.character(attachment[1]))) {
-    stop("Pièce jointe PDF introuvable.", call. = FALSE)
-  }
+  if (!nzchar(from)) stop("ALERT_FROM est vide.", call. = FALSE)
+  if (length(to) == 0) stop("ALERT_TO est vide.", call. = FALSE)
+  if (!nzchar(smtp_user)) stop("SMTP_USER est vide.", call. = FALSE)
+  if (!nzchar(smtp_pass)) stop("SMTP_PASS est vide.", call. = FALSE)
+  if (!nzchar(smtp_host)) stop("SMTP_HOST est vide.", call. = FALSE)
+  if (is.na(smtp_port)) smtp_port <- 465L
+  if (is.null(attachment) || length(attachment) == 0) stop("Pièce jointe PDF manquante.", call. = FALSE)
 
   attachment <- as.character(attachment[1])
+  if (!file.exists(attachment)) stop("Pièce jointe introuvable: ", attachment, call. = FALSE)
 
   preis_validate_emails(from, "ALERT_FROM")
   preis_validate_emails(to, "ALERT_TO")
   preis_validate_emails(cc, "ALERT_CC")
   preis_validate_emails(bcc, "ALERT_BCC")
 
-  rcpts <- unique(c(to, cc, bcc))
-
-  curl_bin <- Sys.which("curl")
-  if (!nzchar(curl_bin)) {
-    stop("curl CLI introuvable sur le runner.", call. = FALSE)
+  py_script <- file.path(getwd(), "scripts", "py_send_email.py")
+  if (!file.exists(py_script)) {
+    stop("Helper Python introuvable: ", py_script, call. = FALSE)
   }
 
-  msg_file <- preis_write_mime_message(
-    subject = subject,
-    body = body,
-    attachment = attachment,
-    from = from,
-    to = to,
-    cc = cc,
-    bcc = bcc
+  body_file <- tempfile(pattern = "preis_email_body_", fileext = ".txt")
+  writeLines(enc2utf8(body), body_file, useBytes = TRUE)
+
+  py <- preis_find_python()
+  env_vars <- c(
+    paste0("SMTP_HOST=", smtp_host),
+    paste0("SMTP_PORT=", as.integer(smtp_port)),
+    paste0("SMTP_USER=", smtp_user),
+    paste0("SMTP_PASS=", smtp_pass),
+    paste0("ALERT_FROM=", from),
+    paste0("ALERT_TO=", paste(to, collapse = ";")),
+    paste0("ALERT_CC=", paste(cc, collapse = ";")),
+    paste0("ALERT_BCC=", paste(bcc, collapse = ";")),
+    paste0("PREIS_EMAIL_SUBJECT=", subject),
+    paste0("PREIS_EMAIL_BODY_FILE=", body_file),
+    paste0("PREIS_EMAIL_ATTACHMENT=", normalizePath(attachment, mustWork = TRUE))
   )
 
-  smtp_scheme <- if (as.integer(smtp_port) == 465L) "smtps" else "smtp"
-  smtp_url <- paste0(smtp_scheme, "://", smtp_host, ":", as.integer(smtp_port))
-
-  args <- c(
-    "--silent",
-    "--show-error",
-    "--fail",
-    "--ssl-reqd",
-    "--connect-timeout", "30",
-    "--max-time", "180",
-    "--url", smtp_url,
-    "--user", paste0(smtp_user, ":", smtp_pass),
-    "--mail-from", paste0("<", from, ">")
+  output <- tryCatch(
+    system2(py, args = c(py_script), stdout = TRUE, stderr = TRUE, env = env_vars),
+    error = function(e) structure(conditionMessage(e), status = 99)
   )
 
-  for (r in rcpts) {
-    args <- c(args, "--mail-rcpt", paste0("<", r, ">"))
-  }
+  status <- attr(output, "status")
+  if (is.null(status)) status <- 0
 
-  args <- c(args, "--upload-file", msg_file)
+  safe_output <- preis_redact(output, smtp_user, smtp_pass)
+  if (nzchar(safe_output)) message(safe_output)
 
-  res <- tryCatch(
-    system2(curl_bin, args = args, stdout = TRUE, stderr = TRUE),
-    error = function(e) {
-      attr(e, "preis_system2_error") <- TRUE
-      e
-    }
-  )
-
-  if (inherits(res, "error")) {
-    stop("Erreur curl SMTP: ", conditionMessage(res), call. = FALSE)
-  }
-
-  status <- attr(res, "status")
-
-  if (!is.null(status) && status != 0) {
-    safe_output <- paste(res, collapse = "\n")
-    safe_output <- gsub(smtp_pass, "********", safe_output, fixed = TRUE)
-    safe_output <- gsub(smtp_user, "SMTP_USER", safe_output, fixed = TRUE)
-    stop("Erreur envoi SMTP curl. Sortie:\n", safe_output, call. = FALSE)
+  if (!identical(as.integer(status), 0L)) {
+    stop("Erreur envoi SMTP Python. Sortie:\n", safe_output, call. = FALSE)
   }
 
   invisible(TRUE)
