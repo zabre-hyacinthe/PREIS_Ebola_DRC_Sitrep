@@ -5,7 +5,8 @@
 # Version definitive:
 #   - aucun curl SMTP
 #   - aucun emayili
-#   - envoi email via Python standard smtplib
+#   - email via Python standard smtplib
+#   - les secrets sont transmis via fichier config temporaire encode hex
 ############################################################
 
 preis_env <- function(name, default = "") {
@@ -71,6 +72,173 @@ preis_redact <- function(x, smtp_user, smtp_pass) {
   x
 }
 
+preis_hex <- function(x) {
+  x <- enc2utf8(as.character(x)[1])
+  paste(sprintf("%02x", as.integer(charToRaw(x))), collapse = "")
+}
+
+preis_write_hex_config <- function(config_file, values) {
+  keys <- names(values)
+
+  lines <- vapply(
+    keys,
+    function(k) {
+      paste0(k, "=", preis_hex(values[[k]]))
+    },
+    character(1),
+    USE.NAMES = FALSE
+  )
+
+  writeLines(lines, config_file, useBytes = TRUE)
+}
+
+preis_write_python_sender <- function(py_file) {
+  py_lines <- c(
+    "import os",
+    "import re",
+    "import ssl",
+    "import sys",
+    "import smtplib",
+    "import traceback",
+    "from email.message import EmailMessage",
+    "",
+    "def load_config(path):",
+    "    cfg = {}",
+    "    with open(path, 'r', encoding='utf-8') as f:",
+    "        for line in f:",
+    "            line = line.rstrip('\\r\\n')",
+    "            if not line or '=' not in line:",
+    "                continue",
+    "            k, v = line.split('=', 1)",
+    "            cfg[k] = bytes.fromhex(v).decode('utf-8')",
+    "    return cfg",
+    "",
+    "CFG = load_config(sys.argv[1]) if len(sys.argv) > 1 else {}",
+    "",
+    "def cfgget(name, default=''):",
+    "    value = CFG.get(name, default)",
+    "    if value is None:",
+    "        value = default",
+    "    return str(value).strip()",
+    "",
+    "def split_emails(value):",
+    "    value = value or ''",
+    "    parts = re.split(r'[,;]', value)",
+    "    out = []",
+    "    for p in parts:",
+    "        p = p.strip()",
+    "        if p:",
+    "            out.append(p)",
+    "    return list(dict.fromkeys(out))",
+    "",
+    "def redact(text):",
+    "    text = str(text)",
+    "    user = cfgget('SMTP_USER')",
+    "    pwd = cfgget('SMTP_PASS')",
+    "    if pwd:",
+    "        text = text.replace(pwd, '********')",
+    "    if user:",
+    "        text = text.replace(user, 'SMTP_USER')",
+    "    return text",
+    "",
+    "def require_email_list(values, name):",
+    "    if not values:",
+    "        raise ValueError(f'{name} est vide.')",
+    "    bad = [x for x in values if not re.match(r'^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$', x)]",
+    "    if bad:",
+    "        raise ValueError(f'{name} contient email(s) invalide(s): {\", \".join(bad)}')",
+    "",
+    "def main():",
+    "    smtp_host = cfgget('SMTP_HOST')",
+    "    smtp_port = int(cfgget('SMTP_PORT', '465'))",
+    "    smtp_user = cfgget('SMTP_USER')",
+    "    smtp_pass = cfgget('SMTP_PASS')",
+    "    alert_from = cfgget('ALERT_FROM')",
+    "    alert_to = split_emails(cfgget('ALERT_TO'))",
+    "    alert_cc = split_emails(cfgget('ALERT_CC'))",
+    "    alert_bcc = split_emails(cfgget('ALERT_BCC'))",
+    "    subject = cfgget('PREIS_EMAIL_SUBJECT')",
+    "    body_file = cfgget('PREIS_EMAIL_BODY_FILE')",
+    "    attachment = cfgget('PREIS_EMAIL_ATTACHMENT')",
+    "",
+    "    if not smtp_host:",
+    "        raise ValueError('SMTP_HOST est vide.')",
+    "    if not smtp_user:",
+    "        raise ValueError('SMTP_USER est vide.')",
+    "    if not smtp_pass:",
+    "        raise ValueError('SMTP_PASS est vide.')",
+    "    if not alert_from:",
+    "        raise ValueError('ALERT_FROM est vide.')",
+    "    if not subject:",
+    "        raise ValueError('PREIS_EMAIL_SUBJECT est vide.')",
+    "    if not body_file or not os.path.exists(body_file):",
+    "        raise ValueError('PREIS_EMAIL_BODY_FILE est introuvable.')",
+    "    if not attachment or not os.path.exists(attachment):",
+    "        raise ValueError('PREIS_EMAIL_ATTACHMENT est introuvable.')",
+    "",
+    "    require_email_list([alert_from], 'ALERT_FROM')",
+    "    require_email_list(alert_to, 'ALERT_TO')",
+    "    require_email_list(alert_cc, 'ALERT_CC')",
+    "    require_email_list(alert_bcc, 'ALERT_BCC')",
+    "",
+    "    with open(body_file, 'r', encoding='utf-8') as f:",
+    "        body = f.read()",
+    "",
+    "    recipients = list(dict.fromkeys(alert_to + alert_cc + alert_bcc))",
+    "",
+    "    msg = EmailMessage()",
+    "    msg['From'] = alert_from",
+    "    msg['To'] = ', '.join(alert_to)",
+    "    if alert_cc:",
+    "        msg['Cc'] = ', '.join(alert_cc)",
+    "    msg['Subject'] = subject",
+    "    msg.set_content(body, charset='utf-8')",
+    "",
+    "    with open(attachment, 'rb') as f:",
+    "        pdf_data = f.read()",
+    "",
+    "    msg.add_attachment(",
+    "        pdf_data,",
+    "        maintype='application',",
+    "        subtype='pdf',",
+    "        filename=os.path.basename(attachment)",
+    "    )",
+    "",
+    "    print(f'SMTP host: {smtp_host}')",
+    "    print(f'SMTP port: {smtp_port}')",
+    "    print('SMTP user: SMTP_USER')",
+    "    print(f'Recipients: {\", \".join(recipients)}')",
+    "    print(f'Attachment: {attachment}')",
+    "",
+    "    if smtp_port == 465:",
+    "        context = ssl.create_default_context()",
+    "        with smtplib.SMTP_SSL(smtp_host, smtp_port, timeout=90, context=context) as server:",
+    "            server.login(smtp_user, smtp_pass)",
+    "            server.send_message(msg, from_addr=alert_from, to_addrs=recipients)",
+    "    else:",
+    "        context = ssl.create_default_context()",
+    "        with smtplib.SMTP(smtp_host, smtp_port, timeout=90) as server:",
+    "            server.ehlo()",
+    "            server.starttls(context=context)",
+    "            server.ehlo()",
+    "            server.login(smtp_user, smtp_pass)",
+    "            server.send_message(msg, from_addr=alert_from, to_addrs=recipients)",
+    "",
+    "    print('PYTHON_SMTP_EMAIL_SENT')",
+    "    return 0",
+    "",
+    "if __name__ == '__main__':",
+    "    try:",
+    "        sys.exit(main())",
+    "    except Exception as e:",
+    "        print('PYTHON_SMTP_FATAL:', redact(repr(e)), file=sys.stderr)",
+    "        print(redact(traceback.format_exc()), file=sys.stderr)",
+    "        sys.exit(2)"
+  )
+
+  writeLines(py_lines, py_file, useBytes = TRUE)
+}
+
 preis_send_email <- function(
     subject,
     body,
@@ -85,25 +253,11 @@ preis_send_email <- function(
     smtp_port = suppressWarnings(as.integer(preis_env("SMTP_PORT", "465")))
 ) {
 
-  if (!nzchar(from)) {
-    stop("ALERT_FROM est vide.", call. = FALSE)
-  }
-
-  if (length(to) == 0) {
-    stop("ALERT_TO est vide.", call. = FALSE)
-  }
-
-  if (!nzchar(smtp_user)) {
-    stop("SMTP_USER est vide.", call. = FALSE)
-  }
-
-  if (!nzchar(smtp_pass)) {
-    stop("SMTP_PASS est vide.", call. = FALSE)
-  }
-
-  if (!nzchar(smtp_host)) {
-    stop("SMTP_HOST est vide.", call. = FALSE)
-  }
+  if (!nzchar(from)) stop("ALERT_FROM est vide.", call. = FALSE)
+  if (length(to) == 0) stop("ALERT_TO est vide.", call. = FALSE)
+  if (!nzchar(smtp_user)) stop("SMTP_USER est vide.", call. = FALSE)
+  if (!nzchar(smtp_pass)) stop("SMTP_PASS est vide.", call. = FALSE)
+  if (!nzchar(smtp_host)) stop("SMTP_HOST est vide.", call. = FALSE)
 
   if (is.na(smtp_port)) {
     smtp_port <- 465L
@@ -124,38 +278,38 @@ preis_send_email <- function(
   preis_validate_emails(cc, "ALERT_CC")
   preis_validate_emails(bcc, "ALERT_BCC")
 
-  py_script <- file.path(getwd(), "scripts", "py_send_email.py")
-
-  if (!file.exists(py_script)) {
-    stop("Helper Python introuvable: ", py_script, call. = FALSE)
-  }
-
   body_file <- tempfile(pattern = "preis_email_body_", fileext = ".txt")
+  py_file <- tempfile(pattern = "preis_smtp_sender_", fileext = ".py")
+  config_file <- tempfile(pattern = "preis_smtp_config_", fileext = ".txt")
+
   writeLines(enc2utf8(body), body_file, useBytes = TRUE)
+  preis_write_python_sender(py_file)
+
+  preis_write_hex_config(
+    config_file,
+    list(
+      SMTP_HOST = smtp_host,
+      SMTP_PORT = as.character(as.integer(smtp_port)),
+      SMTP_USER = smtp_user,
+      SMTP_PASS = smtp_pass,
+      ALERT_FROM = from,
+      ALERT_TO = paste(to, collapse = ";"),
+      ALERT_CC = paste(cc, collapse = ";"),
+      ALERT_BCC = paste(bcc, collapse = ";"),
+      PREIS_EMAIL_SUBJECT = subject,
+      PREIS_EMAIL_BODY_FILE = body_file,
+      PREIS_EMAIL_ATTACHMENT = normalizePath(attachment, mustWork = TRUE)
+    )
+  )
 
   py <- preis_find_python()
-
-  env_vars <- c(
-    paste0("SMTP_HOST=", smtp_host),
-    paste0("SMTP_PORT=", as.integer(smtp_port)),
-    paste0("SMTP_USER=", smtp_user),
-    paste0("SMTP_PASS=", smtp_pass),
-    paste0("ALERT_FROM=", from),
-    paste0("ALERT_TO=", paste(to, collapse = ";")),
-    paste0("ALERT_CC=", paste(cc, collapse = ";")),
-    paste0("ALERT_BCC=", paste(bcc, collapse = ";")),
-    paste0("PREIS_EMAIL_SUBJECT=", subject),
-    paste0("PREIS_EMAIL_BODY_FILE=", body_file),
-    paste0("PREIS_EMAIL_ATTACHMENT=", normalizePath(attachment, mustWork = TRUE))
-  )
 
   output <- tryCatch(
     system2(
       py,
-      args = c(py_script),
+      args = c(py_file, config_file),
       stdout = TRUE,
-      stderr = TRUE,
-      env = env_vars
+      stderr = TRUE
     ),
     error = function(e) {
       structure(conditionMessage(e), status = 99)
