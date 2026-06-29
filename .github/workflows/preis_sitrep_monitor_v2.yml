@@ -43,6 +43,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y \
+            curl \
             libcurl4-openssl-dev \
             libssl-dev \
             libxml2-dev \
@@ -50,11 +51,12 @@ jobs:
 
       - name: Install R packages
         run: |
-          Rscript --vanilla -e 'install.packages(c("httr","rvest","xml2","stringr","dplyr","readr","tibble","purrr","digest","curl","base64enc","emayili"), repos="https://cloud.r-project.org")'
+          Rscript --vanilla -e 'install.packages(c("httr","rvest","xml2","stringr","dplyr","readr","tibble","purrr","digest","base64enc"), repos="https://cloud.r-project.org")'
 
-      - name: Confirm R packages
+      - name: Confirm R packages and curl CLI
         run: |
-          Rscript --vanilla -e 'pkgs <- c("httr","rvest","xml2","stringr","dplyr","readr","tibble","purrr","digest","curl","base64enc","emayili"); missing <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly=TRUE)]; if(length(missing)>0) stop("Packages manquants: ", paste(missing, collapse=", ")); cat("All R packages OK\n")'
+          curl --version
+          Rscript --vanilla -e 'pkgs <- c("httr","rvest","xml2","stringr","dplyr","readr","tibble","purrr","digest","base64enc"); missing <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly=TRUE)]; if(length(missing)>0) stop("Packages manquants: ", paste(missing, collapse=", ")); cat("All R packages OK\n")'
 
       - name: Check email secrets
         run: |
