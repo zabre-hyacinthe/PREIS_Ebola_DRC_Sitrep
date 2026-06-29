@@ -178,8 +178,6 @@ preis_write_python_sender <- function(py_file) {
     "",
     "    require_email_list([alert_from], 'ALERT_FROM')",
     "    require_email_list(alert_to, 'ALERT_TO')",
-    "    require_email_list(alert_cc, 'ALERT_CC')",
-    "    require_email_list(alert_bcc, 'ALERT_BCC')",
     "",
     "    with open(body_file, 'r', encoding='utf-8') as f:",
     "        body = f.read()",
