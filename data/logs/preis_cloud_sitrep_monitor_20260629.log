@@ -142,3 +142,16 @@ ValueError: ALERT_CC est vide.
 [2026-06-29 21:19:35 UTC] State updated: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/monitor_state/preis_sitrep_email_state.csv 
 [2026-06-29 21:19:35 UTC] Email status: sent 
 [2026-06-29 21:19:35 UTC] PREIS cloud monitor finished. 
+[2026-06-29 21:37:38 UTC] ============================================================ 
+[2026-06-29 21:37:38 UTC] PREIS Ebola RDC — Cloud SitRep Monitor started 
+[2026-06-29 21:37:38 UTC] ROOT: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep 
+[2026-06-29 21:37:38 UTC] DRY_RUN: FALSE 
+[2026-06-29 21:37:38 UTC] MAX_PAGES: 6 
+[2026-06-29 21:37:38 UTC] Scanning INSP category page: https://insp.cd/category/sitrep/ 
+[2026-06-29 21:37:43 UTC] Page 1: 10 SitRep candidate(s) 
+[2026-06-29 21:37:47 UTC] Page 2: 10 SitRep candidate(s) 
+[2026-06-29 21:37:57 UTC] Page 3: 6 SitRep candidate(s) 
+[2026-06-29 21:38:25 UTC] Latest SitRep online: N44 
+[2026-06-29 21:38:25 UTC] SitRep page: https://insp.cd/sitrep-n044-mvb_27-06-2026/ 
+[2026-06-29 21:38:30 UTC] PDF URL resolved: https://insp.cd/wp-content/uploads/2026/06/Final-SitRep_MVE_RDC_N°044_27_06_2026.pdf 
+[2026-06-29 21:38:30 UTC] SitRep N44 already sent. No duplicate email. 
