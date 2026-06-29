@@ -60,7 +60,11 @@ preis_send_email <- function(
 ) {
 
   if (!requireNamespace("emayili", quietly = TRUE)) {
-    stop("Package 'emayili' manquant.", call. = FALSE)
+    install.packages("emayili", repos = "https://cloud.r-project.org")
+  }
+
+  if (!requireNamespace("emayili", quietly = TRUE)) {
+    stop("Package 'emayili' manquant après tentative d'installation.", call. = FALSE)
   }
 
   if (!nzchar(from)) {

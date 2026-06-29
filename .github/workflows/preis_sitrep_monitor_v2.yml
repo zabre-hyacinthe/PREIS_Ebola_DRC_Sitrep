@@ -2,16 +2,8 @@ name: PREIS Ebola DRC SitRep Monitor V2
 
 on:
   workflow_dispatch:
-  repository_dispatch:
-    types: [preis_sitrep_monitor]
   schedule:
     - cron: '*/5 * * * *'
-  push:
-    branches: [main]
-    paths:
-      - 'scripts/08_cloud_sitrep_monitor.R'
-      - 'scripts/00_email_smtp_base.R'
-      - '.github/workflows/preis_sitrep_monitor_v2.yml'
 
 permissions:
   contents: write
@@ -23,7 +15,7 @@ concurrency:
 jobs:
   monitor:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
 
     env:
       PREIS_DRY_RUN: 'FALSE'
@@ -60,9 +52,13 @@ jobs:
         run: |
           Rscript --vanilla -e 'install.packages(c("httr","rvest","xml2","stringr","dplyr","readr","tibble","purrr","digest","curl","base64enc","emayili"), repos="https://cloud.r-project.org")'
 
+      - name: Confirm R packages
+        run: |
+          Rscript --vanilla -e 'pkgs <- c("httr","rvest","xml2","stringr","dplyr","readr","tibble","purrr","digest","curl","base64enc","emayili"); missing <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly=TRUE)]; if(length(missing)>0) stop("Packages manquants: ", paste(missing, collapse=", ")); cat("All R packages OK\n")'
+
       - name: Check email secrets
         run: |
-          Rscript --vanilla -e 'required <- c("SMTP_USER","SMTP_PASS","ALERT_FROM","ALERT_TO"); missing <- required[!nzchar(Sys.getenv(required))]; if (length(missing) > 0) stop("Secrets manquants: ", paste(missing, collapse=", ")); cat("Email secrets OK\n")'
+          Rscript --vanilla -e 'required <- c("SMTP_USER","SMTP_PASS","SMTP_HOST","SMTP_PORT","ALERT_FROM","ALERT_TO"); missing <- required[!nzchar(Sys.getenv(required))]; if (length(missing) > 0) stop("Secrets manquants: ", paste(missing, collapse=", ")); cat("Email secrets OK\n")'
 
       - name: Parse R scripts
         run: |
@@ -73,6 +69,7 @@ jobs:
           Rscript --vanilla scripts/08_cloud_sitrep_monitor.R
 
       - name: Commit monitor outputs
+        if: always()
         run: |
           git config user.name "PREIS Ebola Automation"
           git config user.email "actions@github.com"
