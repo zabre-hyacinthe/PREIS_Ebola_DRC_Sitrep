@@ -404,6 +404,114 @@ download_pdf <- function(pdf_url, sitrep_no) {
   stop("PDF download failed for SitRep N", sitrep_no, call. = FALSE)
 }
 
+
+# ============================================================
+# PATCH — compatibility with old state CSV schema
+# This overrides read_state() and already_sent() safely.
+# ============================================================
+
+empty_state_template <- function() {
+  tibble::tibble(
+    run_id = character(),
+    detected_at_utc = character(),
+    sent_at_utc = character(),
+    sitrep_no = integer(),
+    sitrep_date = character(),
+    page_url = character(),
+    pdf_url = character(),
+    pdf_sha256 = character(),
+    pdf_file = character(),
+    email_status = character(),
+    note = character()
+  )
+}
+
+normalize_state_schema <- function(state) {
+  template <- empty_state_template()
+
+  if (is.null(state) || nrow(state) == 0) {
+    return(template)
+  }
+
+  if (!"email_status" %in% names(state)) {
+    if ("status" %in% names(state)) {
+      state$email_status <- as.character(state$status)
+    } else if ("email_sent" %in% names(state)) {
+      state$email_status <- ifelse(
+        as.character(state$email_sent) %in% c("TRUE", "true", "1", "Yes", "yes"),
+        "sent",
+        "not_sent"
+      )
+    } else {
+      state$email_status <- NA_character_
+    }
+  }
+
+  for (nm in names(template)) {
+    if (!nm %in% names(state)) {
+      state[[nm]] <- NA_character_
+    }
+  }
+
+  state <- state |>
+    dplyr::mutate(
+      run_id = as.character(run_id),
+      detected_at_utc = as.character(detected_at_utc),
+      sent_at_utc = as.character(sent_at_utc),
+      sitrep_no = suppressWarnings(as.integer(sitrep_no)),
+      sitrep_date = as.character(sitrep_date),
+      page_url = as.character(page_url),
+      pdf_url = as.character(pdf_url),
+      pdf_sha256 = as.character(pdf_sha256),
+      pdf_file = as.character(pdf_file),
+      email_status = as.character(email_status),
+      note = as.character(note)
+    ) |>
+    dplyr::select(dplyr::all_of(names(template)), dplyr::everything())
+
+  state
+}
+
+read_state <- function() {
+  if (!file.exists(STATE_FILE)) {
+    return(empty_state_template())
+  }
+
+  state <- suppressMessages(
+    readr::read_csv(
+      STATE_FILE,
+      col_types = readr::cols(.default = readr::col_character()),
+      show_col_types = FALSE
+    )
+  )
+
+  normalize_state_schema(state)
+}
+
+write_state <- function(state) {
+  state <- normalize_state_schema(state)
+  readr::write_csv(state, STATE_FILE, na = "")
+}
+
+already_sent <- function(sitrep_no) {
+  state <- read_state()
+
+  if (nrow(state) == 0) {
+    return(FALSE)
+  }
+
+  state <- normalize_state_schema(state)
+
+  hit <- state |>
+    dplyr::filter(
+      !is.na(sitrep_no),
+      .data$sitrep_no == !!as.integer(sitrep_no),
+      .data$email_status %in% c("sent", "dry_run")
+    )
+
+  nrow(hit) > 0
+}
+
 log_msg("============================================================")
 log_msg("PREIS Ebola RDC — Cloud SitRep Monitor started")
 log_msg("ROOT: ", ROOT)
