@@ -1,4 +1,4 @@
-﻿name: PREIS Ebola DRC SitRep Monitor V2
+name: PREIS Ebola DRC SitRep Monitor V2
 
 on:
   workflow_dispatch:

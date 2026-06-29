@@ -1,4 +1,4 @@
-﻿############################################################
+############################################################
 # PREIS Ebola RDC — Cloud SitRep Monitor
 # Fichier: scripts/08_cloud_sitrep_monitor.R
 #
