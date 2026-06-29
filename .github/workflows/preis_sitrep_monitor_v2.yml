@@ -60,22 +60,18 @@ jobs:
         run: |
           Rscript --vanilla -e 'pkgs <- c("httr","rvest","xml2","stringr","dplyr","readr","tibble","purrr","digest","base64enc"); missing <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly=TRUE)]; if(length(missing)>0) stop("Packages manquants: ", paste(missing, collapse=", ")); cat("All R packages OK\n")'
 
-      - name: Block old curl email helper
-        run: |
-          if grep -q "Erreur envoi SMTP curl" scripts/00_email_smtp_base.R; then
-            echo "OLD CURL EMAIL HELPER STILL PRESENT"
-            exit 1
-          fi
-          if grep -q "curl::" scripts/00_email_smtp_base.R; then
-            echo "OLD curl:: CODE STILL PRESENT"
-            exit 1
-          fi
-          grep -q "Erreur envoi SMTP Python" scripts/00_email_smtp_base.R
-          echo "Email helper is Python SMTP"
-
       - name: Check email secrets
         run: |
           Rscript --vanilla -e 'required <- c("SMTP_USER","SMTP_PASS","SMTP_HOST","SMTP_PORT","ALERT_FROM","ALERT_TO"); missing <- required[!nzchar(Sys.getenv(required))]; if (length(missing) > 0) stop("Secrets manquants: ", paste(missing, collapse=", ")); cat("Email secrets OK\n")'
+
+      - name: Check no legacy email sender
+        run: |
+          if grep -nE 'Erreur envoi SMTP curl|curl_bin|curl::mime|curl::send_mail' scripts/00_email_smtp_base.R; then
+            echo 'Legacy curl SMTP email sender detected. Stop.'
+            exit 1
+          fi
+          grep -nE 'Python|smtplib|py_send_email' scripts/00_email_smtp_base.R
+          echo 'No legacy curl SMTP email sender'
 
       - name: Parse R scripts
         run: |
@@ -84,7 +80,7 @@ jobs:
       - name: Check Python mail helper
         run: |
           python3 -m py_compile scripts/py_send_email.py
-          echo "Python mail helper OK"
+          echo 'Python mail helper OK'
 
       - name: Run PREIS SitRep monitor
         run: |

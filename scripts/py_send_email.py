@@ -5,6 +5,7 @@ import ssl
 import sys
 import smtplib
 from email.message import EmailMessage
+from email.policy import SMTP
 
 
 def getenv(name, default=""):
@@ -84,12 +85,13 @@ def main():
 
     recipients = list(dict.fromkeys(alert_to + alert_cc + alert_bcc))
 
-    msg = EmailMessage()
+    msg = EmailMessage(policy=SMTP)
     msg["From"] = alert_from
     msg["To"] = ", ".join(alert_to)
     if alert_cc:
         msg["Cc"] = ", ".join(alert_cc)
     msg["Subject"] = subject
+
     msg.set_content(body, charset="utf-8")
 
     with open(attachment, "rb") as f:
