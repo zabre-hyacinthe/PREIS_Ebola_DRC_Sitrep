@@ -1,6 +1,10 @@
 ############################################################
 # PREIS Ebola RDC — SMTP email helper
 # Fichier: scripts/00_email_smtp_base.R
+#
+# Version stable GitHub Actions:
+#   - utilise emayili pour email + pièce jointe PDF
+#   - évite curl::mime(), non disponible selon version curl
 ############################################################
 
 preis_env <- function(name, default = "") {
@@ -51,12 +55,12 @@ preis_send_email <- function(
     bcc = preis_split_emails(preis_env("ALERT_BCC")),
     smtp_user = preis_env("SMTP_USER"),
     smtp_pass = preis_env("SMTP_PASS"),
-    smtp_host = preis_env("SMTP_HOST", "smtp.gmail.com"),
-    smtp_port = suppressWarnings(as.integer(preis_env("SMTP_PORT", "587")))
+    smtp_host = preis_env("SMTP_HOST"),
+    smtp_port = suppressWarnings(as.integer(preis_env("SMTP_PORT", "465")))
 ) {
 
-  if (!requireNamespace("curl", quietly = TRUE)) {
-    stop("Package 'curl' manquant.", call. = FALSE)
+  if (!requireNamespace("emayili", quietly = TRUE)) {
+    stop("Package 'emayili' manquant.", call. = FALSE)
   }
 
   if (!nzchar(from)) {
@@ -80,7 +84,7 @@ preis_send_email <- function(
   }
 
   if (is.na(smtp_port)) {
-    smtp_port <- 587L
+    smtp_port <- 465L
   }
 
   preis_validate_emails(from, "ALERT_FROM")
@@ -88,55 +92,47 @@ preis_send_email <- function(
   preis_validate_emails(cc, "ALERT_CC")
   preis_validate_emails(bcc, "ALERT_BCC")
 
-  recipients_all <- unique(c(to, cc, bcc))
+  email <- emayili::envelope()
+  email <- emayili::from(email, from)
 
-  msg <- curl::mime()
-
-  headers <- list(
-    From = from,
-    To = paste(to, collapse = ", "),
-    Subject = subject
-  )
-
-  if (length(cc) > 0) {
-    headers$Cc <- paste(cc, collapse = ", ")
+  for (addr in to) {
+    email <- emayili::to(email, addr)
   }
 
-  do.call(msg$set_header, headers)
+  if (length(cc) > 0) {
+    for (addr in cc) {
+      email <- emayili::cc(email, addr)
+    }
+  }
 
-  msg$add_part(enc2utf8(body), type = "text/plain; charset=utf-8")
+  if (length(bcc) > 0) {
+    for (addr in bcc) {
+      email <- emayili::bcc(email, addr)
+    }
+  }
+
+  email <- emayili::subject(email, subject)
+  email <- emayili::text(email, body)
 
   if (!is.null(attachment) && length(attachment) > 0) {
     attachment <- as.character(attachment[1])
 
     if (!file.exists(attachment)) {
-      stop("Piece jointe introuvable: ", attachment, call. = FALSE)
+      stop("Pièce jointe introuvable: ", attachment, call. = FALSE)
     }
 
-    msg$add_part(
-      file = attachment,
-      name = basename(attachment),
-      type = "application/pdf"
-    )
+    email <- emayili::attachment(email, attachment)
   }
 
-  smtp_scheme <- if (identical(as.integer(smtp_port), 465L)) {
-    "smtps"
-  } else {
-    "smtp"
-  }
-
-  smtp_server <- paste0(smtp_scheme, "://", smtp_host, ":", smtp_port)
-
-  curl::send_mail(
-    mail_from = from,
-    mail_rcpt = recipients_all,
-    message = msg,
-    smtp_server = smtp_server,
+  smtp <- emayili::server(
+    host = smtp_host,
+    port = smtp_port,
     username = smtp_user,
     password = smtp_pass,
-    use_ssl = "try"
+    reuse = FALSE
   )
+
+  smtp(email, verbose = FALSE)
 
   invisible(TRUE)
 }

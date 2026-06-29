@@ -58,7 +58,7 @@ jobs:
 
       - name: Install R packages
         run: |
-          Rscript --vanilla -e 'install.packages(c("httr","rvest","xml2","stringr","dplyr","readr","tibble","purrr","digest","curl","base64enc"), repos="https://cloud.r-project.org")'
+          Rscript --vanilla -e 'install.packages(c("httr","rvest","xml2","stringr","dplyr","readr","tibble","purrr","digest","curl","base64enc","emayili"), repos="https://cloud.r-project.org")'
 
       - name: Check email secrets
         run: |
