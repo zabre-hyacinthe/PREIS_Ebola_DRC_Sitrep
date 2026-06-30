@@ -1,5 +1,5 @@
 ############################################################
-# PREIS Ebola RDC — Notification WhatsApp (Cloud API)
+# PREIS Ebola RDC â€” Notification WhatsApp (Cloud API)
 # scripts/10_whatsapp_notify.R
 #   - appele APRES un email envoye avec succes
 #   - WA_ENABLED != TRUE  -> "WhatsApp disabled"
