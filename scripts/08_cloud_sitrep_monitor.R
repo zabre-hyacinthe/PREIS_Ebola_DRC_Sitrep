@@ -1,4 +1,15 @@
 ############################################################
+# PREIS patch: robust INSP PDF download
+############################################################
+.preis_pdf_patch_file <- file.path(getwd(), 'scripts', 'preis_robust_pdf_download_patch.R')
+if (file.exists(.preis_pdf_patch_file)) {
+  source(.preis_pdf_patch_file, local = TRUE)
+} else {
+  stop('Patch fichier téléchargement PDF introuvable : ', .preis_pdf_patch_file)
+}
+############################################################
+
+############################################################
 # PREIS Ebola RDC â€” Cloud SitRep Monitor
 # Fichier: scripts/08_cloud_sitrep_monitor.R
 #
