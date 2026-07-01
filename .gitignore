@@ -125,3 +125,4 @@ outputs/analyse/
 /outputs/*
 /outputs/audit/
 /outputs/audit/*.txt
+.github/workflows/*.BACKUP*
