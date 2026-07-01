@@ -147,3 +147,72 @@ preis_try_download_file <- function(url, destfile, quiet = FALSE, mode = 'wb', m
   warning('All PDF download candidates failed for: ', url, if (!is.null(last_error)) paste0(' | last error: ', last_error) else '')
   1L
 }
+
+# === PREIS SMTP Gmail blocked fallback START ===
+
+preis_patch_smtp_python_lines <- function(text) {
+  if (!is.character(text)) {
+    return(text)
+  }
+
+  target <- "server.send_message(msg, from_addr=alert_from, to_addrs=recipients)"
+
+  if (!any(grepl(target, text, fixed = TRUE))) {
+    return(text)
+  }
+
+  if (any(grepl("PYTHON_SMTP_RETRY_NO_ATTACHMENT", text, fixed = TRUE))) {
+    return(text)
+  }
+
+  idx <- grep(target, text, fixed = TRUE)
+
+  for (i in rev(idx)) {
+    indent <- sub("^(\\s*).*$", "\\1", text[i])
+
+    replacement <- c(
+      paste0(indent, "import smtplib as _preis_smtplib"),
+      paste0(indent, "try:"),
+      paste0(indent, "    server.send_message(msg, from_addr=alert_from, to_addrs=recipients)"),
+      paste0(indent, "except Exception as _preis_e:"),
+      paste0(indent, "    _preis_blocked = False"),
+      paste0(indent, "    if isinstance(_preis_e, _preis_smtplib.SMTPDataError):"),
+      paste0(indent, "        _preis_code = getattr(_preis_e, 'smtp_code', None)"),
+      paste0(indent, "        _preis_error = str(getattr(_preis_e, 'smtp_error', b''))"),
+      paste0(indent, "        _preis_blocked = (_preis_code == 552) or ('5.7.0' in _preis_error) or ('security issue' in _preis_error.lower())"),
+      paste0(indent, "    if not _preis_blocked:"),
+      paste0(indent, "        raise"),
+      paste0(indent, "    print('PYTHON_SMTP_RETRY_NO_ATTACHMENT: Gmail blocked original message; retrying safe text-only alert.', flush=True)"),
+      paste0(indent, "    from email.message import EmailMessage as _PreisEmailMessage"),
+      paste0(indent, "    _fallback = _PreisEmailMessage()"),
+      paste0(indent, "    _fallback['From'] = msg.get('From', alert_from)"),
+      paste0(indent, "    _fallback['To'] = msg.get('To', ', '.join(recipients) if isinstance(recipients, (list, tuple)) else str(recipients))"),
+      paste0(indent, "    _subject = str(msg.get('Subject', 'PREIS Ebola DRC SitRep alert'))"),
+      paste0(indent, "    _subject = ''.join([ch for ch in _subject if ord(ch) < 128]).strip()"),
+      paste0(indent, "    if not _subject:"),
+      paste0(indent, "        _subject = 'PREIS Ebola DRC SitRep alert'"),
+      paste0(indent, "    _fallback['Subject'] = '[PREIS SAFE ALERT] ' + _subject[:120]"),
+      paste0(indent, "    _safe_body = 'PREIS Ebola DRC SitRep alert generated.\\n\\nThe original automated message or attachment was blocked by Gmail as a potential security issue.\\nThis fallback email is text-only, without attachment and without links.\\n\\nPlease open PREIS GitHub Actions or the PREIS dashboard to review the full SitRep and outputs.'"),
+      paste0(indent, "    _fallback.set_content(_safe_body)"),
+      paste0(indent, "    server.send_message(_fallback, from_addr=alert_from, to_addrs=recipients)"),
+      paste0(indent, "    print('PYTHON_SMTP_FALLBACK_OK: text-only alert sent without attachments.', flush=True)")
+    )
+
+    before <- if (i > 1) text[1:(i - 1)] else character(0)
+    after <- if (i < length(text)) text[(i + 1):length(text)] else character(0)
+    text <- c(before, replacement, after)
+  }
+
+  message("[PREIS SMTP PATCH] Python SMTP sender patched with Gmail blocked fallback")
+  text
+}
+
+writeLines <- function(text, con = stdout(), sep = "\n", useBytes = FALSE) {
+  if (is.character(text) && any(grepl("server.send_message(msg, from_addr=alert_from, to_addrs=recipients)", text, fixed = TRUE))) {
+    text <- preis_patch_smtp_python_lines(text)
+  }
+
+  base::writeLines(text, con = con, sep = sep, useBytes = useBytes)
+}
+
+# === PREIS SMTP Gmail blocked fallback END ===
