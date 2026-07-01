@@ -4,6 +4,17 @@
 .preis_pdf_patch_file <- file.path(getwd(), 'scripts', 'preis_robust_pdf_download_patch.R')
 if (file.exists(.preis_pdf_patch_file)) {
   source(.preis_pdf_patch_file, local = TRUE)
+  message('[PREIS PATCH] robust PDF patch loaded')
+} else {
+  warning('Patch fichier téléchargement PDF introuvable : ', .preis_pdf_patch_file)
+}
+############################################################
+
+############################################################
+# PREIS patch: robust INSP PDF download
+############################################################
+if (file.exists(.preis_pdf_patch_file)) {
+  source(.preis_pdf_patch_file, local = TRUE)
 } else {
   stop('Patch fichier téléchargement PDF introuvable : ', .preis_pdf_patch_file)
 }
@@ -421,7 +432,7 @@ download_pdf <- function(pdf_url, sitrep_no) {
     }
   }
 
-  stop("PDF download failed for SitRep N", sitrep_no, call. = FALSE)
+  log_msg("WARNING: PDF download failed; continuing without PDF attachment so email alert can still be sent.")
 }
 
 
