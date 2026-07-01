@@ -24,3 +24,40 @@
 [2026-07-01 07:05:33 UTC] SitRep page: https://insp.cd/sitrep-n046-mvb_29-06-2026/ 
 [2026-07-01 07:05:36 UTC] PDF URL resolved: https://insp.cd/wp-content/uploads/2026/07/Draft-SitRep_MVE_RDC_NAÂ°046_29_06_2026_PAZ.pdf 
 [2026-07-01 07:05:36 UTC] Downloading PDF SitRep N46 
+[2026-07-01 08:44:31 UTC] ============================================================ 
+[2026-07-01 08:44:31 UTC] PREIS Ebola RDC â€” Cloud SitRep Monitor started 
+[2026-07-01 08:44:31 UTC] ROOT: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep 
+[2026-07-01 08:44:31 UTC] DRY_RUN: FALSE 
+[2026-07-01 08:44:31 UTC] MAX_PAGES: 6 
+[2026-07-01 08:44:31 UTC] Scanning INSP category page: https://insp.cd/category/sitrep/ 
+[2026-07-01 08:44:36 UTC] Page 1: 10 SitRep candidate(s) 
+[2026-07-01 08:44:40 UTC] Page 2: 10 SitRep candidate(s) 
+[2026-07-01 08:44:44 UTC] Page 3: 7 SitRep candidate(s) 
+[2026-07-01 08:45:15 UTC] Latest SitRep online: N46 
+[2026-07-01 08:45:15 UTC] SitRep page: https://insp.cd/sitrep-n046-mvb_29-06-2026/ 
+[2026-07-01 08:45:19 UTC] PDF URL resolved: https://insp.cd/wp-content/uploads/2026/07/Draft-SitRep_MVE_RDC_NAÂ°046_29_06_2026_PAZ.pdf 
+[2026-07-01 08:45:19 UTC] PDF already exists locally: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/pdf/PREIS_DRC_Ebola_SitRep_046.pdf 
+[2026-07-01 08:45:19 UTC] PDF SHA256: 9af0c935b812e3508bc7e3109d10e534facf01e529b81efa9703cf2ec200c8b8 
+[2026-07-01 08:45:19 UTC] Sending email for SitRep N46 
+[2026-07-01 08:45:26 UTC] Email sending failed: Erreur envoi SMTP Python. Sortie:
+PYTHON_SMTP_FATAL: SMTPDataError(552, b'5.7.0 This message was blocked because its content presents a potential\n5.7.0 security issue. To review our message content and attachment content\n5.7.0 guidelines, go to\n5.7.0  https://support.google.com/mail/?p=BlockedMessage 46e09a7af769-7e9f328636dsm3381938a34.9 - gsmtp')
+Traceback (most recent call last):
+  File "/tmp/Rtmpd2nxcg/preis_smtp_sender_336e2ba17502.py", line 134, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/tmp/Rtmpd2nxcg/preis_smtp_sender_336e2ba17502.py", line 119, in main
+    server.send_message(msg, from_addr=alert_from, to_addrs=recipients)
+  File "/usr/lib/python3.12/smtplib.py", line 975, in send_message
+    return self.sendmail(from_addr, to_addrs, flatmsg, mail_options,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/smtplib.py", line 897, in sendmail
+    raise SMTPDataError(code, resp)
+smtplib.SMTPDataError: (552, b'5.7.0 This message was blocked because its content presents a potential\n5.7.0 security issue. To review our message content and attachment content\n5.7.0 guidelines, go to\n5.7.0  https://support.google.com/mail/?p=BlockedMessage 46e09a7af769-7e9f328636dsm3381938a34.9 - gsmtp')
+
+SMTP host: smtp.gmail.com
+SMTP port: 465
+SMTP user: SMTP_USER
+Recipients: raogoz@africacdc.org
+Attachment: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/pdf/PREIS_DRC_Ebola_SitRep_046.pdf 
+[2026-07-01 08:45:26 UTC] State updated: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/monitor_state/preis_sitrep_email_state.csv 
+[2026-07-01 08:45:26 UTC] Email status: failed 

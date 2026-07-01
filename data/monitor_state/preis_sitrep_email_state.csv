@@ -24,3 +24,23 @@ ValueError: ALERT_CC est vide.
 ",,,,,,
 20260629_211846,2026-06-29 21:19:35,2026-06-29 21:19:35,44,2026-06-27,https://insp.cd/sitrep-n044-mvb_27-06-2026/,https://insp.cd/wp-content/uploads/2026/06/Final-SitRep_MVE_RDC_N°044_27_06_2026.pdf,122a15ac6296926dd1ff8c05e0c605fd8f4612943145c3097264d3df66d897f1,/home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/pdf/PREIS_DRC_Ebola_SitRep_044.pdf,sent,Email sent successfully.,,,,,,
 20260701_070452,2026-07-01 07:05:58,,46,2026-06-29,https://insp.cd/sitrep-n046-mvb_29-06-2026/,https://insp.cd/wp-content/uploads/2026/07/Draft-SitRep_MVE_RDC_NAÂ°046_29_06_2026_PAZ.pdf,,,failed,PDF download failed for SitRep N46,,,,,,
+20260701_084431,2026-07-01 08:45:26,,46,2026-06-29,https://insp.cd/sitrep-n046-mvb_29-06-2026/,https://insp.cd/wp-content/uploads/2026/07/Draft-SitRep_MVE_RDC_NAÂ°046_29_06_2026_PAZ.pdf,9af0c935b812e3508bc7e3109d10e534facf01e529b81efa9703cf2ec200c8b8,/home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/pdf/PREIS_DRC_Ebola_SitRep_046.pdf,failed,"Erreur envoi SMTP Python. Sortie:
+PYTHON_SMTP_FATAL: SMTPDataError(552, b'5.7.0 This message was blocked because its content presents a potential\n5.7.0 security issue. To review our message content and attachment content\n5.7.0 guidelines, go to\n5.7.0  https://support.google.com/mail/?p=BlockedMessage 46e09a7af769-7e9f328636dsm3381938a34.9 - gsmtp')
+Traceback (most recent call last):
+  File ""/tmp/Rtmpd2nxcg/preis_smtp_sender_336e2ba17502.py"", line 134, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File ""/tmp/Rtmpd2nxcg/preis_smtp_sender_336e2ba17502.py"", line 119, in main
+    server.send_message(msg, from_addr=alert_from, to_addrs=recipients)
+  File ""/usr/lib/python3.12/smtplib.py"", line 975, in send_message
+    return self.sendmail(from_addr, to_addrs, flatmsg, mail_options,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/usr/lib/python3.12/smtplib.py"", line 897, in sendmail
+    raise SMTPDataError(code, resp)
+smtplib.SMTPDataError: (552, b'5.7.0 This message was blocked because its content presents a potential\n5.7.0 security issue. To review our message content and attachment content\n5.7.0 guidelines, go to\n5.7.0  https://support.google.com/mail/?p=BlockedMessage 46e09a7af769-7e9f328636dsm3381938a34.9 - gsmtp')
+
+SMTP host: smtp.gmail.com
+SMTP port: 465
+SMTP user: SMTP_USER
+Recipients: raogoz@africacdc.org
+Attachment: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/pdf/PREIS_DRC_Ebola_SitRep_046.pdf",,,,,,
