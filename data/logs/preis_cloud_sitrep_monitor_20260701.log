@@ -81,3 +81,16 @@ Attachment: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data
 [2026-07-01 09:35:34 UTC] Email status: sent 
 [2026-07-01 09:35:34 UTC] WhatsApp disabled 
 [2026-07-01 09:35:34 UTC] PREIS cloud monitor finished. 
+[2026-07-01 14:43:59 UTC] ============================================================ 
+[2026-07-01 14:43:59 UTC] PREIS Ebola RDC â€” Cloud SitRep Monitor started 
+[2026-07-01 14:43:59 UTC] ROOT: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep 
+[2026-07-01 14:43:59 UTC] DRY_RUN: FALSE 
+[2026-07-01 14:43:59 UTC] MAX_PAGES: 6 
+[2026-07-01 14:43:59 UTC] Scanning INSP category page: https://insp.cd/category/sitrep/ 
+[2026-07-01 14:44:05 UTC] Page 1: 10 SitRep candidate(s) 
+[2026-07-01 14:44:11 UTC] Page 2: 10 SitRep candidate(s) 
+[2026-07-01 14:44:18 UTC] Page 3: 7 SitRep candidate(s) 
+[2026-07-01 14:44:49 UTC] Latest SitRep online: N46 
+[2026-07-01 14:44:49 UTC] SitRep page: https://insp.cd/sitrep-n046-mvb_29-06-2026/ 
+[2026-07-01 14:44:53 UTC] PDF URL resolved: https://insp.cd/wp-content/uploads/2026/07/Draft-SitRep_MVE_RDC_NAÂ°046_29_06_2026_PAZ.pdf 
+[2026-07-01 14:44:53 UTC] SitRep N46 already sent. No duplicate email. 
