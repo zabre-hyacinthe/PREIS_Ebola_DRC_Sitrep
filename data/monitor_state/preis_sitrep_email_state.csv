@@ -1,2 +1,25 @@
-"sitrep_no","title","post_url","pdf_path","status","sent_at","pdf_url","detected_at"
-28,"DRC Ebola SitRep 28","https://insp.cd/sitrep-n28-mvb_11-06-2026/","Already sent locally before GitHub setup","sent_cloud","2026-06-12T23:10:59Z",NA,NA
+run_id,detected_at_utc,sent_at_utc,sitrep_no,sitrep_date,page_url,pdf_url,pdf_sha256,pdf_file,email_status,note,title,post_url,pdf_path,status,sent_at,detected_at
+,,,28,,,,,,sent_cloud,,DRC Ebola SitRep 28,https://insp.cd/sitrep-n28-mvb_11-06-2026/,Already sent locally before GitHub setup,sent_cloud,2026-06-12T23:10:59Z,
+20260629_180930,2026-06-29 18:10:13,,44,2026-06-27,https://insp.cd/sitrep-n044-mvb_27-06-2026/,https://insp.cd/wp-content/uploads/2026/06/Final-SitRep_MVE_RDC_N°044_27_06_2026.pdf,122a15ac6296926dd1ff8c05e0c605fd8f4612943145c3097264d3df66d897f1,/home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/pdf/PREIS_DRC_Ebola_SitRep_044.pdf,failed,"Erreur envoi SMTP curl. Sortie:
+",,,,,,
+20260629_183049,2026-06-29 18:31:32,,44,2026-06-27,https://insp.cd/sitrep-n044-mvb_27-06-2026/,https://insp.cd/wp-content/uploads/2026/06/Final-SitRep_MVE_RDC_N°044_27_06_2026.pdf,122a15ac6296926dd1ff8c05e0c605fd8f4612943145c3097264d3df66d897f1,/home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/pdf/PREIS_DRC_Ebola_SitRep_044.pdf,failed,"Erreur envoi SMTP curl. Sortie:
+",,,,,,
+20260629_184344,2026-06-29 18:44:29,,44,2026-06-27,https://insp.cd/sitrep-n044-mvb_27-06-2026/,https://insp.cd/wp-content/uploads/2026/06/Final-SitRep_MVE_RDC_N°044_27_06_2026.pdf,122a15ac6296926dd1ff8c05e0c605fd8f4612943145c3097264d3df66d897f1,/home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/pdf/PREIS_DRC_Ebola_SitRep_044.pdf,failed,"Erreur envoi SMTP curl. Sortie:
+",,,,,,
+20260629_194600,2026-06-29 19:46:44,,44,2026-06-27,https://insp.cd/sitrep-n044-mvb_27-06-2026/,https://insp.cd/wp-content/uploads/2026/06/Final-SitRep_MVE_RDC_N°044_27_06_2026.pdf,122a15ac6296926dd1ff8c05e0c605fd8f4612943145c3097264d3df66d897f1,/home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/pdf/PREIS_DRC_Ebola_SitRep_044.pdf,failed,"Erreur envoi SMTP curl. Sortie:
+",,,,,,
+20260629_204730,2026-06-29 20:48:14,,44,2026-06-27,https://insp.cd/sitrep-n044-mvb_27-06-2026/,https://insp.cd/wp-content/uploads/2026/06/Final-SitRep_MVE_RDC_N°044_27_06_2026.pdf,122a15ac6296926dd1ff8c05e0c605fd8f4612943145c3097264d3df66d897f1,/home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/pdf/PREIS_DRC_Ebola_SitRep_044.pdf,failed,"Erreur envoi SMTP Python. Sortie:
+error in running command",,,,,,
+20260629_210252,2026-06-29 21:03:36,,44,2026-06-27,https://insp.cd/sitrep-n044-mvb_27-06-2026/,https://insp.cd/wp-content/uploads/2026/06/Final-SitRep_MVE_RDC_N°044_27_06_2026.pdf,122a15ac6296926dd1ff8c05e0c605fd8f4612943145c3097264d3df66d897f1,/home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/pdf/PREIS_DRC_Ebola_SitRep_044.pdf,failed,"Erreur envoi SMTP Python. Sortie:
+PYTHON_SMTP_FATAL: ValueError('ALERT_CC est vide.')
+Traceback (most recent call last):
+  File ""/tmp/Rtmpd24KKy/preis_smtp_sender_304823060cda.py"", line 136, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File ""/tmp/Rtmpd24KKy/preis_smtp_sender_304823060cda.py"", line 85, in main
+    require_email_list(alert_cc, 'ALERT_CC')
+  File ""/tmp/Rtmpd24KKy/preis_smtp_sender_304823060cda.py"", line 50, in require_email_list
+    raise ValueError(f'{name} est vide.')
+ValueError: ALERT_CC est vide.
+",,,,,,
+20260629_211846,2026-06-29 21:19:35,2026-06-29 21:19:35,44,2026-06-27,https://insp.cd/sitrep-n044-mvb_27-06-2026/,https://insp.cd/wp-content/uploads/2026/06/Final-SitRep_MVE_RDC_N°044_27_06_2026.pdf,122a15ac6296926dd1ff8c05e0c605fd8f4612943145c3097264d3df66d897f1,/home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/pdf/PREIS_DRC_Ebola_SitRep_044.pdf,sent,Email sent successfully.,,,,,,

@@ -1,7 +1,7 @@
 name: PREIS Ebola DRC SitRep Monitor
 on:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "*/30 * * * *"
   workflow_dispatch:
 permissions:
   contents: write
@@ -29,11 +29,11 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev libfontconfig1-dev
+          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev libfontconfig1-dev libuv1-dev libgit2-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev
 
       - name: Install R packages
         run: |
-          Rscript -e 'packages <- c("blastula","readr","rvest","xml2","httr2","stringr","dplyr","tibble","purrr","openssl","openxlsx","tidyr","lubridate","jsonlite","pdftools"); missing <- packages[!vapply(packages, requireNamespace, logical(1), quietly = TRUE)]; if (length(missing) > 0) install.packages(missing, repos = "https://cloud.r-project.org")'
+          Rscript -e 'options(repos = c(P3M = "https://packagemanager.posit.co/cran/__linux__/jammy/latest", CRAN = "https://cloud.r-project.org")); packages <- c("blastula","readr","rvest","xml2","httr2","stringr","dplyr","tibble","purrr","openssl","openxlsx","tidyr","lubridate","jsonlite","pdftools"); missing <- packages[!vapply(packages, requireNamespace, logical(1), quietly = TRUE)]; if (length(missing) > 0) install.packages(missing)'
 
       - name: Run SitRep monitor (detection + extraction + email)
         run: |

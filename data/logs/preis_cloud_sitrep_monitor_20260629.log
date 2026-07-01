@@ -1,0 +1,157 @@
+[2026-06-29 18:09:30 UTC] ============================================================ 
+[2026-06-29 18:09:30 UTC] PREIS Ebola RDC — Cloud SitRep Monitor started 
+[2026-06-29 18:09:30 UTC] ROOT: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep 
+[2026-06-29 18:09:30 UTC] DRY_RUN: FALSE 
+[2026-06-29 18:09:30 UTC] MAX_PAGES: 6 
+[2026-06-29 18:09:30 UTC] Scanning INSP category page: https://insp.cd/category/sitrep/ 
+[2026-06-29 18:09:34 UTC] Page 1: 10 SitRep candidate(s) 
+[2026-06-29 18:09:37 UTC] Page 2: 10 SitRep candidate(s) 
+[2026-06-29 18:09:40 UTC] Page 3: 6 SitRep candidate(s) 
+[2026-06-29 18:10:09 UTC] Latest SitRep online: N44 
+[2026-06-29 18:10:09 UTC] SitRep page: https://insp.cd/sitrep-n044-mvb_27-06-2026/ 
+[2026-06-29 18:10:13 UTC] PDF URL resolved: https://insp.cd/wp-content/uploads/2026/06/Final-SitRep_MVE_RDC_N°044_27_06_2026.pdf 
+[2026-06-29 18:10:13 UTC] Downloading PDF SitRep N44 
+[2026-06-29 18:10:13 UTC] PDF downloaded: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/pdf/PREIS_DRC_Ebola_SitRep_044.pdf 
+[2026-06-29 18:10:13 UTC] PDF SHA256: 122a15ac6296926dd1ff8c05e0c605fd8f4612943145c3097264d3df66d897f1 
+[2026-06-29 18:10:13 UTC] Sending email for SitRep N44 
+[2026-06-29 18:10:13 UTC] Email sending failed: Erreur envoi SMTP curl. Sortie:
+ 
+[2026-06-29 18:10:13 UTC] State updated: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/monitor_state/preis_sitrep_email_state.csv 
+[2026-06-29 18:10:13 UTC] Email status: failed 
+[2026-06-29 18:30:49 UTC] ============================================================ 
+[2026-06-29 18:30:49 UTC] PREIS Ebola RDC — Cloud SitRep Monitor started 
+[2026-06-29 18:30:49 UTC] ROOT: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep 
+[2026-06-29 18:30:49 UTC] DRY_RUN: FALSE 
+[2026-06-29 18:30:49 UTC] MAX_PAGES: 6 
+[2026-06-29 18:30:49 UTC] Scanning INSP category page: https://insp.cd/category/sitrep/ 
+[2026-06-29 18:30:54 UTC] Page 1: 10 SitRep candidate(s) 
+[2026-06-29 18:30:57 UTC] Page 2: 10 SitRep candidate(s) 
+[2026-06-29 18:31:01 UTC] Page 3: 6 SitRep candidate(s) 
+[2026-06-29 18:31:29 UTC] Latest SitRep online: N44 
+[2026-06-29 18:31:29 UTC] SitRep page: https://insp.cd/sitrep-n044-mvb_27-06-2026/ 
+[2026-06-29 18:31:32 UTC] PDF URL resolved: https://insp.cd/wp-content/uploads/2026/06/Final-SitRep_MVE_RDC_N°044_27_06_2026.pdf 
+[2026-06-29 18:31:32 UTC] PDF already exists locally: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/pdf/PREIS_DRC_Ebola_SitRep_044.pdf 
+[2026-06-29 18:31:32 UTC] PDF SHA256: 122a15ac6296926dd1ff8c05e0c605fd8f4612943145c3097264d3df66d897f1 
+[2026-06-29 18:31:32 UTC] Sending email for SitRep N44 
+[2026-06-29 18:31:32 UTC] Email sending failed: Erreur envoi SMTP curl. Sortie:
+ 
+[2026-06-29 18:31:32 UTC] State updated: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/monitor_state/preis_sitrep_email_state.csv 
+[2026-06-29 18:31:32 UTC] Email status: failed 
+[2026-06-29 18:43:44 UTC] ============================================================ 
+[2026-06-29 18:43:44 UTC] PREIS Ebola RDC — Cloud SitRep Monitor started 
+[2026-06-29 18:43:44 UTC] ROOT: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep 
+[2026-06-29 18:43:44 UTC] DRY_RUN: FALSE 
+[2026-06-29 18:43:44 UTC] MAX_PAGES: 6 
+[2026-06-29 18:43:44 UTC] Scanning INSP category page: https://insp.cd/category/sitrep/ 
+[2026-06-29 18:43:49 UTC] Page 1: 10 SitRep candidate(s) 
+[2026-06-29 18:43:52 UTC] Page 2: 10 SitRep candidate(s) 
+[2026-06-29 18:43:56 UTC] Page 3: 6 SitRep candidate(s) 
+[2026-06-29 18:44:25 UTC] Latest SitRep online: N44 
+[2026-06-29 18:44:25 UTC] SitRep page: https://insp.cd/sitrep-n044-mvb_27-06-2026/ 
+[2026-06-29 18:44:29 UTC] PDF URL resolved: https://insp.cd/wp-content/uploads/2026/06/Final-SitRep_MVE_RDC_N°044_27_06_2026.pdf 
+[2026-06-29 18:44:29 UTC] PDF already exists locally: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/pdf/PREIS_DRC_Ebola_SitRep_044.pdf 
+[2026-06-29 18:44:29 UTC] PDF SHA256: 122a15ac6296926dd1ff8c05e0c605fd8f4612943145c3097264d3df66d897f1 
+[2026-06-29 18:44:29 UTC] Sending email for SitRep N44 
+[2026-06-29 18:44:29 UTC] Email sending failed: Erreur envoi SMTP curl. Sortie:
+ 
+[2026-06-29 18:44:29 UTC] State updated: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/monitor_state/preis_sitrep_email_state.csv 
+[2026-06-29 18:44:29 UTC] Email status: failed 
+[2026-06-29 19:46:00 UTC] ============================================================ 
+[2026-06-29 19:46:00 UTC] PREIS Ebola RDC — Cloud SitRep Monitor started 
+[2026-06-29 19:46:00 UTC] ROOT: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep 
+[2026-06-29 19:46:00 UTC] DRY_RUN: FALSE 
+[2026-06-29 19:46:00 UTC] MAX_PAGES: 6 
+[2026-06-29 19:46:00 UTC] Scanning INSP category page: https://insp.cd/category/sitrep/ 
+[2026-06-29 19:46:04 UTC] Page 1: 10 SitRep candidate(s) 
+[2026-06-29 19:46:09 UTC] Page 2: 10 SitRep candidate(s) 
+[2026-06-29 19:46:12 UTC] Page 3: 6 SitRep candidate(s) 
+[2026-06-29 19:46:40 UTC] Latest SitRep online: N44 
+[2026-06-29 19:46:40 UTC] SitRep page: https://insp.cd/sitrep-n044-mvb_27-06-2026/ 
+[2026-06-29 19:46:44 UTC] PDF URL resolved: https://insp.cd/wp-content/uploads/2026/06/Final-SitRep_MVE_RDC_N°044_27_06_2026.pdf 
+[2026-06-29 19:46:44 UTC] PDF already exists locally: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/pdf/PREIS_DRC_Ebola_SitRep_044.pdf 
+[2026-06-29 19:46:44 UTC] PDF SHA256: 122a15ac6296926dd1ff8c05e0c605fd8f4612943145c3097264d3df66d897f1 
+[2026-06-29 19:46:44 UTC] Sending email for SitRep N44 
+[2026-06-29 19:46:44 UTC] Email sending failed: Erreur envoi SMTP curl. Sortie:
+ 
+[2026-06-29 19:46:44 UTC] State updated: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/monitor_state/preis_sitrep_email_state.csv 
+[2026-06-29 19:46:44 UTC] Email status: failed 
+[2026-06-29 20:47:30 UTC] ============================================================ 
+[2026-06-29 20:47:30 UTC] PREIS Ebola RDC — Cloud SitRep Monitor started 
+[2026-06-29 20:47:30 UTC] ROOT: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep 
+[2026-06-29 20:47:30 UTC] DRY_RUN: FALSE 
+[2026-06-29 20:47:30 UTC] MAX_PAGES: 6 
+[2026-06-29 20:47:30 UTC] Scanning INSP category page: https://insp.cd/category/sitrep/ 
+[2026-06-29 20:47:34 UTC] Page 1: 10 SitRep candidate(s) 
+[2026-06-29 20:47:38 UTC] Page 2: 10 SitRep candidate(s) 
+[2026-06-29 20:47:42 UTC] Page 3: 6 SitRep candidate(s) 
+[2026-06-29 20:48:11 UTC] Latest SitRep online: N44 
+[2026-06-29 20:48:11 UTC] SitRep page: https://insp.cd/sitrep-n044-mvb_27-06-2026/ 
+[2026-06-29 20:48:14 UTC] PDF URL resolved: https://insp.cd/wp-content/uploads/2026/06/Final-SitRep_MVE_RDC_N°044_27_06_2026.pdf 
+[2026-06-29 20:48:14 UTC] PDF already exists locally: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/pdf/PREIS_DRC_Ebola_SitRep_044.pdf 
+[2026-06-29 20:48:14 UTC] PDF SHA256: 122a15ac6296926dd1ff8c05e0c605fd8f4612943145c3097264d3df66d897f1 
+[2026-06-29 20:48:14 UTC] Sending email for SitRep N44 
+[2026-06-29 20:48:14 UTC] Email sending failed: Erreur envoi SMTP Python. Sortie:
+error in running command 
+[2026-06-29 20:48:14 UTC] State updated: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/monitor_state/preis_sitrep_email_state.csv 
+[2026-06-29 20:48:14 UTC] Email status: failed 
+[2026-06-29 21:02:52 UTC] ============================================================ 
+[2026-06-29 21:02:52 UTC] PREIS Ebola RDC — Cloud SitRep Monitor started 
+[2026-06-29 21:02:52 UTC] ROOT: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep 
+[2026-06-29 21:02:52 UTC] DRY_RUN: FALSE 
+[2026-06-29 21:02:52 UTC] MAX_PAGES: 6 
+[2026-06-29 21:02:52 UTC] Scanning INSP category page: https://insp.cd/category/sitrep/ 
+[2026-06-29 21:02:57 UTC] Page 1: 10 SitRep candidate(s) 
+[2026-06-29 21:03:01 UTC] Page 2: 10 SitRep candidate(s) 
+[2026-06-29 21:03:04 UTC] Page 3: 6 SitRep candidate(s) 
+[2026-06-29 21:03:33 UTC] Latest SitRep online: N44 
+[2026-06-29 21:03:33 UTC] SitRep page: https://insp.cd/sitrep-n044-mvb_27-06-2026/ 
+[2026-06-29 21:03:36 UTC] PDF URL resolved: https://insp.cd/wp-content/uploads/2026/06/Final-SitRep_MVE_RDC_N°044_27_06_2026.pdf 
+[2026-06-29 21:03:36 UTC] PDF already exists locally: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/pdf/PREIS_DRC_Ebola_SitRep_044.pdf 
+[2026-06-29 21:03:36 UTC] PDF SHA256: 122a15ac6296926dd1ff8c05e0c605fd8f4612943145c3097264d3df66d897f1 
+[2026-06-29 21:03:36 UTC] Sending email for SitRep N44 
+[2026-06-29 21:03:36 UTC] Email sending failed: Erreur envoi SMTP Python. Sortie:
+PYTHON_SMTP_FATAL: ValueError('ALERT_CC est vide.')
+Traceback (most recent call last):
+  File "/tmp/Rtmpd24KKy/preis_smtp_sender_304823060cda.py", line 136, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/tmp/Rtmpd24KKy/preis_smtp_sender_304823060cda.py", line 85, in main
+    require_email_list(alert_cc, 'ALERT_CC')
+  File "/tmp/Rtmpd24KKy/preis_smtp_sender_304823060cda.py", line 50, in require_email_list
+    raise ValueError(f'{name} est vide.')
+ValueError: ALERT_CC est vide.
+ 
+[2026-06-29 21:03:36 UTC] State updated: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/monitor_state/preis_sitrep_email_state.csv 
+[2026-06-29 21:03:36 UTC] Email status: failed 
+[2026-06-29 21:18:46 UTC] ============================================================ 
+[2026-06-29 21:18:46 UTC] PREIS Ebola RDC — Cloud SitRep Monitor started 
+[2026-06-29 21:18:46 UTC] ROOT: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep 
+[2026-06-29 21:18:46 UTC] DRY_RUN: FALSE 
+[2026-06-29 21:18:46 UTC] MAX_PAGES: 6 
+[2026-06-29 21:18:46 UTC] Scanning INSP category page: https://insp.cd/category/sitrep/ 
+[2026-06-29 21:18:51 UTC] Page 1: 10 SitRep candidate(s) 
+[2026-06-29 21:18:54 UTC] Page 2: 10 SitRep candidate(s) 
+[2026-06-29 21:18:58 UTC] Page 3: 6 SitRep candidate(s) 
+[2026-06-29 21:19:26 UTC] Latest SitRep online: N44 
+[2026-06-29 21:19:26 UTC] SitRep page: https://insp.cd/sitrep-n044-mvb_27-06-2026/ 
+[2026-06-29 21:19:30 UTC] PDF URL resolved: https://insp.cd/wp-content/uploads/2026/06/Final-SitRep_MVE_RDC_N°044_27_06_2026.pdf 
+[2026-06-29 21:19:30 UTC] PDF already exists locally: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/pdf/PREIS_DRC_Ebola_SitRep_044.pdf 
+[2026-06-29 21:19:30 UTC] PDF SHA256: 122a15ac6296926dd1ff8c05e0c605fd8f4612943145c3097264d3df66d897f1 
+[2026-06-29 21:19:30 UTC] Sending email for SitRep N44 
+[2026-06-29 21:19:35 UTC] Email sent successfully. 
+[2026-06-29 21:19:35 UTC] State updated: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/monitor_state/preis_sitrep_email_state.csv 
+[2026-06-29 21:19:35 UTC] Email status: sent 
+[2026-06-29 21:19:35 UTC] PREIS cloud monitor finished. 
+[2026-06-29 21:37:38 UTC] ============================================================ 
+[2026-06-29 21:37:38 UTC] PREIS Ebola RDC — Cloud SitRep Monitor started 
+[2026-06-29 21:37:38 UTC] ROOT: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep 
+[2026-06-29 21:37:38 UTC] DRY_RUN: FALSE 
+[2026-06-29 21:37:38 UTC] MAX_PAGES: 6 
+[2026-06-29 21:37:38 UTC] Scanning INSP category page: https://insp.cd/category/sitrep/ 
+[2026-06-29 21:37:43 UTC] Page 1: 10 SitRep candidate(s) 
+[2026-06-29 21:37:47 UTC] Page 2: 10 SitRep candidate(s) 
+[2026-06-29 21:37:57 UTC] Page 3: 6 SitRep candidate(s) 
+[2026-06-29 21:38:25 UTC] Latest SitRep online: N44 
+[2026-06-29 21:38:25 UTC] SitRep page: https://insp.cd/sitrep-n044-mvb_27-06-2026/ 
+[2026-06-29 21:38:30 UTC] PDF URL resolved: https://insp.cd/wp-content/uploads/2026/06/Final-SitRep_MVE_RDC_N°044_27_06_2026.pdf 
+[2026-06-29 21:38:30 UTC] SitRep N44 already sent. No duplicate email. 

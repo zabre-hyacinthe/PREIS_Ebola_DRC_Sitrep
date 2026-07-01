@@ -1,8 +1,8 @@
 name: PREIS Ebola DRC SitRep Monitor
 on:
-  schedule:
-    - cron: "*/30 * * * *"
   workflow_dispatch:
+  schedule:
+    - cron: "7,37 * * * *"
 permissions:
   contents: write
 concurrency:

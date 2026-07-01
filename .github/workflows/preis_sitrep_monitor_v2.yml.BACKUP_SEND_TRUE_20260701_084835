@@ -1,0 +1,104 @@
+name: PREIS Ebola DRC SitRep Monitor V2
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '7,37 * * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: preis-sitrep-monitor-v2
+  cancel-in-progress: false
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    env:
+      PREIS_DRY_RUN: 'FALSE'
+      PREIS_MAX_PAGES: '6'
+
+      SMTP_USER: ${{ secrets.SMTP_USER }}
+      SMTP_PASS: ${{ secrets.SMTP_PASS }}
+      SMTP_HOST: ${{ secrets.SMTP_HOST }}
+      SMTP_PORT: ${{ secrets.SMTP_PORT }}
+      ALERT_FROM: ${{ secrets.ALERT_FROM }}
+      ALERT_TO: ${{ secrets.ALERT_TO }}
+      ALERT_CC: ${{ secrets.ALERT_CC }}
+      ALERT_BCC: ${{ secrets.ALERT_BCC }}
+
+      WA_ENABLED: ${{ secrets.WA_ENABLED }}
+      WA_ACCESS_TOKEN: ${{ secrets.WA_ACCESS_TOKEN }}
+      WA_PHONE_NUMBER_ID: ${{ secrets.WA_PHONE_NUMBER_ID }}
+      WA_TO: ${{ secrets.WA_TO }}
+      WA_API_VERSION: ${{ secrets.WA_API_VERSION }}
+      WA_STRICT: ${{ secrets.WA_STRICT }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v2
+
+      - name: Confirm Python available
+        run: |
+          python3 --version
+
+      - name: Install Linux dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libcurl4-openssl-dev \
+            libssl-dev \
+            libxml2-dev \
+            make
+
+      - name: Install R packages
+        run: |
+          Rscript --vanilla -e 'install.packages(c("httr","rvest","xml2","stringr","dplyr","readr","tibble","purrr","digest","base64enc","jsonlite"), repos="https://cloud.r-project.org")'
+
+      - name: Confirm R packages
+        run: |
+          Rscript --vanilla -e 'pkgs <- c("httr","rvest","xml2","stringr","dplyr","readr","tibble","purrr","digest","base64enc","jsonlite"); missing <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly=TRUE)]; if(length(missing)>0) stop("Packages manquants: ", paste(missing, collapse=", ")); cat("All R packages OK\n")'
+
+      - name: Check email secrets
+        run: |
+          Rscript --vanilla -e 'required <- c("SMTP_USER","SMTP_PASS","SMTP_HOST","SMTP_PORT","ALERT_FROM","ALERT_TO"); missing <- required[!nzchar(Sys.getenv(required))]; if (length(missing) > 0) stop("Secrets email manquants: ", paste(missing, collapse=", ")); cat("Email secrets OK\n")'
+
+      - name: Check WhatsApp secrets if enabled
+        run: |
+          Rscript --vanilla -e 'enabled <- toupper(Sys.getenv("WA_ENABLED","FALSE")) %in% c("TRUE","1","YES","Y"); if (enabled) { required <- c("WA_ACCESS_TOKEN","WA_PHONE_NUMBER_ID","WA_TO"); missing <- required[!nzchar(Sys.getenv(required))]; if (length(missing) > 0) stop("Secrets WhatsApp manquants: ", paste(missing, collapse=", ")); cat("WhatsApp secrets OK\n") } else { cat("WhatsApp disabled\n") }'
+
+      - name: Check no legacy curl SMTP sender
+        run: |
+          if grep -nE 'Erreur envoi SMTP curl|curl_bin|curl::mime|curl::send_mail' scripts/00_email_smtp_base.R; then
+            echo 'Legacy curl SMTP email sender detected. Stop.'
+            exit 1
+          fi
+          echo 'No legacy curl SMTP email sender'
+
+      - name: Parse R scripts
+        run: |
+          Rscript --vanilla -e 'parse(file="scripts/00_email_smtp_base.R", encoding="UTF-8"); parse(file="scripts/08_cloud_sitrep_monitor.R", encoding="UTF-8"); if (file.exists("scripts/10_whatsapp_notify.R")) parse(file="scripts/10_whatsapp_notify.R", encoding="UTF-8"); cat("R parse OK\n")'
+
+      - name: Run PREIS SitRep monitor
+        run: |
+          Rscript --vanilla scripts/08_cloud_sitrep_monitor.R
+
+      - name: Commit monitor outputs
+        if: always()
+        run: |
+          git config user.name "PREIS Ebola Automation"
+          git config user.email "actions@github.com"
+          git add data/monitor_state/ data/pdf/ data/logs/ outputs/cloud_monitor/ || true
+          git status --short
+          git commit -m "PREIS SitRep monitor state update" || echo "No changes to commit"
+          git pull --rebase origin main || echo "No remote changes to rebase"
+          git push || echo "No changes to push"
