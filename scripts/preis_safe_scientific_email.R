@@ -212,54 +212,47 @@ if (length(recipients) == 0) stop('Recipient list is empty')
 
 repo <- env_get(c('GITHUB_REPOSITORY'), 'zabre-hyacinthe/PREIS_Ebola_DRC_Sitrep')
 run_id <- env_get(c('GITHUB_RUN_ID'), '')
-run_url <- if (nzchar(repo) && nzchar(run_id)) paste0('https://github.com/', repo, '/actions/runs/', run_id) else 'https://github.com/zabre-hyacinthe/PREIS_Ebola_DRC_Sitrep/actions'
+run_url <- ''
 
-subject <- paste0('[PREIS Ebola RDC] Nouveau SitRep detecte - ', sitrep_label)
+subject <- paste0('[PREIS Ebola DRC] New SitRep detected - PREIS analysis and DSB - ', sitrep_label)
 
 body_detailed <- paste(
-  'PREIS Ebola RDC - Alerte scientifique automatisee',
+  'PREIS Ebola DRC - Automated scientific SitRep alert',
   '',
-  'Objet : nouveau rapport de situation Ebola RDC detecte par PREIS.',
-  paste0('SitRep : ', sitrep_label),
-  'Source : INSP RDC / page officielle SitRep.',
+  paste0('SitRep: ', sitrep_label),
+  'Source: INSP DRC official SitRep page.',
   '',
-  'Resume operationnel',
-  '- PREIS a detecte un nouveau SitRep publie en ligne.',
-  '- Le workflow cloud PREIS a ete execute avec succes.',
-  '- Les indicateurs detailles doivent etre verifies dans le SitRep et dans les sorties PREIS.',
+  'PREIS update',
+  '- A new Ebola DRC SitRep has been detected online.',
+  '- PREIS automated analysis and DSB outputs are being generated/updated for operational review.',
+  '- Detailed indicators should be verified against the official SitRep and PREIS outputs.',
   '',
-  'Liens de verification',
-  paste0('- Page INSP : ', page_url),
-  if (nzchar(pdf_url)) paste0('- PDF SitRep : ', pdf_url) else '- PDF SitRep : non trouve automatiquement',
-  paste0('- Run GitHub PREIS : ', run_url),
+  'Verification links',
+  paste0('- Official INSP page: ', page_url),
+  if (nzchar(pdf_url)) paste0('- SitRep PDF: ', pdf_url) else '- SitRep PDF: not automatically identified',
   '',
-  'Piece jointe',
-  '- Le PDF est fourni par lien ci-dessus afin d eviter les blocages Gmail/SMTP.',
-  '- Le monitor principal peut continuer a tenter l envoi avec PDF lorsque Gmail l accepte.',
+  'Recommended action',
+  '- Review the official SitRep and PREIS outputs.',
+  '- Update coordination actions if new epidemiological or operational signals are confirmed.',
   '',
-  'Note methodologique',
-  '- Cette alerte est generee automatiquement a partir des sources SitRep/PREIS.',
-  '- Les signaux PREIS sont des signaux operationnels et doivent etre interpretes avec les donnees officielles validees.',
-  '- Cette notification ne remplace pas la validation epidemiologique officielle.',
-  '',
-  'Action attendue',
-  '- Ouvrir le SitRep et verifier les principaux changements epidemiologiques et operationnels.',
-  '- Mettre a jour les actions de coordination si de nouveaux signaux ou gaps sont confirmes.',
-  '',
-  'PREIS Ebola DRC Automation',
+  'Automation by PREIS.',
+  'For support, contact Dr Hyacinthe ZABRE.',
+  'PREIS WhatsApp contact: +226 78 08 87 70.',
   sep = '\n'
 )
 
 body_minimal <- paste(
-  'PREIS Ebola RDC - Alerte scientifique automatisee',
+  'PREIS Ebola DRC - Automated SitRep alert',
   '',
-  paste0('SitRep : ', sitrep_label),
-  'Un nouveau rapport de situation Ebola RDC a ete detecte par PREIS.',
-  'Le message detaille avec liens a ete simplifie pour eviter un blocage Gmail/SMTP.',
+  paste0('SitRep: ', sitrep_label),
+  'A new Ebola DRC SitRep has been detected by PREIS.',
+  'PREIS analysis and DSB outputs are being generated/updated for operational review.',
   '',
-  'Action : ouvrir le dashboard PREIS ou GitHub Actions pour consulter les liens et sorties du run.',
+  'Please review the official INSP SitRep and PREIS outputs.',
   '',
-  'PREIS Ebola DRC Automation',
+  'Automation by PREIS.',
+  'For support, contact Dr Hyacinthe ZABRE.',
+  'PREIS WhatsApp contact: +226 78 08 87 70.',
   sep = '\n'
 )
 
