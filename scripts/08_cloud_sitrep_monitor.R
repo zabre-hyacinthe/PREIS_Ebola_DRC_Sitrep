@@ -4,6 +4,13 @@
 .preis_pdf_patch_file <- file.path(getwd(), 'scripts', 'preis_robust_pdf_download_patch.R')
 if (file.exists(.preis_pdf_patch_file)) {
   source(.preis_pdf_patch_file, local = TRUE)
+.preis_smtp_scientific_patch_file <- file.path(getwd(), 'scripts', 'preis_smtp_scientific_fallback_patch.R')
+if (file.exists(.preis_smtp_scientific_patch_file)) {
+  source(.preis_smtp_scientific_patch_file, local = TRUE)
+  message('[PREIS SMTP SCIENTIFIC PATCH] loaded')
+} else {
+  warning('Patch SMTP scientifique introuvable : ', .preis_smtp_scientific_patch_file)
+}
   message('[PREIS PATCH] robust PDF patch loaded')
 } else {
   warning('Patch fichier téléchargement PDF introuvable : ', .preis_pdf_patch_file)
