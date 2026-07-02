@@ -1,7 +1,7 @@
 ############################################################
 # PREIS safe scientific SitRep email
 # Robust text-only email layer for INSP SitRep alerts
-# Does not pass secrets through system2(env=...)
+# Supports SMTP STARTTLS 587 and SMTP_SSL 465
 ############################################################
 
 log_msg <- function(...) {
@@ -277,14 +277,18 @@ write_secret_file(cfg_dir, 'body_minimal.txt', body_minimal)
 
 py_file <- tempfile(fileext = '.py')
 py_lines <- c(
-  'import sys, smtplib',
+  'import sys, smtplib, ssl, socket, time',
   'from pathlib import Path',
   'from email.message import EmailMessage',
   'cfg = Path(sys.argv[1])',
   'def read(name):',
   '    return (cfg / name).read_text(encoding="utf-8").strip()',
-  'host = read("smtp_host.txt")',
-  'port = int(read("smtp_port.txt"))',
+  'host = read("smtp_host.txt") or "smtp.gmail.com"',
+  'port_raw = read("smtp_port.txt") or "587"',
+  'try:',
+  '    port = int(port_raw)',
+  'except Exception:',
+  '    port = 587',
   'user = read("smtp_user.txt")',
   'password = read("smtp_pass.txt")',
   'sender = read("email_from.txt")',
@@ -292,29 +296,75 @@ py_lines <- c(
   'subject = read("subject.txt")',
   'body_detailed = (cfg / "body_detailed.txt").read_text(encoding="utf-8")',
   'body_minimal = (cfg / "body_minimal.txt").read_text(encoding="utf-8")',
-  'def send_body(body, tag):',
+  'class ContentBlocked(Exception):',
+  '    pass',
+  'def add_candidate(cands, h, p, mode):',
+  '    item = (str(h), int(p), str(mode))',
+  '    if item not in cands:',
+  '        cands.append(item)',
+  'candidates = []',
+  'if port == 465:',
+  '    add_candidate(candidates, host, 465, "ssl")',
+  'elif port == 587:',
+  '    add_candidate(candidates, host, 587, "starttls")',
+  'else:',
+  '    add_candidate(candidates, host, port, "starttls")',
+  'add_candidate(candidates, host, 587, "starttls")',
+  'add_candidate(candidates, host, 465, "ssl")',
+  'add_candidate(candidates, "smtp.gmail.com", 587, "starttls")',
+  'add_candidate(candidates, "smtp.gmail.com", 465, "ssl")',
+  'print("PREIS_SMTP_CANDIDATES: " + "; ".join([f"{h}:{p}/{m}" for h,p,m in candidates]), flush=True)',
+  'def make_msg(body, tag):',
   '    msg = EmailMessage()',
   '    msg["From"] = sender',
   '    msg["To"] = ", ".join(recipients)',
   '    msg["Subject"] = subject if tag == "detailed" else subject + " [minimal]"',
   '    msg.set_content(body)',
-  '    with smtplib.SMTP(host, port, timeout=120) as server:',
-  '        server.ehlo()',
-  '        server.starttls()',
-  '        server.ehlo()',
-  '        server.login(user, password)',
-  '        server.send_message(msg, from_addr=sender, to_addrs=recipients)',
+  '    return msg',
+  'def smtp_send_candidate(h, p, mode, msg):',
+  '    ctx = ssl.create_default_context()',
+  '    if mode == "ssl":',
+  '        with smtplib.SMTP_SSL(h, p, timeout=120, context=ctx) as server:',
+  '            server.ehlo()',
+  '            server.login(user, password)',
+  '            server.send_message(msg, from_addr=sender, to_addrs=recipients)',
+  '    else:',
+  '        with smtplib.SMTP(h, p, timeout=120) as server:',
+  '            server.ehlo()',
+  '            server.starttls(context=ctx)',
+  '            server.ehlo()',
+  '            server.login(user, password)',
+  '            server.send_message(msg, from_addr=sender, to_addrs=recipients)',
+  'def deliver(body, tag):',
+  '    errors = []',
+  '    msg = make_msg(body, tag)',
+  '    for h, p, mode in candidates:',
+  '        try:',
+  '            print(f"PREIS_SMTP_TRY {tag}: {h}:{p}/{mode}", flush=True)',
+  '            smtp_send_candidate(h, p, mode, msg)',
+  '            print(f"PREIS_SAFE_EMAIL_SENT_OK {tag} via {h}:{p}/{mode}", flush=True)',
+  '            return True',
+  '        except smtplib.SMTPDataError as e:',
+  '            code = getattr(e, "smtp_code", None)',
+  '            err = str(getattr(e, "smtp_error", b""))',
+  '            errors.append(f"{h}:{p}/{mode} SMTPDataError {code} {err[:180]}")',
+  '            if code == 552 or "5.7.0" in err or "security issue" in err.lower():',
+  '                raise ContentBlocked(f"Gmail blocked {tag}: {code} {err[:200]}")',
+  '        except (smtplib.SMTPServerDisconnected, smtplib.SMTPConnectError, smtplib.SMTPHeloError, smtplib.SMTPAuthenticationError, socket.timeout, OSError) as e:',
+  '            errors.append(f"{h}:{p}/{mode} {type(e).__name__}: {str(e)[:180]}")',
+  '            time.sleep(1)',
+  '        except Exception as e:',
+  '            errors.append(f"{h}:{p}/{mode} {type(e).__name__}: {str(e)[:180]}")',
+  '            time.sleep(1)',
+  '    raise RuntimeError("All SMTP candidates failed for " + tag + ": " + " | ".join(errors))',
   'try:',
-  '    send_body(body_detailed, "detailed")',
-  '    print("PREIS_SAFE_EMAIL_SENT_OK detailed", flush=True)',
+  '    deliver(body_detailed, "detailed")',
+  'except ContentBlocked as e:',
+  '    print("PREIS_SAFE_EMAIL_DETAILED_BLOCKED: " + str(e), flush=True)',
+  '    deliver(body_minimal, "minimal")',
   'except Exception as e:',
   '    print("PREIS_SAFE_EMAIL_DETAILED_FAILED: " + repr(e), flush=True)',
-  '    try:',
-  '        send_body(body_minimal, "minimal")',
-  '        print("PREIS_SAFE_EMAIL_SENT_OK minimal", flush=True)',
-  '    except Exception as e2:',
-  '        print("PREIS_SAFE_EMAIL_FATAL: " + repr(e2), flush=True)',
-  '        raise'
+  '    raise'
 )
 writeLines(py_lines, py_file, useBytes = TRUE)
 
@@ -322,6 +372,8 @@ py <- Sys.which('python3')
 if (!nzchar(py)) py <- Sys.which('python')
 if (!nzchar(py)) stop('Python not found on runner')
 
+log_msg('SMTP host configured: ', smtp_host)
+log_msg('SMTP port configured: ', smtp_port)
 log_msg('Sending safe scientific email to ', paste(recipients, collapse = ', '))
 
 res <- tryCatch(
