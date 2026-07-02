@@ -1,6 +1,7 @@
 ############################################################
 # PREIS safe scientific SitRep email
-# Text-only guaranteed email layer for INSP SitRep alerts
+# Robust text-only email layer for INSP SitRep alerts
+# Does not pass secrets through system2(env=...)
 ############################################################
 
 log_msg <- function(...) {
@@ -18,6 +19,10 @@ env_get <- function(names, default = '') {
 
 truthy <- function(x) {
   tolower(trimws(as.character(x))) %in% c('true', '1', 'yes', 'y', 'oui')
+}
+
+safe_url_decode <- function(x) {
+  tryCatch(utils::URLdecode(x), error = function(e) x)
 }
 
 html_decode_basic <- function(x) {
@@ -46,6 +51,9 @@ read_url_text <- function(url) {
       )
     )
     TRUE
+  }, warning = function(w) {
+    log_msg('WARNING: download warning for ', url, ' | ', conditionMessage(w))
+    FALSE
   }, error = function(e) {
     log_msg('WARNING: download failed for ', url, ' | ', conditionMessage(e))
     FALSE
@@ -65,9 +73,31 @@ extract_links <- function(html) {
   unique(links[nzchar(links)])
 }
 
+extract_pdf_like_urls <- function(html) {
+  if (!nzchar(html)) return(character(0))
+  html <- html_decode_basic(html)
+  html <- gsub('\\\\/', '/', html)
+  patterns <- c(
+    'https?://[^"\\\'<>[:space:]]+\\.pdf[^"\\\'<>[:space:]]*',
+    '/wp-content/uploads/[^"\\\'<>[:space:]]+\\.pdf[^"\\\'<>[:space:]]*',
+    'wp-content/uploads/[^"\\\'<>[:space:]]+\\.pdf[^"\\\'<>[:space:]]*'
+  )
+  out <- character(0)
+  for (pat in patterns) {
+    m <- gregexpr(pat, html, perl = TRUE, ignore.case = TRUE)
+    r <- regmatches(html, m)[[1]]
+    if (length(r) > 0 && !identical(r, character(0))) out <- c(out, r)
+  }
+  out <- unique(out)
+  out[nzchar(out)]
+}
+
 abs_url <- function(x, base = 'https://insp.cd') {
   x <- trimws(x)
   x <- sub('#.*$', '', x)
+  x <- safe_url_decode(x)
+  x <- gsub('NAÂ°', 'N°', x, fixed = TRUE)
+  x <- gsub('NÂ°', 'N°', x, fixed = TRUE)
   if (!nzchar(x)) return(NA_character_)
   if (grepl('^https?://', x, ignore.case = TRUE)) return(x)
   if (startsWith(x, '//')) return(paste0('https:', x))
@@ -76,7 +106,7 @@ abs_url <- function(x, base = 'https://insp.cd') {
 }
 
 extract_sitrep_number <- function(x) {
-  x <- utils::URLdecode(enc2utf8(as.character(x)))
+  x <- safe_url_decode(enc2utf8(as.character(x)))
   x <- gsub('NAÂ°', 'N°', x, fixed = TRUE)
   x <- gsub('NÂ°', 'N°', x, fixed = TRUE)
   x <- tolower(x)
@@ -93,7 +123,7 @@ extract_sitrep_number <- function(x) {
   NA_integer_
 }
 
-find_latest_sitrep <- function(max_pages = 6) {
+find_latest_sitrep <- function(max_pages = 5) {
   urls <- c('https://insp.cd/category/sitrep/')
   if (max_pages > 1) {
     urls <- c(urls, paste0('https://insp.cd/category/sitrep/page/', 2:max_pages, '/'))
@@ -101,6 +131,7 @@ find_latest_sitrep <- function(max_pages = 6) {
   candidates <- data.frame(number = integer(), page_url = character(), stringsAsFactors = FALSE)
   for (u in urls) {
     html <- read_url_text(u)
+    if (!nzchar(html)) next
     links <- extract_links(html)
     links <- vapply(links, abs_url, character(1))
     links <- unique(links[grepl('/sitrep', links, ignore.case = TRUE)])
@@ -119,11 +150,21 @@ find_latest_sitrep <- function(max_pages = 6) {
 
 find_pdf_url <- function(page_url) {
   html <- read_url_text(page_url)
-  links <- extract_links(html)
+  if (!nzchar(html)) return('')
+  links_href <- extract_links(html)
+  links_raw <- extract_pdf_like_urls(html)
+  links <- unique(c(links_href, links_raw))
   links <- vapply(links, abs_url, character(1))
   links <- unique(links[grepl('\\.pdf($|[?#])|\\.pdf', links, ignore.case = TRUE)])
+  links <- links[!is.na(links) & nzchar(links)]
   if (length(links) == 0) return('')
   links[1]
+}
+
+write_secret_file <- function(dir, name, value) {
+  path <- file.path(dir, name)
+  writeLines(enc2utf8(as.character(value)), path, useBytes = TRUE)
+  path
 }
 
 state_file <- file.path(getwd(), 'data', 'preis_safe_email_notification_state.csv')
@@ -132,7 +173,7 @@ force_send <- truthy(env_get(c('PREIS_FORCE_SEND', 'FORCE_SEND', 'INPUT_FORCE_SE
 log_msg('PREIS safe scientific email layer started')
 log_msg('force_send=', force_send)
 
-latest <- find_latest_sitrep(max_pages = 6)
+latest <- find_latest_sitrep(max_pages = 5)
 sitrep_number <- latest$number[1]
 sitrep_label <- sprintf('N%03d', sitrep_number)
 page_url <- latest$page_url[1]
@@ -175,7 +216,7 @@ run_url <- if (nzchar(repo) && nzchar(run_id)) paste0('https://github.com/', rep
 
 subject <- paste0('[PREIS Ebola RDC] Nouveau SitRep detecte - ', sitrep_label)
 
-body <- paste(
+body_detailed <- paste(
   'PREIS Ebola RDC - Alerte scientifique automatisee',
   '',
   'Objet : nouveau rapport de situation Ebola RDC detecte par PREIS.',
@@ -209,35 +250,71 @@ body <- paste(
   sep = '\n'
 )
 
-body_file <- tempfile(fileext = '.txt')
-py_file <- tempfile(fileext = '.py')
-writeLines(body, body_file, useBytes = TRUE)
+body_minimal <- paste(
+  'PREIS Ebola RDC - Alerte scientifique automatisee',
+  '',
+  paste0('SitRep : ', sitrep_label),
+  'Un nouveau rapport de situation Ebola RDC a ete detecte par PREIS.',
+  'Le message detaille avec liens a ete simplifie pour eviter un blocage Gmail/SMTP.',
+  '',
+  'Action : ouvrir le dashboard PREIS ou GitHub Actions pour consulter les liens et sorties du run.',
+  '',
+  'PREIS Ebola DRC Automation',
+  sep = '\n'
+)
 
+cfg_dir <- tempfile('preis_email_cfg_')
+dir.create(cfg_dir, recursive = TRUE, showWarnings = FALSE)
+write_secret_file(cfg_dir, 'smtp_host.txt', smtp_host)
+write_secret_file(cfg_dir, 'smtp_port.txt', smtp_port)
+write_secret_file(cfg_dir, 'smtp_user.txt', smtp_user)
+write_secret_file(cfg_dir, 'smtp_pass.txt', smtp_pass)
+write_secret_file(cfg_dir, 'email_from.txt', email_from)
+write_secret_file(cfg_dir, 'email_to.txt', paste(recipients, collapse = ','))
+write_secret_file(cfg_dir, 'subject.txt', subject)
+write_secret_file(cfg_dir, 'body_detailed.txt', body_detailed)
+write_secret_file(cfg_dir, 'body_minimal.txt', body_minimal)
+
+py_file <- tempfile(fileext = '.py')
 py_lines <- c(
-  'import os, smtplib',
+  'import sys, smtplib',
+  'from pathlib import Path',
   'from email.message import EmailMessage',
-  'host = os.environ.get("PREIS_SMTP_HOST", "smtp.gmail.com")',
-  'port = int(os.environ.get("PREIS_SMTP_PORT", "587"))',
-  'user = os.environ["PREIS_SMTP_USER"]',
-  'password = os.environ["PREIS_SMTP_PASS"]',
-  'sender = os.environ["PREIS_EMAIL_FROM"]',
-  'recipients = [x.strip() for x in os.environ["PREIS_EMAIL_TO"].replace(";", ",").split(",") if x.strip()]',
-  'subject = os.environ["PREIS_EMAIL_SUBJECT"]',
-  'body_path = os.environ["PREIS_BODY_FILE"]',
-  'with open(body_path, "r", encoding="utf-8") as f:',
-  '    body = f.read()',
-  'msg = EmailMessage()',
-  'msg["From"] = sender',
-  'msg["To"] = ", ".join(recipients)',
-  'msg["Subject"] = subject',
-  'msg.set_content(body)',
-  'with smtplib.SMTP(host, port, timeout=90) as server:',
-  '    server.ehlo()'
-  ,'    server.starttls()'
-  ,'    server.ehlo()'
-  ,'    server.login(user, password)'
-  ,'    server.send_message(msg, from_addr=sender, to_addrs=recipients)'
-  ,'print("PREIS_SAFE_EMAIL_SENT_OK", flush=True)'
+  'cfg = Path(sys.argv[1])',
+  'def read(name):',
+  '    return (cfg / name).read_text(encoding="utf-8").strip()',
+  'host = read("smtp_host.txt")',
+  'port = int(read("smtp_port.txt"))',
+  'user = read("smtp_user.txt")',
+  'password = read("smtp_pass.txt")',
+  'sender = read("email_from.txt")',
+  'recipients = [x.strip() for x in read("email_to.txt").replace(";", ",").split(",") if x.strip()]',
+  'subject = read("subject.txt")',
+  'body_detailed = (cfg / "body_detailed.txt").read_text(encoding="utf-8")',
+  'body_minimal = (cfg / "body_minimal.txt").read_text(encoding="utf-8")',
+  'def send_body(body, tag):',
+  '    msg = EmailMessage()',
+  '    msg["From"] = sender',
+  '    msg["To"] = ", ".join(recipients)',
+  '    msg["Subject"] = subject if tag == "detailed" else subject + " [minimal]"',
+  '    msg.set_content(body)',
+  '    with smtplib.SMTP(host, port, timeout=120) as server:',
+  '        server.ehlo()',
+  '        server.starttls()',
+  '        server.ehlo()',
+  '        server.login(user, password)',
+  '        server.send_message(msg, from_addr=sender, to_addrs=recipients)',
+  'try:',
+  '    send_body(body_detailed, "detailed")',
+  '    print("PREIS_SAFE_EMAIL_SENT_OK detailed", flush=True)',
+  'except Exception as e:',
+  '    print("PREIS_SAFE_EMAIL_DETAILED_FAILED: " + repr(e), flush=True)',
+  '    try:',
+  '        send_body(body_minimal, "minimal")',
+  '        print("PREIS_SAFE_EMAIL_SENT_OK minimal", flush=True)',
+  '    except Exception as e2:',
+  '        print("PREIS_SAFE_EMAIL_FATAL: " + repr(e2), flush=True)',
+  '        raise'
 )
 writeLines(py_lines, py_file, useBytes = TRUE)
 
@@ -245,23 +322,19 @@ py <- Sys.which('python3')
 if (!nzchar(py)) py <- Sys.which('python')
 if (!nzchar(py)) stop('Python not found on runner')
 
-envs <- c(
-  paste0('PREIS_SMTP_HOST=', smtp_host),
-  paste0('PREIS_SMTP_PORT=', smtp_port),
-  paste0('PREIS_SMTP_USER=', smtp_user),
-  paste0('PREIS_SMTP_PASS=', smtp_pass),
-  paste0('PREIS_EMAIL_FROM=', email_from),
-  paste0('PREIS_EMAIL_TO=', paste(recipients, collapse = ',')),
-  paste0('PREIS_EMAIL_SUBJECT=', subject),
-  paste0('PREIS_BODY_FILE=', body_file)
+log_msg('Sending safe scientific email to ', paste(recipients, collapse = ', '))
+
+res <- tryCatch(
+  system2(py, args = c(py_file, cfg_dir), stdout = TRUE, stderr = TRUE),
+  error = function(e) {
+    paste0('R_SYSTEM2_ERROR: ', conditionMessage(e))
+  }
 )
 
-log_msg('Sending safe scientific email to ', paste(recipients, collapse = ', '))
-res <- system2(py, args = py_file, stdout = TRUE, stderr = TRUE, env = envs)
 cat(paste(res, collapse = '\n'), '\n')
 
 if (!any(grepl('PREIS_SAFE_EMAIL_SENT_OK', res, fixed = TRUE))) {
-  stop('Safe scientific email failed. Python output: ', paste(res, collapse = '\n'))
+  stop('Safe scientific email failed. Output: ', paste(res, collapse = '\n'))
 }
 
 new_row <- data.frame(
