@@ -448,3 +448,16 @@
 [2026-07-03 16:07:51 UTC] SitRep page: https://insp.cd/sitrep-n48-mvb_01-07-2026/ 
 [2026-07-03 16:07:54 UTC] PDF URL resolved: https://insp.cd/wp-content/uploads/2026/07/SitRep_MVE_RDC_20260701_OK.pdf 
 [2026-07-03 16:07:55 UTC] SitRep N48 already sent. No duplicate email. 
+[2026-07-03 16:37:39 UTC] ============================================================ 
+[2026-07-03 16:37:39 UTC] PREIS Ebola RDC â€” Cloud SitRep Monitor started 
+[2026-07-03 16:37:39 UTC] ROOT: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep 
+[2026-07-03 16:37:39 UTC] DRY_RUN: FALSE 
+[2026-07-03 16:37:39 UTC] MAX_PAGES: 6 
+[2026-07-03 16:37:39 UTC] Scanning INSP category page: https://insp.cd/category/sitrep/ 
+[2026-07-03 16:37:43 UTC] Page 1: 10 SitRep candidate(s) 
+[2026-07-03 16:37:47 UTC] Page 2: 10 SitRep candidate(s) 
+[2026-07-03 16:37:51 UTC] Page 3: 9 SitRep candidate(s) 
+[2026-07-03 16:38:18 UTC] Latest SitRep online: N48 
+[2026-07-03 16:38:18 UTC] SitRep page: https://insp.cd/sitrep-n48-mvb_01-07-2026/ 
+[2026-07-03 16:38:21 UTC] PDF URL resolved: https://insp.cd/wp-content/uploads/2026/07/SitRep_MVE_RDC_20260701_OK.pdf 
+[2026-07-03 16:38:21 UTC] SitRep N48 already sent. No duplicate email. 
