@@ -189,6 +189,13 @@ if (file.exists(state_file)) {
 }
 
 already <- nrow(state) > 0 && sitrep_number %in% suppressWarnings(as.integer(state$sitrep_number))
+# PREIS STRICT ANTI REPEAT START
+log_msg('Safe email anti-repeat check: sitrep=', sitrep_label, ' already=', already, ' force_send=', force_send)
+if (already && !force_send) {
+  log_msg('Safe email skipped: ', sitrep_label, ' already notified and force_send=false')
+  quit(save = 'no', status = 0)
+}
+# PREIS STRICT ANTI REPEAT END
 if (already && !force_send) {
   log_msg('Safe email skipped: ', sitrep_label, ' already notified and force_send=false')
   quit(save = 'no', status = 0)

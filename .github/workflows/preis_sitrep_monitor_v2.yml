@@ -114,14 +114,46 @@ jobs:
           echo 'No legacy curl SMTP email sender'
 
       - name: Parse R scripts
+        env:
+          SEND: false
+          SEND_EMAIL: false
+          SEND_ALERTS: false
+          PREIS_SEND: false
+          PREIS_SEND_EMAIL: false
+          EMAIL_ENABLED: false
+          PREIS_EMAIL_ENABLED: false
+          FORCE_SEND: false
+          PREIS_FORCE_SEND: false
         run: |
           Rscript --vanilla -e 'parse(file="scripts/00_email_smtp_base.R", encoding="UTF-8"); parse(file="scripts/08_cloud_sitrep_monitor.R", encoding="UTF-8"); if (file.exists("scripts/10_whatsapp_notify.R")) parse(file="scripts/10_whatsapp_notify.R", encoding="UTF-8"); cat("R parse OK\n")'
 
       # PREIS SAFE EMAIL GUARANTEE START
       - name: PREIS safe scientific email guarantee
         if: always()
+        env:
+          PREIS_FORCE_SEND: ${{ github.event_name == 'workflow_dispatch' && inputs.force_send || 'false' }}
+          FORCE_SEND: ${{ github.event_name == 'workflow_dispatch' && inputs.force_send || 'false' }}
+          PREIS_SAFE_EMAIL_TO: ${{ secrets.PREIS_SAFE_EMAIL_TO }}
+          ALERT_TO: ${{ secrets.ALERT_TO }}
         run: Rscript --vanilla scripts/preis_safe_scientific_email.R
       # PREIS SAFE EMAIL GUARANTEE END
+      # PREIS SAFE EMAIL STATE COMMIT START
+      - name: Commit PREIS safe email notification state
+        if: always()
+        run: |
+          set +e
+          if [ -f data/preis_safe_email_notification_state.csv ]; then
+            git config user.name "PREIS Ebola DRC Automation"
+            git config user.email "preis-automation@users.noreply.github.com"
+            git add data/preis_safe_email_notification_state.csv
+            git diff --cached --quiet && echo "No safe email state change to commit" && exit 0
+            git commit -m "Update PREIS safe email notification state [skip ci]"
+            git push
+          else
+            echo "No safe email state file found"
+          fi
+          exit 0
+      # PREIS SAFE EMAIL STATE COMMIT END
       - name: Run PREIS SitRep monitor
         run: |
           Rscript --vanilla scripts/08_cloud_sitrep_monitor.R
