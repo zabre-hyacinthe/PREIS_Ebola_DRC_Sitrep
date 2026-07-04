@@ -587,3 +587,24 @@
 [2026-07-04 19:37:39 UTC] PDF URL resolved: https://insp.cd/wp-content/uploads/2026/07/Draft_SitRep_MVE_RDC_NÂ°050_04_07_2026.pdf 
 [2026-07-04 19:37:39 UTC] Downloading PDF SitRep N50 
 [2026-07-04 19:38:01 UTC] WARNING: PDF download failed; continuing without PDF attachment so email alert can still be sent. 
+[2026-07-04 20:07:28 UTC] ============================================================ 
+[2026-07-04 20:07:28 UTC] PREIS Ebola RDC â€” Cloud SitRep Monitor started 
+[2026-07-04 20:07:28 UTC] ROOT: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep 
+[2026-07-04 20:07:28 UTC] DRY_RUN: FALSE 
+[2026-07-04 20:07:28 UTC] MAX_PAGES: 6 
+[2026-07-04 20:07:28 UTC] Scanning INSP category page: https://insp.cd/category/sitrep/ 
+[2026-07-04 20:07:32 UTC] Page 1: 10 SitRep candidate(s) 
+[2026-07-04 20:07:35 UTC] Page 2: 10 SitRep candidate(s) 
+[2026-07-04 20:07:38 UTC] Page 3: 9 SitRep candidate(s) 
+[2026-07-04 20:07:42 UTC] Page 4: 2 SitRep candidate(s) 
+[2026-07-04 20:08:07 UTC] Latest SitRep online: N50 
+[2026-07-04 20:08:07 UTC] SitRep page: https://insp.cd/sitrep-n050-mvb_02-07-2026/ 
+[2026-07-04 20:08:11 UTC] PDF URL resolved: https://insp.cd/wp-content/uploads/2026/07/Draft_SitRep_MVE_RDC_NÂ°050_04_07_2026.pdf 
+[2026-07-04 20:08:11 UTC] PDF already exists locally: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/pdf/PREIS_DRC_Ebola_SitRep_050.pdf 
+[2026-07-04 20:08:11 UTC] PDF SHA256: 38b35718a0391fd9931b9984d943c6563a5d78e1b7dd0b315c0df1b917871a26 
+[2026-07-04 20:08:11 UTC] Sending email for SitRep N50 
+[2026-07-04 20:08:15 UTC] Email sent successfully. 
+[2026-07-04 20:08:15 UTC] State updated: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/monitor_state/preis_sitrep_email_state.csv 
+[2026-07-04 20:08:15 UTC] Email status: sent 
+[2026-07-04 20:08:15 UTC] WhatsApp disabled 
+[2026-07-04 20:08:15 UTC] PREIS cloud monitor finished. 
