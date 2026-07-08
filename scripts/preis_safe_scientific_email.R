@@ -221,47 +221,55 @@ repo <- env_get(c('GITHUB_REPOSITORY'), 'zabre-hyacinthe/PREIS_Ebola_DRC_Sitrep'
 run_id <- env_get(c('GITHUB_RUN_ID'), '')
 run_url <- ''
 
-subject <- paste0('[PREIS Ebola DRC] New SitRep detected - PREIS analysis and DSB - ', sitrep_label)
+subject <- paste0('[PREIS Ebola DRC] Official SitRep - ', sitrep_label)
 
-body_detailed <- paste(
-  'PREIS Ebola DRC - Automated scientific SitRep alert',
-  '',
-  paste0('SitRep: ', sitrep_label),
-  'Source: INSP DRC official SitRep page.',
-  '',
-  'PREIS update',
-  '- A new Ebola DRC SitRep has been detected online.',
-  '- PREIS automated analysis and DSB outputs are being generated/updated for operational review.',
-  '- Detailed indicators should be verified against the official SitRep and PREIS outputs.',
-  '',
-  'Verification links',
-  paste0('- Official INSP page: ', page_url),
-  if (nzchar(pdf_url)) paste0('- SitRep PDF: ', pdf_url) else '- SitRep PDF: not automatically identified',
-  '',
-  'Recommended action',
-  '- Review the official SitRep and PREIS outputs.',
-  '- Update coordination actions if new epidemiological or operational signals are confirmed.',
-  '',
-  'Automation by PREIS.',
-  'For support, contact Dr Hyacinthe ZABRE.',
-  'PREIS WhatsApp contact: +226 78 08 87 70.',
-  sep = '\n'
-)
+if (isTRUE(pdf_info$attached)) {
+  body_detailed <- paste(
+    'Dear colleagues,',
+    '',
+    'Please find attached the latest official Ebola DRC Situation Report detected by PREIS.',
+    '',
+    paste0('SitRep: ', sitrep_label),
+    'Source: INSP DRC official SitRep page.',
+    '',
+    'Kind regards,',
+    'PREIS Ebola DRC Automation',
+    '',
+    'Automation by PREIS.',
+    'For support, contact Dr Hyacinthe ZABRE.',
+    'PREIS WhatsApp contact: +226 78 08 87 70.',
+    sep = '\n'
+  )
+} else {
+  pdf_line <- if (nzchar(pdf_info$url)) {
+    paste0('PDF link: ', pdf_info$url)
+  } else {
+    'PDF link: not automatically identified'
+  }
 
-body_minimal <- paste(
-  'PREIS Ebola DRC - Automated SitRep alert',
-  '',
-  paste0('SitRep: ', sitrep_label),
-  'A new Ebola DRC SitRep has been detected by PREIS.',
-  'PREIS analysis and DSB outputs are being generated/updated for operational review.',
-  '',
-  'Please review the official INSP SitRep and PREIS outputs.',
-  '',
-  'Automation by PREIS.',
-  'For support, contact Dr Hyacinthe ZABRE.',
-  'PREIS WhatsApp contact: +226 78 08 87 70.',
-  sep = '\n'
-)
+  body_detailed <- paste(
+    'Dear colleagues,',
+    '',
+    'PREIS detected the latest official Ebola DRC Situation Report.',
+    '',
+    paste0('SitRep: ', sitrep_label),
+    'Source: INSP DRC official SitRep page.',
+    paste0('Official page: ', page_url),
+    pdf_line,
+    '',
+    'The PDF attachment could not be added automatically, but the official link is provided above.',
+    '',
+    'Kind regards,',
+    'PREIS Ebola DRC Automation',
+    '',
+    'Automation by PREIS.',
+    'For support, contact Dr Hyacinthe ZABRE.',
+    'PREIS WhatsApp contact: +226 78 08 87 70.',
+    sep = '\n'
+  )
+}
+
+body_minimal <- body_detailed
 
 cfg_dir <- tempfile('preis_email_cfg_')
 dir.create(cfg_dir, recursive = TRUE, showWarnings = FALSE)
