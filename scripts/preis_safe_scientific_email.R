@@ -221,6 +221,83 @@ repo <- env_get(c('GITHUB_REPOSITORY'), 'zabre-hyacinthe/PREIS_Ebola_DRC_Sitrep'
 run_id <- env_get(c('GITHUB_RUN_ID'), '')
 run_url <- ''
 
+# PREIS PDF_INFO SAFETY START
+# Ensure pdf_info always exists before building the email body.
+# Priority: attach the official PDF if possible; otherwise send official links.
+if (!exists('pdf_info')) {
+  pdf_info <- list(
+    attached = FALSE,
+    path = '',
+    url = '',
+    reason = 'PDF information was not created upstream.'
+  )
+
+  if (exists('pdf_url') && !is.na(pdf_url) && nzchar(trimws(as.character(pdf_url))) &&
+      !grepl('not found', as.character(pdf_url), ignore.case = TRUE)) {
+    candidate_pdf_url <- trimws(as.character(pdf_url))
+    tmp_pdf <- file.path(tempdir(), sprintf('PREIS_DRC_Ebola_SitRep_%03d.pdf', as.integer(sitrep_number)))
+
+    ok_pdf <- tryCatch({
+      utils::download.file(
+        url = candidate_pdf_url,
+        destfile = tmp_pdf,
+        quiet = TRUE,
+        method = 'libcurl',
+        mode = 'wb',
+        headers = c(
+          'User-Agent' = 'Mozilla/5.0 PREIS-Ebola-DRC-Monitor',
+          'Accept' = 'application/pdf,*/*'
+        )
+      )
+      TRUE
+    }, warning = function(w) {
+      log_msg('PDF download warning: ', conditionMessage(w))
+      FALSE
+    }, error = function(e) {
+      log_msg('PDF download error: ', conditionMessage(e))
+      FALSE
+    })
+
+    if (ok_pdf && file.exists(tmp_pdf) && file.info(tmp_pdf)$size > 5000) {
+      con <- file(tmp_pdf, 'rb')
+      sig <- readBin(con, what = 'raw', n = 4)
+      close(con)
+
+      if (identical(sig, charToRaw('%PDF'))) {
+        pdf_info <- list(
+          attached = TRUE,
+          path = tmp_pdf,
+          url = candidate_pdf_url,
+          reason = ''
+        )
+        log_msg('PDF attachment prepared from existing pdf_url: ', candidate_pdf_url)
+      } else {
+        pdf_info <- list(
+          attached = FALSE,
+          path = '',
+          url = candidate_pdf_url,
+          reason = 'Downloaded file was not a valid PDF.'
+        )
+      }
+    } else {
+      pdf_info <- list(
+        attached = FALSE,
+        path = '',
+        url = candidate_pdf_url,
+        reason = 'PDF URL found but file could not be downloaded.'
+      )
+    }
+  }
+
+  if (!isTRUE(pdf_info$attached) && (!nzchar(pdf_info$url)) && exists('page_url')) {
+    pdf_info$url <- as.character(page_url)
+    pdf_info$reason <- paste(pdf_info$reason, 'Using official INSP page as fallback link.')
+  }
+
+  log_msg('PDF attachment status: attached=', pdf_info$attached, ' url=', pdf_info$url)
+}
+# PREIS PDF_INFO SAFETY END
+
 subject <- paste0('[PREIS Ebola DRC] Official SitRep - ', sitrep_label)
 
 if (isTRUE(pdf_info$attached)) {
