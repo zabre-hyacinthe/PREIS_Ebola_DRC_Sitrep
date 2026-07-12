@@ -1,4 +1,295 @@
 ############################################################
+
+############################################################
+# PREIS UNIVERSAL INSP PDF RESOLVER
+# This block resolves and downloads any PDF linked or embedded
+# in an INSP SitRep article page, regardless of filename.
+############################################################
+
+preis_null_coalesce <- function(x, y) {
+  if (is.null(x) || length(x) == 0 || is.na(x[1])) y else x
+}
+
+preis_safe_trim <- function(x) {
+  x <- as.character(x)
+  x <- trimws(x)
+  x[nzchar(x)]
+}
+
+preis_safe_unique <- function(x) {
+  x <- preis_safe_trim(x)
+  unique(x[!is.na(x) & nzchar(x)])
+}
+
+preis_safe_http_get_text <- function(url, timeout_sec = 90) {
+  resp <- tryCatch(
+    httr::GET(
+      url,
+      httr::timeout(timeout_sec),
+      httr::add_headers(
+        `User-Agent` = 'Mozilla/5.0 PREIS-Ebola-DRC-PDF-Resolver',
+        Accept = 'text/html,application/xhtml+xml,application/pdf,*/*',
+        `Accept-Language` = 'fr-FR,fr;q=0.9,en;q=0.8'
+      )
+    ),
+    error = function(e) NULL
+  )
+  if (is.null(resp)) return(NA_character_)
+  if (httr::status_code(resp) < 200 || httr::status_code(resp) >= 400) return(NA_character_)
+  httr::content(resp, as = 'text', encoding = 'UTF-8')
+}
+
+preis_safe_url_absolute <- function(urls, base_url) {
+  urls <- preis_safe_unique(urls)
+  if (length(urls) == 0) return(character())
+  out <- vapply(urls, function(u) {
+    tryCatch(xml2::url_absolute(u, base_url), error = function(e) NA_character_)
+  }, character(1))
+  preis_safe_unique(out)
+}
+
+preis_safe_clean_pdf_url <- function(urls, base_url = 'https://insp.cd') {
+  urls <- preis_safe_unique(urls)
+  if (length(urls) == 0) return(character())
+  urls <- gsub('\\\\/', '/', urls)
+  urls <- gsub('&amp;', '&', urls, fixed = TRUE)
+  urls <- gsub('\\u0026', '&', urls, fixed = TRUE)
+  urls <- gsub('\\u003d', '=', urls, fixed = TRUE)
+  urls <- gsub('\\u003a', ':', urls, fixed = TRUE)
+  urls <- gsub('\\u002f', '/', urls, fixed = TRUE)
+  urls <- gsub('\\u00b0', '°', urls, fixed = TRUE)
+  urls <- gsub('%5C/', '/', urls, fixed = TRUE)
+  urls <- utils::URLdecode(urls)
+  urls <- preis_safe_url_absolute(urls, base_url)
+  urls <- urls[grepl('[.]pdf($|[?#])', urls, ignore.case = TRUE)]
+  preis_safe_unique(urls)
+}
+
+preis_safe_extract_pdf_urls_from_html <- function(html_text, page_url) {
+  if (is.na(html_text) || !nzchar(html_text)) return(character())
+  urls <- character()
+  
+  # 1) Raw URLs ending in .pdf
+  raw_pdf <- stringr::str_extract_all(
+    html_text,
+    'https?://[^\"\'<>[:space:]]+[.]pdf(?:[?#][^\"\'<>[:space:]]*)?'
+  )[[1]]
+  urls <- c(urls, raw_pdf)
+  
+  # 2) Encoded / escaped URLs that still contain .pdf
+  encoded_pdf <- stringr::str_extract_all(
+    html_text,
+    'https?%3A%2F%2F[^\"\'<>[:space:]]+[.]pdf(?:[?#][^\"\'<>[:space:]]*)?'
+  )[[1]]
+  urls <- c(urls, encoded_pdf)
+  
+  # 3) Parse HTML attributes href/src/data/pdfemb-url
+  doc <- tryCatch(rvest::read_html(html_text), error = function(e) NULL)
+  if (!is.null(doc)) {
+    nodes <- rvest::html_nodes(doc, 'a, iframe, embed, object, source')
+    attrs <- c(
+      rvest::html_attr(nodes, 'href'),
+      rvest::html_attr(nodes, 'src'),
+      rvest::html_attr(nodes, 'data'),
+      rvest::html_attr(nodes, 'data-pdf'),
+      rvest::html_attr(nodes, 'data-url'),
+      rvest::html_attr(nodes, 'pdfemb-url')
+    )
+    urls <- c(urls, attrs)
+  }
+  
+  # 4) PDF Embedder plugin: pdfemb-data base64
+  b64_values <- stringr::str_match_all(html_text, 'pdfemb-data=[\"\']?([A-Za-z0-9+/=]+)')[[1]]
+  if (!is.null(b64_values) && nrow(b64_values) > 0) {
+    for (b64 in b64_values[, 2]) {
+      decoded <- tryCatch(rawToChar(base64enc::base64decode(b64)), error = function(e) NA_character_)
+      if (!is.na(decoded) && nzchar(decoded)) {
+        pdf_inside <- stringr::str_extract_all(
+          decoded,
+          'https?://[^\"\'<>[:space:]]+[.]pdf(?:[?#][^\"\'<>[:space:]]*)?'
+        )[[1]]
+        urls <- c(urls, pdf_inside)
+      }
+    }
+  }
+  
+  preis_safe_clean_pdf_url(urls, base_url = page_url)
+}
+
+preis_safe_pdf_signature_ok <- function(file) {
+  if (!file.exists(file)) return(FALSE)
+  if (file.info(file)$size < 5000) return(FALSE)
+  con <- file(file, 'rb')
+  on.exit(close(con), add = TRUE)
+  sig <- readBin(con, what = 'raw', n = 4)
+  identical(sig, charToRaw('%PDF'))
+}
+
+preis_safe_url_variants <- function(url) {
+  url <- as.character(url[1])
+  out <- c(url)
+  encoded <- tryCatch(utils::URLencode(url, reserved = TRUE), error = function(e) url)
+  encoded <- gsub('%3A', ':', encoded, fixed = TRUE)
+  encoded <- gsub('%2F', '/', encoded, fixed = TRUE)
+  encoded <- gsub('%3F', '?', encoded, fixed = TRUE)
+  encoded <- gsub('%3D', '=', encoded, fixed = TRUE)
+  encoded <- gsub('%26', '&', encoded, fixed = TRUE)
+  out <- c(out, encoded)
+  out <- c(out, gsub('°', '%C2%B0', url, fixed = TRUE))
+  preis_safe_unique(out)
+}
+
+preis_safe_download_pdf_from_url <- function(pdf_url, dest_file, referer = 'https://insp.cd/category/sitrep/') {
+  urls <- preis_safe_url_variants(pdf_url)
+  dir.create(dirname(dest_file), recursive = TRUE, showWarnings = FALSE)
+  
+  for (u in urls) {
+    tmp <- tempfile(fileext = '.pdf')
+    resp <- tryCatch(
+      httr::GET(
+        u,
+        httr::timeout(180),
+        httr::write_disk(tmp, overwrite = TRUE),
+        httr::add_headers(
+          `User-Agent` = 'Mozilla/5.0 PREIS-Ebola-DRC-PDF-Download',
+          Referer = referer,
+          Accept = 'application/pdf,*/*'
+        )
+      ),
+      error = function(e) NULL
+    )
+    
+    if (!is.null(resp)) {
+      code <- httr::status_code(resp)
+      if (code >= 200 && code < 400 && preis_safe_pdf_signature_ok(tmp)) {
+        file.copy(tmp, dest_file, overwrite = TRUE)
+        unlink(tmp, force = TRUE)
+        return(normalizePath(dest_file, mustWork = TRUE))
+      }
+    }
+    unlink(tmp, force = TRUE)
+  }
+  
+  NA_character_
+}
+
+preis_safe_generate_pdf_candidates_from_context <- function(sitrep_no, page_url, title = '') {
+  n_int <- suppressWarnings(as.integer(sitrep_no))
+  if (is.na(n_int)) return(character())
+  n1 <- as.character(n_int)
+  n2 <- sprintf('%02d', n_int)
+  n3 <- sprintf('%03d', n_int)
+  
+  context <- paste(page_url, title, collapse = ' ')
+  m <- stringr::str_match(context, '(\\d{2})[-_/](\\d{2})[-_/](\\d{4})')
+  if (all(is.na(m))) return(character())
+  dd <- m[2]
+  mm <- m[3]
+  yyyy <- m[4]
+  date_dash <- paste(dd, mm, yyyy, sep = '-')
+  date_us <- paste(dd, mm, yyyy, sep = '_')
+  date_slash <- paste(dd, mm, yyyy, sep = '/')
+  date_compact <- paste0(dd, mm, yyyy)
+  
+  base <- paste0('https://insp.cd/wp-content/uploads/', yyyy, '/', mm, '/')
+  nums <- c(n1, n2, n3)
+  dates <- c(date_dash, date_us, date_compact)
+  prefixes <- c(
+    'SitRep_MVE_RDC_N°',
+    'SitRep_MVE_RDC_N',
+    'Draft_SitRep_MVE_RDC_N°',
+    'Draft_SitRep_MVE_RDC_N',
+    'Draft_SitRep_MVB_RDC_N°',
+    'Draft_SitRep_MVB_RDC_N',
+    'SitRep_MVB_RDC_N°',
+    'SitRep_MVB_RDC_N'
+  )
+  
+  names <- character()
+  for (p in prefixes) {
+    for (n in nums) {
+      for (d in dates) {
+        names <- c(names, paste0(p, n, '_', d, '.pdf'))
+      }
+    }
+  }
+  
+  urls <- paste0(base, names)
+  urls <- vapply(urls, function(u) {
+    e <- utils::URLencode(u, reserved = TRUE)
+    e <- gsub('%3A', ':', e, fixed = TRUE)
+    e <- gsub('%2F', '/', e, fixed = TRUE)
+    e
+  }, character(1))
+  preis_safe_unique(urls)
+}
+
+preis_safe_resolve_pdf_universal <- function(sitrep_no, page_url, current_pdf_url = '', title = '') {
+  candidates <- character()
+  
+  if (!is.na(current_pdf_url) && nzchar(current_pdf_url)) {
+    candidates <- c(candidates, current_pdf_url)
+  }
+  
+  html_text <- preis_safe_http_get_text(page_url)
+  candidates <- c(candidates, preis_safe_extract_pdf_urls_from_html(html_text, page_url))
+  
+  # Follow internal article links that may hide the real PDF or attachment page
+  if (!is.na(html_text) && nzchar(html_text)) {
+    doc <- tryCatch(rvest::read_html(html_text), error = function(e) NULL)
+    if (!is.null(doc)) {
+      links <- rvest::html_attr(rvest::html_nodes(doc, 'a'), 'href')
+      links <- preis_safe_url_absolute(links, page_url)
+      links <- links[grepl('wp-content|attachment|download|pdf|media', links, ignore.case = TRUE)]
+      links <- links[!grepl('[.]jpg|[.]jpeg|[.]png|[.]gif|[.]webp|[.]css|[.]js', links, ignore.case = TRUE)]
+      links <- head(preis_safe_unique(links), 20)
+      for (lnk in links) {
+        if (grepl('[.]pdf($|[?#])', lnk, ignore.case = TRUE)) {
+          candidates <- c(candidates, lnk)
+        } else {
+          sub_html <- preis_safe_http_get_text(lnk, timeout_sec = 45)
+          candidates <- c(candidates, preis_safe_extract_pdf_urls_from_html(sub_html, lnk))
+        }
+      }
+    }
+  }
+  
+  # Last-resort candidates from known INSP upload patterns
+  candidates <- c(candidates, preis_safe_generate_pdf_candidates_from_context(sitrep_no, page_url, title))
+  candidates <- preis_safe_clean_pdf_url(candidates, page_url)
+  
+  if (length(candidates) == 0) return('')
+  
+  # Test candidates by real PDF signature after download
+  tmp_dir <- file.path(getwd(), 'data', 'pdf_probe')
+  dir.create(tmp_dir, recursive = TRUE, showWarnings = FALSE)
+  
+  for (u in candidates) {
+    probe_file <- tempfile(pattern = 'preis_pdf_probe_', fileext = '.pdf', tmpdir = tmp_dir)
+    got <- preis_safe_download_pdf_from_url(u, probe_file, referer = page_url)
+    if (!is.na(got) && nzchar(got) && file.exists(got) && preis_safe_pdf_signature_ok(got)) {
+      unlink(got, force = TRUE)
+      return(u)
+    }
+    unlink(probe_file, force = TRUE)
+  }
+  
+  ''
+}
+
+preis_safe_download_resolved_pdf <- function(pdf_url, sitrep_no, page_url) {
+  if (is.na(pdf_url) || !nzchar(pdf_url)) return(NA_character_)
+  if (!grepl('[.]pdf($|[?#])', pdf_url, ignore.case = TRUE)) return(NA_character_)
+  pdf_dir <- file.path(getwd(), 'data', 'pdf')
+  dir.create(pdf_dir, recursive = TRUE, showWarnings = FALSE)
+  dest_file <- file.path(pdf_dir, paste0('PREIS_DRC_Ebola_SitRep_', sprintf('%03d', as.integer(sitrep_no)), '.pdf'))
+  out <- preis_safe_download_pdf_from_url(pdf_url, dest_file, referer = page_url)
+  if (!is.na(out) && nzchar(out) && preis_safe_pdf_signature_ok(out)) return(out)
+  NA_character_
+}
+
+# END PREIS UNIVERSAL INSP PDF RESOLVER
+
 # PREIS safe scientific SitRep email
 # Robust text-only email layer for INSP SitRep alerts
 # Supports SMTP STARTTLS 587 and SMTP_SSL 465
@@ -181,6 +472,28 @@ pdf_url <- find_pdf_url(page_url)
 
 log_msg('Latest SitRep detected by safe layer: ', sitrep_label)
 log_msg('Page URL: ', page_url)
+# PREIS universal PDF resolver call
+if (!exists('pdf_url')) pdf_url <- ''
+if (!exists('page_url')) page_url <- ''
+if (!exists('sitrep_no')) sitrep_no <- NA_integer_
+if (!exists('sitrep_title')) sitrep_title <- ''
+pdf_url <- preis_safe_resolve_pdf_universal(
+  sitrep_no = sitrep_no,
+  page_url = page_url,
+  current_pdf_url = pdf_url,
+  title = sitrep_title
+)
+safe_log(paste0('Universal PDF resolved: ', ifelse(nzchar(pdf_url), pdf_url, 'not found')))
+# PREIS universal PDF download call
+pdf_file <- preis_safe_download_resolved_pdf(pdf_url, sitrep_no, page_url)
+pdf_attached <- !is.na(pdf_file) && nzchar(pdf_file) && file.exists(pdf_file)
+safe_log(paste0('Universal PDF downloaded: ', ifelse(pdf_attached, pdf_file, 'not downloaded')))
+# PREIS universal PDF info normalization
+if (exists('pdf_info')) {
+  pdf_info$url <- pdf_url
+  pdf_info$file <- if (exists('pdf_file')) pdf_file else NA_character_
+  pdf_info$attached <- exists('pdf_attached') && isTRUE(pdf_attached)
+}
 if (nzchar(pdf_url)) log_msg('PDF URL: ', pdf_url) else log_msg('PDF URL: not found')
 
 state <- data.frame(sitrep_number = integer(), notified_utc = character(), stringsAsFactors = FALSE)
