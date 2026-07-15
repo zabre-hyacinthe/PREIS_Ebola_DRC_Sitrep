@@ -158,13 +158,76 @@ jobs:
         run: |
           Rscript --vanilla scripts/08_cloud_sitrep_monitor.R
 
-      - name: Commit monitor outputs
+      # ------------------------------------------------------------
+      # PATCH 2026-07-15 P2/P3 : chaine d'extraction, indicateurs,
+      # analyse consolidee. Ces steps etaient absents du workflow,
+      # ce qui bloquait le dashboard sur son fallback (SR 28).
+      # continue-on-error: chaque etape peut echouer sans casser
+      # le download PDF ni les commits en aval.
+      # ------------------------------------------------------------
+      - name: Install R packages pipeline (extraction + analyse)
+        run: |
+          Rscript --vanilla -e 'pkgs <- c("pdftools","tidyr","lubridate","ggplot2","openxlsx"); to_install <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly=TRUE)]; if(length(to_install)>0) install.packages(to_install, repos="https://cloud.r-project.org")'
+
+      - name: Normaliser les noms de PDFs (P3)
+        if: always()
+        continue-on-error: true
+        run: |
+          if [ -f scripts/06_normalize_pdf_names.R ]; then
+            Rscript --vanilla scripts/06_normalize_pdf_names.R || echo "06_normalize_pdf_names.R en erreur"
+          else
+            echo "scripts/06_normalize_pdf_names.R absent - skip normalisation"
+          fi
+
+      - name: Extraction PDFs vers texte (03_extract_pdf.R)
+        if: always()
+        continue-on-error: true
+        run: |
+          Rscript --vanilla scripts/03_extract_pdf.R || echo "03_extract_pdf.R en erreur"
+
+      - name: Extraction indicateurs (04_extract_indicators.R)
+        if: always()
+        continue-on-error: true
+        run: |
+          Rscript --vanilla scripts/04_extract_indicators.R || echo "04_extract_indicators.R en erreur"
+
+      - name: Indicateurs journaliers (11_daily_indicators.R)
+        if: always()
+        continue-on-error: true
+        run: |
+          Rscript --vanilla scripts/11_daily_indicators.R || echo "11_daily_indicators.R en erreur"
+
+      - name: Analyse consolidee - serie temporelle nationale (03_analyse_consolidee.R)
+        if: always()
+        continue-on-error: true
+        run: |
+          Rscript --vanilla scripts/03_analyse_consolidee.R || echo "03_analyse_consolidee.R en erreur"
+
+      - name: Commit monitor + pipeline outputs
         if: always()
         run: |
           git config user.name "PREIS Ebola Automation"
           git config user.email "actions@github.com"
+          # Etats et logs du monitor (existant)
           git add data/monitor_state/ data/pdf/ data/logs/ outputs/cloud_monitor/ || true
+          # Bases consolidees (NOUVEAU - P2)
+          git add data/final/PREIS_indicators_long.csv || true
+          git add data/final/PREIS_daily_indicators.csv || true
+          git add data/final/PREIS_indicators_validated.csv || true
+          git add data/final/PREIS_health_zones.csv || true
+          git add data/final/PREIS_QC_by_sitrep.csv || true
+          git add data/final/PREIS_QC_issues.csv || true
+          git add data/final/PREIS_signals.csv || true
+          git add data/final/PREIS_signals_text.txt || true
+          git add data/final/PREIS_validation_signals.csv || true
+          git add data/final/PREIS_validation_vs_INRB.csv || true
+          git add data/final/sitrep_registry.csv || true
+          # Sortie analyse consolidee (NOUVEAU - P2, deblocage via .gitignore P1)
+          git add outputs/analyse/serie_temporelle_nationale.csv || true
+          git add outputs/analyse/tableau_zones_sante.csv || true
+          # Sortie audit QC
+          git add outputs/audit/ || true
           git status --short
-          git commit -m "PREIS SitRep monitor state update" || echo "No changes to commit"
+          git commit -m "PREIS pipeline: monitor + extraction + analyse [skip ci]" || echo "No changes to commit"
           git pull --rebase origin main || echo "No remote changes to rebase"
           git push || echo "No changes to push"

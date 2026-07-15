@@ -1,0 +1,104 @@
+name: Deploy PREIS Dashboard to shinyapps.io
+
+# ------------------------------------------------------------
+# PATCH 2026-07-15 P4 : deploiement automatique du dashboard.
+#
+# Deux triggers :
+#   1. workflow_dispatch : lancement manuel a la demande
+#   2. schedule cron     : 1 fois par jour a 06:15 UTC
+#      = 08:15 heure d'Addis Abeba, apres le SitRep de la nuit
+#
+# Prerequis (a configurer une seule fois dans
+# Settings > Secrets and variables > Actions > New repository secret) :
+#   SHINYAPPS_ACCOUNT = zrhyacinthe25
+#   SHINYAPPS_TOKEN   = (recupere sur shinyapps.io > Account > Tokens > Show)
+#   SHINYAPPS_SECRET  = (idem, champ Secret)
+#
+# En absence des secrets, le job echoue avec un message explicite
+# et n'ecrase pas la version en ligne.
+# ------------------------------------------------------------
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "15 6 * * *"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-shinyapps
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    env:
+      SHINYAPPS_ACCOUNT: ${{ secrets.SHINYAPPS_ACCOUNT }}
+      SHINYAPPS_TOKEN:   ${{ secrets.SHINYAPPS_TOKEN }}
+      SHINYAPPS_SECRET:  ${{ secrets.SHINYAPPS_SECRET }}
+      APP_NAME:          "preis-ebola-drc-v2"
+      APP_DIR:           "dashboard_ebola"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Verify secrets are set
+        run: |
+          Rscript --vanilla -e 'req <- c("SHINYAPPS_ACCOUNT","SHINYAPPS_TOKEN","SHINYAPPS_SECRET"); miss <- req[!nzchar(Sys.getenv(req))]; if (length(miss)) stop("Secrets manquants : ", paste(miss, collapse=", "), ". Configurer dans Settings > Secrets > Actions."); cat("Secrets shinyapps.io OK\n")'
+
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v2
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libcurl4-openssl-dev libssl-dev libxml2-dev \
+            libfontconfig1-dev libharfbuzz-dev libfribidi-dev \
+            libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev \
+            libudunits2-dev libgdal-dev libgeos-dev libproj-dev
+
+      - name: Install R packages
+        run: |
+          Rscript --vanilla -e 'options(repos = c(P3M = "https://packagemanager.posit.co/cran/__linux__/jammy/latest", CRAN = "https://cloud.r-project.org")); pkgs <- c("rsconnect","shiny","shinydashboard","dplyr","tidyr","readr","stringr","lubridate","ggplot2","plotly","DT","leaflet","sf","base64enc","tibble","purrr","httr"); miss <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly=TRUE)]; if(length(miss)>0) install.packages(miss)'
+
+      - name: Parse app.R
+        run: |
+          Rscript --vanilla -e 'invisible(parse(file="dashboard_ebola/app.R", encoding="UTF-8")); cat("app.R parse OK\n")'
+
+      - name: Deploy to shinyapps.io
+        run: |
+          Rscript --vanilla -e '
+            rsconnect::setAccountInfo(
+              name   = Sys.getenv("SHINYAPPS_ACCOUNT"),
+              token  = Sys.getenv("SHINYAPPS_TOKEN"),
+              secret = Sys.getenv("SHINYAPPS_SECRET")
+            )
+            app_dir  <- Sys.getenv("APP_DIR",  "dashboard_ebola")
+            app_name <- Sys.getenv("APP_NAME", "preis-ebola-drc-v2")
+
+            # Exclure shapefiles bruts et fichiers Rproj
+            all_files <- list.files(app_dir, recursive = TRUE)
+            excl <- c("\\.shp$","\\.shx$","\\.dbf$","\\.prj$","\\.sbn$",
+                      "\\.sbx$","\\.cpg$","\\.qpj$","\\.Rproj$","\\.git",
+                      "rsconnect/","\\.dupe\\.bak$")
+            keep <- all_files[!Reduce(`|`, lapply(excl, function(p) grepl(p, all_files)))]
+            cat("Fichiers a deployer : ", length(keep), "\n")
+
+            rsconnect::deployApp(
+              appDir       = app_dir,
+              appName      = app_name,
+              appFiles     = keep,
+              forceUpdate  = TRUE,
+              launch.browser = FALSE
+            )
+            cat("Deploiement termine : https://",
+                Sys.getenv("SHINYAPPS_ACCOUNT"),
+                ".shinyapps.io/", app_name, "/\n", sep="")
+          '

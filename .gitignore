@@ -126,3 +126,30 @@ outputs/analyse/
 /outputs/audit/
 /outputs/audit/*.txt
 .github/workflows/*.BACKUP*
+
+# ------------------------------------------------------------
+# PATCH 2026-07-15 P1: publier les CSV consolides d'outputs/analyse/
+# necessaire pour que le dashboard Shiny en ligne les lise.
+# Doit rester en fin de fichier pour surcharger les regles precedentes.
+# ------------------------------------------------------------
+!outputs/
+!outputs/audit/
+!outputs/audit/**
+!outputs/analyse/
+!outputs/analyse/*.csv
+
+# Continuer a bloquer les PNG/PDF/RDS lourds dans outputs/analyse/
+outputs/analyse/*.png
+outputs/analyse/*.pdf
+outputs/analyse/*.rds
+outputs/analyse/*.Rds
+
+# Blocages sensibles (redondance de securite)
+outputs/gap_tracker/
+outputs/dashboard_audit/
+outputs/figures/
+outputs/data/
+outputs/tables/
+outputs/validation/
+outputs/checks/
+outputs/qc/

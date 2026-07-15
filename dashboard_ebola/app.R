@@ -355,8 +355,20 @@ indic_present <- if (nrow(long_all))
 indic_choices <- setNames(indic_present, INDIC_LABELS[indic_present])
 
 # Dernier SitRep dispo
+# PATCH 2026-07-15: quand la serie temporelle est indisponible
+# (outputs/analyse/serie_temporelle_nationale.csv absent sur GitHub car
+# .gitignore bloque, ou pipeline consolide non lance), on tombait avant
+# sur un fallback hardcode "28" trompeur. On lit maintenant en secours
+# le max depuis PREIS_indicators_long.csv qui est toujours publie.
 last_sno <- if (nrow(serie_all)) max(serie_all$sitrep_no, na.rm=TRUE) else NA
 sno_choices <- if (nrow(serie_all)) sort(unique(serie_all$sitrep_no)) else integer()
+fallback_sno <- if (nrow(long_all) && "sitrep_no" %in% names(long_all)) {
+  suppressWarnings(max(long_all$sitrep_no, na.rm = TRUE))
+} else NA_integer_
+if (!is.finite(fallback_sno)) fallback_sno <- 1L
+fallback_choices <- if (nrow(long_all) && "sitrep_no" %in% names(long_all)) {
+  sort(unique(long_all$sitrep_no))
+} else integer()
 
 # Palette intensité (dégradé rouge épidémie)
 EBOLA_RED   <- "#C0392B"
@@ -376,9 +388,12 @@ ui <- dashboardPage(
     sidebarMenuOutput("dynamic_menu"),
     br(),
     sliderInput("sitrep", "SitRep (jusqu'à)",
-                min = if(length(sno_choices)) min(sno_choices) else 1,
-                max = if(length(sno_choices)) max(sno_choices) else 28,
-                value = if(!is.na(last_sno)) last_sno else 28, step = 1, sep = ""),
+                min = if(length(sno_choices)) min(sno_choices)
+                      else if(length(fallback_choices)) min(fallback_choices) else 1,
+                max = if(length(sno_choices)) max(sno_choices)
+                      else if(length(fallback_choices)) max(fallback_choices) else fallback_sno,
+                value = if(!is.na(last_sno)) last_sno else fallback_sno,
+                step = 1, sep = ""),
     selectInput("province", "Province",
                 choices = c("Toutes", sort(unique(zone_coords$province))),
                 selected = "Toutes"),
