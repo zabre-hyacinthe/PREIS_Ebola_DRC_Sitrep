@@ -1,3 +1,14 @@
 sitrep_no,indicator_code,pdf_value,inrb_value,diff,match
-30,cumulative_confirmed_cases,782,782,0,OK
-30,cumulative_deaths,181,181,0,OK
+2,cumulative_confirmed_cases,42,13,29,ECART_corrige_par_INRB
+4,cumulative_confirmed_cases,516,33,483,ECART_corrige_par_INRB
+4,cumulative_deaths,131,4,127,ECART_corrige_par_INRB
+5,cumulative_confirmed_cases,575,51,524,ECART_corrige_par_INRB
+5,cumulative_deaths,148,4,144,ECART_corrige_par_INRB
+6,cumulative_confirmed_cases,1881,64,1817,ECART_corrige_par_INRB
+6,cumulative_deaths,1881,6,1875,ECART_corrige_par_INRB
+56,cumulative_deaths,35,NA,NA,no_ref
+57,cumulative_deaths,35,NA,NA,no_ref
+58,cumulative_deaths,35,NA,NA,no_ref
+59,cumulative_confirmed_cases,26,NA,NA,no_ref
+59,cumulative_deaths,112,NA,NA,no_ref
+60,cumulative_confirmed_cases,26,NA,NA,no_ref

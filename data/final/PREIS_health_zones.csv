@@ -1,661 +1,788 @@
-sitrep_no,page,line_no,health_zone,confidence,evidence_line
-1,1,8,Bunia,high,"Zone de Santé touchée Mongbwalu, Bunia et Rwampara"
-1,1,8,Mongbwalu,high,"Zone de Santé touchée Mongbwalu, Bunia et Rwampara"
-1,1,8,Rwampara,high,"Zone de Santé touchée Mongbwalu, Bunia et Rwampara"
-4,1,8,Bunia,medium,"ITURI : Mongbwalu, Rwampara, Bunia, Nyankunde,NORD"
-4,1,8,Mongbwalu,medium,"ITURI : Mongbwalu, Rwampara, Bunia, Nyankunde,NORD"
-4,1,8,Nyankunde,medium,"ITURI : Mongbwalu, Rwampara, Bunia, Nyankunde,NORD"
-4,1,8,Rwampara,medium,"ITURI : Mongbwalu, Rwampara, Bunia, Nyankunde,NORD"
-4,1,10,Butembo,medium,"KIVU : Goma, Katwa et Butembo"
-4,1,10,Goma,medium,"KIVU : Goma, Katwa et Butembo"
-4,1,10,Katwa,medium,"KIVU : Goma, Katwa et Butembo"
-4,4,4,Bambu,medium,Bunia Rwampara Nyankunde Mongbwalu Nizi Lita Bambu Fataki Total
-4,4,4,Lita,medium,Bunia Rwampara Nyankunde Mongbwalu Nizi Lita Bambu Fataki Total
-4,4,4,Nizi,medium,Bunia Rwampara Nyankunde Mongbwalu Nizi Lita Bambu Fataki Total
-5,1,6,Bunia,medium,"ITURI : Mongbwalu, Rwampara, Bunia, Nyankunde,"
-5,1,6,Mongbwalu,medium,"ITURI : Mongbwalu, Rwampara, Bunia, Nyankunde,"
-5,1,6,Nyankunde,medium,"ITURI : Mongbwalu, Rwampara, Bunia, Nyankunde,"
-5,1,6,Rwampara,medium,"ITURI : Mongbwalu, Rwampara, Bunia, Nyankunde,"
-5,1,8,Butembo,medium,"NORD KIVU : Goma, Katwa et Butembo"
-5,1,8,Goma,medium,"NORD KIVU : Goma, Katwa et Butembo"
-5,1,8,Katwa,medium,"NORD KIVU : Goma, Katwa et Butembo"
-5,4,44,Bambu,high,"• Recherche active des cas de MVE : ZS Bunia, Bambu, Rwampara, Nyankunde"
-5,4,45,Mangala,medium,"• Investigation autour des alertes de MVE : ZS Bunia, Mongbwalu, Rwampara, Nyankunde, Kamanda, Mangala,"
-5,4,46,Aru,medium,Bambu et Aru
-6,1,4,Bunia,medium,"ITURI : Mongbwalu, Rwampara, Bunia, Nyankunde,"
-6,1,4,Mongbwalu,medium,"ITURI : Mongbwalu, Rwampara, Bunia, Nyankunde,"
-6,1,4,Nyankunde,medium,"ITURI : Mongbwalu, Rwampara, Bunia, Nyankunde,"
-6,1,4,Rwampara,medium,"ITURI : Mongbwalu, Rwampara, Bunia, Nyankunde,"
-6,1,6,Butembo,medium,"NORD KIVU : Goma, Katwa et Butembo"
-6,1,6,Goma,medium,"NORD KIVU : Goma, Katwa et Butembo"
-6,1,6,Katwa,medium,"NORD KIVU : Goma, Katwa et Butembo"
-6,1,30,Bambu,medium,Bambu 1 0 ND 1 128 0
-6,3,23,Beni,high,Division Provinciale de la Santé du Nord-Kivu (Beni) et Ituri (Bunia).
-6,4,1,Lita,medium,Logo Lita Nizi
-6,4,1,Logo,medium,Logo Lita Nizi
-6,4,1,Nizi,medium,Logo Lita Nizi
-6,4,3,Aungba,medium,Mangala Bambu Aungba Suivi des
-6,4,3,Mangala,medium,Mangala Bambu Aungba Suivi des
-6,4,5,Komanda,medium,Komanda Rwampara
-6,6,24,Aru,medium,ARU OMBAYI 253 253 253 253 0 0 0
-6,7,46,Kalunguta,medium,"Kalunguta, Kamango, Mabalako, Oicha, Museniene, Kayina, Alimbongo, Butembo ;"
-6,7,46,Oicha,medium,"Kalunguta, Kamango, Mabalako, Oicha, Museniene, Kayina, Alimbongo, Butembo ;"
-13,6,37,Logo,medium,▪ Actualisation des outils avec le logo du Ministère.
-15,1,9,Aru,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,"
-15,1,9,Aungba,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,"
-15,1,9,Bambu,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,"
-15,1,9,Bunia,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,"
-15,1,9,Damas,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,"
-15,1,9,Gety,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,"
-15,1,9,Kilo,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,"
-15,1,9,Komanda,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,"
-15,1,9,Lita,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,"
-15,1,9,Mangala,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,"
-15,1,10,Mongbwalu,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde et Rwampara"
-15,1,10,Nizi,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde et Rwampara"
-15,1,10,Nyankunde,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde et Rwampara"
-15,1,10,Rwampara,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde et Rwampara"
-15,1,11,Beni,medium,"(22) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni"
-15,1,11,Butembo,medium,"(22) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni"
-15,1,11,Goma,medium,"(22) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni"
-15,1,11,Kalunguta,medium,"(22) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni"
-15,1,11,Katwa,medium,"(22) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni"
-15,1,11,Kyondo,medium,"(22) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni"
-15,1,11,Oicha,medium,"(22) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni"
-15,1,12,Miti-Murhesa,medium,SUD-KIVU : Miti-Murhesa
-16,1,9,Aru,medium,"ITURI : Aru, Aungba, Bambu, Bunia, Damas, Gethy, Kilo, Komanda, Lita, Mangala,"
-16,1,9,Aungba,medium,"ITURI : Aru, Aungba, Bambu, Bunia, Damas, Gethy, Kilo, Komanda, Lita, Mangala,"
-16,1,9,Bambu,medium,"ITURI : Aru, Aungba, Bambu, Bunia, Damas, Gethy, Kilo, Komanda, Lita, Mangala,"
-16,1,9,Bunia,medium,"ITURI : Aru, Aungba, Bambu, Bunia, Damas, Gethy, Kilo, Komanda, Lita, Mangala,"
-16,1,9,Damas,medium,"ITURI : Aru, Aungba, Bambu, Bunia, Damas, Gethy, Kilo, Komanda, Lita, Mangala,"
-16,1,9,Gethy,medium,"ITURI : Aru, Aungba, Bambu, Bunia, Damas, Gethy, Kilo, Komanda, Lita, Mangala,"
-16,1,9,Kilo,medium,"ITURI : Aru, Aungba, Bambu, Bunia, Damas, Gethy, Kilo, Komanda, Lita, Mangala,"
-16,1,9,Komanda,medium,"ITURI : Aru, Aungba, Bambu, Bunia, Damas, Gethy, Kilo, Komanda, Lita, Mangala,"
-16,1,9,Lita,medium,"ITURI : Aru, Aungba, Bambu, Bunia, Damas, Gethy, Kilo, Komanda, Lita, Mangala,"
-16,1,9,Mangala,medium,"ITURI : Aru, Aungba, Bambu, Bunia, Damas, Gethy, Kilo, Komanda, Lita, Mangala,"
-16,1,10,Mongbwalu,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde et Rwampara"
-16,1,10,Nizi,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde et Rwampara"
-16,1,10,Nyankunde,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde et Rwampara"
-16,1,10,Rwampara,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde et Rwampara"
-16,1,11,Beni,medium,"(22) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni"
-16,1,11,Butembo,medium,"(22) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni"
-16,1,11,Goma,medium,"(22) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni"
-16,1,11,Kalunguta,medium,"(22) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni"
-16,1,11,Katwa,medium,"(22) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni"
-16,1,11,Kyondo,medium,"(22) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni"
-16,1,11,Oicha,medium,"(22) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni"
-16,1,12,Miti-Murhesa,medium,SUD-KIVU : Miti-Murhesa
-16,2,17,Gety,medium,"Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala, Mongbwalu, Nizi, Nyankunde et"
-17,1,9,Aru,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,"
-17,1,9,Aungba,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,"
-17,1,9,Bambu,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,"
-17,1,9,Bunia,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,"
-17,1,9,Damas,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,"
-17,1,9,Gety,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,"
-17,1,9,Kilo,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,"
-17,1,9,Komanda,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,"
-17,1,9,Lita,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,"
-17,1,9,Mangala,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,"
-17,1,10,Logo,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde, Rwampara et Logo"
-17,1,10,Mongbwalu,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde, Rwampara et Logo"
-17,1,10,Nizi,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde, Rwampara et Logo"
-17,1,10,Nyankunde,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde, Rwampara et Logo"
-17,1,10,Rwampara,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde, Rwampara et Logo"
-17,1,11,Beni,medium,"(23) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni"
-17,1,11,Butembo,medium,"(23) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni"
-17,1,11,Goma,medium,"(23) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni"
-17,1,11,Kalunguta,medium,"(23) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni"
-17,1,11,Katwa,medium,"(23) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni"
-17,1,11,Kyondo,medium,"(23) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni"
-17,1,11,Oicha,medium,"(23) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni"
-17,1,12,Miti-Murhesa,medium,SUD-KIVU : Miti-Murhesa
-17,8,11,Mambasa,medium,"calme, mais la présence de groupes armés dans les territoires de Djugu, Irumu et Mambasa continue de"
-18,1,9,Aru,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,"
-18,1,9,Aungba,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,"
-18,1,9,Bambu,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,"
-18,1,9,Bunia,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,"
-18,1,9,Damas,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,"
-18,1,9,Gety,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,"
-18,1,9,Kilo,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,"
-18,1,9,Komanda,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,"
-18,1,9,Lita,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,"
-18,1,9,Mambasa,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,"
-18,1,9,Mangala,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,"
-18,1,10,Logo,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde, Rwampara et Logo"
-18,1,10,Mongbwalu,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde, Rwampara et Logo"
-18,1,10,Nizi,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde, Rwampara et Logo"
-18,1,10,Nyankunde,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde, Rwampara et Logo"
-18,1,10,Rwampara,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde, Rwampara et Logo"
-18,1,11,Beni,medium,"(24) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni"
-18,1,11,Butembo,medium,"(24) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni"
-18,1,11,Goma,medium,"(24) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni"
-18,1,11,Kalunguta,medium,"(24) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni"
-18,1,11,Katwa,medium,"(24) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni"
-18,1,11,Kyondo,medium,"(24) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni"
-18,1,11,Oicha,medium,"(24) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni"
-18,1,12,Miti-Murhesa,medium,SUD-KIVU : Miti-Murhesa
-19,1,9,Aru,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,"
-19,1,9,Aungba,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,"
-19,1,9,Bambu,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,"
-19,1,9,Bunia,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,"
-19,1,9,Damas,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,"
-19,1,9,Gety,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,"
-19,1,9,Kilo,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,"
-19,1,9,Komanda,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,"
-19,1,9,Lita,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,"
-19,1,9,Mambasa,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,"
-19,1,9,Mangala,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,"
-19,1,10,Logo,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara et Logo"
-19,1,10,Mongbwalu,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara et Logo"
-19,1,10,Nizi,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara et Logo"
-19,1,10,Nyankunde,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara et Logo"
-19,1,10,Rimba,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara et Logo"
-19,1,10,Rwampara,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara et Logo"
-19,1,11,Beni,medium,"(25) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni"
-19,1,11,Butembo,medium,"(25) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni"
-19,1,11,Goma,medium,"(25) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni"
-19,1,11,Kalunguta,medium,"(25) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni"
-19,1,11,Katwa,medium,"(25) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni"
-19,1,11,Kyondo,medium,"(25) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni"
-19,1,11,Oicha,medium,"(25) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni"
-19,1,12,Miti-Murhesa,medium,SUD-KIVU : Miti-Murhesa
-20,1,9,Aru,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-20,1,9,Aungba,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-20,1,9,Bambu,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-20,1,9,Bunia,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-20,1,9,Damas,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-20,1,9,Gety,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-20,1,9,Kilo,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-20,1,9,Komanda,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-20,1,9,Lita,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-20,1,9,Logo,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-20,1,10,Mambasa,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-20,1,10,Mangala,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-20,1,10,Mongbwalu,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-20,1,10,Nizi,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-20,1,10,Nyankunde,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-20,1,10,Rimba,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-20,1,10,Rwampara,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-20,1,11,Beni,medium,"(25) • Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-20,1,11,Butembo,medium,"(25) • Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-20,1,11,Goma,medium,"(25) • Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-20,1,11,Kalunguta,medium,"(25) • Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-20,1,11,Katwa,medium,"(25) • Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-20,1,11,Kyondo,medium,"(25) • Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-20,1,11,Oicha,medium,"(25) • Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-20,1,12,Miti-Murhesa,medium,• Sud-Kivu (1/34): Miti-Murhesa
-21,1,9,Aru,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-21,1,9,Aungba,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-21,1,9,Bambu,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-21,1,9,Bunia,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-21,1,9,Damas,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-21,1,9,Gety,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-21,1,9,Kilo,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-21,1,9,Komanda,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-21,1,9,Lita,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-21,1,9,Logo,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-21,1,10,Mambasa,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-21,1,10,Mangala,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-21,1,10,Mongbwalu,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-21,1,10,Nizi,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-21,1,10,Nyankunde,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-21,1,10,Rimba,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-21,1,10,Rwampara,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-21,1,11,Beni,medium,"(25) • Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-21,1,11,Butembo,medium,"(25) • Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-21,1,11,Goma,medium,"(25) • Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-21,1,11,Kalunguta,medium,"(25) • Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-21,1,11,Katwa,medium,"(25) • Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-21,1,11,Kyondo,medium,"(25) • Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-21,1,11,Oicha,medium,"(25) • Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-21,1,12,Miti-Murhesa,medium,Sud-Kivu (1/34): Miti-Murhesa
-22,1,9,Aru,medium," Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-22,1,9,Aungba,medium," Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-22,1,9,Bambu,medium," Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-22,1,9,Bunia,medium," Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-22,1,9,Damas,medium," Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-22,1,9,Gety,medium," Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-22,1,9,Kilo,medium," Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-22,1,9,Komanda,medium," Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-22,1,9,Lita,medium," Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-22,1,9,Logo,medium," Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-22,1,10,Mambasa,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-22,1,10,Mangala,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-22,1,10,Mongbwalu,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-22,1,10,Nizi,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-22,1,10,Nyankunde,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-22,1,10,Rimba,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-22,1,10,Rwampara,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-22,1,11,Beni,medium,"(25)  Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-22,1,11,Butembo,medium,"(25)  Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-22,1,11,Goma,medium,"(25)  Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-22,1,11,Kalunguta,medium,"(25)  Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-22,1,11,Katwa,medium,"(25)  Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-22,1,11,Kyondo,medium,"(25)  Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-22,1,11,Oicha,medium,"(25)  Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-22,1,12,Miti-Murhesa,medium, Sud-Kivu (1/34): Miti-Murhesa
-23,1,9,Aru,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-23,1,9,Aungba,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-23,1,9,Bambu,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-23,1,9,Bunia,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-23,1,9,Damas,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-23,1,9,Gety,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-23,1,9,Kilo,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-23,1,9,Komanda,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-23,1,9,Lita,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-23,1,9,Logo,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-23,1,10,Mambasa,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-23,1,10,Mangala,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-23,1,10,Mongbwalu,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-23,1,10,Nizi,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-23,1,10,Nyankunde,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-23,1,10,Rimba,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-23,1,10,Rwampara,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-23,1,11,Beni,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-23,1,11,Butembo,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-23,1,11,Goma,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-23,1,11,Kalunguta,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-23,1,11,Katwa,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-23,1,11,Kyondo,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-23,1,11,Oicha,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-23,1,12,Miti-Murhesa,medium, Sud-Kivu (1/34) : Miti-Murhesa
-24,1,9,Aru,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-24,1,9,Aungba,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-24,1,9,Bambu,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-24,1,9,Bunia,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-24,1,9,Damas,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-24,1,9,Gety,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-24,1,9,Kilo,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-24,1,9,Komanda,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-24,1,9,Lita,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-24,1,9,Logo,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-24,1,10,Mambasa,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-24,1,10,Mangala,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-24,1,10,Mongbwalu,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-24,1,10,Nizi,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-24,1,10,Nyankunde,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-24,1,10,Rimba,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-24,1,10,Rwampara,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-24,1,11,Beni,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-24,1,11,Butembo,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-24,1,11,Goma,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-24,1,11,Kalunguta,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-24,1,11,Katwa,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-24,1,11,Kyondo,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-24,1,11,Oicha,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-24,1,12,Miti-Murhesa,medium, Sud-Kivu (1/34) : Miti-Murhesa
-25,1,9,Aru,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-25,1,9,Aungba,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-25,1,9,Bambu,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-25,1,9,Bunia,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-25,1,9,Damas,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-25,1,9,Gety,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-25,1,9,Kilo,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-25,1,9,Komanda,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-25,1,9,Lita,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-25,1,9,Logo,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-25,1,10,Mambasa,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-25,1,10,Mangala,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-25,1,10,Mongbwalu,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-25,1,10,Nizi,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-25,1,10,Nyankunde,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-25,1,10,Rimba,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-25,1,10,Rwampara,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara"
-25,1,11,Beni,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-25,1,11,Butembo,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-25,1,11,Goma,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-25,1,11,Kalunguta,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-25,1,11,Katwa,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-25,1,11,Kyondo,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-25,1,11,Oicha,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-25,1,12,Miti-Murhesa,medium, Sud-Kivu (1/34) : Miti-Murhesa
-26,1,9,Aru,medium,"• Ituri (18/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-26,1,9,Aungba,medium,"• Ituri (18/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-26,1,9,Bambu,medium,"• Ituri (18/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-26,1,9,Bunia,medium,"• Ituri (18/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-26,1,9,Damas,medium,"• Ituri (18/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-26,1,9,Gety,medium,"• Ituri (18/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-26,1,9,Kilo,medium,"• Ituri (18/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-26,1,9,Komanda,medium,"• Ituri (18/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-26,1,9,Lita,medium,"• Ituri (18/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-26,1,9,Logo,medium,"• Ituri (18/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-26,1,10,Mambasa,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia."
-26,1,10,Mangala,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia."
-26,1,10,Mongbwalu,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia."
-26,1,10,Nizi,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia."
-26,1,10,Nyankunde,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia."
-26,1,10,Rimba,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia."
-26,1,10,Rwampara,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia."
-26,1,11,Beni,medium,"(26) • Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-26,1,11,Butembo,medium,"(26) • Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-26,1,11,Goma,medium,"(26) • Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-26,1,11,Kalunguta,medium,"(26) • Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-26,1,11,Katwa,medium,"(26) • Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-26,1,11,Kyondo,medium,"(26) • Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-26,1,11,Oicha,medium,"(26) • Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha"
-26,1,12,Miti-Murhesa,medium,• Sud-Kivu (1/34) : Miti-Murhesa
-27,1,9,Aru,medium," Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-27,1,9,Aungba,medium," Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-27,1,9,Bambu,medium," Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-27,1,9,Bunia,medium," Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-27,1,9,Damas,medium," Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-27,1,9,Gety,medium," Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-27,1,9,Kilo,medium," Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-27,1,9,Komanda,medium," Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-27,1,9,Lita,medium," Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-27,1,9,Logo,medium," Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-27,1,10,Mambasa,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-27,1,10,Mangala,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-27,1,10,Mongbwalu,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-27,1,10,Nizi,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-27,1,10,Nyankunde,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-27,1,10,Rimba,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-27,1,10,Rwampara,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-27,1,12,Beni,medium,"(29)  Nord-Kivu (9/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha, Masereka"
-27,1,12,Butembo,medium,"(29)  Nord-Kivu (9/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha, Masereka"
-27,1,12,Goma,medium,"(29)  Nord-Kivu (9/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha, Masereka"
-27,1,12,Kalunguta,medium,"(29)  Nord-Kivu (9/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha, Masereka"
-27,1,12,Katwa,medium,"(29)  Nord-Kivu (9/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha, Masereka"
-27,1,12,Kyondo,medium,"(29)  Nord-Kivu (9/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha, Masereka"
-27,1,12,Oicha,medium,"(29)  Nord-Kivu (9/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha, Masereka"
-27,1,14,Miti-Murhesa,medium, Sud-Kivu (1/34) : Miti-Murhesa
-28,1,9,Aru,medium,"• Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-28,1,9,Aungba,medium,"• Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-28,1,9,Bambu,medium,"• Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-28,1,9,Bunia,medium,"• Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-28,1,9,Damas,medium,"• Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-28,1,9,Gety,medium,"• Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-28,1,9,Kilo,medium,"• Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-28,1,9,Komanda,medium,"• Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-28,1,9,Lita,medium,"• Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-28,1,9,Logo,medium,"• Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-28,1,10,Mambasa,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-28,1,10,Mangala,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-28,1,10,Mongbwalu,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-28,1,10,Nizi,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-28,1,10,Nyankunde,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-28,1,10,Rimba,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-28,1,10,Rwampara,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-28,1,12,Beni,medium,"(29) • Nord-Kivu (9/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha, Masereka"
-28,1,12,Butembo,medium,"(29) • Nord-Kivu (9/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha, Masereka"
-28,1,12,Goma,medium,"(29) • Nord-Kivu (9/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha, Masereka"
-28,1,12,Kalunguta,medium,"(29) • Nord-Kivu (9/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha, Masereka"
-28,1,12,Katwa,medium,"(29) • Nord-Kivu (9/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha, Masereka"
-28,1,12,Kyondo,medium,"(29) • Nord-Kivu (9/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha, Masereka"
-28,1,12,Oicha,medium,"(29) • Nord-Kivu (9/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha, Masereka"
-28,1,14,Miti-Murhesa,medium,• Sud-Kivu (1/34) : Miti-Murhesa
-30,1,9,Aru,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-30,1,9,Aungba,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-30,1,9,Bambu,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-30,1,9,Bunia,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-30,1,9,Damas,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-30,1,9,Gety,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-30,1,9,Kilo,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-30,1,9,Komanda,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-30,1,9,Lita,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-30,1,9,Logo,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-30,1,10,Mambasa,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-30,1,10,Mangala,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-30,1,10,Mongbwalu,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-30,1,10,Nizi,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-30,1,10,Nyankunde,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-30,1,10,Rimba,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-30,1,10,Rwampara,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-30,1,12,Beni,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-30,1,12,Butembo,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-30,1,12,Goma,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-30,1,12,Kalunguta,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-30,1,12,Katwa,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-30,1,12,Kyondo,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-30,1,12,Oicha,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-30,1,14,Miti-Murhesa,medium, Sud-Kivu (1/34) : Miti-Murhesa
-31,1,9,Aru,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-31,1,9,Aungba,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-31,1,9,Bambu,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-31,1,9,Bunia,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-31,1,9,Damas,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-31,1,9,Gety,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-31,1,9,Kilo,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-31,1,9,Komanda,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-31,1,9,Lita,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-31,1,9,Logo,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-31,1,10,Mambasa,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-31,1,10,Mangala,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-31,1,10,Mongbwalu,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-31,1,10,Nizi,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-31,1,10,Nyankunde,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-31,1,10,Rimba,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-31,1,10,Rwampara,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-31,1,12,Beni,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-31,1,12,Butembo,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-31,1,12,Goma,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-31,1,12,Kalunguta,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-31,1,12,Katwa,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-31,1,12,Kyondo,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-31,1,12,Oicha,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-31,1,14,Miti-Murhesa,medium, Sud-Kivu (1/34) : Miti-Murhesa
-32,1,9,Aru,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-32,1,9,Aungba,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-32,1,9,Bambu,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-32,1,9,Bunia,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-32,1,9,Damas,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-32,1,9,Gety,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-32,1,9,Kilo,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-32,1,9,Komanda,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-32,1,9,Lita,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-32,1,9,Logo,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-32,1,10,Mambasa,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-32,1,10,Mangala,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-32,1,10,Mongbwalu,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-32,1,10,Nizi,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-32,1,10,Nyankunde,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-32,1,10,Rimba,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-32,1,10,Rwampara,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-32,1,12,Beni,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-32,1,12,Butembo,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-32,1,12,Goma,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-32,1,12,Kalunguta,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-32,1,12,Katwa,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-32,1,12,Kyondo,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-32,1,12,Oicha,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-32,1,14,Miti-Murhesa,medium, Sud-Kivu (1/34) : Miti-Murhesa
-33,1,9,Aru,medium," Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-33,1,9,Aungba,medium," Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-33,1,9,Bambu,medium," Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-33,1,9,Bunia,medium," Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-33,1,9,Damas,medium," Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-33,1,9,Gety,medium," Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-33,1,9,Kilo,medium," Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-33,1,9,Komanda,medium," Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-33,1,9,Lita,medium," Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-33,1,9,Logo,medium," Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-33,1,10,Mambasa,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-33,1,10,Mangala,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-33,1,10,Mongbwalu,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-33,1,10,Nizi,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-33,1,10,Nyankunde,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-33,1,10,Rimba,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-33,1,10,Rwampara,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-33,1,12,Beni,medium,"(33)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-33,1,12,Butembo,medium,"(33)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-33,1,12,Goma,medium,"(33)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-33,1,12,Kalunguta,medium,"(33)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-33,1,12,Katwa,medium,"(33)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-33,1,12,Kyondo,medium,"(33)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-33,1,12,Oicha,medium,"(33)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-33,1,14,Miti-Murhesa,medium, Sud-Kivu (1/34) : Miti-Murhesa
-34,1,9,Aru,medium,"• Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-34,1,9,Aungba,medium,"• Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-34,1,9,Bambu,medium,"• Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-34,1,9,Bunia,medium,"• Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-34,1,9,Damas,medium,"• Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-34,1,9,Gety,medium,"• Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-34,1,9,Kilo,medium,"• Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-34,1,9,Komanda,medium,"• Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-34,1,9,Lita,medium,"• Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-34,1,9,Logo,medium,"• Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,"
-34,1,10,Mambasa,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-34,1,10,Mangala,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-34,1,10,Mongbwalu,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-34,1,10,Nizi,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-34,1,10,Nyankunde,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-34,1,10,Rimba,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-34,1,10,Rwampara,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-34,1,12,Beni,medium,"(33) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-34,1,12,Butembo,medium,"(33) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-34,1,12,Goma,medium,"(33) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-34,1,12,Kalunguta,medium,"(33) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-34,1,12,Katwa,medium,"(33) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-34,1,12,Kyondo,medium,"(33) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-34,1,12,Oicha,medium,"(33) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-34,1,14,Miti-Murhesa,medium,• Sud-Kivu (1/34) : Miti-Murhesa
-35,1,9,Aru,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-35,1,9,Aungba,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-35,1,9,Bambu,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-35,1,9,Bunia,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-35,1,9,Damas,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-35,1,9,Gety,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-35,1,9,Kilo,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-35,1,9,Komanda,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-35,1,9,Lita,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-35,1,10,Logo,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-35,1,10,Mambasa,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-35,1,10,Mangala,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-35,1,10,Mongbwalu,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-35,1,10,Nizi,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-35,1,10,Nyankunde,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-35,1,10,Rimba,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-35,1,10,Rwampara,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-35,1,12,Beni,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-35,1,12,Butembo,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-35,1,12,Goma,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-35,1,12,Kalunguta,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-35,1,12,Katwa,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-35,1,12,Kyondo,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-35,1,12,Oicha,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-35,1,14,Miti-Murhesa,medium,• Sud-Kivu (1/34) : Miti-Murhesa
-36,1,9,Aru,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-36,1,9,Aungba,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-36,1,9,Bambu,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-36,1,9,Bunia,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-36,1,9,Damas,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-36,1,9,Gety,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-36,1,9,Kilo,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-36,1,9,Komanda,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-36,1,9,Lita,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-36,1,10,Logo,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-36,1,10,Mambasa,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-36,1,10,Mangala,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-36,1,10,Mongbwalu,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-36,1,10,Nizi,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-36,1,10,Nyankunde,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-36,1,10,Rimba,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-36,1,10,Rwampara,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-36,1,12,Beni,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-36,1,12,Butembo,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-36,1,12,Goma,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-36,1,12,Kalunguta,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-36,1,12,Katwa,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-36,1,12,Kyondo,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-36,1,12,Oicha,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-36,1,14,Miti-Murhesa,medium,• Sud-Kivu (1/34) : Miti-Murhesa
-37,1,9,Aru,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-37,1,9,Aungba,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-37,1,9,Bambu,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-37,1,9,Bunia,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-37,1,9,Damas,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-37,1,9,Gety,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-37,1,9,Kilo,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-37,1,9,Komanda,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-37,1,9,Lita,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-37,1,10,Logo,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-37,1,10,Mambasa,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-37,1,10,Mangala,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-37,1,10,Mongbwalu,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-37,1,10,Nizi,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-37,1,10,Nyankunde,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-37,1,10,Rimba,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-37,1,10,Rwampara,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-37,1,12,Beni,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-37,1,12,Butembo,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-37,1,12,Goma,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-37,1,12,Kalunguta,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-37,1,12,Katwa,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-37,1,12,Kyondo,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-37,1,12,Oicha,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-37,1,14,Miti-Murhesa,medium,• Sud-Kivu (1/34) : Miti-Murhesa
-38,1,9,Aru,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-38,1,9,Aungba,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-38,1,9,Bambu,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-38,1,9,Bunia,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-38,1,9,Damas,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-38,1,9,Gety,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-38,1,9,Kilo,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-38,1,9,Komanda,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-38,1,9,Lita,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-38,1,10,Logo,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-38,1,10,Mambasa,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-38,1,10,Mangala,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-38,1,10,Mongbwalu,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-38,1,10,Nizi,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-38,1,10,Nyankunde,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-38,1,10,Rimba,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-38,1,10,Rwampara,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-38,1,12,Beni,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-38,1,12,Butembo,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-38,1,12,Goma,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-38,1,12,Kalunguta,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-38,1,12,Katwa,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-38,1,12,Kyondo,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-38,1,12,Oicha,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-38,1,14,Miti-Murhesa,medium,• Sud-Kivu (1/34) : Miti-Murhesa
-39,1,9,Aru,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-39,1,9,Aungba,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-39,1,9,Bambu,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-39,1,9,Bunia,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-39,1,9,Damas,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-39,1,9,Gety,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-39,1,9,Kilo,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-39,1,9,Komanda,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-39,1,9,Lita,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-39,1,10,Logo,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-39,1,10,Mambasa,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-39,1,10,Mangala,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-39,1,10,Mongbwalu,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-39,1,10,Nizi,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-39,1,10,Nyankunde,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-39,1,10,Rimba,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-39,1,10,Rwampara,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-39,1,12,Beni,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-39,1,12,Butembo,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-39,1,12,Goma,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-39,1,12,Kalunguta,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-39,1,12,Katwa,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-39,1,12,Kyondo,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-39,1,12,Oicha,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-39,1,14,Miti-Murhesa,medium,• Sud-Kivu (1/34) : Miti-Murhesa
-40,1,9,Aru,medium," Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-40,1,9,Aungba,medium," Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-40,1,9,Bambu,medium," Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-40,1,9,Bunia,medium," Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-40,1,9,Damas,medium," Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-40,1,9,Gety,medium," Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-40,1,9,Kilo,medium," Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-40,1,9,Komanda,medium," Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-40,1,9,Lita,medium," Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,"
-40,1,10,Logo,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-40,1,10,Mambasa,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-40,1,10,Mangala,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-40,1,10,Mongbwalu,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-40,1,10,Nizi,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-40,1,10,Nyankunde,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-40,1,10,Rimba,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-40,1,10,Rwampara,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,"
-40,1,12,Beni,medium,"(34)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-40,1,12,Butembo,medium,"(34)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-40,1,12,Goma,medium,"(34)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-40,1,12,Kalunguta,medium,"(34)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-40,1,12,Katwa,medium,"(34)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-40,1,12,Kyondo,medium,"(34)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-40,1,12,Oicha,medium,"(34)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,"
-40,1,14,Miti-Murhesa,medium, Sud-Kivu (1/34) : Miti-Murhesa
+sitrep_no,page,line_no,health_zone,confidence,evidence_line,rule
+1,1,8,Bunia,high,"Zone de Santé touchée Mongbwalu, Bunia et Rwampara",NA
+1,1,8,Mongbwalu,high,"Zone de Santé touchée Mongbwalu, Bunia et Rwampara",NA
+1,1,8,Rwampara,high,"Zone de Santé touchée Mongbwalu, Bunia et Rwampara",NA
+4,1,8,Bunia,medium,"ITURI : Mongbwalu, Rwampara, Bunia, Nyankunde,NORD",NA
+4,1,8,Mongbwalu,medium,"ITURI : Mongbwalu, Rwampara, Bunia, Nyankunde,NORD",NA
+4,1,8,Nyankunde,medium,"ITURI : Mongbwalu, Rwampara, Bunia, Nyankunde,NORD",NA
+4,1,8,Rwampara,medium,"ITURI : Mongbwalu, Rwampara, Bunia, Nyankunde,NORD",NA
+4,1,10,Butembo,medium,"KIVU : Goma, Katwa et Butembo",NA
+4,1,10,Goma,medium,"KIVU : Goma, Katwa et Butembo",NA
+4,1,10,Katwa,medium,"KIVU : Goma, Katwa et Butembo",NA
+4,4,4,Bambu,medium,Bunia Rwampara Nyankunde Mongbwalu Nizi Lita Bambu Fataki Total,NA
+4,4,4,Lita,medium,Bunia Rwampara Nyankunde Mongbwalu Nizi Lita Bambu Fataki Total,NA
+4,4,4,Nizi,medium,Bunia Rwampara Nyankunde Mongbwalu Nizi Lita Bambu Fataki Total,NA
+5,1,6,Bunia,medium,"ITURI : Mongbwalu, Rwampara, Bunia, Nyankunde,",NA
+5,1,6,Mongbwalu,medium,"ITURI : Mongbwalu, Rwampara, Bunia, Nyankunde,",NA
+5,1,6,Nyankunde,medium,"ITURI : Mongbwalu, Rwampara, Bunia, Nyankunde,",NA
+5,1,6,Rwampara,medium,"ITURI : Mongbwalu, Rwampara, Bunia, Nyankunde,",NA
+5,1,8,Butembo,medium,"NORD KIVU : Goma, Katwa et Butembo",NA
+5,1,8,Goma,medium,"NORD KIVU : Goma, Katwa et Butembo",NA
+5,1,8,Katwa,medium,"NORD KIVU : Goma, Katwa et Butembo",NA
+5,4,44,Bambu,high,"• Recherche active des cas de MVE : ZS Bunia, Bambu, Rwampara, Nyankunde",NA
+5,4,45,Mangala,medium,"• Investigation autour des alertes de MVE : ZS Bunia, Mongbwalu, Rwampara, Nyankunde, Kamanda, Mangala,",NA
+5,4,46,Aru,medium,Bambu et Aru,NA
+6,1,4,Bunia,medium,"ITURI : Mongbwalu, Rwampara, Bunia, Nyankunde,",NA
+6,1,4,Mongbwalu,medium,"ITURI : Mongbwalu, Rwampara, Bunia, Nyankunde,",NA
+6,1,4,Nyankunde,medium,"ITURI : Mongbwalu, Rwampara, Bunia, Nyankunde,",NA
+6,1,4,Rwampara,medium,"ITURI : Mongbwalu, Rwampara, Bunia, Nyankunde,",NA
+6,1,6,Butembo,medium,"NORD KIVU : Goma, Katwa et Butembo",NA
+6,1,6,Goma,medium,"NORD KIVU : Goma, Katwa et Butembo",NA
+6,1,6,Katwa,medium,"NORD KIVU : Goma, Katwa et Butembo",NA
+6,1,30,Bambu,medium,Bambu 1 0 ND 1 128 0,NA
+6,3,23,Beni,high,Division Provinciale de la Santé du Nord-Kivu (Beni) et Ituri (Bunia).,NA
+6,4,1,Lita,medium,Logo Lita Nizi,NA
+6,4,1,Logo,medium,Logo Lita Nizi,NA
+6,4,1,Nizi,medium,Logo Lita Nizi,NA
+6,4,3,Aungba,medium,Mangala Bambu Aungba Suivi des,NA
+6,4,3,Mangala,medium,Mangala Bambu Aungba Suivi des,NA
+6,4,5,Komanda,medium,Komanda Rwampara,NA
+6,6,24,Aru,medium,ARU OMBAYI 253 253 253 253 0 0 0,NA
+6,7,46,Kalunguta,medium,"Kalunguta, Kamango, Mabalako, Oicha, Museniene, Kayina, Alimbongo, Butembo ;",NA
+6,7,46,Oicha,medium,"Kalunguta, Kamango, Mabalako, Oicha, Museniene, Kayina, Alimbongo, Butembo ;",NA
+13,6,37,Logo,medium,▪ Actualisation des outils avec le logo du Ministère.,NA
+15,1,9,Aru,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,",NA
+15,1,9,Aungba,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,",NA
+15,1,9,Bambu,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,",NA
+15,1,9,Bunia,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,",NA
+15,1,9,Damas,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,",NA
+15,1,9,Gety,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,",NA
+15,1,9,Kilo,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,",NA
+15,1,9,Komanda,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,",NA
+15,1,9,Lita,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,",NA
+15,1,9,Mangala,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,",NA
+15,1,10,Mongbwalu,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde et Rwampara",NA
+15,1,10,Nizi,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde et Rwampara",NA
+15,1,10,Nyankunde,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde et Rwampara",NA
+15,1,10,Rwampara,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde et Rwampara",NA
+15,1,11,Beni,medium,"(22) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni",NA
+15,1,11,Butembo,medium,"(22) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni",NA
+15,1,11,Goma,medium,"(22) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni",NA
+15,1,11,Kalunguta,medium,"(22) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni",NA
+15,1,11,Katwa,medium,"(22) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni",NA
+15,1,11,Kyondo,medium,"(22) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni",NA
+15,1,11,Oicha,medium,"(22) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni",NA
+15,1,12,Miti-Murhesa,medium,SUD-KIVU : Miti-Murhesa,NA
+16,1,9,Aru,medium,"ITURI : Aru, Aungba, Bambu, Bunia, Damas, Gethy, Kilo, Komanda, Lita, Mangala,",NA
+16,1,9,Aungba,medium,"ITURI : Aru, Aungba, Bambu, Bunia, Damas, Gethy, Kilo, Komanda, Lita, Mangala,",NA
+16,1,9,Bambu,medium,"ITURI : Aru, Aungba, Bambu, Bunia, Damas, Gethy, Kilo, Komanda, Lita, Mangala,",NA
+16,1,9,Bunia,medium,"ITURI : Aru, Aungba, Bambu, Bunia, Damas, Gethy, Kilo, Komanda, Lita, Mangala,",NA
+16,1,9,Damas,medium,"ITURI : Aru, Aungba, Bambu, Bunia, Damas, Gethy, Kilo, Komanda, Lita, Mangala,",NA
+16,1,9,Gethy,medium,"ITURI : Aru, Aungba, Bambu, Bunia, Damas, Gethy, Kilo, Komanda, Lita, Mangala,",NA
+16,1,9,Kilo,medium,"ITURI : Aru, Aungba, Bambu, Bunia, Damas, Gethy, Kilo, Komanda, Lita, Mangala,",NA
+16,1,9,Komanda,medium,"ITURI : Aru, Aungba, Bambu, Bunia, Damas, Gethy, Kilo, Komanda, Lita, Mangala,",NA
+16,1,9,Lita,medium,"ITURI : Aru, Aungba, Bambu, Bunia, Damas, Gethy, Kilo, Komanda, Lita, Mangala,",NA
+16,1,9,Mangala,medium,"ITURI : Aru, Aungba, Bambu, Bunia, Damas, Gethy, Kilo, Komanda, Lita, Mangala,",NA
+16,1,10,Mongbwalu,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde et Rwampara",NA
+16,1,10,Nizi,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde et Rwampara",NA
+16,1,10,Nyankunde,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde et Rwampara",NA
+16,1,10,Rwampara,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde et Rwampara",NA
+16,1,11,Beni,medium,"(22) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni",NA
+16,1,11,Butembo,medium,"(22) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni",NA
+16,1,11,Goma,medium,"(22) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni",NA
+16,1,11,Kalunguta,medium,"(22) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni",NA
+16,1,11,Katwa,medium,"(22) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni",NA
+16,1,11,Kyondo,medium,"(22) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni",NA
+16,1,11,Oicha,medium,"(22) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni",NA
+16,1,12,Miti-Murhesa,medium,SUD-KIVU : Miti-Murhesa,NA
+16,2,17,Gety,medium,"Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala, Mongbwalu, Nizi, Nyankunde et",NA
+17,1,9,Aru,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,",NA
+17,1,9,Aungba,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,",NA
+17,1,9,Bambu,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,",NA
+17,1,9,Bunia,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,",NA
+17,1,9,Damas,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,",NA
+17,1,9,Gety,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,",NA
+17,1,9,Kilo,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,",NA
+17,1,9,Komanda,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,",NA
+17,1,9,Lita,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,",NA
+17,1,9,Mangala,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mangala,",NA
+17,1,10,Logo,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde, Rwampara et Logo",NA
+17,1,10,Mongbwalu,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde, Rwampara et Logo",NA
+17,1,10,Nizi,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde, Rwampara et Logo",NA
+17,1,10,Nyankunde,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde, Rwampara et Logo",NA
+17,1,10,Rwampara,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde, Rwampara et Logo",NA
+17,1,11,Beni,medium,"(23) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni",NA
+17,1,11,Butembo,medium,"(23) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni",NA
+17,1,11,Goma,medium,"(23) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni",NA
+17,1,11,Kalunguta,medium,"(23) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni",NA
+17,1,11,Katwa,medium,"(23) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni",NA
+17,1,11,Kyondo,medium,"(23) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni",NA
+17,1,11,Oicha,medium,"(23) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni",NA
+17,1,12,Miti-Murhesa,medium,SUD-KIVU : Miti-Murhesa,NA
+17,8,11,Mambasa,medium,"calme, mais la présence de groupes armés dans les territoires de Djugu, Irumu et Mambasa continue de",NA
+18,1,9,Aru,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,",NA
+18,1,9,Aungba,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,",NA
+18,1,9,Bambu,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,",NA
+18,1,9,Bunia,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,",NA
+18,1,9,Damas,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,",NA
+18,1,9,Gety,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,",NA
+18,1,9,Kilo,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,",NA
+18,1,9,Komanda,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,",NA
+18,1,9,Lita,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,",NA
+18,1,9,Mambasa,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,",NA
+18,1,9,Mangala,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,",NA
+18,1,10,Logo,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde, Rwampara et Logo",NA
+18,1,10,Mongbwalu,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde, Rwampara et Logo",NA
+18,1,10,Nizi,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde, Rwampara et Logo",NA
+18,1,10,Nyankunde,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde, Rwampara et Logo",NA
+18,1,10,Rwampara,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde, Rwampara et Logo",NA
+18,1,11,Beni,medium,"(24) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni",NA
+18,1,11,Butembo,medium,"(24) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni",NA
+18,1,11,Goma,medium,"(24) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni",NA
+18,1,11,Kalunguta,medium,"(24) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni",NA
+18,1,11,Katwa,medium,"(24) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni",NA
+18,1,11,Kyondo,medium,"(24) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni",NA
+18,1,11,Oicha,medium,"(24) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni",NA
+18,1,12,Miti-Murhesa,medium,SUD-KIVU : Miti-Murhesa,NA
+19,1,9,Aru,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,",NA
+19,1,9,Aungba,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,",NA
+19,1,9,Bambu,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,",NA
+19,1,9,Bunia,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,",NA
+19,1,9,Damas,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,",NA
+19,1,9,Gety,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,",NA
+19,1,9,Kilo,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,",NA
+19,1,9,Komanda,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,",NA
+19,1,9,Lita,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,",NA
+19,1,9,Mambasa,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,",NA
+19,1,9,Mangala,medium,"ITURI : Aru, Aungba, Bambu, Damas, Bunia, Gety, Kilo, Komanda, Lita, Mambasa, Mangala,",NA
+19,1,10,Logo,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara et Logo",NA
+19,1,10,Mongbwalu,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara et Logo",NA
+19,1,10,Nizi,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara et Logo",NA
+19,1,10,Nyankunde,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara et Logo",NA
+19,1,10,Rimba,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara et Logo",NA
+19,1,10,Rwampara,high,"Zones de Santé touchées Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara et Logo",NA
+19,1,11,Beni,medium,"(25) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni",NA
+19,1,11,Butembo,medium,"(25) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni",NA
+19,1,11,Goma,medium,"(25) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni",NA
+19,1,11,Kalunguta,medium,"(25) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni",NA
+19,1,11,Katwa,medium,"(25) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni",NA
+19,1,11,Kyondo,medium,"(25) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni",NA
+19,1,11,Oicha,medium,"(25) NORD-KIVU : Butembo, Goma, Oicha, Kalunguta, Katwa, Kyondo et Beni",NA
+19,1,12,Miti-Murhesa,medium,SUD-KIVU : Miti-Murhesa,NA
+20,1,9,Aru,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+20,1,9,Aungba,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+20,1,9,Bambu,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+20,1,9,Bunia,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+20,1,9,Damas,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+20,1,9,Gety,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+20,1,9,Kilo,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+20,1,9,Komanda,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+20,1,9,Lita,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+20,1,9,Logo,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+20,1,10,Mambasa,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+20,1,10,Mangala,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+20,1,10,Mongbwalu,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+20,1,10,Nizi,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+20,1,10,Nyankunde,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+20,1,10,Rimba,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+20,1,10,Rwampara,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+20,1,11,Beni,medium,"(25) • Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+20,1,11,Butembo,medium,"(25) • Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+20,1,11,Goma,medium,"(25) • Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+20,1,11,Kalunguta,medium,"(25) • Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+20,1,11,Katwa,medium,"(25) • Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+20,1,11,Kyondo,medium,"(25) • Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+20,1,11,Oicha,medium,"(25) • Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+20,1,12,Miti-Murhesa,medium,• Sud-Kivu (1/34): Miti-Murhesa,NA
+21,1,9,Aru,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+21,1,9,Aungba,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+21,1,9,Bambu,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+21,1,9,Bunia,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+21,1,9,Damas,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+21,1,9,Gety,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+21,1,9,Kilo,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+21,1,9,Komanda,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+21,1,9,Lita,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+21,1,9,Logo,medium,"• Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+21,1,10,Mambasa,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+21,1,10,Mangala,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+21,1,10,Mongbwalu,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+21,1,10,Nizi,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+21,1,10,Nyankunde,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+21,1,10,Rimba,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+21,1,10,Rwampara,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+21,1,11,Beni,medium,"(25) • Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+21,1,11,Butembo,medium,"(25) • Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+21,1,11,Goma,medium,"(25) • Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+21,1,11,Kalunguta,medium,"(25) • Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+21,1,11,Katwa,medium,"(25) • Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+21,1,11,Kyondo,medium,"(25) • Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+21,1,11,Oicha,medium,"(25) • Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+21,1,12,Miti-Murhesa,medium,Sud-Kivu (1/34): Miti-Murhesa,NA
+22,1,9,Aru,medium," Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+22,1,9,Aungba,medium," Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+22,1,9,Bambu,medium," Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+22,1,9,Bunia,medium," Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+22,1,9,Damas,medium," Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+22,1,9,Gety,medium," Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+22,1,9,Kilo,medium," Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+22,1,9,Komanda,medium," Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+22,1,9,Lita,medium," Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+22,1,9,Logo,medium," Ituri (17/36): Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+22,1,10,Mambasa,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+22,1,10,Mangala,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+22,1,10,Mongbwalu,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+22,1,10,Nizi,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+22,1,10,Nyankunde,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+22,1,10,Rimba,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+22,1,10,Rwampara,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+22,1,11,Beni,medium,"(25)  Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+22,1,11,Butembo,medium,"(25)  Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+22,1,11,Goma,medium,"(25)  Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+22,1,11,Kalunguta,medium,"(25)  Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+22,1,11,Katwa,medium,"(25)  Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+22,1,11,Kyondo,medium,"(25)  Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+22,1,11,Oicha,medium,"(25)  Nord-Kivu (7/34): Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+22,1,12,Miti-Murhesa,medium, Sud-Kivu (1/34): Miti-Murhesa,NA
+23,1,9,Aru,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+23,1,9,Aungba,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+23,1,9,Bambu,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+23,1,9,Bunia,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+23,1,9,Damas,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+23,1,9,Gety,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+23,1,9,Kilo,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+23,1,9,Komanda,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+23,1,9,Lita,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+23,1,9,Logo,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+23,1,10,Mambasa,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+23,1,10,Mangala,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+23,1,10,Mongbwalu,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+23,1,10,Nizi,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+23,1,10,Nyankunde,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+23,1,10,Rimba,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+23,1,10,Rwampara,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+23,1,11,Beni,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+23,1,11,Butembo,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+23,1,11,Goma,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+23,1,11,Kalunguta,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+23,1,11,Katwa,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+23,1,11,Kyondo,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+23,1,11,Oicha,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+23,1,12,Miti-Murhesa,medium, Sud-Kivu (1/34) : Miti-Murhesa,NA
+24,1,9,Aru,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+24,1,9,Aungba,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+24,1,9,Bambu,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+24,1,9,Bunia,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+24,1,9,Damas,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+24,1,9,Gety,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+24,1,9,Kilo,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+24,1,9,Komanda,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+24,1,9,Lita,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+24,1,9,Logo,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+24,1,10,Mambasa,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+24,1,10,Mangala,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+24,1,10,Mongbwalu,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+24,1,10,Nizi,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+24,1,10,Nyankunde,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+24,1,10,Rimba,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+24,1,10,Rwampara,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+24,1,11,Beni,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+24,1,11,Butembo,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+24,1,11,Goma,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+24,1,11,Kalunguta,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+24,1,11,Katwa,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+24,1,11,Kyondo,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+24,1,11,Oicha,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+24,1,12,Miti-Murhesa,medium, Sud-Kivu (1/34) : Miti-Murhesa,NA
+25,1,9,Aru,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+25,1,9,Aungba,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+25,1,9,Bambu,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+25,1,9,Bunia,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+25,1,9,Damas,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+25,1,9,Gety,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+25,1,9,Kilo,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+25,1,9,Komanda,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+25,1,9,Lita,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+25,1,9,Logo,medium," Ituri (17/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+25,1,10,Mambasa,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+25,1,10,Mangala,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+25,1,10,Mongbwalu,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+25,1,10,Nizi,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+25,1,10,Nyankunde,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+25,1,10,Rimba,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+25,1,10,Rwampara,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara",NA
+25,1,11,Beni,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+25,1,11,Butembo,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+25,1,11,Goma,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+25,1,11,Kalunguta,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+25,1,11,Katwa,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+25,1,11,Kyondo,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+25,1,11,Oicha,medium,"(25)  Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+25,1,12,Miti-Murhesa,medium, Sud-Kivu (1/34) : Miti-Murhesa,NA
+26,1,9,Aru,medium,"• Ituri (18/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+26,1,9,Aungba,medium,"• Ituri (18/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+26,1,9,Bambu,medium,"• Ituri (18/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+26,1,9,Bunia,medium,"• Ituri (18/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+26,1,9,Damas,medium,"• Ituri (18/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+26,1,9,Gety,medium,"• Ituri (18/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+26,1,9,Kilo,medium,"• Ituri (18/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+26,1,9,Komanda,medium,"• Ituri (18/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+26,1,9,Lita,medium,"• Ituri (18/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+26,1,9,Logo,medium,"• Ituri (18/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+26,1,10,Mambasa,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia.",NA
+26,1,10,Mangala,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia.",NA
+26,1,10,Mongbwalu,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia.",NA
+26,1,10,Nizi,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia.",NA
+26,1,10,Nyankunde,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia.",NA
+26,1,10,Rimba,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia.",NA
+26,1,10,Rwampara,high,"Zones de Santé touchées Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia.",NA
+26,1,11,Beni,medium,"(26) • Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+26,1,11,Butembo,medium,"(26) • Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+26,1,11,Goma,medium,"(26) • Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+26,1,11,Kalunguta,medium,"(26) • Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+26,1,11,Katwa,medium,"(26) • Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+26,1,11,Kyondo,medium,"(26) • Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+26,1,11,Oicha,medium,"(26) • Nord-Kivu (7/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha",NA
+26,1,12,Miti-Murhesa,medium,• Sud-Kivu (1/34) : Miti-Murhesa,NA
+27,1,9,Aru,medium," Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+27,1,9,Aungba,medium," Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+27,1,9,Bambu,medium," Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+27,1,9,Bunia,medium," Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+27,1,9,Damas,medium," Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+27,1,9,Gety,medium," Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+27,1,9,Kilo,medium," Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+27,1,9,Komanda,medium," Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+27,1,9,Lita,medium," Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+27,1,9,Logo,medium," Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+27,1,10,Mambasa,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+27,1,10,Mangala,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+27,1,10,Mongbwalu,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+27,1,10,Nizi,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+27,1,10,Nyankunde,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+27,1,10,Rimba,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+27,1,10,Rwampara,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+27,1,12,Beni,medium,"(29)  Nord-Kivu (9/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha, Masereka",NA
+27,1,12,Butembo,medium,"(29)  Nord-Kivu (9/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha, Masereka",NA
+27,1,12,Goma,medium,"(29)  Nord-Kivu (9/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha, Masereka",NA
+27,1,12,Kalunguta,medium,"(29)  Nord-Kivu (9/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha, Masereka",NA
+27,1,12,Katwa,medium,"(29)  Nord-Kivu (9/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha, Masereka",NA
+27,1,12,Kyondo,medium,"(29)  Nord-Kivu (9/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha, Masereka",NA
+27,1,12,Oicha,medium,"(29)  Nord-Kivu (9/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha, Masereka",NA
+27,1,14,Miti-Murhesa,medium, Sud-Kivu (1/34) : Miti-Murhesa,NA
+28,1,9,Aru,medium,"• Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+28,1,9,Aungba,medium,"• Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+28,1,9,Bambu,medium,"• Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+28,1,9,Bunia,medium,"• Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+28,1,9,Damas,medium,"• Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+28,1,9,Gety,medium,"• Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+28,1,9,Kilo,medium,"• Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+28,1,9,Komanda,medium,"• Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+28,1,9,Lita,medium,"• Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+28,1,9,Logo,medium,"• Ituri (19/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+28,1,10,Mambasa,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+28,1,10,Mangala,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+28,1,10,Mongbwalu,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+28,1,10,Nizi,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+28,1,10,Nyankunde,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+28,1,10,Rimba,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+28,1,10,Rwampara,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+28,1,12,Beni,medium,"(29) • Nord-Kivu (9/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha, Masereka",NA
+28,1,12,Butembo,medium,"(29) • Nord-Kivu (9/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha, Masereka",NA
+28,1,12,Goma,medium,"(29) • Nord-Kivu (9/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha, Masereka",NA
+28,1,12,Kalunguta,medium,"(29) • Nord-Kivu (9/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha, Masereka",NA
+28,1,12,Katwa,medium,"(29) • Nord-Kivu (9/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha, Masereka",NA
+28,1,12,Kyondo,medium,"(29) • Nord-Kivu (9/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha, Masereka",NA
+28,1,12,Oicha,medium,"(29) • Nord-Kivu (9/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha, Masereka",NA
+28,1,14,Miti-Murhesa,medium,• Sud-Kivu (1/34) : Miti-Murhesa,NA
+30,1,9,Aru,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+30,1,9,Aungba,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+30,1,9,Bambu,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+30,1,9,Bunia,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+30,1,9,Damas,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+30,1,9,Gety,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+30,1,9,Kilo,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+30,1,9,Komanda,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+30,1,9,Lita,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+30,1,9,Logo,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+30,1,10,Mambasa,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+30,1,10,Mangala,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+30,1,10,Mongbwalu,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+30,1,10,Nizi,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+30,1,10,Nyankunde,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+30,1,10,Rimba,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+30,1,10,Rwampara,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+30,1,12,Beni,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+30,1,12,Butembo,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+30,1,12,Goma,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+30,1,12,Kalunguta,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+30,1,12,Katwa,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+30,1,12,Kyondo,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+30,1,12,Oicha,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+30,1,14,Miti-Murhesa,medium, Sud-Kivu (1/34) : Miti-Murhesa,NA
+31,1,9,Aru,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+31,1,9,Aungba,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+31,1,9,Bambu,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+31,1,9,Bunia,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+31,1,9,Damas,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+31,1,9,Gety,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+31,1,9,Kilo,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+31,1,9,Komanda,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+31,1,9,Lita,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+31,1,9,Logo,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+31,1,10,Mambasa,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+31,1,10,Mangala,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+31,1,10,Mongbwalu,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+31,1,10,Nizi,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+31,1,10,Nyankunde,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+31,1,10,Rimba,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+31,1,10,Rwampara,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+31,1,12,Beni,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+31,1,12,Butembo,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+31,1,12,Goma,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+31,1,12,Kalunguta,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+31,1,12,Katwa,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+31,1,12,Kyondo,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+31,1,12,Oicha,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+31,1,14,Miti-Murhesa,medium, Sud-Kivu (1/34) : Miti-Murhesa,NA
+32,1,9,Aru,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+32,1,9,Aungba,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+32,1,9,Bambu,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+32,1,9,Bunia,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+32,1,9,Damas,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+32,1,9,Gety,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+32,1,9,Kilo,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+32,1,9,Komanda,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+32,1,9,Lita,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+32,1,9,Logo,medium," Ituri (20/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+32,1,10,Mambasa,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+32,1,10,Mangala,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+32,1,10,Mongbwalu,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+32,1,10,Nizi,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+32,1,10,Nyankunde,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+32,1,10,Rimba,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+32,1,10,Rwampara,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+32,1,12,Beni,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+32,1,12,Butembo,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+32,1,12,Goma,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+32,1,12,Kalunguta,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+32,1,12,Katwa,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+32,1,12,Kyondo,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+32,1,12,Oicha,medium,"(31)  Nord-Kivu (10/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+32,1,14,Miti-Murhesa,medium, Sud-Kivu (1/34) : Miti-Murhesa,NA
+33,1,9,Aru,medium," Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+33,1,9,Aungba,medium," Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+33,1,9,Bambu,medium," Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+33,1,9,Bunia,medium," Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+33,1,9,Damas,medium," Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+33,1,9,Gety,medium," Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+33,1,9,Kilo,medium," Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+33,1,9,Komanda,medium," Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+33,1,9,Lita,medium," Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+33,1,9,Logo,medium," Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+33,1,10,Mambasa,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+33,1,10,Mangala,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+33,1,10,Mongbwalu,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+33,1,10,Nizi,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+33,1,10,Nyankunde,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+33,1,10,Rimba,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+33,1,10,Rwampara,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+33,1,12,Beni,medium,"(33)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+33,1,12,Butembo,medium,"(33)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+33,1,12,Goma,medium,"(33)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+33,1,12,Kalunguta,medium,"(33)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+33,1,12,Katwa,medium,"(33)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+33,1,12,Kyondo,medium,"(33)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+33,1,12,Oicha,medium,"(33)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+33,1,14,Miti-Murhesa,medium, Sud-Kivu (1/34) : Miti-Murhesa,NA
+34,1,9,Aru,medium,"• Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+34,1,9,Aungba,medium,"• Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+34,1,9,Bambu,medium,"• Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+34,1,9,Bunia,medium,"• Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+34,1,9,Damas,medium,"• Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+34,1,9,Gety,medium,"• Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+34,1,9,Kilo,medium,"• Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+34,1,9,Komanda,medium,"• Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+34,1,9,Lita,medium,"• Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+34,1,9,Logo,medium,"• Ituri (21/36) : Aru, Aungba, Bambu, Bunia, Damas, Gety, Kilo, Komanda, Lita, Logo,",NA
+34,1,10,Mambasa,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+34,1,10,Mangala,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+34,1,10,Mongbwalu,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+34,1,10,Nizi,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+34,1,10,Nyankunde,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+34,1,10,Rimba,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+34,1,10,Rwampara,medium,"Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+34,1,12,Beni,medium,"(33) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+34,1,12,Butembo,medium,"(33) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+34,1,12,Goma,medium,"(33) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+34,1,12,Kalunguta,medium,"(33) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+34,1,12,Katwa,medium,"(33) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+34,1,12,Kyondo,medium,"(33) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+34,1,12,Oicha,medium,"(33) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+34,1,14,Miti-Murhesa,medium,• Sud-Kivu (1/34) : Miti-Murhesa,NA
+35,1,9,Aru,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+35,1,9,Aungba,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+35,1,9,Bambu,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+35,1,9,Bunia,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+35,1,9,Damas,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+35,1,9,Gety,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+35,1,9,Kilo,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+35,1,9,Komanda,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+35,1,9,Lita,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+35,1,10,Logo,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+35,1,10,Mambasa,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+35,1,10,Mangala,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+35,1,10,Mongbwalu,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+35,1,10,Nizi,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+35,1,10,Nyankunde,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+35,1,10,Rimba,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+35,1,10,Rwampara,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+35,1,12,Beni,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+35,1,12,Butembo,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+35,1,12,Goma,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+35,1,12,Kalunguta,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+35,1,12,Katwa,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+35,1,12,Kyondo,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+35,1,12,Oicha,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+35,1,14,Miti-Murhesa,medium,• Sud-Kivu (1/34) : Miti-Murhesa,NA
+36,1,9,Aru,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+36,1,9,Aungba,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+36,1,9,Bambu,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+36,1,9,Bunia,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+36,1,9,Damas,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+36,1,9,Gety,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+36,1,9,Kilo,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+36,1,9,Komanda,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+36,1,9,Lita,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+36,1,10,Logo,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+36,1,10,Mambasa,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+36,1,10,Mangala,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+36,1,10,Mongbwalu,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+36,1,10,Nizi,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+36,1,10,Nyankunde,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+36,1,10,Rimba,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+36,1,10,Rwampara,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+36,1,12,Beni,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+36,1,12,Butembo,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+36,1,12,Goma,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+36,1,12,Kalunguta,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+36,1,12,Katwa,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+36,1,12,Kyondo,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+36,1,12,Oicha,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+36,1,14,Miti-Murhesa,medium,• Sud-Kivu (1/34) : Miti-Murhesa,NA
+37,1,9,Aru,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+37,1,9,Aungba,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+37,1,9,Bambu,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+37,1,9,Bunia,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+37,1,9,Damas,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+37,1,9,Gety,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+37,1,9,Kilo,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+37,1,9,Komanda,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+37,1,9,Lita,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+37,1,10,Logo,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+37,1,10,Mambasa,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+37,1,10,Mangala,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+37,1,10,Mongbwalu,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+37,1,10,Nizi,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+37,1,10,Nyankunde,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+37,1,10,Rimba,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+37,1,10,Rwampara,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+37,1,12,Beni,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+37,1,12,Butembo,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+37,1,12,Goma,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+37,1,12,Kalunguta,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+37,1,12,Katwa,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+37,1,12,Kyondo,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+37,1,12,Oicha,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+37,1,14,Miti-Murhesa,medium,• Sud-Kivu (1/34) : Miti-Murhesa,NA
+38,1,9,Aru,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+38,1,9,Aungba,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+38,1,9,Bambu,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+38,1,9,Bunia,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+38,1,9,Damas,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+38,1,9,Gety,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+38,1,9,Kilo,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+38,1,9,Komanda,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+38,1,9,Lita,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+38,1,10,Logo,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+38,1,10,Mambasa,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+38,1,10,Mangala,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+38,1,10,Mongbwalu,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+38,1,10,Nizi,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+38,1,10,Nyankunde,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+38,1,10,Rimba,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+38,1,10,Rwampara,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+38,1,12,Beni,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+38,1,12,Butembo,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+38,1,12,Goma,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+38,1,12,Kalunguta,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+38,1,12,Katwa,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+38,1,12,Kyondo,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+38,1,12,Oicha,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+38,1,14,Miti-Murhesa,medium,• Sud-Kivu (1/34) : Miti-Murhesa,NA
+39,1,9,Aru,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+39,1,9,Aungba,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+39,1,9,Bambu,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+39,1,9,Bunia,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+39,1,9,Damas,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+39,1,9,Gety,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+39,1,9,Kilo,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+39,1,9,Komanda,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+39,1,9,Lita,medium,"• Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+39,1,10,Logo,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+39,1,10,Mambasa,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+39,1,10,Mangala,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+39,1,10,Mongbwalu,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+39,1,10,Nizi,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+39,1,10,Nyankunde,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+39,1,10,Rimba,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+39,1,10,Rwampara,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+39,1,12,Beni,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+39,1,12,Butembo,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+39,1,12,Goma,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+39,1,12,Kalunguta,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+39,1,12,Katwa,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+39,1,12,Kyondo,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+39,1,12,Oicha,medium,"(34) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+39,1,14,Miti-Murhesa,medium,• Sud-Kivu (1/34) : Miti-Murhesa,NA
+40,1,9,Aru,medium," Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+40,1,9,Aungba,medium," Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+40,1,9,Bambu,medium," Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+40,1,9,Bunia,medium," Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+40,1,9,Damas,medium," Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+40,1,9,Gety,medium," Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+40,1,9,Kilo,medium," Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+40,1,9,Komanda,medium," Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+40,1,9,Lita,medium," Ituri (22/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",NA
+40,1,10,Logo,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+40,1,10,Mambasa,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+40,1,10,Mangala,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+40,1,10,Mongbwalu,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+40,1,10,Nizi,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+40,1,10,Nyankunde,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+40,1,10,Rimba,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+40,1,10,Rwampara,medium,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",NA
+40,1,12,Beni,medium,"(34)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+40,1,12,Butembo,medium,"(34)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+40,1,12,Goma,medium,"(34)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+40,1,12,Kalunguta,medium,"(34)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+40,1,12,Katwa,medium,"(34)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+40,1,12,Kyondo,medium,"(34)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+40,1,12,Oicha,medium,"(34)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",NA
+40,1,14,Miti-Murhesa,medium, Sud-Kivu (1/34) : Miti-Murhesa,NA
+60,1,9,Aru,NA,"• Ituri (26/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita, Logo, Mambasa,",known_dictionary_match
+60,1,9,Aungba,NA,"• Ituri (26/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita, Logo, Mambasa,",known_dictionary_match
+60,1,9,Bambu,NA,"• Ituri (26/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita, Logo, Mambasa,",known_dictionary_match
+60,1,9,Bunia,NA,"• Ituri (26/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita, Logo, Mambasa,",known_dictionary_match
+60,1,9,Damas,NA,"• Ituri (26/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita, Logo, Mambasa,",known_dictionary_match
+60,1,9,Gety,NA,"• Ituri (26/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita, Logo, Mambasa,",known_dictionary_match
+60,1,9,Kilo,NA,"• Ituri (26/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita, Logo, Mambasa,",known_dictionary_match
+60,1,9,Komanda,NA,"• Ituri (26/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita, Logo, Mambasa,",known_dictionary_match
+60,1,9,Lita,NA,"• Ituri (26/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita, Logo, Mambasa,",known_dictionary_match
+60,1,9,Logo,NA,"• Ituri (26/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita, Logo, Mambasa,",known_dictionary_match
+60,1,9,Mambasa,NA,"• Ituri (26/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita, Logo, Mambasa,",known_dictionary_match
+60,1,10,Mangala,NA,"Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia, Kambala, Nia-Nia, Fataki, Mandima,",known_dictionary_match
+60,1,10,Mongbwalu,NA,"Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia, Kambala, Nia-Nia, Fataki, Mandima,",known_dictionary_match
+60,1,10,Nizi,NA,"Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia, Kambala, Nia-Nia, Fataki, Mandima,",known_dictionary_match
+60,1,10,Nyankunde,NA,"Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia, Kambala, Nia-Nia, Fataki, Mandima,",known_dictionary_match
+60,1,10,Rimba,NA,"Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia, Kambala, Nia-Nia, Fataki, Mandima,",known_dictionary_match
+60,1,10,Rwampara,NA,"Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia, Kambala, Nia-Nia, Fataki, Mandima,",known_dictionary_match
+60,1,12,Beni,NA,"• Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha, Masereka, Vuhovi, Mabalako et",known_dictionary_match
+60,1,12,Butembo,NA,"• Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha, Masereka, Vuhovi, Mabalako et",known_dictionary_match
+60,1,12,Goma,NA,"• Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha, Masereka, Vuhovi, Mabalako et",known_dictionary_match
+60,1,12,Kalunguta,NA,"• Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha, Masereka, Vuhovi, Mabalako et",known_dictionary_match
+60,1,12,Katwa,NA,"• Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha, Masereka, Vuhovi, Mabalako et",known_dictionary_match
+60,1,12,Kyondo,NA,"• Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha, Masereka, Vuhovi, Mabalako et",known_dictionary_match
+60,1,12,Oicha,NA,"• Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha, Masereka, Vuhovi, Mabalako et",known_dictionary_match
+60,1,14,Miti-Murhesa,NA,• Sud-Kivu (1/34) : Miti-Murhesa,known_dictionary_match
+60,8,28,Gethy,NA,"n’ont pas transmis leur rapport de suivi (Ariwara, Lolwa, Logo, Rimba, Kambala, Damas, Gethy). Nord-Kivu (13/07) :",known_dictionary_match
+59,1,48,Bunia,NA,"Ituri — Bunia 3, Lita 2, Rwampara 1, Fataki 1 — et 3 au Nord-Kivu (Katwa, Butembo).",known_dictionary_match
+59,1,48,Lita,NA,"Ituri — Bunia 3, Lita 2, Rwampara 1, Fataki 1 — et 3 au Nord-Kivu (Katwa, Butembo).",known_dictionary_match
+59,1,48,Rwampara,NA,"Ituri — Bunia 3, Lita 2, Rwampara 1, Fataki 1 — et 3 au Nord-Kivu (Katwa, Butembo).",known_dictionary_match
+59,1,48,Butembo,NA,"Ituri — Bunia 3, Lita 2, Rwampara 1, Fataki 1 — et 3 au Nord-Kivu (Katwa, Butembo).",known_dictionary_match
+59,1,48,Katwa,NA,"Ituri — Bunia 3, Lita 2, Rwampara 1, Fataki 1 — et 3 au Nord-Kivu (Katwa, Butembo).",known_dictionary_match
+59,1,50,Nizi,NA,"reste soutenue dans le corridor Djugu–Irumu (Bunia, Lita, Nizi, Rwampara).",known_dictionary_match
+59,2,1,Beni,NA,"— Quinze (15) patients déclarés guéris (Ituri 13, Nord-Kivu 2 au CTE de Beni). Déploiement de 3 équipes EDS",known_dictionary_match
+59,2,5,Mambasa,NA,interceptés. Activation du PoC Makoko 2 (Mambasa) et ouverture partielle des PoE Ruzizi I et II (Sud-Kivu).,known_dictionary_match
+59,2,33,Mongbwalu,NA,"l'épidémie (létalité brute 34,3 %). Les zones de Bunia, Rwampara, Mongbwalu, Nizi et Nyankunde regroupent la majorité",known_dictionary_match
+59,2,33,Nyankunde,NA,"l'épidémie (létalité brute 34,3 %). Les zones de Bunia, Rwampara, Mongbwalu, Nizi et Nyankunde regroupent la majorité",known_dictionary_match
+59,3,12,Mangala,NA,"Mangala 50 29 58,0 %",known_dictionary_match
+59,3,15,Bambu,NA,"Bambu 31 10 32,3 %",known_dictionary_match
+59,3,16,Komanda,NA,"Komanda 25 8 32,0 %",known_dictionary_match
+59,3,19,Kilo,NA,"Kilo 9 1 11,1 %",known_dictionary_match
+59,3,21,Logo,NA,"Logo 7 0 0,0 %",known_dictionary_match
+59,3,22,Aungba,NA,"Aungba 6 2 33,3 %",known_dictionary_match
+59,3,23,Damas,NA,"Damas 5 0 0,0 %",known_dictionary_match
+59,3,25,Rimba,NA,"Rimba 4 0 0,0 %",known_dictionary_match
+59,3,28,Aru,NA,"Aru 3 1 33,3 %",known_dictionary_match
+59,3,30,Gety,NA,"Gety 1 0 0,0 %",known_dictionary_match
+59,3,39,Kyondo,NA,"Kyondo 7 3 42,9 %",known_dictionary_match
+59,3,40,Oicha,NA,"Oicha 3 2 66,7 %",known_dictionary_match
+59,3,42,Kalunguta,NA,"Kalunguta 2 1 50,0 %",known_dictionary_match
+59,3,43,Goma,NA,"Goma 1 0 0,0 %",known_dictionary_match
+59,3,47,Miti-Murhesa,NA,"Miti-Murhesa 3 1 33,3 %",known_dictionary_match
+59,7,16,Gethy,NA,"ont achevé leur suivi de 21 jours. Six zones (Gethy, Lolwa, Mandima, Logo, Rimba, Kambala) n'ont pas transmis leur rapport",known_dictionary_match
+58,1,10,Aru,NA,"• Ituri (26/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+58,1,10,Aungba,NA,"• Ituri (26/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+58,1,10,Bambu,NA,"• Ituri (26/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+58,1,10,Bunia,NA,"• Ituri (26/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+58,1,10,Damas,NA,"• Ituri (26/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+58,1,10,Gety,NA,"• Ituri (26/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+58,1,10,Kilo,NA,"• Ituri (26/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+58,1,10,Komanda,NA,"• Ituri (26/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+58,1,10,Lita,NA,"• Ituri (26/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+58,1,11,Logo,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+58,1,11,Mambasa,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+58,1,11,Mangala,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+58,1,11,Mongbwalu,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+58,1,11,Nizi,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+58,1,11,Nyankunde,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+58,1,11,Rimba,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+58,1,11,Rwampara,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+58,1,13,Beni,NA,"(42) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+58,1,13,Butembo,NA,"(42) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+58,1,13,Goma,NA,"(42) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+58,1,13,Kalunguta,NA,"(42) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+58,1,13,Katwa,NA,"(42) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+58,1,13,Kyondo,NA,"(42) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+58,1,13,Oicha,NA,"(42) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+58,1,15,Miti-Murhesa,NA,• Sud-Kivu (1/34) : Miti-Murhesa,known_dictionary_match
+57,1,10,Aru,NA," Ituri (25/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+57,1,10,Aungba,NA," Ituri (25/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+57,1,10,Bambu,NA," Ituri (25/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+57,1,10,Bunia,NA," Ituri (25/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+57,1,10,Damas,NA," Ituri (25/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+57,1,10,Gety,NA," Ituri (25/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+57,1,10,Kilo,NA," Ituri (25/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+57,1,10,Komanda,NA," Ituri (25/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+57,1,10,Lita,NA," Ituri (25/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+57,1,11,Logo,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+57,1,11,Mambasa,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+57,1,11,Mangala,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+57,1,11,Mongbwalu,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+57,1,11,Nizi,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+57,1,11,Nyankunde,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+57,1,11,Rimba,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+57,1,11,Rwampara,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+57,1,13,Beni,NA,"(41)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+57,1,13,Butembo,NA,"(41)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+57,1,13,Goma,NA,"(41)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+57,1,13,Kalunguta,NA,"(41)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+57,1,13,Katwa,NA,"(41)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+57,1,13,Kyondo,NA,"(41)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+57,1,13,Oicha,NA,"(41)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+57,1,15,Miti-Murhesa,NA, Sud-Kivu (1/34) : Miti-Murhesa,known_dictionary_match
+56,1,9,Aru,NA," Ituri (25/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+56,1,9,Aungba,NA," Ituri (25/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+56,1,9,Bambu,NA," Ituri (25/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+56,1,9,Bunia,NA," Ituri (25/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+56,1,9,Damas,NA," Ituri (25/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+56,1,9,Gety,NA," Ituri (25/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+56,1,9,Kilo,NA," Ituri (25/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+56,1,9,Komanda,NA," Ituri (25/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+56,1,9,Lita,NA," Ituri (25/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+56,1,10,Logo,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+56,1,10,Mambasa,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+56,1,10,Mangala,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+56,1,10,Mongbwalu,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+56,1,10,Nizi,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+56,1,10,Nyankunde,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+56,1,10,Rimba,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+56,1,10,Rwampara,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+56,1,12,Beni,NA,"(37)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+56,1,12,Butembo,NA,"(37)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+56,1,12,Goma,NA,"(37)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+56,1,12,Kalunguta,NA,"(37)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+56,1,12,Katwa,NA,"(37)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+56,1,12,Kyondo,NA,"(37)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+56,1,12,Oicha,NA,"(37)  Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+56,1,14,Miti-Murhesa,NA, Sud-Kivu (1/34) : Miti-Murhesa,known_dictionary_match
