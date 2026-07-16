@@ -178,7 +178,17 @@ jobs:
           else
             echo "scripts/06_normalize_pdf_names.R absent - skip normalisation"
           fi
-
+- name: Pipeline complet fiable (maitre, sans email)
+        if: always()
+        continue-on-error: true
+        env:
+          PREIS_SEND: "false"
+          SEND: "false"
+          SEND_EMAIL: "false"
+          PREIS_SEND_EMAIL: "false"
+          EMAIL_ENABLED: "false"
+        run: |
+          Rscript --vanilla -e 'source("scripts/preis_pdf_resolver_v2.R"); source("scripts/00_PREIS_MASTER_AUTOMATION.R")' || echo "maitre en erreur"
       - name: Extraction PDFs vers texte (03_extract_pdf.R)
         if: always()
         continue-on-error: true

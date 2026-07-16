@@ -66,143 +66,54 @@ preis_safe_clean_pdf_url <- function(urls, base_url = 'https://insp.cd') {
 }
 
 preis_safe_extract_pdf_urls_from_html <- function(html_text, page_url) {
-  if (length(html_text) == 0 || is.na(html_text[1]) ||
-      !nzchar(as.character(html_text[1]))) {
-    return(character())
-  }
-
-  html_text <- as.character(html_text[1])
+  if (is.na(html_text) || !nzchar(html_text)) return(character())
   urls <- character()
-
-  raw_patterns <- c(
-    'https?://[^"\'<>[:space:]]+[.]pdf(?:[?#][^"\'<>[:space:]]*)?',
-    'https?:\\/\\/[^"\'<>[:space:]]+[.]pdf(?:[?#][^"\'<>[:space:]]*)?',
-    '/wp-content/uploads/[^"\'<>[:space:]]+[.]pdf(?:[?#][^"\'<>[:space:]]*)?'
-  )
-
-  for (pattern in raw_patterns) {
-    found <- stringr::str_extract_all(html_text, pattern)[[1]]
-    if (length(found) > 0) urls <- c(urls, found)
-  }
-
-  doc <- tryCatch(rvest::read_html(html_text), error = function(e) NULL)
-
-  if (!is.null(doc)) {
-    nodes <- rvest::html_elements(
-      doc,
-      'a, iframe, embed, object, source, link, meta, div'
-    )
-
-    attributes <- c(
-      'href', 'src', 'data', 'content', 'data-src',
-      'data-pdf', 'data-url', 'data-file',
-      'data-download', 'data-pdf-url',
-      'pdfemb-url', 'pdfemb-data'
-    )
-
-    for (attribute in attributes) {
-      values <- rvest::html_attr(nodes, attribute)
-      values <- values[!is.na(values) & nzchar(trimws(values))]
-      urls <- c(urls, values)
-    }
-  }
-
-  b64_matches <- stringr::str_match_all(
+  
+  # 1) Raw URLs ending in .pdf
+  raw_pdf <- stringr::str_extract_all(
     html_text,
-    'pdfemb-data=["\']?([A-Za-z0-9+/_=-]+)'
+    'https?://[^\"\'<>[:space:]]+[.]pdf(?:[?#][^\"\'<>[:space:]]*)?'
   )[[1]]
-
-  if (!is.null(b64_matches) && nrow(b64_matches) > 0) {
-    for (b64_value in unique(b64_matches[, 2])) {
-      b64_value <- trimws(b64_value)
-      padding_needed <- (4L - nchar(b64_value) %% 4L) %% 4L
-
-      if (padding_needed > 0L) {
-        b64_value <- paste0(
-          b64_value,
-          paste(rep('=', padding_needed), collapse = '')
-        )
-      }
-
-      decoded <- tryCatch(
-        rawToChar(base64enc::base64decode(b64_value)),
-        error = function(e) NA_character_
-      )
-
-      if (is.na(decoded) || !nzchar(decoded)) next
-
-      payload <- tryCatch(
-        jsonlite::fromJSON(decoded, simplifyVector = TRUE),
-        error = function(e) NULL
-      )
-
-      if (!is.null(payload)) {
-        if (!is.null(payload$url) && length(payload$url) > 0) {
-          urls <- c(urls, as.character(payload$url[1]))
-        }
-
-        if (!is.null(payload$pdfID) && length(payload$pdfID) > 0) {
-          media_id <- suppressWarnings(as.integer(payload$pdfID[1]))
-
-          if (!is.na(media_id)) {
-            media_api <- paste0(
-              'https://insp.cd/wp-json/wp/v2/media/',
-              media_id
-            )
-
-            media_text <- preis_safe_http_get_text(
-              media_api,
-              timeout_sec = 25
-            )
-
-            if (!is.na(media_text) && nzchar(media_text)) {
-              media_payload <- tryCatch(
-                jsonlite::fromJSON(media_text),
-                error = function(e) NULL
-              )
-
-              if (!is.null(media_payload)) {
-                if (!is.null(media_payload$source_url)) {
-                  urls <- c(urls, media_payload$source_url)
-                }
-
-                if (!is.null(media_payload$guid$rendered)) {
-                  urls <- c(urls, media_payload$guid$rendered)
-                }
-              }
-            }
-          }
-        }
-      }
-
-      fallback_urls <- stringr::str_extract_all(
-        decoded,
-        'https?:\\\\?/\\\\?/[^"\'<>[:space:]]+[.]pdf(?:[?#][^"\'<>[:space:]]*)?'
-      )[[1]]
-
-      if (length(fallback_urls) > 0) {
-        fallback_urls <- gsub('\\\\/', '/', fallback_urls)
-        urls <- c(urls, fallback_urls)
+  urls <- c(urls, raw_pdf)
+  
+  # 2) Encoded / escaped URLs that still contain .pdf
+  encoded_pdf <- stringr::str_extract_all(
+    html_text,
+    'https?%3A%2F%2F[^\"\'<>[:space:]]+[.]pdf(?:[?#][^\"\'<>[:space:]]*)?'
+  )[[1]]
+  urls <- c(urls, encoded_pdf)
+  
+  # 3) Parse HTML attributes href/src/data/pdfemb-url
+  doc <- tryCatch(rvest::read_html(html_text), error = function(e) NULL)
+  if (!is.null(doc)) {
+    nodes <- rvest::html_nodes(doc, 'a, iframe, embed, object, source')
+    attrs <- c(
+      rvest::html_attr(nodes, 'href'),
+      rvest::html_attr(nodes, 'src'),
+      rvest::html_attr(nodes, 'data'),
+      rvest::html_attr(nodes, 'data-pdf'),
+      rvest::html_attr(nodes, 'data-url'),
+      rvest::html_attr(nodes, 'pdfemb-url')
+    )
+    urls <- c(urls, attrs)
+  }
+  
+  # 4) PDF Embedder plugin: pdfemb-data base64
+  b64_values <- stringr::str_match_all(html_text, 'pdfemb-data=[\"\']?([A-Za-z0-9+/=]+)')[[1]]
+  if (!is.null(b64_values) && nrow(b64_values) > 0) {
+    for (b64 in b64_values[, 2]) {
+      decoded <- tryCatch(rawToChar(base64enc::base64decode(b64)), error = function(e) NA_character_)
+      if (!is.na(decoded) && nzchar(decoded)) {
+        pdf_inside <- stringr::str_extract_all(
+          decoded,
+          'https?://[^\"\'<>[:space:]]+[.]pdf(?:[?#][^\"\'<>[:space:]]*)?'
+        )[[1]]
+        urls <- c(urls, pdf_inside)
       }
     }
   }
-
-  urls <- gsub('\\\\/', '/', urls)
-  urls <- gsub('&amp;', '&', urls, fixed = TRUE)
-  urls <- utils::URLdecode(urls)
-
-  absolute <- vapply(
-    urls,
-    function(u) {
-      tryCatch(
-        xml2::url_absolute(u, page_url),
-        error = function(e) NA_character_
-      )
-    },
-    character(1)
-  )
-
-  preis_safe_unique(absolute)
+  
+  preis_safe_clean_pdf_url(urls, base_url = page_url)
 }
 
 preis_safe_pdf_signature_ok <- function(file) {
@@ -228,54 +139,37 @@ preis_safe_url_variants <- function(url) {
   preis_safe_unique(out)
 }
 
-preis_safe_download_pdf_from_url <- function(
-  pdf_url,
-  dest_file,
-  referer = 'https://insp.cd/category/sitrep/',
-  timeout_sec = 45
-) {
-  if (is.null(pdf_url) || length(pdf_url) == 0 ||
-      is.na(pdf_url[1]) || !nzchar(trimws(as.character(pdf_url[1])))) {
-    return(NA_character_)
-  }
-
-  urls <- preis_safe_url_variants(as.character(pdf_url[1]))
+preis_safe_download_pdf_from_url <- function(pdf_url, dest_file, referer = 'https://insp.cd/category/sitrep/') {
+  urls <- preis_safe_url_variants(pdf_url)
   dir.create(dirname(dest_file), recursive = TRUE, showWarnings = FALSE)
-
+  
   for (u in urls) {
-    tmp <- tempfile(fileext = '.bin')
-
+    tmp <- tempfile(fileext = '.pdf')
     resp <- tryCatch(
       httr::GET(
         u,
-        httr::timeout(timeout_sec),
+        httr::timeout(180),
         httr::write_disk(tmp, overwrite = TRUE),
         httr::add_headers(
           `User-Agent` = 'Mozilla/5.0 PREIS-Ebola-DRC-PDF-Download',
           Referer = referer,
-          Accept = 'application/pdf,application/octet-stream,*/*'
+          Accept = 'application/pdf,*/*'
         )
       ),
       error = function(e) NULL
     )
-
+    
     if (!is.null(resp)) {
       code <- httr::status_code(resp)
-
-      if (code >= 200 && code < 400 &&
-          preis_safe_pdf_signature_ok(tmp)) {
-        copied <- file.copy(tmp, dest_file, overwrite = TRUE)
+      if (code >= 200 && code < 400 && preis_safe_pdf_signature_ok(tmp)) {
+        file.copy(tmp, dest_file, overwrite = TRUE)
         unlink(tmp, force = TRUE)
-
-        if (isTRUE(copied) && preis_safe_pdf_signature_ok(dest_file)) {
-          return(normalizePath(dest_file, mustWork = TRUE))
-        }
+        return(normalizePath(dest_file, mustWork = TRUE))
       }
     }
-
     unlink(tmp, force = TRUE)
   }
-
+  
   NA_character_
 }
 
@@ -330,396 +224,81 @@ preis_safe_generate_pdf_candidates_from_context <- function(sitrep_no, page_url,
   preis_safe_unique(urls)
 }
 
-preis_safe_extract_wp_media_ids <- function(html_text) {
-  if (is.na(html_text) || !nzchar(html_text)) return(integer())
-  patterns <- c(
-    "wp-image-([0-9]+)",
-    "attachment[_-]id[=:\"']+([0-9]+)",
-    "\\\"id\\\"\\s*:\\s*([0-9]+)",
-    "data-id=[\\\"']([0-9]+)[\\\"']"
-  )
-  ids <- integer()
-  for (pat in patterns) {
-    m <- stringr::str_match_all(html_text, pat)[[1]]
-    if (!is.null(m) && nrow(m) > 0 && ncol(m) >= 2) {
-      ids <- c(ids, suppressWarnings(as.integer(m[, 2])))
-    }
+preis_safe_resolve_pdf_universal <- function(sitrep_no, page_url, current_pdf_url = '', title = '') {
+  candidates <- character()
+  
+  if (!is.na(current_pdf_url) && nzchar(current_pdf_url)) {
+    candidates <- c(candidates, current_pdf_url)
   }
-  unique(ids[!is.na(ids) & ids > 0])
-}
-
-preis_safe_wp_media_urls <- function(media_ids, base_url = 'https://insp.cd') {
-  media_ids <- unique(suppressWarnings(as.integer(media_ids)))
-  media_ids <- media_ids[!is.na(media_ids) & media_ids > 0]
-  if (length(media_ids) == 0) return(character())
-  out <- character()
-  for (id in head(media_ids, 80)) {
-    api_url <- paste0(sub('/+$', '', base_url), '/wp-json/wp/v2/media/', id)
-    txt <- preis_safe_http_get_text(api_url, timeout_sec = 45)
-    if (is.na(txt) || !nzchar(txt)) next
-    txt <- gsub('\\\\/', '/', txt)
-    matches <- stringr::str_extract_all(
-      txt,
-      "https?://[^\\\"'<>[:space:]]+"
-    )[[1]]
-    if (length(matches) > 0) {
-      out <- c(out, matches[grepl('pdf|wp-content/uploads', matches, ignore.case = TRUE)])
-    }
-  }
-  preis_safe_unique(out)
-}
-
-preis_safe_probe_pdf_url <- function(url, referer, timeout_sec = 120) {
-  if (is.na(url) || !nzchar(trimws(url))) return(FALSE)
-  tmp <- tempfile(fileext = '.bin')
-  on.exit(unlink(tmp, force = TRUE), add = TRUE)
-  resp <- tryCatch(
-    httr::GET(
-      url,
-      httr::timeout(timeout_sec),
-      httr::write_disk(tmp, overwrite = TRUE),
-      httr::add_headers(
-        `User-Agent` = 'Mozilla/5.0 PREIS-Ebola-DRC-PDF-Probe',
-        Referer = referer,
-        Accept = 'application/pdf,application/octet-stream,*/*'
-      )
-    ),
-    error = function(e) NULL
-  )
-  if (is.null(resp)) return(FALSE)
-  code <- httr::status_code(resp)
-  code >= 200 && code < 400 && preis_safe_pdf_signature_ok(tmp)
-}
-
-preis_safe_resolve_pdf_universal <- function(
-  sitrep_no,
-  page_url,
-  current_pdf_url = '',
-  title = ''
-) {
-  resolver_log <- function(...) {
-    if (exists('log_msg', mode = 'function')) {
-      log_msg(...)
-    } else {
-      cat(paste0(...), '\n')
-    }
-  }
-
-  direct_candidates <- character()
-  html_candidates <- character()
-  api_candidates <- character()
-  fallback_candidates <- character()
-
-  if (!is.null(current_pdf_url) &&
-      length(current_pdf_url) > 0 &&
-      !is.na(current_pdf_url[1]) &&
-      nzchar(trimws(as.character(current_pdf_url[1])))) {
-    direct_candidates <- c(
-      direct_candidates,
-      as.character(current_pdf_url[1])
-    )
-  }
-
-  html_text <- preis_safe_http_get_text(
-    page_url,
-    timeout_sec = 35
-  )
-
+  
+  html_text <- preis_safe_http_get_text(page_url)
+  candidates <- c(candidates, preis_safe_extract_pdf_urls_from_html(html_text, page_url))
+  
+  # Follow internal article links that may hide the real PDF or attachment page
   if (!is.na(html_text) && nzchar(html_text)) {
-    html_candidates <- preis_safe_extract_pdf_urls_from_html(
-      html_text,
-      page_url
-    )
-
-    resolver_log(
-      'PDF resolver: HTML/embed candidates=',
-      length(preis_safe_unique(html_candidates))
-    )
-
-    # Extract WordPress post IDs only to obtain additional real URLs.
-    post_ids <- character()
-
-    post_api_match <- stringr::str_match_all(
-      html_text,
-      'wp-json/wp/v2/posts/([0-9]+)'
-    )[[1]]
-
-    if (!is.null(post_api_match) &&
-        nrow(post_api_match) > 0) {
-      post_ids <- c(post_ids, post_api_match[, 2])
-    }
-
-    body_match <- stringr::str_match_all(
-      html_text,
-      'postid-([0-9]+)'
-    )[[1]]
-
-    if (!is.null(body_match) && nrow(body_match) > 0) {
-      post_ids <- c(post_ids, body_match[, 2])
-    }
-
-    post_ids <- unique(post_ids[nzchar(post_ids)])
-
-    for (post_id in head(post_ids, 3)) {
-      post_api <- paste0(
-        'https://insp.cd/wp-json/wp/v2/posts/',
-        post_id
-      )
-
-      post_text <- preis_safe_http_get_text(
-        post_api,
-        timeout_sec = 25
-      )
-
-      if (is.na(post_text) || !nzchar(post_text)) next
-
-      post_payload <- tryCatch(
-        jsonlite::fromJSON(post_text),
-        error = function(e) NULL
-      )
-
-      if (is.null(post_payload)) next
-
-      rendered_fields <- character()
-
-      if (!is.null(post_payload$content$rendered)) {
-        rendered_fields <- c(
-          rendered_fields,
-          post_payload$content$rendered
-        )
-      }
-
-      if (!is.null(post_payload$excerpt$rendered)) {
-        rendered_fields <- c(
-          rendered_fields,
-          post_payload$excerpt$rendered
-        )
-      }
-
-      for (rendered in rendered_fields) {
-        api_candidates <- c(
-          api_candidates,
-          preis_safe_extract_pdf_urls_from_html(
-            rendered,
-            page_url
-          )
-        )
+    doc <- tryCatch(rvest::read_html(html_text), error = function(e) NULL)
+    if (!is.null(doc)) {
+      links <- rvest::html_attr(rvest::html_nodes(doc, 'a'), 'href')
+      links <- preis_safe_url_absolute(links, page_url)
+      links <- links[grepl('wp-content|attachment|download|pdf|media', links, ignore.case = TRUE)]
+      links <- links[!grepl('[.]jpg|[.]jpeg|[.]png|[.]gif|[.]webp|[.]css|[.]js', links, ignore.case = TRUE)]
+      links <- head(preis_safe_unique(links), 20)
+      for (lnk in links) {
+        if (grepl('[.]pdf($|[?#])', lnk, ignore.case = TRUE)) {
+          candidates <- c(candidates, lnk)
+        } else {
+          sub_html <- preis_safe_http_get_text(lnk, timeout_sec = 45)
+          candidates <- c(candidates, preis_safe_extract_pdf_urls_from_html(sub_html, lnk))
+        }
       }
     }
   }
-
-  # Generated filenames are now strictly last-resort candidates.
-  fallback_candidates <- preis_safe_generate_pdf_candidates_from_context(
-    sitrep_no,
-    page_url,
-    title
-  )
-
-  clean_candidates <- function(x) {
-    x <- preis_safe_unique(x)
-
-    x <- x[
-      grepl('^https?://', x, ignore.case = TRUE)
-    ]
-
-    bad_extensions <- paste0(
-      '[.](jpg|jpeg|png|gif|webp|svg|css|js|woff|woff2|ttf|ico)',
-      '($|[?#])'
-    )
-
-    x <- x[
-      !grepl(bad_extensions, x, ignore.case = TRUE)
-    ]
-
-    x
-  }
-
-  direct_candidates <- clean_candidates(direct_candidates)
-  html_candidates <- clean_candidates(html_candidates)
-  api_candidates <- clean_candidates(api_candidates)
-  fallback_candidates <- clean_candidates(fallback_candidates)
-
-  # Prioritize exact PDFs extracted from the page/embed payload.
-  rank_real_candidates <- function(x) {
-    if (length(x) == 0) return(x)
-
-    exact_pdf <- grepl(
-      '[.]pdf($|[?#])',
-      x,
-      ignore.case = TRUE
-    )
-
-    sitrep_match <- grepl(
-      paste0('(?:^|[^0-9])0*', as.integer(sitrep_no), '(?:[^0-9]|$)'),
-      utils::URLdecode(x),
-      ignore.case = TRUE,
-      perl = TRUE
-    )
-
-    analytical_match <- grepl(
-      'analytique|final|vf|sitrep|mve|mvb',
-      utils::URLdecode(x),
-      ignore.case = TRUE
-    )
-
-    score <- as.integer(exact_pdf) * 100L +
-      as.integer(sitrep_match) * 50L +
-      as.integer(analytical_match) * 10L
-
-    x[order(score, decreasing = TRUE)]
-  }
-
-  direct_candidates <- rank_real_candidates(direct_candidates)
-  html_candidates <- rank_real_candidates(html_candidates)
-  api_candidates <- rank_real_candidates(api_candidates)
-
-  # Keep real candidates first. Generated names are tested only if needed.
-  real_candidates <- preis_safe_unique(c(
-    direct_candidates,
-    html_candidates,
-    api_candidates
-  ))
-
-  fallback_candidates <- fallback_candidates[
-    !fallback_candidates %in% real_candidates
-  ]
-
-  real_candidates <- head(real_candidates, 40)
-  fallback_candidates <- head(fallback_candidates, 12)
-
-  resolver_log(
-    'PDF resolver: real candidates to test=',
-    length(real_candidates)
-  )
-
-  resolver_log(
-    'PDF resolver: fallback candidates available=',
-    length(fallback_candidates)
-  )
-
-  test_candidates <- function(candidates, label) {
-    if (length(candidates) == 0) return('')
-
-    tmp_dir <- file.path(getwd(), 'data', 'pdf_probe')
-    dir.create(tmp_dir, recursive = TRUE, showWarnings = FALSE)
-
-    for (i in seq_along(candidates)) {
-      candidate <- candidates[i]
-
-      resolver_log(
-        'PDF resolver [',
-        label,
-        ']: testing ',
-        i,
-        '/',
-        length(candidates),
-        ' ',
-        substr(utils::URLdecode(candidate), 1, 180)
-      )
-
-      probe_file <- tempfile(
-        pattern = 'preis_pdf_probe_',
-        fileext = '.bin',
-        tmpdir = tmp_dir
-      )
-
-      got <- preis_safe_download_pdf_from_url(
-        candidate,
-        probe_file,
-        referer = page_url,
-        timeout_sec = 30
-      )
-
-      valid <- !is.na(got) &&
-        nzchar(got) &&
-        file.exists(got) &&
-        preis_safe_pdf_signature_ok(got)
-
-      unlink(probe_file, force = TRUE)
-
-      if (valid) {
-        resolver_log(
-          'PDF resolver: valid PDF found from ',
-          label
-        )
-        return(candidate)
-      }
+  
+  # Last-resort candidates from known INSP upload patterns
+  candidates <- c(candidates, preis_safe_generate_pdf_candidates_from_context(sitrep_no, page_url, title))
+  candidates <- preis_safe_clean_pdf_url(candidates, page_url)
+  
+  if (length(candidates) == 0) return('')
+  
+  # Test candidates by real PDF signature after download
+  tmp_dir <- file.path(getwd(), 'data', 'pdf_probe')
+  dir.create(tmp_dir, recursive = TRUE, showWarnings = FALSE)
+  
+  for (u in candidates) {
+    probe_file <- tempfile(pattern = 'preis_pdf_probe_', fileext = '.pdf', tmpdir = tmp_dir)
+    got <- preis_safe_download_pdf_from_url(u, probe_file, referer = page_url)
+    if (!is.na(got) && nzchar(got) && file.exists(got) && preis_safe_pdf_signature_ok(got)) {
+      unlink(got, force = TRUE)
+      return(u)
     }
-
-    ''
+    unlink(probe_file, force = TRUE)
   }
-
-  resolved <- test_candidates(
-    real_candidates,
-    'page/embed'
-  )
-
-  if (nzchar(resolved)) return(resolved)
-
-  resolved <- test_candidates(
-    fallback_candidates,
-    'generated fallback'
-  )
-
-  resolved
+  
+  ''
 }
 
-preis_safe_download_resolved_pdf <- function(
-  pdf_url,
-  sitrep_no,
-  page_url
-) {
-  if (is.null(pdf_url) || length(pdf_url) == 0 ||
-      is.na(pdf_url[1]) || !nzchar(trimws(as.character(pdf_url[1])))) {
-    return(NA_character_)
-  }
-
-  n_int <- suppressWarnings(as.integer(sitrep_no))
-  if (is.na(n_int)) return(NA_character_)
-
+preis_safe_download_resolved_pdf <- function(pdf_url, sitrep_no, page_url) {
+  if (is.na(pdf_url) || !nzchar(pdf_url)) return(NA_character_)
+  if (!grepl('[.]pdf($|[?#])', pdf_url, ignore.case = TRUE)) return(NA_character_)
   pdf_dir <- file.path(getwd(), 'data', 'pdf')
   dir.create(pdf_dir, recursive = TRUE, showWarnings = FALSE)
-
-  dest_file <- file.path(
-    pdf_dir,
-    paste0(
-      'PREIS_DRC_Ebola_SitRep_',
-      sprintf('%03d', n_int),
-      '.pdf'
-    )
-  )
-
-  out <- preis_safe_download_pdf_from_url(
-    as.character(pdf_url[1]),
-    dest_file,
-    referer = page_url,
-    timeout_sec = 90
-  )
-
-  if (!is.na(out) && nzchar(out) &&
-      preis_safe_pdf_signature_ok(out)) {
-    return(out)
-  }
-
+  dest_file <- file.path(pdf_dir, paste0('PREIS_DRC_Ebola_SitRep_', sprintf('%03d', as.integer(sitrep_no)), '.pdf'))
+  out <- preis_safe_download_pdf_from_url(pdf_url, dest_file, referer = page_url)
+  if (!is.na(out) && nzchar(out) && preis_safe_pdf_signature_ok(out)) return(out)
   NA_character_
 }
+
+# END PREIS UNIVERSAL INSP PDF RESOLVER
+
+# PREIS safe scientific SitRep email
+# Robust text-only email layer for INSP SitRep alerts
+# Supports SMTP STARTTLS 587 and SMTP_SSL 465
+############################################################
 
 log_msg <- function(...) {
   ts <- format(Sys.time(), '%Y-%m-%d %H:%M:%S UTC', tz = 'UTC')
   cat('[', ts, '] ', paste0(...), '\n', sep = '')
 }
-
-
-# PREIS PDF RESOLVER V2 SOURCE START
-source(
-  file.path(
-    getwd(),
-    'scripts',
-    'preis_pdf_resolver_v2.R'
-  ),
-  local = globalenv()
-)
-# PREIS PDF RESOLVER V2 SOURCE END
 
 env_get <- function(names, default = '') {
   for (nm in names) {
@@ -887,7 +466,11 @@ log_msg('force_send=', force_send)
 
 latest <- find_latest_sitrep(max_pages = 5)
 sitrep_number <- latest$number[1]
-if (is.na(sitrep_number)) stop('Le numero du dernier SitRep est manquant.')
+
+if (is.na(sitrep_number)) {
+  stop('Le numero du dernier SitRep est manquant.')
+}
+
 sitrep_no <- as.integer(sitrep_number)
 sitrep_label <- sprintf('N%03d', sitrep_number)
 page_url <- latest$page_url[1]
@@ -898,40 +481,44 @@ log_msg('Page URL: ', page_url)
 # PREIS universal PDF resolver call
 if (!exists('pdf_url') || is.na(pdf_url)) pdf_url <- ''
 if (!exists('page_url') || is.na(page_url)) page_url <- ''
-if (!exists('sitrep_no') || is.na(sitrep_no)) sitrep_no <- as.integer(sitrep_number)
-if (!exists('sitrep_title') || is.na(sitrep_title) || !nzchar(trimws(as.character(sitrep_title)))) sitrep_title <- sitrep_label
 
-## ---- PREIS V2.1 PDF RESOLVER WIRING (auto-patch) ----
-if (file.exists(file.path('scripts','preis_pdf_resolver_v2.R'))) {
-  source(file.path('scripts','preis_pdf_resolver_v2.R'))
-  preis_safe_resolve_pdf_universal <- function(sitrep_no, page_url, current_pdf_url = '', title = '') {
-    preis_v2_resolve_pdf_universal(sitrep_no = sitrep_no, page_url = page_url,
-                                   current_pdf_url = current_pdf_url, title = title)
-  }
-  preis_safe_download_resolved_pdf <- function(pdf_url, sitrep_no, page_url) {
-    preis_v2_download_resolved(pdf_url, sitrep_no, page_url)
-  }
+if (!exists('sitrep_no') || is.na(sitrep_no)) {
+  sitrep_no <- as.integer(sitrep_number)
 }
-## ---- END PREIS V2.1 WIRING ----
 
+if (!exists('sitrep_title') ||
+    is.na(sitrep_title) ||
+    !nzchar(trimws(as.character(sitrep_title)))) {
+  sitrep_title <- sitrep_label
+}
 pdf_url <- preis_safe_resolve_pdf_universal(
   sitrep_no = sitrep_no,
   page_url = page_url,
   current_pdf_url = pdf_url,
   title = sitrep_title
 )
-log_msg('Universal PDF resolved: ', ifelse(nzchar(pdf_url), pdf_url, 'not found'))
+log_msg(
+  'Universal PDF resolved: ',
+  ifelse(nzchar(pdf_url), pdf_url, 'not found')
+)
 # PREIS universal PDF download call
 pdf_file <- preis_safe_download_resolved_pdf(pdf_url, sitrep_no, page_url)
 pdf_attached <- !is.na(pdf_file) && nzchar(pdf_file) && file.exists(pdf_file)
-log_msg('Universal PDF downloaded: ', ifelse(pdf_attached, pdf_file, 'not downloaded'))
+log_msg(
+  'Universal PDF downloaded: ',
+  ifelse(pdf_attached, pdf_file, 'not downloaded')
+)
 # PREIS universal PDF info normalization
 pdf_info <- list(
   attached = isTRUE(pdf_attached),
   path = if (isTRUE(pdf_attached)) pdf_file else '',
   file = if (isTRUE(pdf_attached)) pdf_file else NA_character_,
   url = if (nzchar(pdf_url)) pdf_url else page_url,
-  reason = if (isTRUE(pdf_attached)) '' else 'Official PDF could not be downloaded automatically.'
+  reason = if (isTRUE(pdf_attached)) {
+    ''
+  } else {
+    'Official PDF could not be downloaded automatically.'
+  }
 )
 if (nzchar(pdf_url)) log_msg('PDF URL: ', pdf_url) else log_msg('PDF URL: not found')
 
@@ -1110,8 +697,14 @@ write_secret_file(cfg_dir, 'body_minimal.txt', body_minimal)
 write_secret_file(
   cfg_dir,
   'pdf_path.txt',
-  if (isTRUE(pdf_info$attached) && nzchar(pdf_info$path) && file.exists(pdf_info$path)) {
-    normalizePath(pdf_info$path, winslash = '/', mustWork = TRUE)
+  if (isTRUE(pdf_info$attached) &&
+      nzchar(pdf_info$path) &&
+      file.exists(pdf_info$path)) {
+    normalizePath(
+      pdf_info$path,
+      winslash = '/',
+      mustWork = TRUE
+    )
   } else {
     ''
   }
@@ -1166,7 +759,12 @@ py_lines <- c(
   '    if pdf_path:',
   '        attachment = Path(pdf_path)',
   '        if attachment.is_file():',
-  '            msg.add_attachment(attachment.read_bytes(), maintype="application", subtype="pdf", filename=attachment.name)',
+  '            msg.add_attachment(',
+  '                attachment.read_bytes(),',
+  '                maintype="application",',
+  '                subtype="pdf",',
+  '                filename=attachment.name',
+  '            )',
   '            print("PREIS_PDF_ATTACHED: " + attachment.name, flush=True)',
   '    return msg',
   'def smtp_send_candidate(h, p, mode, msg):',

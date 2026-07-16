@@ -709,18 +709,6 @@ log_msg <- function(...) {
   cat('[', ts, '] ', paste0(...), '\n', sep = '')
 }
 
-
-# PREIS PDF RESOLVER V2 SOURCE START
-source(
-  file.path(
-    getwd(),
-    'scripts',
-    'preis_pdf_resolver_v2.R'
-  ),
-  local = globalenv()
-)
-# PREIS PDF RESOLVER V2 SOURCE END
-
 env_get <- function(names, default = '') {
   for (nm in names) {
     val <- Sys.getenv(nm, unset = '')
@@ -900,20 +888,6 @@ if (!exists('pdf_url') || is.na(pdf_url)) pdf_url <- ''
 if (!exists('page_url') || is.na(page_url)) page_url <- ''
 if (!exists('sitrep_no') || is.na(sitrep_no)) sitrep_no <- as.integer(sitrep_number)
 if (!exists('sitrep_title') || is.na(sitrep_title) || !nzchar(trimws(as.character(sitrep_title)))) sitrep_title <- sitrep_label
-
-## ---- PREIS V2.1 PDF RESOLVER WIRING (auto-patch) ----
-if (file.exists(file.path('scripts','preis_pdf_resolver_v2.R'))) {
-  source(file.path('scripts','preis_pdf_resolver_v2.R'))
-  preis_safe_resolve_pdf_universal <- function(sitrep_no, page_url, current_pdf_url = '', title = '') {
-    preis_v2_resolve_pdf_universal(sitrep_no = sitrep_no, page_url = page_url,
-                                   current_pdf_url = current_pdf_url, title = title)
-  }
-  preis_safe_download_resolved_pdf <- function(pdf_url, sitrep_no, page_url) {
-    preis_v2_download_resolved(pdf_url, sitrep_no, page_url)
-  }
-}
-## ---- END PREIS V2.1 WIRING ----
-
 pdf_url <- preis_safe_resolve_pdf_universal(
   sitrep_no = sitrep_no,
   page_url = page_url,

@@ -1,0 +1,32 @@
+PREIS PATCH EMAIL ET PDF
+Date UTC : 20260715_212104
+Projet : D:/PREIS_Ebola_DRC_Sitrep_FV_12.06.26
+Fichier corrigé : D:/PREIS_Ebola_DRC_Sitrep_FV_12.06.26/scripts/preis_safe_scientific_email.R
+Sauvegarde : D:/PREIS_Ebola_DRC_Sitrep_FV_12.06.26/scripts/preis_safe_scientific_email.R.BACKUP_PATCH_EMAIL_PDF_20260715_212104
+
+CORRECTIONS :
+- Transmission correcte de sitrep_number vers sitrep_no : corrected
+- Securisation des variables du resolveur PDF : corrected
+- Remplacement du premier safe_log : corrected
+- Remplacement du second safe_log : corrected
+- Creation immediate et complete de pdf_info : corrected
+- Suppression du doublon anti-repeat : corrected
+- Transmission du chemin PDF vers Python : corrected
+- Lecture du chemin PDF par Python : corrected
+- Ajout reel du PDF comme piece jointe : corrected
+
+VALIDATIONS :
+- Sauvegarde originale : OK
+- Absence de safe_log() : OK
+- sitrep_no relié à sitrep_number : OK
+- Contrôle anti-repeat unique : OK
+- pdf_info construit après téléchargement : OK
+- Chemin PDF transmis à Python : OK
+- Pièce jointe Python ajoutée : OK
+- Syntaxe R finale : OK
+
+IMPORTANT :
+- Aucun email n'a été envoyé par ce patch.
+- Tester ensuite avec PREIS_FORCE_SEND=false.
+- Ne pas utiliser git add .
+- Ajouter uniquement scripts/preis_safe_scientific_email.R.
