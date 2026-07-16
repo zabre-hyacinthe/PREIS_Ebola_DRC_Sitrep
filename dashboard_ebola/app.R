@@ -1,3 +1,4 @@
+
 ## ============================================================
 ## PREIS EBOLA RDC — DASHBOARD (app.R)
 ## Adapté de PREIS_Polio_FV.
@@ -11,6 +12,31 @@ suppressPackageStartupMessages({
   library(dplyr); library(readr); library(stringr); library(tidyr)
   library(DT); library(plotly); library(leaflet); library(sf)
   library(ggplot2); library(htmltools); library(scales)
+
+# PATCH_PREIS_SINGLE_SOURCE_ALERTS_LOAD_START
+PREIS_APP_ENV <- environment()
+PREIS_DASHBOARD_DIR <- "D:/PREIS_Ebola_DRC_Sitrep_FV_12.06.26/dashboard_ebola"
+if (!dir.exists(PREIS_DASHBOARD_DIR)) PREIS_DASHBOARD_DIR <- getwd()
+preis_source_module_once <- function(file_name) {
+  hits <- list.files(
+    PREIS_DASHBOARD_DIR,
+    pattern = paste0("^", file_name, "$"),
+    recursive = TRUE,
+    full.names = TRUE
+  )
+  if (length(hits) == 0) {
+    message("[PREIS SOURCE] Missing module: ", file_name)
+    return(FALSE)
+  }
+  source(normalizePath(hits[1], winslash = "/", mustWork = TRUE), local = PREIS_APP_ENV)
+  message("[PREIS SOURCE] Loaded once: ", basename(hits[1]))
+  TRUE
+}
+preis_source_module_once("module_dhis2_official_alerts.R")
+preis_source_module_once("module_source_indicateurs_alertes.R")
+if (exists("ui_source_alerts_tab", mode = "function", inherits = TRUE)) SOURCE_ALERTS_OK <- TRUE
+# PATCH_PREIS_SINGLE_SOURCE_ALERTS_LOAD_END
+
 })
 
 options(shiny.maxRequestSize = 100 * 1024^2)
@@ -23,6 +49,7 @@ if (requireNamespace("sf", quietly = TRUE)) sf::sf_use_s2(FALSE)
 # ------------------------------------------------------------
 I18N <- list(
   fr = c(
+    t_map_zone="Carte — cas par zone de santé", t_top_zones="Top zones touchées", t_epicurve="Courbe épidémique (incidence + cumul)", t_interpret="Interprétation opérationnelle", t_indic_evol="Évolution d'un indicateur dans le temps", t_indic_read="Lecture opérationnelle des indicateurs (→ action)", t_kpi_vars="Variables à collecter pour débloquer les KPI avancés", t_daily_track="Suivi journalier depuis le début de l'épidémie", t_indic_simple="Évolution d'un indicateur", t_daily_table="Tableau journalier", t_cfr_title="Létalité provisoire vs nombre de cas par zone de santé",
     app_title="PREIS Ebola RDC", map="Carte", overview="Vue d'ensemble",
     kpi="Indicateurs (KPI)", daily="Suivi journalier", cfr_tab="Analyse CFR",
     faq="Questions fréquentes", signals="Détection de signaux", synthesis="Synthèse narrative", zones="Zones", about="À propos",
@@ -34,6 +61,7 @@ I18N <- list(
     map_full_title="Carte interactive — zones de santé",
     faq_question="Question", faq_answer="Réponse", faq_illustration="Illustration"),
   en = c(
+    t_map_zone="Map — cases by health zone", t_top_zones="Top affected zones", t_epicurve="Epidemic curve (incidence + cumulative)", t_interpret="Operational interpretation", t_indic_evol="Indicator evolution over time", t_indic_read="Operational reading of indicators (→ action)", t_kpi_vars="Variables to collect to unlock advanced KPIs", t_daily_track="Daily tracking since outbreak start", t_indic_simple="Indicator evolution", t_daily_table="Daily table", t_cfr_title="Provisional CFR vs case count by health zone",
     app_title="PREIS Ebola DRC", map="Map", overview="Overview",
     kpi="Indicators (KPI)", daily="Daily tracking", cfr_tab="CFR analysis",
     faq="Frequently asked questions", signals="Signal detection", synthesis="Narrative summary", zones="Zones", about="About",
@@ -90,6 +118,17 @@ I18N <- list(
     map_full_title="خريطة تفاعلية — المناطق الصحية",
     faq_question="سؤال", faq_answer="إجابة", faq_illustration="رسم توضيحي")
 )
+
+# GLOBAL_TR : tr() global pour l'UI statique (langue par defaut FR)
+.UI_LANG_DEFAULT <- 'fr'
+tr <- function(key) {
+  l <- if (exists('.UI_LANG_DEFAULT')) .UI_LANG_DEFAULT else 'fr'
+  val <- I18N[[l]][[key]]
+  if (is.null(val) || (length(val)==1 && is.na(val))) {
+    val2 <- I18N[['en']][[key]]
+    if (is.null(val2)) key else val2
+  } else val
+}
 LANG_CHOICES <- c("Français"="fr", "English"="en", "Português"="pt",
                   "Español"="es", "Kiswahili"="sw", "العربية"="ar")
 
@@ -138,8 +177,69 @@ if (file.exists(.gap_mod)) {
 # ── Module Ligne de vie (onglet dédié) ──
 .life_mod <- if (file.exists('app_lifeline_module.R')) normalizePath('app_lifeline_module.R', mustWork=FALSE) else normalizePath('dashboard_ebola/app_lifeline_module.R', mustWork=FALSE)
 if (file.exists(.life_mod)) source(.life_mod)
+if (file.exists('module_situation_room_officiel.R')) source('module_situation_room_officiel.R')
+if (!exists('ui_sitroom_tab')) ui_sitroom_tab <- shinydashboard::tabItem(tabName='sitroom', shiny::tags$p('Situation Room officiel absent.'))
+if (!exists('server_sitroom')) server_sitroom <- function(input,output,session){}
 if (!exists('ui_lifeline_tab')) ui_lifeline_tab <- shinydashboard::tabItem(tabName='lifeline', shiny::tags$p('Module ligne de vie absent.'))
 if (!exists('server_lifeline')) server_lifeline <- function(input,output,session){}
+
+# ── Module source additionnelle + alertes conditionnelles ──
+.source_alerts_mod <- if (file.exists('module_dhis2_official_alerts.R')) normalizePath('module_dhis2_official_alerts.R', mustWork=FALSE) else normalizePath('dashboard_ebola/module_dhis2_official_alerts.R', mustWork=FALSE)
+if (file.exists(.source_alerts_mod)) {
+  tryCatch({
+# DISABLED_DUPLICATE_PREIS_SOURCE_IN_APP:     source(.source_alerts_mod, encoding = 'UTF-8')
+  }, error = function(e) {
+    SOURCE_ALERTS_OK <<- FALSE
+    SOURCE_ALERTS_ERROR <<- conditionMessage(e)
+    message('[SOURCE ALERTS] Module non charge : ', conditionMessage(e))
+  })
+}
+if (!exists('ui_source_alerts_tab')) {
+  ui_source_alerts_tab <- shinydashboard::tabItem(
+    tabName = 'source_alerts',
+    shiny::fluidRow(
+      shinydashboard::box(
+        width = 12, status = 'warning', solidHeader = TRUE,
+        title = 'Source additionnelle + alertes conditionnelles',
+        shiny::tags$p('Module source additionnelle non disponible ou non chargé.'),
+        shiny::tags$p(if (exists('SOURCE_ALERTS_ERROR')) SOURCE_ALERTS_ERROR else 'Copier module_dhis2_official_alerts.R dans dashboard_ebola/.')
+      )
+    )
+  )
+}
+if (!exists('server_source_alerts')) {
+  server_source_alerts <- function(input, output, session) {}
+}
+
+
+# ── Module DHIS2 officiel RDC + tendances + alertes conditionnelles ──
+.official_dhis2_mod <- if (file.exists('module_dhis2_official_alerts.R')) normalizePath('module_dhis2_official_alerts.R', mustWork=FALSE) else normalizePath('dashboard_ebola/module_dhis2_official_alerts.R', mustWork=FALSE)
+if (file.exists(.official_dhis2_mod)) {
+  tryCatch({
+# DISABLED_DUPLICATE_PREIS_SOURCE_IN_APP:     source(.official_dhis2_mod, encoding = 'UTF-8')
+  }, error = function(e) {
+    DHIS2_OFFICIAL_OK <<- FALSE
+    DHIS2_OFFICIAL_ERROR <<- conditionMessage(e)
+    message('[DHIS2 OFFICIAL] Module non charge : ', conditionMessage(e))
+  })
+}
+if (!exists('ui_dhis2_official_tab')) {
+  ui_dhis2_official_tab <- shinydashboard::tabItem(
+    tabName = 'dhis2_official',
+    shiny::fluidRow(
+      shinydashboard::box(
+        width = 12, status = 'warning', solidHeader = TRUE,
+        title = 'DHIS2 officiel RDC + alertes conditionnelles',
+        shiny::tags$p('Module DHIS2 officiel non disponible ou non chargé.'),
+        shiny::tags$p(if (exists('DHIS2_OFFICIAL_ERROR')) DHIS2_OFFICIAL_ERROR else 'Copier module_dhis2_official_alerts.R et PREIS_dhis2_official_lib.R dans dashboard_ebola/.')
+      )
+    )
+  )
+}
+if (!exists('server_dhis2_official')) {
+  server_dhis2_official <- function(input, output, session) {}
+}
+
 if (!exists('ui_gap_tracker_tab')) {
   ui_gap_tracker_tab <- shinydashboard::tabItem(
     tabName = 'gap_tracker',
@@ -182,12 +282,22 @@ GH_RAW <- Sys.getenv(
 # locale (plus rapide). Pour forcer le tout-local en dev : PREIS_LOCAL_FIRST=1.
 find_first <- function(paths) {
   for (p in paths) {
-    if (grepl("^https?://", p)) return(p)   # URL : on tente le telechargement
-    if (file.exists(p)) return(p)
+    if (base::is.na(p) || !base::nzchar(p)) next
+    if (base::grepl('^https?://', p)) {
+      ok <- tryCatch({
+        con <- base::url(p, open = 'rb')
+        on.exit(base::close(con), add = TRUE)
+        base::readBin(con, what = 'raw', n = 1)
+        TRUE
+      }, error = function(e) FALSE)
+      if (base::isTRUE(ok)) return(p)
+    } else {
+      if (base::file.exists(p)) return(p)
+    }
   }
   NA_character_
 }
-.LOCAL_FIRST <- tolower(Sys.getenv("PREIS_LOCAL_FIRST", "0")) %in% c("1","true","yes")
+.LOCAL_FIRST <- TRUE   # forcé : données locales prioritaires
 # Pour les donnees dynamiques : GitHub d'abord (sauf si dev local force).
 prefere_github <- function(local_paths, gh_url) {
   if (.LOCAL_FIRST) return(find_first(c(local_paths, gh_url)))
@@ -195,14 +305,16 @@ prefere_github <- function(local_paths, gh_url) {
 }
 
 SERIE_FP <- prefere_github(
-  c(file.path(ANALYSE_DIR, "serie_temporelle_nationale.csv"),
-    file.path(DATA_DIR, "serie_temporelle_nationale.csv")),
-  paste0(GH_RAW, "/outputs/analyse/serie_temporelle_nationale.csv")
+  c(file.path(DATA_DIR, "serie_temporelle_nationale.csv"),
+    file.path(ROOT_DIR, "dashboard_ebola", "data", "serie_temporelle_nationale.csv"),
+    file.path(ANALYSE_DIR, "serie_temporelle_nationale.csv")),
+  paste0(GH_RAW, "/dashboard_ebola/data/serie_temporelle_nationale.csv")
 )
 ZONES_FP <- prefere_github(
-  c(file.path(ANALYSE_DIR, "tableau_zones_sante.csv"),
-    file.path(DATA_DIR, "tableau_zones_sante.csv")),
-  paste0(GH_RAW, "/outputs/analyse/tableau_zones_sante.csv")
+  c(file.path(DATA_DIR, "tableau_zones_sante.csv"),
+    file.path(ROOT_DIR, "dashboard_ebola", "data", "tableau_zones_sante.csv"),
+    file.path(ANALYSE_DIR, "tableau_zones_sante.csv")),
+  paste0(GH_RAW, "/dashboard_ebola/data/tableau_zones_sante.csv")
 )
 AFRICA_FP <- find_first(c(
   file.path(CURATED_DIR, "africa_countries_rcc.geojson"),
@@ -215,13 +327,13 @@ ZONES_GEO_FP <- find_first(c(
   paste0(GH_RAW, "/dashboard_ebola/data/curated/rdc_zones_sante_est.geojson")
 ))
 LONG_FP <- prefere_github(
-  c(file.path(DATA_DIR, "PREIS_indicators_long.csv"),
-    file.path(ROOT_DIR, "data", "final", "PREIS_indicators_long.csv")),
+  c(file.path(ROOT_DIR, "data", "final", "PREIS_indicators_long.csv"),
+    file.path(DATA_DIR, "PREIS_indicators_long.csv")),
   paste0(GH_RAW, "/data/final/PREIS_indicators_long.csv")
 )
 DAILY_FP <- prefere_github(
-  c(file.path(DATA_DIR, "PREIS_daily_indicators.csv"),
-    file.path(ROOT_DIR, "data", "final", "PREIS_daily_indicators.csv")),
+  c(file.path(ROOT_DIR, "data", "final", "PREIS_daily_indicators.csv"),
+    file.path(DATA_DIR, "PREIS_daily_indicators.csv")),
   paste0(GH_RAW, "/data/final/PREIS_daily_indicators.csv")
 )
 
@@ -251,6 +363,7 @@ INDIC_LABELS <- c(
 # ------------------------------------------------------------
 zone_coords <- tibble::tribble(
   ~health_zone,   ~province,     ~lat,    ~lon,
+  "Mabalako",     "Nord-Kivu",    0.420,  29.420,
   "Bunia",        "Ituri",        1.565,  30.244,
   "Rwampara",     "Ituri",        1.530,  30.180,
   "Mongbwalu",    "Ituri",        1.960,  30.040,
@@ -355,20 +468,8 @@ indic_present <- if (nrow(long_all))
 indic_choices <- setNames(indic_present, INDIC_LABELS[indic_present])
 
 # Dernier SitRep dispo
-# PATCH 2026-07-15: quand la serie temporelle est indisponible
-# (outputs/analyse/serie_temporelle_nationale.csv absent sur GitHub car
-# .gitignore bloque, ou pipeline consolide non lance), on tombait avant
-# sur un fallback hardcode "28" trompeur. On lit maintenant en secours
-# le max depuis PREIS_indicators_long.csv qui est toujours publie.
 last_sno <- if (nrow(serie_all)) max(serie_all$sitrep_no, na.rm=TRUE) else NA
 sno_choices <- if (nrow(serie_all)) sort(unique(serie_all$sitrep_no)) else integer()
-fallback_sno <- if (nrow(long_all) && "sitrep_no" %in% names(long_all)) {
-  suppressWarnings(max(long_all$sitrep_no, na.rm = TRUE))
-} else NA_integer_
-if (!is.finite(fallback_sno)) fallback_sno <- 1L
-fallback_choices <- if (nrow(long_all) && "sitrep_no" %in% names(long_all)) {
-  sort(unique(long_all$sitrep_no))
-} else integer()
 
 # Palette intensité (dégradé rouge épidémie)
 EBOLA_RED   <- "#C0392B"
@@ -380,6 +481,71 @@ header_title <- "PREIS Ebola RDC — Surveillance MVE"
 # ------------------------------------------------------------
 # UI
 # ------------------------------------------------------------
+
+# PREIS_DHIS2_DAILY_TRACE_V6
+# Integration propre : DHIS2 Situation Room + Bilan DHIS2 quotidien
+.dhis2_trace_mod_v6 <- normalizePath('../source_line_list/scripts/08_PREIS_dhis2_daily_trace_dashboard.R',
+                                  mustWork = FALSE)
+if (file.exists(.dhis2_trace_mod_v6)) {
+  tryCatch(
+    source(.dhis2_trace_mod_v6, encoding = 'UTF-8'),
+    error = function(e) message('[DHIS2 TRACE] Module non charge : ', conditionMessage(e))
+  )
+}
+
+.preis_fallback_tab_v6 <- function(tab_name, title, reason) {
+  shinydashboard::tabItem(
+    tabName = tab_name,
+    shiny::fluidRow(
+      shinydashboard::box(
+        width = 12, status = 'warning', solidHeader = TRUE,
+        title = title,
+        shiny::tags$p(reason)
+      )
+    )
+  )
+}
+
+.preis_safe_tab_v6 <- function(obj_name, tab_name, title) {
+  if (!exists(obj_name, inherits = TRUE)) {
+    return(.preis_fallback_tab_v6(tab_name, title, paste('Objet UI introuvable :', obj_name)))
+  }
+
+  obj <- get(obj_name, inherits = TRUE)
+
+  out <- tryCatch({
+    if (is.function(obj)) {
+      tryCatch(obj(tab_name), error = function(e) obj())
+    } else {
+      obj
+    }
+  }, error = function(e) {
+    .preis_fallback_tab_v6(tab_name, title, paste('Erreur UI module :', conditionMessage(e)))
+  })
+
+  if (!inherits(out, 'shiny.tag')) {
+    return(.preis_fallback_tab_v6(tab_name, title, paste('UI non valide pour', obj_name)))
+  }
+
+  cls <- out$attribs$class
+  cls <- if (is.null(cls)) '' else paste(cls, collapse = ' ')
+
+  if (!grepl('tab-pane', cls, fixed = TRUE)) {
+    return(.preis_fallback_tab_v6(tab_name, title, paste('UI non tabItem pour', obj_name)))
+  }
+
+  out
+}
+
+ui_dhis2_tab_v6 <- .preis_safe_tab_v6(
+  'ui_dhis2_tab',
+  'dhis2',
+  'DHIS2 Situation Room'
+)
+
+
+# END_PREIS_DHIS2_DAILY_TRACE_V6
+
 ui <- dashboardPage(
   skin = "red",
   dashboardHeader(title = header_title, titleWidth = 320),
@@ -388,12 +554,9 @@ ui <- dashboardPage(
     sidebarMenuOutput("dynamic_menu"),
     br(),
     sliderInput("sitrep", "SitRep (jusqu'à)",
-                min = if(length(sno_choices)) min(sno_choices)
-                      else if(length(fallback_choices)) min(fallback_choices) else 1,
-                max = if(length(sno_choices)) max(sno_choices)
-                      else if(length(fallback_choices)) max(fallback_choices) else fallback_sno,
-                value = if(!is.na(last_sno)) last_sno else fallback_sno,
-                step = 1, sep = ""),
+                min = if(length(sno_choices)) min(sno_choices) else 1,
+                max = if(length(sno_choices)) max(sno_choices) else 28,
+                value = if(!is.na(last_sno)) last_sno else 28, step = 1, sep = ""),
     selectInput("province", "Province",
                 choices = c("Toutes", sort(unique(zone_coords$province))),
                 selected = "Toutes"),
@@ -410,7 +573,7 @@ ui <- dashboardPage(
     checkboxInput("show_africa", "Contour Afrique/RDC", value = TRUE),
     checkboxInput("show_choro", "Zones (choroplèthe)", value = TRUE),
     checkboxInput("show_bubbles", "Bulles proportionnelles", value = TRUE),
-    checkboxInput("zoom_rdc", "Zoom Est RDC", value = TRUE)
+    checkboxInput("zoom_rdc", "Zoom Est RDC", value = FALSE)
   ),
   dashboardBody(
     tags$head(tags$style(HTML("
@@ -447,7 +610,11 @@ ui <- dashboardPage(
       @keyframes ebolaBlink {from{opacity:0.85;} to{opacity:1;}}
     "))),
     tabItems(
+      ui_dhis2_tab_v6,
       ui_gap_tracker_tab,
+      ui_sitroom_tab,
+      ui_source_alerts_tab(),
+      ui_dhis2_official_tab,
       # ---- Vue d'ensemble ----
       tabItem(
         tabName = "overview",
@@ -458,15 +625,15 @@ ui <- dashboardPage(
           valueBoxOutput("vb_zones", 3)
         ),
         fluidRow(
-          box(width = 8, title = "Carte — cas par zone de santé", status="primary",
+          box(width = 8, title = tr("t_map_zone"), status="primary",
               solidHeader = TRUE, leafletOutput("map_overview", height = 520)),
-          box(width = 4, title = "Top zones touchées", status="primary",
+          box(width = 4, title = tr("t_top_zones"), status="primary",
               solidHeader = TRUE, plotlyOutput("plot_topzones", height = 520))
         ),
         fluidRow(
-          box(width = 7, title = "Courbe épidémique (incidence + cumul)", status="primary",
+          box(width = 7, title = tr("t_epicurve"), status="primary",
               solidHeader = TRUE, plotlyOutput("plot_epi", height = 300)),
-          box(width = 5, title = "Interprétation opérationnelle", status="primary",
+          box(width = 5, title = tr("t_interpret"), status="primary",
               solidHeader = TRUE,
               uiOutput("sitrep_button"),
               div(class="note-block", uiOutput("interpretation")))
@@ -488,7 +655,7 @@ ui <- dashboardPage(
           valueBoxOutput("kpi_completeness", 3)
         ),
         fluidRow(
-          box(width = 12, title = "Évolution d'un indicateur dans le temps (SitRep 1 → dernier)",
+          box(width = 12, title = tr("t_indic_evol"),
               status = "primary", solidHeader = TRUE,
               fluidRow(
                 column(5, selectInput("kpi_indic", "Indicateur à tracer",
@@ -499,12 +666,12 @@ ui <- dashboardPage(
               plotlyOutput("plot_kpi_evol", height = 340))
         ),
         fluidRow(
-          box(width = 12, title = "Lecture opérationnelle des indicateurs (→ action)",
+          box(width = 12, title = tr("t_indic_read"),
               status = "primary", solidHeader = TRUE,
               div(class = "note-block", uiOutput("kpi_actions")))
         ),
         fluidRow(
-          box(width = 12, title = "Variables à collecter pour débloquer les KPI avancés",
+          box(width = 12, title = tr("t_kpi_vars"),
               status = "warning", solidHeader = TRUE,
               div(class = "note-block",
                 p(strong("Pour mesurer si la transmission est sous contrôle (Rt, traçage) :")),
@@ -533,7 +700,7 @@ ui <- dashboardPage(
         tabName = "daily",
         fluidRow(
           box(width = 12, status = "primary", solidHeader = TRUE,
-              title = "Suivi journalier depuis le début de l'épidémie",
+              title = tr("t_daily_track"),
               fluidRow(
                 column(3, selectInput("daily_level", "Niveau",
                        choices = c("National", "Province", "Zone de santé" = "Zone"),
@@ -562,7 +729,7 @@ ui <- dashboardPage(
           valueBoxOutput("d_ma7", 3)
         ),
         fluidRow(
-          box(width = 12, title = "Courbe épidémique (incidence + cumul)",
+          box(width = 12, title = tr("t_epicurve"),
               status = "primary", solidHeader = TRUE,
               radioButtons("epi_mode", NULL, inline = TRUE,
                 choices = c("Incidence + cumul" = "inc_cum",
@@ -572,11 +739,11 @@ ui <- dashboardPage(
               uiOutput("epi_note"))
         ),
         fluidRow(
-          box(width = 12, title = "Évolution d'un indicateur", status = "primary",
+          box(width = 12, title = tr("t_indic_simple"), status = "primary",
               solidHeader = TRUE, plotlyOutput("daily_plot", height = 340))
         ),
         fluidRow(
-          box(width = 12, title = "Tableau journalier", status = "info",
+          box(width = 12, title = tr("t_daily_table"), status = "info",
               solidHeader = TRUE, collapsible = TRUE, collapsed = TRUE,
               DTOutput("daily_table"),
               tags$br(),
@@ -594,7 +761,7 @@ ui <- dashboardPage(
         tabName = "cfr",
         fluidRow(
           box(width = 12, status = "primary", solidHeader = TRUE,
-              title = "Létalité provisoire vs nombre de cas par zone de santé",
+              title = tr("t_cfr_title"),
               plotlyOutput("cfr_scatter", height = 460),
               tags$p(style = "color:#888; font-size:12px; margin-top:8px;",
                 "Chaque point = une zone de santé. Axe X = cas cumulés (échelle log), ",
@@ -722,11 +889,6 @@ ui <- dashboardPage(
               p(strong("CFR provisoire :"), " pendant une épidémie active, certains cas récents peuvent encore évoluer ; ne pas interpréter comme létalité finale."),
               p("Carte de fond : Africa CDC RCC (54 pays). Mise à jour automatique via le pipeline PREIS.")
             ))
-      ,
-      # ---- DHIS2 Situation Room ----
-      ui_dhis2_tab
-      ,ui_gap_tracker_tab
-      ,ui_lifeline_tab
       )
     )
   )
@@ -763,6 +925,8 @@ server <- function(input, output, session) {
       menuItem(tr("cfr_tab"),   tabName = "cfr",      icon = icon("circle-dot")),
       menuItem(tr("faq"),       tabName = "faq",      icon = icon("circle-question")),
       menuItem(tr("signals"),   tabName = "signals",  icon = icon("triangle-exclamation")),
+      menuItem('Source + alertes', tabName = 'source_alerts', icon = icon('bell'), badgeLabel = if (exists('SOURCE_ALERTS_OK') && isTRUE(SOURCE_ALERTS_OK)) 'READY' else 'OFF', badgeColor = if (exists('SOURCE_ALERTS_OK') && isTRUE(SOURCE_ALERTS_OK)) 'green' else 'red'),
+      menuItem('DHIS2 officiel', tabName = 'dhis2_official', icon = icon('chart-line'), badgeLabel = if (exists('DHIS2_OFFICIAL_OK') && isTRUE(DHIS2_OFFICIAL_OK)) 'READY' else 'OFF', badgeColor = if (exists('DHIS2_OFFICIAL_OK') && isTRUE(DHIS2_OFFICIAL_OK)) 'green' else 'red'),
       menuItem('Operational Gaps', tabName = "gap_tracker", icon = icon('exclamation-triangle'), badgeLabel = if (exists('GAP_OK') && isTRUE(GAP_OK)) 'LIVE' else 'OFF', badgeColor = if (exists('GAP_OK') && isTRUE(GAP_OK)) 'green' else 'red'),
       menuItem(tr("synthesis"), tabName = "synthese", icon = icon("file-lines")),
       menuItem(tr("map"),       tabName = "map",      icon = icon("globe-africa")),
@@ -772,6 +936,7 @@ server <- function(input, output, session) {
                icon = icon("database"),
                badgeLabel = if (exists("D2_OK") && D2_OK) "LIVE" else "OFF",
                badgeColor = if (exists("D2_OK") && D2_OK) "green" else "red")
+      ,menuItem("Situation Room (officiel)", tabName = "sitroom", icon = icon("hospital-user"), badgeLabel = "LIVE", badgeColor = "green")
     )
   })
 
@@ -851,7 +1016,8 @@ server <- function(input, output, session) {
   build_map <- function() {
     mv <- map_values(); zf <- mv$zf; ind <- mv$ind
     m <- leaflet(options = leafletOptions(minZoom = 3, maxZoom = 10)) %>%
-      addProviderTiles("CartoDB.Positron")
+      addProviderTiles("CartoDB.Positron") %>%
+      setMaxBounds(lng1 = 11, lat1 = -14, lng2 = 32, lat2 = 6)
 
     # 1) Couche Afrique : CONTOUR léger seulement (ne masque plus la choroplèthe)
     if (isTRUE(input$show_africa) && !is.null(africa_sf)) {
@@ -895,7 +1061,7 @@ server <- function(input, output, session) {
       zb <- zf[zf$val > 0, ]
       if (nrow(zb) > 0) {
         palb <- colorNumeric(AU_RAMP, domain = zb$val)
-        zb$radius <- pmax(5, sqrt(pmax(zb$val, 1)) * 2.4)
+        zb$radius <- pmax(3, sqrt(pmax(zb$val, 1)) * 1.3)
         unit <- if (ind == "cfr") "%" else ""
         m <- m %>% addCircleMarkers(
           data = zb, lng = ~lon, lat = ~lat, radius = ~radius,
@@ -913,7 +1079,7 @@ server <- function(input, output, session) {
     if (isTRUE(input$zoom_rdc)) {
       m <- m %>% fitBounds(lng1 = 27.5, lat1 = -3.0, lng2 = 31.5, lat2 = 3.2)
     } else {
-      m <- m %>% fitBounds(lng1 = -20, lat1 = -36, lng2 = 52, lat2 = 38)
+      m <- m %>% fitBounds(lng1 = 12.2, lat1 = -13.4, lng2 = 31.3, lat2 = 5.4)
     }
     m
   }
@@ -1663,7 +1829,12 @@ server <- function(input, output, session) {
   if (exists('server_lifeline')) server_lifeline(input, output, session)
 
   # Module DHIS2
+
+  # Module DHIS2 Daily Trace : bilan journalier, tendances et gaps
   if (exists("server_dhis2")) server_dhis2(input, output, session)
+  if (exists('server_sitroom')) server_sitroom(input, output, session)
+  if (exists('server_source_alerts')) server_source_alerts(input, output, session)
+  if (exists('server_dhis2_official')) server_dhis2_official(input, output, session)
 }
 
 shinyApp(ui, server)
