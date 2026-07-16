@@ -913,6 +913,11 @@ if (file.exists(file.path('scripts','preis_pdf_resolver_v2.R'))) {
   }
 }
 ## ---- END PREIS V2.1 WIRING ----
+## ---- PREIS safe_log alias (auto-patch) ----
+if (!exists('safe_log')) safe_log <- function(...) {
+  if (exists('log_msg', mode='function')) log_msg(...) else cat(format(Sys.time()), ' ', ..., '\n', sep = '')
+}
+## ---- END safe_log alias ----
 
 pdf_url <- preis_safe_resolve_pdf_universal(
   sitrep_no = sitrep_no,
