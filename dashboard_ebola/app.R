@@ -1,3 +1,29 @@
+## ---- PREIS SAFE TABITEMS WRAPPER (auto-patch) ----
+.preis_safe_tabItems <- function(...) {
+  args <- list(...)
+  out  <- list(); k <- 0L
+  for (i in seq_along(args)) {
+    x <- args[[i]]
+    if (inherits(x, 'shiny.tag')) {
+      k <- k + 1L; out[[k]] <- x
+    } else {
+      msg <- sprintf('[PREIS] tabItems: argument #%d (classe: %s) non-shiny.tag -> onglet de secours.',
+                     i, paste(class(x), collapse = '/'))
+      message(msg)
+      k <- k + 1L
+      out[[k]] <- shinydashboard::tabItem(
+        tabName = sprintf('_preis_secours_%d', i),
+        shiny::fluidRow(shiny::column(12,
+          shiny::tags$div(style = 'padding:16px;',
+            shiny::tags$h4('Module temporairement indisponible'),
+            shiny::tags$p(msg)))))
+    }
+  }
+  if (length(out) == 0L) return(shinydashboard::tabItems())
+  do.call(shinydashboard::tabItems, out)
+}
+## ---- END PREIS SAFE TABITEMS WRAPPER ----
+
 
 ## ============================================================
 ## PREIS EBOLA RDC — DASHBOARD (app.R)
@@ -609,7 +635,7 @@ ui <- dashboardPage(
       .ebola-blink {animation: ebolaBlink 1.1s infinite alternate;}
       @keyframes ebolaBlink {from{opacity:0.85;} to{opacity:1;}}
     "))),
-    tabItems(
+    .preis_safe_tabItems(
       ui_dhis2_tab_v6,
       ui_gap_tracker_tab,
       ui_sitroom_tab,

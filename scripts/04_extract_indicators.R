@@ -73,6 +73,22 @@ extract_candidates_from_row_text <- function(row_text, sitrep_no, source_type = 
   }
 
   # Narrative and indicators.
+  ## ---- PREIS PATCH 04 CUMUL NATIONAL (auto) ----
+  .clean_int <- function(s) suppressWarnings(as.numeric(gsub("[^0-9]", "", s)))
+  .clean_pct <- function(s) suppressWarnings(as.numeric(gsub(",", ".", gsub("[^0-9,.]", "", s))))
+  .mnat <- stringr::str_match(txt, stringr::regex("cumul[[:space:]]+national[[:space:]]*:?[[:space:]]*([0-9][0-9[:space:].]*[0-9]|[0-9])[[:space:]]*cas[[:space:]]+confirm[[:alpha:]]*[[:space:]]+et[[:space:]]+([0-9][0-9[:space:].]*[0-9]|[0-9])[[:space:]]*d[eé]c", ignore_case = TRUE))
+  if (!is.na(.mnat[1, 2])) {
+    add("cumulative_confirmed_cases", .clean_int(.mnat[1, 2]), "cases", "narr_cumul_national_spaced", 1)
+    add("cumulative_deaths",          .clean_int(.mnat[1, 3]), "deaths", "narr_cumul_national_spaced", 1)
+  }
+  .mrat <- stringr::str_match(txt, stringr::regex("cumuls?[[:space:]]+consolid[[:alpha:]]*[[:space:]]*[(][[:space:]]*([0-9][0-9[:space:].]*[0-9])[[:space:]]*[/][[:space:]]*([0-9][0-9[:space:].]*[0-9])[[:space:]]*[)]", ignore_case = TRUE))
+  if (!is.na(.mrat[1, 2])) {
+    add("cumulative_deaths",          .clean_int(.mrat[1, 2]), "deaths", "narr_ratio_consolide", 1)
+    add("cumulative_confirmed_cases", .clean_int(.mrat[1, 3]), "cases", "narr_ratio_consolide", 1)
+  }
+  .mcfr <- stringr::str_match(txt, stringr::regex("l[eé]talit[eé][[:space:]]+globale[[:space:]]+de[[:space:]]+([0-9]+(?:[.,][0-9]+)?)[[:space:]]*%", ignore_case = TRUE))
+  if (!is.na(.mcfr[1, 2])) add("case_fatality_ratio", .clean_pct(.mcfr[1, 2]), "deaths", "narr_letalite_globale", 1)
+  ## ---- FIN PREIS PATCH 04 CUMUL NATIONAL (auto) ----
   add("new_confirmed_cases", g_first("(\\d+)\\s+nouveaux?\\s+cas\\s+confirm", txt), "cases", "narr_new_confirmed", 4)
   add("new_confirmed_cases", g_first("(\\d+)\\s+Nouveaux?\\s+cas\\s+confirm\\w+\\s+en\\s+date", txt), "cases", "narr_new_confirmed_date", 4)
   add("cumulative_confirmed_cases", g_first("cumul\\s+des\\s+cas\\s+confirm\\w*\\s+s.?[eé]l[eè]ve\\s+[aà]\\s+(\\d{2,5})", txt), "cases", "narr_cumulative_cases_eleve", 3)

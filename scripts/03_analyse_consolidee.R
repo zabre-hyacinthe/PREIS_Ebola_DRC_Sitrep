@@ -75,6 +75,34 @@ sitrep_dates <- tibble::tribble(
   30,"2026-06-13",31,"2026-06-14",32,"2026-06-15",33,"2026-06-16",
   34,"2026-06-17",35,"2026-06-18"
 ) %>% dplyr::mutate(date = as.Date(date))
+## ---- PREIS PATCH SERIE DATES+CLEAN v3 (auto) : dates registry ----
+.reg_fp_dates <- file.path(DATA_FINAL, 'sitrep_registry.csv')
+if (file.exists(.reg_fp_dates)) {
+  .reg_d <- tryCatch(as.data.frame(readr::read_csv(.reg_fp_dates, show_col_types = FALSE)),
+                     error = function(e) NULL)
+  if (!is.null(.reg_d) && all(c('sitrep_no','date_raw') %in% names(.reg_d))) {
+    .sn <- suppressWarnings(as.integer(.reg_d[['sitrep_no']]))
+    .dd <- suppressWarnings(as.Date(as.character(.reg_d[['date_raw']]), format = '%d-%m-%Y'))
+    .keep <- !is.na(.sn) & !is.na(.dd)
+    if (any(.keep)) {
+      .uni <- sort(unique(.sn[.keep]))
+      .new_dt <- as.Date(vapply(.uni,
+                                function(s) as.numeric(max(.dd[.keep & .sn == s])),
+                                numeric(1)), origin = '1970-01-01')
+      .sel <- !(.uni %in% as.integer(sitrep_dates$sitrep_no))
+      if (any(.sel)) {
+        .add <- data.frame(sitrep_no = .uni[.sel], date = .new_dt[.sel])
+        sitrep_dates <- dplyr::bind_rows(sitrep_dates, .add)
+        sitrep_dates <- sitrep_dates[order(sitrep_dates$sitrep_no), , drop = FALSE]
+        cat('   [PATCH] dates registry ajoutees pour SitRep:',
+            paste(.uni[.sel], collapse = ', '), '\n')
+      }
+    }
+  }
+}
+## ---- FIN PREIS PATCH SERIE DATES+CLEAN v3 (auto) : dates registry ----
+
+
 
 # =========================================================
 # 2. SÉRIE TEMPORELLE NATIONALE (tableau pivot)
@@ -143,6 +171,47 @@ if ("nouveaux_cas" %in% names(wide)) {
 }
 wide$moy_mobile_cas <- zoo_rollmean(wide$var_cas)
 
+
+
+## ---- PREIS PATCH SERIE DATES+CLEAN v3 (auto) : nettoyage serie ----
+wide <- wide %>% dplyr::filter(!is.na(cas_cumules)) %>% dplyr::arrange(sitrep_no)
+## garde de monotonie : un cumul qui descend est ecarte (extraction douteuse)
+.rm <- -Inf; .ok <- rep(TRUE, nrow(wide)); .drop <- integer(0)
+for (.i in seq_len(nrow(wide))) {
+  .v <- wide$cas_cumules[.i]
+  if (is.na(.v)) { .ok[.i] <- FALSE; next }
+  if (.v + 1e-9 < .rm) { .ok[.i] <- FALSE; .drop <- c(.drop, wide$sitrep_no[.i]) } else { .rm <- .v }
+}
+if (length(.drop) > 0) cat('   [PATCH] SitRep ecartes (cumul non-monotone):', paste(.drop, collapse = ', '), '\n')
+wide <- wide[.ok, , drop = FALSE]
+## dates manquantes comblees par interpolation sur sitrep_no
+if (any(is.na(wide$date)) && sum(!is.na(wide$date)) >= 2) {
+  .kn <- !is.na(wide$date)
+  .y <- stats::approx(x = wide$sitrep_no[.kn], y = as.numeric(wide$date[.kn]),
+                      xout = wide$sitrep_no, rule = 2)$y
+  wide$date <- as.Date(round(.y), origin = '1970-01-01')
+  cat('   [PATCH] dates manquantes comblees par interpolation\n')
+}
+## CFR complete par 100*deces/cas quand absent (definition standard)
+wide <- wide %>% dplyr::mutate(
+  cfr = dplyr::if_else(is.na(cfr) & !is.na(deces_cumules) & !is.na(cas_cumules) & cas_cumules > 0,
+                       round(100 * deces_cumules / cas_cumules, 1), cfr))
+## increments recalcules, incidence neutralisee a travers un trou (>1 SitRep)
+wide <- wide %>%
+  dplyr::mutate(
+    .gap = sitrep_no - dplyr::lag(sitrep_no),
+    nouveaux_cas_calc = cas_cumules   - dplyr::lag(cas_cumules),
+    nouveaux_deces    = deces_cumules - dplyr::lag(deces_cumules),
+    nouveaux_cas_calc = dplyr::if_else(is.na(.gap) | .gap > 1, NA_real_, nouveaux_cas_calc),
+    nouveaux_deces    = dplyr::if_else(is.na(.gap) | .gap > 1, NA_real_, nouveaux_deces),
+    var_cas      = nouveaux_cas_calc,
+    nouveaux_cas = nouveaux_cas_calc
+  )
+wide$moy_mobile_cas <- zoo_rollmean(wide$var_cas)
+wide$.gap <- NULL
+cat('   [PATCH] serie nettoyee :', nrow(wide), 'SitRep, max =',
+    suppressWarnings(max(wide$sitrep_no, na.rm = TRUE)), '\n')
+## ---- FIN PREIS PATCH SERIE DATES+CLEAN v3 (auto) : nettoyage serie ----
 readr::write_csv(wide, file.path(OUT_DIR, "serie_temporelle_nationale.csv"))
 cat(">> Tableau série temporelle nationale sauvegardé (",
     nrow(wide), "SitReps )\n")
