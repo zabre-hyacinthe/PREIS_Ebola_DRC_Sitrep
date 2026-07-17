@@ -323,7 +323,7 @@ find_first <- function(paths) {
   }
   NA_character_
 }
-.LOCAL_FIRST <- TRUE   # forcé : données locales prioritaires
+.LOCAL_FIRST <- FALSE   # forcé : données locales prioritaires
 # Pour les donnees dynamiques : GitHub d'abord (sauf si dev local force).
 prefere_github <- function(local_paths, gh_url) {
   if (.LOCAL_FIRST) return(find_first(c(local_paths, gh_url)))
