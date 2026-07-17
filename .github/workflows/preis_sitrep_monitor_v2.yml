@@ -203,6 +203,19 @@ jobs:
         run: |
           Rscript --vanilla scripts/03_analyse_consolidee.R || echo "03_analyse_consolidee.R en erreur"
 
+
+      # PREIS ENRICHED EMAIL START
+      - name: Send PREIS enriched email
+        if: always() && env.PREIS_SEND_EMAIL == 'true'
+        continue-on-error: true
+        run: |
+          if [ -f preis_email_enrichi.R ]; then
+            Rscript --vanilla -e 'parse(file="preis_email_enrichi.R", encoding="UTF-8"); cat("preis_email_enrichi.R parse OK\n")'
+            Rscript --vanilla preis_email_enrichi.R
+          else
+            echo "preis_email_enrichi.R absent - skip enriched email"
+          fi
+      # PREIS ENRICHED EMAIL END
       - name: Commit monitor + pipeline outputs
         if: always()
         run: |
@@ -223,6 +236,7 @@ jobs:
           git add outputs/analyse/serie_temporelle_nationale.csv || true
           git add outputs/analyse/tableau_zones_sante.csv || true
           git add outputs/audit/ || true
+          git add data/preis_email_enrichi_state.csv || true
           git status --short
           git commit -m "PREIS pipeline: monitor + extraction + analyse [skip ci]" || echo "No changes to commit"
           git pull --rebase origin main || echo "No remote changes to rebase"
