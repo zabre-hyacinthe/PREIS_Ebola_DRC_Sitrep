@@ -77,38 +77,108 @@ preis_email_enrichi <- function(root = NULL, force = FALSE) {
   }
   
   pdf_fp <- sprintf("data/pdf/PREIS_DRC_Ebola_SitRep_%03d.pdf", sno)
-  atts <- c(
-    if (file.exists(pdf_fp)) pdf_fp else NULL,
-    Filter(file.exists, file.path("outputs/analyse", c(
-      "g1_courbe_epidemique.png", "g2_courbe_mortalite.png",
-      "g3_evolution_cfr.png", "g4_top_zones.png", "carte_zones_intensite.png"))))
-  
+  # Temporaire : seul le PDF officiel est joint.
+  # Les graphiques et la carte restent suspendus pendant leur revision.
+  atts <- if (file.exists(pdf_fp)) pdf_fp else character(0)
+
   cfr_txt <- if (length(cfr) == 0 || is.na(cfr)) sprintf("%.1f %%", 100 * as.numeric(dec) / as.numeric(cas)) else sprintf("%.1f %%", as.numeric(cfr))
   kpi <- function(val, lab, col) paste0(
     "<td style='padding:14px 18px;background:", col, ";color:#fff;border-radius:10px'>",
     "<div style='font-size:26px;font-weight:700'>", val, "</div>",
     "<div style='font-size:12px;opacity:.9'>", lab, "</div></td>")
   html <- paste0(
-    "<div style='font-family:Segoe UI,Arial,sans-serif;color:#222;max-width:680px'>",
-    "<div style='background:#1a7a3c;color:#fff;padding:16px 20px;border-radius:10px'>",
-    "<div style='font-size:18px;font-weight:700'>PREIS &mdash; MVE Ebola RDC</div>",
-    "<div>Synthese automatique &mdash; SitRep N&deg;", sprintf("%03d", sno),
-    if (nzchar(d_date) && d_date != "NA") paste0(" (", d_date, ")") else "", "</div></div>",
-    "<table style='border-spacing:8px 0;margin:14px 0'><tr>",
-    kpi(.fmt(cas), "Cas confirmes cumules", "#C0392B"),
-    kpi(.fmt(dec), "Deces cumules", "#2C3E50"),
-    kpi(cfr_txt, "Letalite (CFR)", "#E67E22"), "</tr></table>",
-    "<p><b>Evolution vs SitRep precedent (N&deg;", sprintf("%03d", as.integer(prev$sitrep_no)), ") :</b> ",
-    if (!is.na(nvx_cas)) paste0("+", .fmt(nvx_cas), " nouveaux cas") else "nouveaux cas n/d",
-    if (!is.na(nvx_dec)) paste0(", +", .fmt(nvx_dec), " deces") else "", ".</p>",
-    if (nzchar(top_html)) paste0("<p><b>Zones les plus touchees :</b></p>", top_html) else "",
-    "<p style='margin-top:16px'><b>Points saillants :</b> transmission active, l'Ituri reste l'epicentre. ",
-    "Details epidemiologiques complets dans le PDF officiel joint.</p>",
-    "<p style='margin:18px 0'><a href='", DASHBOARD_URL,
-    "' style='background:#1a7a3c;color:#fff;text-decoration:none;padding:12px 20px;border-radius:8px;font-weight:700'>",
-    "Ouvrir le dashboard PREIS (mis a jour)</a></p>",
-    "<p style='font-size:12px;color:#666'>Graphiques et carte joints : courbe epidemique, mortalite, evolution du CFR, ",
-    "zones les plus touchees, carte d'intensite. Donnees provisoires (source INSP/INRB RDC).</p></div>")
+    "<div style='font-family:Segoe UI,Arial,sans-serif;color:#252525;max-width:700px;line-height:1.45'>",
+
+    "<div style='background:#0B4F3C;color:#fff;padding:18px 22px;border-radius:10px'>",
+    "<div style='font-size:19px;font-weight:700'>PREIS &mdash; MVE Ebola RDC</div>",
+    "<div style='font-size:14px;margin-top:3px'>Synth&egrave;se automatique &mdash; SitRep N&deg;",
+    sprintf("%03d", sno),
+    if (nzchar(d_date) && d_date != "NA") paste0(" (", d_date, ")") else "",
+    "</div></div>",
+
+    "<table role='presentation' style='border-spacing:9px 0;margin:16px 0;width:100%'><tr>",
+    kpi(.fmt(cas), "Cas confirm&eacute;s cumul&eacute;s", "#C83A2D"),
+    kpi(.fmt(dec), "D&eacute;c&egrave;s cumul&eacute;s", "#33485D"),
+    kpi(cfr_txt, "L&eacute;talit&eacute; (CFR)", "#EF7F1A"),
+    "</tr></table>",
+
+    "<div style='background:#F4F6F7;border-left:4px solid #0B4F3C;padding:12px 14px;margin:14px 0'>",
+    "<b>&Eacute;volution depuis le SitRep N&deg;",
+    sprintf("%03d", as.integer(prev$sitrep_no)),
+    " :</b> ",
+    if (!is.na(nvx_cas)) {
+      paste0(if (nvx_cas >= 0) "+" else "", .fmt(nvx_cas), " nouveaux cas")
+    } else {
+      "nouveaux cas : n/d"
+    },
+    if (!is.na(nvx_dec)) {
+      paste0(", ", if (nvx_dec >= 0) "+" else "", .fmt(nvx_dec), " d&eacute;c&egrave;s")
+    } else {
+      ""
+    },
+    ".</div>",
+
+    if (nzchar(top_html)) {
+      paste0(
+        "<div style='margin-top:18px'>",
+        "<div style='font-size:16px;font-weight:700;margin-bottom:6px'>Zones les plus touch&eacute;es</div>",
+        top_html,
+        "</div>"
+      )
+    } else {
+      ""
+    },
+
+    "<div style='background:#FFF8E8;border-left:4px solid #EF7F1A;padding:12px 14px;margin-top:18px'>",
+    "<div style='font-weight:700;margin-bottom:4px'>Points saillants</div>",
+
+    if (exists("z", inherits = FALSE) && !is.null(z) && nrow(z) > 0) {
+      paste0(
+        "Parmi les zones renseign&eacute;es, <b>",
+        z$nom[1],
+        "</b> pr&eacute;sente le plus grand nombre cumul&eacute;, avec <b>",
+        .fmt(z$cas[1]),
+        " cas</b>. "
+      )
+    } else {
+      "La r&eacute;partition par zone de sant&eacute; n'est pas disponible dans les donn&eacute;es analys&eacute;es. "
+    },
+
+    if (!is.na(nvx_cas) && nvx_cas > 0) {
+      paste0(
+        "La comparaison avec le SitRep pr&eacute;c&eacute;dent montre une augmentation de <b>",
+        .fmt(nvx_cas),
+        " cas</b>"
+      )
+    } else if (!is.na(nvx_cas) && nvx_cas == 0) {
+      "Aucun cas cumul&eacute; suppl&eacute;mentaire n'est enregistr&eacute; par rapport au SitRep pr&eacute;c&eacute;dent"
+    } else {
+      "L'&eacute;volution des cas par rapport au SitRep pr&eacute;c&eacute;dent n'est pas disponible"
+    },
+
+    if (!is.na(nvx_dec) && nvx_dec > 0) {
+      paste0(
+        " et de <b>",
+        .fmt(nvx_dec),
+        " d&eacute;c&egrave;s</b>."
+      )
+    } else {
+      "."
+    },
+
+    "</div>",
+
+    "<p style='font-size:12px;color:#666;margin-top:18px'>",
+    if (file.exists(pdf_fp)) {
+      "Le rapport officiel complet est joint au format PDF. "
+    } else {
+      "Le PDF officiel n'&eacute;tait pas disponible au moment de l'envoi. "
+    },
+    "Donn&eacute;es provisoires, source INSP/INRB RDC.</p>",
+
+    "</div>"
+  )
+
   subject <- sprintf("PREIS MVE RDC - SitRep N%03d : %s cas / %s deces (CFR %s)",
                      sno, .fmt(cas), .fmt(dec), cfr_txt)
   
@@ -138,7 +208,7 @@ preis_email_enrichi <- function(root = NULL, force = FALSE) {
     "use_ssl = (str(os.environ.get('SMTP_SSL','')).lower() in ('1','true','yes')) or port == 465",
     "msg = EmailMessage()",
     "msg['From'] = cfg['from']; msg['To'] = ', '.join(cfg['to']); msg['Subject'] = cfg['subject']",
-    "msg.set_content('Ouvrez cet e-mail en HTML, ou le dashboard PREIS.')",
+    "msg.set_content('Consultez la synthese PREIS et le rapport officiel joint.')",
     "msg.add_alternative(cfg['html'], subtype='html')",
     "for a in cfg.get('attachments', []):",
     "    p = Path(a)",
