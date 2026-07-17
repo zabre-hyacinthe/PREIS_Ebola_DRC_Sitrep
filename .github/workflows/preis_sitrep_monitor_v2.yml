@@ -204,6 +204,23 @@ jobs:
           Rscript --vanilla scripts/03_analyse_consolidee.R || echo "03_analyse_consolidee.R en erreur"
 
 
+
+      # PREIS DASHBOARD DATA SYNC START
+      - name: Synchroniser les donnees du dashboard
+        if: always()
+        run: |
+          mkdir -p dashboard_ebola/data
+          if [ -f outputs/analyse/serie_temporelle_nationale.csv ]; then
+            cp -f outputs/analyse/serie_temporelle_nationale.csv dashboard_ebola/data/serie_temporelle_nationale.csv
+          else
+            echo 'Serie nationale absente - synchronisation ignoree'
+          fi
+          if [ -f outputs/analyse/tableau_zones_sante.csv ]; then
+            cp -f outputs/analyse/tableau_zones_sante.csv dashboard_ebola/data/tableau_zones_sante.csv
+          else
+            echo 'Tableau zones absent - synchronisation ignoree'
+          fi
+      # PREIS DASHBOARD DATA SYNC END
       # PREIS ENRICHED EMAIL START
       - name: Send PREIS enriched email
         if: always() && env.PREIS_SEND_EMAIL == 'true'
@@ -237,6 +254,8 @@ jobs:
           git add outputs/analyse/tableau_zones_sante.csv || true
           git add outputs/audit/ || true
           git add data/preis_email_enrichi_state.csv || true
+          git add dashboard_ebola/data/serie_temporelle_nationale.csv || true
+          git add dashboard_ebola/data/tableau_zones_sante.csv || true
           git status --short
           git commit -m "PREIS pipeline: monitor + extraction + analyse [skip ci]" || echo "No changes to commit"
           git pull --rebase origin main || echo "No remote changes to rebase"

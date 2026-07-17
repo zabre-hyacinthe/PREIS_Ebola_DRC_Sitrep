@@ -334,13 +334,13 @@ SERIE_FP <- prefere_github(
   c(file.path(DATA_DIR, "serie_temporelle_nationale.csv"),
     file.path(ROOT_DIR, "dashboard_ebola", "data", "serie_temporelle_nationale.csv"),
     file.path(ANALYSE_DIR, "serie_temporelle_nationale.csv")),
-  paste0(GH_RAW, "/dashboard_ebola/data/serie_temporelle_nationale.csv")
+  paste0(GH_RAW, "/outputs/analyse/serie_temporelle_nationale.csv")
 )
 ZONES_FP <- prefere_github(
   c(file.path(DATA_DIR, "tableau_zones_sante.csv"),
     file.path(ROOT_DIR, "dashboard_ebola", "data", "tableau_zones_sante.csv"),
     file.path(ANALYSE_DIR, "tableau_zones_sante.csv")),
-  paste0(GH_RAW, "/dashboard_ebola/data/tableau_zones_sante.csv")
+  paste0(GH_RAW, "/outputs/analyse/tableau_zones_sante.csv")
 )
 AFRICA_FP <- find_first(c(
   file.path(CURATED_DIR, "africa_countries_rcc.geojson"),
@@ -924,6 +924,94 @@ ui <- dashboardPage(
 # SERVER
 # ------------------------------------------------------------
 server <- function(input, output, session) {
+  # PREIS AUTO REFRESH DATA START
+  .preis_refresh_ms <- 5L * 60L * 1000L
+
+  .preis_fresh_url <- function(p) {
+    if (length(p) != 1L || is.na(p) || !nzchar(p)) return(p)
+    if (!grepl('^https?://', p)) return(p)
+    sep <- if (grepl('?', p, fixed = TRUE)) '&' else '?'
+    bucket <- floor(as.numeric(Sys.time()) / 300)
+    paste0(p, sep, 'preis_refresh=', bucket)
+  }
+
+  .preis_read_csv_live <- function(p) {
+    tryCatch(
+      readr::read_csv(.preis_fresh_url(p), show_col_types = FALSE),
+      error = function(e) tibble::tibble()
+    )
+  }
+
+  serie_live <- reactive({
+    invalidateLater(.preis_refresh_ms, session)
+    d <- .preis_read_csv_live(SERIE_FP)
+    if (!nrow(d)) return(serie_all)
+    d$sitrep_no <- suppressWarnings(as.integer(d$sitrep_no))
+    d <- d[!is.na(d$sitrep_no), , drop = FALSE]
+    d[order(d$sitrep_no), , drop = FALSE]
+  })
+
+  zones_live <- reactive({
+    invalidateLater(.preis_refresh_ms, session)
+    z <- .preis_read_csv_live(ZONES_FP)
+    if (!nrow(z)) return(zones_all)
+    names(z)[names(z) %in% c('nom','zone','health_zone')] <- 'health_zone'
+    names(z)[names(z) %in% c('cas','cases','total_cases')] <- 'cases'
+    if (!all(c('health_zone','cases') %in% names(z))) return(zones_all)
+    z %>%
+      mutate(
+        health_zone = canon_zone(health_zone),
+        cases = suppressWarnings(as.numeric(cases))
+      ) %>%
+      group_by(health_zone) %>%
+      summarise(cases = sum(cases, na.rm = TRUE), .groups = 'drop') %>%
+      left_join(zone_coords, by = 'health_zone') %>%
+      filter(!is.na(lat), !is.na(lon))
+  })
+
+  long_live <- reactive({
+    invalidateLater(.preis_refresh_ms, session)
+    d <- .preis_read_csv_live(LONG_FP)
+    if (!nrow(d)) return(long_all)
+    d %>% filter(indicator_code %in% names(INDIC_LABELS))
+  })
+
+  daily_live <- reactive({
+    invalidateLater(.preis_refresh_ms, session)
+    d <- .preis_read_csv_live(DAILY_FP)
+    if (!nrow(d)) return(daily_all)
+    d %>% mutate(date = as.Date(date))
+  })
+
+  sno_date_live <- reactive({
+    s <- serie_live()
+    if (!nrow(s) || !all(c('sitrep_no','date') %in% names(s))) return(tibble())
+    s %>% select(sitrep_no, date) %>% distinct()
+  })
+
+  observe({
+    s <- serie_live()
+    if (!nrow(s) || !('sitrep_no' %in% names(s))) return()
+    snos <- sort(unique(suppressWarnings(as.integer(s$sitrep_no))))
+    snos <- snos[is.finite(snos)]
+    if (!length(snos)) return()
+    updateSliderInput(
+      session, 'sitrep',
+      min = min(snos), max = max(snos), value = max(snos)
+    )
+  })
+
+  observe({
+    d <- long_live()
+    if (!nrow(d) || !('indicator_code' %in% names(d))) return()
+    present <- intersect(names(INDIC_LABELS), unique(d$indicator_code))
+    choices <- setNames(present, INDIC_LABELS[present])
+    selected <- isolate(input$kpi_indic)
+    if (is.null(selected) || !(selected %in% present))
+      selected <- if (length(present)) present[1] else NULL
+    updateSelectInput(session, 'kpi_indic', choices = choices, selected = selected)
+  })
+  # PREIS AUTO REFRESH DATA END
   # Langue courante (réactive) + helper de traduction
   cur_lang <- reactive({
     l <- input$ui_lang
@@ -968,8 +1056,8 @@ server <- function(input, output, session) {
 
   # Série filtrée jusqu'au SitRep choisi
   serie_f <- reactive({
-    if (nrow(serie_all) == 0) return(serie_all)
-    serie_all %>% filter(sitrep_no <= input$sitrep) %>% arrange(sitrep_no)
+    if (nrow(serie_live()) == 0) return(serie_live())
+    serie_live() %>% filter(sitrep_no <= input$sitrep) %>% arrange(sitrep_no)
   })
 
   # Dernier point de la série filtrée
@@ -979,7 +1067,7 @@ server <- function(input, output, session) {
 
   # Zones filtrées (province + seuil)
   zones_f <- reactive({
-    z <- zones_all
+    z <- zones_live()
     if (nrow(z) == 0) return(z)
     if (!is.null(input$province) && input$province != "Toutes")
       z <- z %>% filter(province == input$province)
@@ -1016,8 +1104,8 @@ server <- function(input, output, session) {
     zf <- zones_f()
     ind <- if (is.null(input$map_indic)) "cases" else input$map_indic
     # Récupère décès / CFR / nouveaux cas depuis les données zone si dispo
-    zd <- if (exists("daily_all") && nrow(daily_all))
-      daily_all %>% filter(level == "Zone") %>%
+    zd <- if (nrow(daily_live()))
+      daily_live() %>% filter(level == "Zone") %>%
         group_by(zone) %>% arrange(date) %>% slice_tail(n = 1) %>% ungroup() else NULL
     zf$deaths   <- if (!is.null(zd)) zd$cum_deaths[match(zf$health_zone, zd$zone)] else NA
     zf$cfr      <- if (!is.null(zd)) zd$cfr[match(zf$health_zone, zd$zone)] else NA
@@ -1242,11 +1330,11 @@ server <- function(input, output, session) {
   # KPI géographiques
   kpi_geo <- reactive({
     z <- zones_f()
-    if (nrow(z) == 0) return(list(active=0, total=nrow(zones_all), conc=NA))
+    if (nrow(z) == 0) return(list(active=0, total=nrow(zones_live()), conc=NA))
     total_cases <- sum(z$cases, na.rm = TRUE)
     top3 <- sum(head(sort(z$cases, decreasing=TRUE), 3), na.rm = TRUE)
     conc <- if (total_cases > 0) round(100*top3/total_cases, 0) else NA
-    list(active = nrow(z), total = nrow(zones_all), conc = conc)
+    list(active = nrow(z), total = nrow(zones_live()), conc = conc)
   })
 
   # Complétude : % SitReps avec détail par zone (proxy de fiabilité)
@@ -1326,12 +1414,12 @@ server <- function(input, output, session) {
 
   # Évolution d'un indicateur choisi, du SitRep 1 au SitRep filtré
   output$plot_kpi_evol <- renderPlotly({
-    if (nrow(long_all) == 0 || is.null(input$kpi_indic))
+    if (nrow(long_live()) == 0 || is.null(input$kpi_indic))
       return(plotly_empty() %>% layout(title = "Base d'indicateurs non disponible"))
     code <- input$kpi_indic
-    df <- long_all %>%
+    df <- long_live() %>%
       filter(indicator_code == code, sitrep_no <= input$sitrep) %>%
-      left_join(sno_date, by = "sitrep_no") %>%
+      left_join(sno_date_live(), by = "sitrep_no") %>%
       arrange(sitrep_no) %>%
       mutate(date = as.Date(date))
     if (nrow(df) == 0)
@@ -1382,23 +1470,23 @@ server <- function(input, output, session) {
   # Suivi journalier (national + province)
   # ============================================================
   daily_f <- reactive({
-    if (nrow(daily_all) == 0) return(daily_all)
+    if (nrow(daily_live()) == 0) return(daily_live())
     if (input$daily_level == "National") {
-      daily_all %>% filter(level == "National")
+      daily_live() %>% filter(level == "National")
     } else if (input$daily_level == "Province") {
       pr <- if (is.null(input$daily_prov)) "Ituri" else input$daily_prov
-      daily_all %>% filter(level == "Province", province == pr)
+      daily_live() %>% filter(level == "Province", province == pr)
     } else {
       zn <- input$daily_zone
-      if (is.null(zn) || zn == "") return(daily_all[0, ])
-      daily_all %>% filter(level == "Zone", zone == zn)
+      if (is.null(zn) || zn == "") return(daily_live()[0, ])
+      daily_live() %>% filter(level == "Zone", zone == zn)
     }
   })
 
   # Peupler la liste des zones disponibles (celles retenues par le module)
   observe({
-    zones_av <- if (nrow(daily_all))
-      sort(unique(daily_all$zone[daily_all$level == "Zone"])) else character(0)
+    zones_av <- if (nrow(daily_live()))
+      sort(unique(daily_live()$zone[daily_live()$level == "Zone"])) else character(0)
     updateSelectInput(session, "daily_zone", choices = zones_av,
                       selected = if (length(zones_av)) zones_av[1] else NULL)
   })
@@ -1489,13 +1577,13 @@ server <- function(input, output, session) {
 
   # ---- Analyse CFR : nuage létalité vs cas par zone (couleurs Africa CDC) ----
   output$cfr_scatter <- renderPlotly({
-    if (nrow(daily_all) == 0) return(plotly_empty())
+    if (nrow(daily_live()) == 0) return(plotly_empty())
     # Dernier point par zone
-    zlast <- daily_all %>% filter(level == "Zone") %>%
+    zlast <- daily_live() %>% filter(level == "Zone") %>%
       group_by(zone, province) %>% arrange(date) %>% slice_tail(n = 1) %>% ungroup() %>%
       filter(cum_cases > 0)
     if (nrow(zlast) == 0) return(plotly_empty())
-    natl <- daily_all %>% filter(level == "National") %>% arrange(date) %>% tail(1)
+    natl <- daily_live() %>% filter(level == "National") %>% arrange(date) %>% tail(1)
     cfr_nat <- if (nrow(natl)) natl$cfr else NA
     pal <- c("Ituri" = "#E31C23", "Nord-Kivu" = "#00843E", "Sud-Kivu" = "#F0B323")
     zlast$col <- pal[zlast$province]
@@ -1529,10 +1617,10 @@ server <- function(input, output, session) {
   # ============================================================
   # Chiffres clés recalculés depuis les données actuelles
   faq_facts <- reactive({
-    natl <- if (nrow(daily_all))
-      daily_all %>% filter(level == "National") %>% arrange(date) %>% tail(1) else NULL
-    zlast <- if (nrow(daily_all))
-      daily_all %>% filter(level == "Zone") %>%
+    natl <- if (nrow(daily_live()))
+      daily_live() %>% filter(level == "National") %>% arrange(date) %>% tail(1) else NULL
+    zlast <- if (nrow(daily_live()))
+      daily_live() %>% filter(level == "Zone") %>%
         group_by(zone, province) %>% arrange(date) %>% slice_tail(n = 1) %>% ungroup() else NULL
     top_cases <- if (!is.null(zlast)) zlast %>% arrange(desc(cum_cases)) %>% head(3) else NULL
     top_cfr   <- if (!is.null(zlast)) zlast %>% filter(cum_cases >= 10) %>%
@@ -1673,7 +1761,7 @@ server <- function(input, output, session) {
     AU_GREEN <- "#00843E"; AU_RED <- "#E31C23"; AU_GOLD <- "#F0B323"
     pal <- c("Ituri" = AU_RED, "Nord-Kivu" = AU_GREEN, "Sud-Kivu" = AU_GOLD)
     if (q == "q_national_trend") {
-      df <- daily_all %>% filter(level == "National") %>% arrange(date)
+      df <- daily_live() %>% filter(level == "National") %>% arrange(date)
       plot_ly(df, x = ~date) %>%
         add_bars(y = ~pmax(new_cases,0), name = "Nouveaux cas/j", marker = list(color = AU_GREEN)) %>%
         add_lines(y = ~cum_cases, name = "Cumul", yaxis = "y2", line = list(color = AU_RED, width = 2)) %>%
@@ -1693,7 +1781,7 @@ server <- function(input, output, session) {
         layout(xaxis = list(title = "Cas cumulés (log)", type = "log"),
                yaxis = list(title = "Létalité provisoire (%)"), margin = list(t = 20))
     } else if (q == "q_province") {
-      pv <- daily_all %>% filter(level == "Province") %>%
+      pv <- daily_live() %>% filter(level == "Province") %>%
         group_by(province) %>% arrange(date) %>% slice_tail(n = 1) %>% ungroup()
       plot_ly(pv, x = ~province, y = ~cum_cases, type = "bar",
               marker = list(color = unname(pal[pv$province])),
