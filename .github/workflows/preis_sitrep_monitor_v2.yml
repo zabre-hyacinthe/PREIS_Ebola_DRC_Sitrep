@@ -125,12 +125,15 @@ jobs:
           FORCE_SEND: false
           PREIS_FORCE_SEND: false
         run: |
-          Rscript --vanilla -e 'parse(file="scripts/00_email_smtp_base.R", encoding="UTF-8"); parse(file="scripts/08_cloud_sitrep_monitor.R", encoding="UTF-8"); if (file.exists("scripts/10_whatsapp_notify.R")) parse(file="scripts/10_whatsapp_notify.R", encoding="UTF-8"); cat("R parse OK\n")'
+          Rscript --vanilla -e 'parse(file="scripts/00_email_smtp_base.R", encoding="UTF-8"); parse(file="scripts/08_cloud_sitrep_monitor.R", encoding="UTF-8"); parse(file="scripts/preis_safe_scientific_email.R", encoding="UTF-8"); parse(file="preis_email_enrichi.R", encoding="UTF-8"); if (file.exists("scripts/10_whatsapp_notify.R")) parse(file="scripts/10_whatsapp_notify.R", encoding="UTF-8"); cat("R parse OK\n")'
 
       # PREIS SAFE EMAIL GUARANTEE START
       - name: PREIS safe scientific email guarantee
         if: always()
         env:
+          # Keep the robust INSP/PDF resolver, but do not send the old PDF-only email.
+          # The single notification is sent later by preis_email_enrichi.R after analysis.
+          PREIS_SAFE_EMAIL_ENABLED: "false"
           PREIS_FORCE_SEND: ${{ github.event_name == 'workflow_dispatch' && inputs.force_send || 'false' }}
           FORCE_SEND: ${{ github.event_name == 'workflow_dispatch' && inputs.force_send || 'false' }}
           PREIS_SAFE_EMAIL_TO: ${{ secrets.PREIS_SAFE_EMAIL_TO }}

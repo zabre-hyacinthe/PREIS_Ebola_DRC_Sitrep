@@ -881,9 +881,11 @@ write_secret_file <- function(dir, name, value) {
 
 state_file <- file.path(getwd(), 'data', 'preis_safe_email_notification_state.csv')
 force_send <- truthy(env_get(c('PREIS_FORCE_SEND', 'FORCE_SEND', 'INPUT_FORCE_SEND'), 'false'))
+safe_email_enabled <- truthy(env_get(c('PREIS_SAFE_EMAIL_ENABLED', 'SAFE_EMAIL_ENABLED'), 'true'))
 
 log_msg('PREIS safe scientific email layer started')
 log_msg('force_send=', force_send)
+log_msg('safe_email_enabled=', safe_email_enabled)
 
 latest <- find_latest_sitrep(max_pages = 5)
 sitrep_number <- latest$number[1]
@@ -939,6 +941,16 @@ pdf_info <- list(
   reason = if (isTRUE(pdf_attached)) '' else 'Official PDF could not be downloaded automatically.'
 )
 if (nzchar(pdf_url)) log_msg('PDF URL: ', pdf_url) else log_msg('PDF URL: not found')
+
+# The resolver/downloader may be kept active without sending the legacy PDF-only email.
+# The enriched email is sent later, after extraction and consolidated analysis.
+if (!safe_email_enabled) {
+  log_msg(
+    'Legacy safe email disabled: resolver completed; ',
+    'notification delegated to preis_email_enrichi.R.'
+  )
+  quit(save = 'no', status = 0)
+}
 
 state <- data.frame(sitrep_number = integer(), notified_utc = character(), stringsAsFactors = FALSE)
 if (file.exists(state_file)) {
