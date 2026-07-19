@@ -17,6 +17,17 @@
 # 00 — SETUP
 # ============================================================
 
+# CRAN repository must be explicit in non-interactive environments
+# such as GitHub Actions. This protects every install.packages()
+# call executed by this master script or by a subsequently sourced
+# module. It does not modify the PREIS detection or PDF resolver.
+.preis_cran_repo <- Sys.getenv(
+  "PREIS_CRAN_REPO",
+  unset = "https://cloud.r-project.org"
+)
+options(repos = c(CRAN = .preis_cran_repo))
+
+
 BASE_DIR           <- Sys.getenv("GITHUB_WORKSPACE",
                                  unset = "D:/PREIS_Ebola_DRC_Sitrep_FV_12.06.26")
 SCRIPT_DIR         <- file.path(BASE_DIR, "scripts")
@@ -60,8 +71,34 @@ packages <- c(
 install_missing <- packages[
   !vapply(packages, requireNamespace, logical(1), quietly = TRUE)
 ]
+
+cat("CRAN repository:", unname(getOption("repos")[["CRAN"]]), "\n")
+cat("R library paths:", paste(.libPaths(), collapse = " | "), "\n")
+
 if (length(install_missing) > 0) {
-  install.packages(install_missing)
+  cat(
+    "Installing missing R packages:",
+    paste(install_missing, collapse = ", "),
+    "\n"
+  )
+
+  install.packages(
+    install_missing,
+    repos = c(CRAN = .preis_cran_repo),
+    dependencies = NA
+  )
+}
+
+still_missing <- packages[
+  !vapply(packages, requireNamespace, logical(1), quietly = TRUE)
+]
+
+if (length(still_missing) > 0) {
+  stop(
+    "Required R packages remain unavailable after installation: ",
+    paste(still_missing, collapse = ", "),
+    call. = FALSE
+  )
 }
 
 suppressPackageStartupMessages({
@@ -1413,6 +1450,8 @@ run_preis_pipeline <- function(
     dplyr::filter(
       is.na(extracted) |
         !extracted |
+        is.na(date_raw) |
+        !nzchar(trimws(as.character(date_raw))) |
         !sitrep_no %in% existing_indicator_nos |
         force_redownload
     ) %>%
@@ -1475,6 +1514,34 @@ run_preis_pipeline <- function(
     lines <- extract_pdf_text(local_pdf, sno)
     if (is.null(lines) || nrow(lines) == 0) next
 
+    # PREIS PATCH EARLY PDF BRIDGE v2 — concordance numéro interne
+    # Le PDF n'est traité que si son en-tête officiel correspond au numéro
+    # porté par le fichier/registre. Aucun indicateur n'est écrit sinon.
+    header_text_validation <- paste(
+      lines$line_text[lines$page <= 2],
+      collapse = " "
+    )
+    internal_no_match <- stringr::str_match(
+      header_text_validation,
+      stringr::regex(
+        "SitRep\\s*N\\s*[°ºo]?\\s*0*([0-9]{1,3})",
+        ignore_case = TRUE
+      )
+    )
+    internal_no <- suppressWarnings(as.integer(internal_no_match[1, 2]))
+    if (is.na(internal_no) || internal_no != as.integer(sno)) {
+      cat(
+        "   VALIDATION BLOQUANTE: numéro interne du PDF =",
+        ifelse(is.na(internal_no), "non détecté", internal_no),
+        "mais numéro attendu =", sno, "\n"
+      )
+      registry$extracted[registry$pdf_url == purl] <- FALSE
+      registry$analysed[registry$pdf_url == purl] <- FALSE
+      registry$last_updated[registry$pdf_url == purl] <- as.character(Sys.time())
+      next
+    }
+    cat("   Numéro interne du PDF validé: N", sprintf("%03d", internal_no), "\n", sep = "")
+
     # PREIS PATCH EARLY PDF BRIDGE v1 — date officielle du PDF
     # Ne complète date_raw que lorsqu'elle est absente, à partir de
     # l'en-tête officiel "SitRep N°NNN/MVB_DD/MM/YYYY".
@@ -1515,7 +1582,62 @@ run_preis_pipeline <- function(
     # Extract indicators
     indics <- extract_indicators(lines)
     cat("   Indicators extracted:", nrow(indics), "\n")
-    if (nrow(indics) > 0) all_indicators[[i]] <- indics
+
+    # PREIS PATCH EARLY PDF BRIDGE v2 — indicateurs obligatoires
+    required_codes <- c(
+      "cumulative_confirmed_cases",
+      "cumulative_deaths"
+    )
+    missing_required <- setdiff(
+      required_codes,
+      unique(as.character(indics$indicator_code))
+    )
+
+    get_indicator_value <- function(code) {
+      values <- suppressWarnings(as.numeric(
+        indics$value[indics$indicator_code == code]
+      ))
+      values <- values[is.finite(values)]
+      if (length(values) == 0) NA_real_ else values[1]
+    }
+
+    cases_check <- get_indicator_value("cumulative_confirmed_cases")
+    deaths_check <- get_indicator_value("cumulative_deaths")
+
+    plausible_required <- length(missing_required) == 0 &&
+      is.finite(cases_check) && cases_check > 0 &&
+      is.finite(deaths_check) && deaths_check >= 0 &&
+      deaths_check <= cases_check
+
+    if (!plausible_required) {
+      cat(
+        "   VALIDATION BLOQUANTE: indicateurs obligatoires absents ou non plausibles.",
+        " cas=", cases_check, " décès=", deaths_check,
+        if (length(missing_required) > 0) {
+          paste0(" manquants=", paste(missing_required, collapse = ","))
+        } else "",
+        "\n", sep = ""
+      )
+      registry$extracted[registry$pdf_url == purl] <- FALSE
+      registry$analysed[registry$pdf_url == purl] <- FALSE
+      registry$last_updated[registry$pdf_url == purl] <- as.character(Sys.time())
+      next
+    }
+
+    if (!"case_fatality_ratio" %in% indics$indicator_code) {
+      indics <- dplyr::bind_rows(
+        indics,
+        tibble::tibble(
+          sitrep_no = as.integer(sno),
+          indicator_code = "case_fatality_ratio",
+          domain = "deaths",
+          value = round(100 * deaths_check / cases_check, 1),
+          extraction_rule = "computed_from_pdf_totals"
+        )
+      )
+    }
+
+    all_indicators[[i]] <- indics
 
     # Extract health zones
     hz <- extract_hz_from_lines(lines)

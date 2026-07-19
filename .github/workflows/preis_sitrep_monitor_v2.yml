@@ -88,15 +88,58 @@ jobs:
             libcurl4-openssl-dev \
             libssl-dev \
             libxml2-dev \
+            libpoppler-cpp-dev \
+            libfontconfig1-dev \
             make
 
-      - name: Install R packages
+      - name: Configure CRAN and install all PREIS R packages
+        shell: bash
+        env:
+          PREIS_CRAN_REPO: https://cloud.r-project.org
         run: |
-          Rscript --vanilla -e 'install.packages(c("httr","rvest","xml2","stringr","dplyr","readr","tibble","purrr","digest","base64enc","jsonlite"), repos="https://cloud.r-project.org")'
+          Rscript --vanilla - <<'RSCRIPT'
+          cran <- Sys.getenv(
+            "PREIS_CRAN_REPO",
+            unset = "https://cloud.r-project.org"
+          )
+          options(repos = c(CRAN = cran))
 
-      - name: Confirm R packages
-        run: |
-          Rscript --vanilla -e 'pkgs <- c("httr","rvest","xml2","stringr","dplyr","readr","tibble","purrr","digest","base64enc","jsonlite"); missing <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly=TRUE)]; if(length(missing)>0) stop("Packages manquants: ", paste(missing, collapse=", ")); cat("All R packages OK\n")'
+          pkgs <- c(
+            "httr", "rvest", "xml2", "stringr", "dplyr",
+            "readr", "tibble", "tidyr", "purrr", "digest",
+            "base64enc", "jsonlite", "pdftools", "lubridate",
+            "ggplot2", "openxlsx", "zoo", "glue"
+          )
+
+          cat("CRAN repository:", getOption("repos")[["CRAN"]], "\n")
+          cat("R library paths:", paste(.libPaths(), collapse = " | "), "\n")
+
+          missing <- pkgs[
+            !vapply(pkgs, requireNamespace, logical(1), quietly = TRUE)
+          ]
+
+          if (length(missing) > 0) {
+            cat("Installing:", paste(missing, collapse = ", "), "\n")
+            install.packages(
+              missing,
+              repos = c(CRAN = cran),
+              dependencies = NA
+            )
+          }
+
+          missing_after <- pkgs[
+            !vapply(pkgs, requireNamespace, logical(1), quietly = TRUE)
+          ]
+
+          if (length(missing_after) > 0) {
+            stop(
+              "Packages still missing: ",
+              paste(missing_after, collapse = ", ")
+            )
+          }
+
+          cat("All PREIS R packages are available.\n")
+          RSCRIPT
 
       - name: Check email secrets
         run: |
@@ -159,22 +202,57 @@ jobs:
           exit 0
       # PREIS SAFE EMAIL STATE COMMIT END
       - name: Run PREIS SitRep monitor
+        continue-on-error: true
         run: |
           Rscript --vanilla scripts/08_cloud_sitrep_monitor.R
 
-      # PREIS END-TO-END ANALYTICS START
-      # La détection précoce et le téléchargement restent inchangés.
-      # Le pipeline maître traite ensuite le dernier PDF validé, y compris
-      # lorsqu'il n'est pas encore visible sur la page publique.
-      - name: Install R packages pipeline (master + analyse)
+      # PREIS END-TO-END ANALYTICS V2 START
+      # Le détecteur précoce et le résolveur restent inchangés.
+      # Le pipeline maître consomme ensuite le PDF officiel déjà présent
+      # dans data/pdf, même avant son affichage sur la page publique.
+      - name: Verify master pipeline R packages
+        if: always()
+        env:
+          PREIS_CRAN_REPO: https://cloud.r-project.org
         run: |
-          Rscript --vanilla -e 'pkgs <- c("pdftools","tidyr","lubridate","ggplot2","openxlsx","zoo","glue"); to_install <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly=TRUE)]; if(length(to_install)>0) install.packages(to_install, repos="https://cloud.r-project.org")'
+          Rscript --vanilla - <<'RSCRIPT'
+          options(
+            repos = c(
+              CRAN = Sys.getenv(
+                "PREIS_CRAN_REPO",
+                unset = "https://cloud.r-project.org"
+              )
+            )
+          )
+
+          pkgs <- c(
+            "dplyr", "readr", "stringr", "tibble", "tidyr",
+            "purrr", "openxlsx", "glue", "lubridate",
+            "rvest", "httr", "pdftools", "base64enc",
+            "ggplot2", "zoo", "xml2", "digest", "jsonlite"
+          )
+
+          missing <- pkgs[
+            !vapply(pkgs, requireNamespace, logical(1), quietly = TRUE)
+          ]
+
+          if (length(missing) > 0) {
+            stop(
+              "Master pipeline packages missing before execution: ",
+              paste(missing, collapse = ", ")
+            )
+          }
+
+          cat("Master pipeline package verification OK.\n")
+          RSCRIPT
 
       - name: Parse PREIS master and validation scripts
         run: |
           Rscript --vanilla -e 'parse(file="scripts/00_PREIS_MASTER_AUTOMATION.R", encoding="UTF-8"); parse(file="scripts/12_validate_pipeline_freshness.R", encoding="UTF-8"); cat("Master and validation scripts parse OK\n")'
 
       - name: Run PREIS master automation
+        env:
+          PREIS_CRAN_REPO: https://cloud.r-project.org
         run: |
           Rscript --vanilla scripts/00_PREIS_MASTER_AUTOMATION.R
 
@@ -190,9 +268,7 @@ jobs:
       - name: Validate SitRep pipeline freshness
         run: |
           Rscript --vanilla scripts/12_validate_pipeline_freshness.R
-      # PREIS END-TO-END ANALYTICS END
-
-
+      # PREIS END-TO-END ANALYTICS V2 END
       # PREIS DASHBOARD DATA SYNC START
       - name: Synchroniser les donnees du dashboard
         if: success()
