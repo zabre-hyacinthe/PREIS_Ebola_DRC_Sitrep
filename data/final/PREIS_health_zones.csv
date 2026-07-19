@@ -861,3 +861,78 @@ sitrep_no,page,line_no,health_zone,confidence,evidence_line,rule
 61,1,12,Kyondo,NA,"• Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha, Masereka, Vuhovi, Mabalako et",known_dictionary_match
 61,1,12,Oicha,NA,"• Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha, Masereka, Vuhovi, Mabalako et",known_dictionary_match
 61,1,14,Miti-Murhesa,NA,• Sud-Kivu (1/34) : Miti-Murhesa,known_dictionary_match
+55,1,9,Aru,NA,"• Ituri (25/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+55,1,9,Aungba,NA,"• Ituri (25/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+55,1,9,Bambu,NA,"• Ituri (25/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+55,1,9,Bunia,NA,"• Ituri (25/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+55,1,9,Damas,NA,"• Ituri (25/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+55,1,9,Gety,NA,"• Ituri (25/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+55,1,9,Kilo,NA,"• Ituri (25/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+55,1,9,Komanda,NA,"• Ituri (25/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+55,1,9,Lita,NA,"• Ituri (25/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+55,1,10,Logo,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+55,1,10,Mambasa,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+55,1,10,Mangala,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+55,1,10,Mongbwalu,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+55,1,10,Nizi,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+55,1,10,Nyankunde,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+55,1,10,Rimba,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+55,1,10,Rwampara,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+55,1,12,Beni,NA,"(37) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+55,1,12,Butembo,NA,"(37) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+55,1,12,Goma,NA,"(37) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+55,1,12,Kalunguta,NA,"(37) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+55,1,12,Katwa,NA,"(37) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+55,1,12,Kyondo,NA,"(37) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+55,1,12,Oicha,NA,"(37) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+55,1,14,Miti-Murhesa,NA,• Sud-Kivu (1/34) : Miti-Murhesa,known_dictionary_match
+54,1,9,Aru,NA,"• Ituri (25/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+54,1,9,Aungba,NA,"• Ituri (25/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+54,1,9,Bambu,NA,"• Ituri (25/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+54,1,9,Bunia,NA,"• Ituri (25/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+54,1,9,Damas,NA,"• Ituri (25/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+54,1,9,Gety,NA,"• Ituri (25/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+54,1,9,Kilo,NA,"• Ituri (25/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+54,1,9,Komanda,NA,"• Ituri (25/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+54,1,9,Lita,NA,"• Ituri (25/36) : Aru, Aungba, Bambu, Bunia, Damas, Drodro, Gety, Kilo, Komanda, Lita,",known_dictionary_match
+54,1,10,Logo,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+54,1,10,Mambasa,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+54,1,10,Mangala,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+54,1,10,Mongbwalu,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+54,1,10,Nizi,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+54,1,10,Nyankunde,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+54,1,10,Rimba,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+54,1,10,Rwampara,NA,"Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara, Tchomia,",known_dictionary_match
+54,1,12,Beni,NA,"(37) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+54,1,12,Butembo,NA,"(37) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+54,1,12,Goma,NA,"(37) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+54,1,12,Kalunguta,NA,"(37) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+54,1,12,Katwa,NA,"(37) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+54,1,12,Kyondo,NA,"(37) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+54,1,12,Oicha,NA,"(37) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+54,1,14,Miti-Murhesa,NA,• Sud-Kivu (1/34) : Miti-Murhesa,known_dictionary_match
+53,1,9,Aru,NA,"• Ituri (25/36) : Aru, Aungba, Bambu, Boga, Bunia, Damas, Drodro, Gety, Kilo, Komanda,",known_dictionary_match
+53,1,9,Aungba,NA,"• Ituri (25/36) : Aru, Aungba, Bambu, Boga, Bunia, Damas, Drodro, Gety, Kilo, Komanda,",known_dictionary_match
+53,1,9,Bambu,NA,"• Ituri (25/36) : Aru, Aungba, Bambu, Boga, Bunia, Damas, Drodro, Gety, Kilo, Komanda,",known_dictionary_match
+53,1,9,Bunia,NA,"• Ituri (25/36) : Aru, Aungba, Bambu, Boga, Bunia, Damas, Drodro, Gety, Kilo, Komanda,",known_dictionary_match
+53,1,9,Damas,NA,"• Ituri (25/36) : Aru, Aungba, Bambu, Boga, Bunia, Damas, Drodro, Gety, Kilo, Komanda,",known_dictionary_match
+53,1,9,Gety,NA,"• Ituri (25/36) : Aru, Aungba, Bambu, Boga, Bunia, Damas, Drodro, Gety, Kilo, Komanda,",known_dictionary_match
+53,1,9,Kilo,NA,"• Ituri (25/36) : Aru, Aungba, Bambu, Boga, Bunia, Damas, Drodro, Gety, Kilo, Komanda,",known_dictionary_match
+53,1,9,Komanda,NA,"• Ituri (25/36) : Aru, Aungba, Bambu, Boga, Bunia, Damas, Drodro, Gety, Kilo, Komanda,",known_dictionary_match
+53,1,10,Lita,NA,"Lita, Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara,",known_dictionary_match
+53,1,10,Logo,NA,"Lita, Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara,",known_dictionary_match
+53,1,10,Mambasa,NA,"Lita, Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara,",known_dictionary_match
+53,1,10,Mangala,NA,"Lita, Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara,",known_dictionary_match
+53,1,10,Mongbwalu,NA,"Lita, Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara,",known_dictionary_match
+53,1,10,Nizi,NA,"Lita, Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara,",known_dictionary_match
+53,1,10,Nyankunde,NA,"Lita, Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara,",known_dictionary_match
+53,1,10,Rimba,NA,"Lita, Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara,",known_dictionary_match
+53,1,10,Rwampara,NA,"Lita, Logo, Mambasa, Mangala, Mongbwalu, Nizi, Nyankunde, Rimba, Rwampara,",known_dictionary_match
+53,1,12,Beni,NA,"(37) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+53,1,12,Butembo,NA,"(37) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+53,1,12,Goma,NA,"(37) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+53,1,12,Kalunguta,NA,"(37) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+53,1,12,Katwa,NA,"(37) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+53,1,12,Kyondo,NA,"(37) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+53,1,12,Oicha,NA,"(37) • Nord-Kivu (11/34) : Beni, Butembo, Goma, Kalunguta, Katwa, Kyondo, Oicha,",known_dictionary_match
+53,1,14,Miti-Murhesa,NA,• Sud-Kivu (1/34) : Miti-Murhesa,known_dictionary_match
