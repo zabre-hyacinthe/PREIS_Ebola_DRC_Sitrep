@@ -1,4 +1,10 @@
 sitrep_no,indicator_code,pdf_value,inrb_value,diff,match
+50,cumulative_confirmed_cases,1528,NA,NA,no_ref
+50,cumulative_deaths,492,NA,NA,no_ref
+51,cumulative_confirmed_cases,1561,NA,NA,no_ref
+51,cumulative_deaths,506,NA,NA,no_ref
+52,cumulative_confirmed_cases,1624,NA,NA,no_ref
+52,cumulative_deaths,521,NA,NA,no_ref
 53,cumulative_confirmed_cases,1708,NA,NA,no_ref
 53,cumulative_deaths,580,NA,NA,no_ref
 54,cumulative_confirmed_cases,1759,NA,NA,no_ref
