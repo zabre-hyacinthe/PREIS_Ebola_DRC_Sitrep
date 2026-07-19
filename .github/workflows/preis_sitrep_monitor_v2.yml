@@ -50,6 +50,7 @@ jobs:
       PREIS_DRY_RUN: 'FALSE'
       PREIS_MONITOR_EMAIL_ENABLED: 'FALSE'
       PREIS_MAX_PAGES: '6'
+      R_LIBS_SITE: /usr/local/lib/R/site-library:/usr/lib/R/site-library
 
       SMTP_USER: ${{ secrets.SMTP_USER }}
       SMTP_PASS: ${{ secrets.SMTP_PASS }}
@@ -90,7 +91,38 @@ jobs:
             libxml2-dev \
             libpoppler-cpp-dev \
             libfontconfig1-dev \
+            libqpdf-dev \
+            pkg-config \
+            r-cran-qpdf \
+            r-cran-pdftools \
             make
+
+
+      - name: Confirm pdftools binary package
+        run: |
+          Rscript --vanilla - <<'RSCRIPT'
+          site_libs <- c(
+            "/usr/local/lib/R/site-library",
+            "/usr/lib/R/site-library"
+          )
+          site_libs <- site_libs[dir.exists(site_libs)]
+          .libPaths(unique(c(site_libs, .libPaths())))
+
+          cat("R library paths:", paste(.libPaths(), collapse = " | "), "\n")
+
+          if (!requireNamespace("pdftools", quietly = TRUE)) {
+            stop(
+              "The Ubuntu pdftools binary package is not visible to R.",
+              call. = FALSE
+            )
+          }
+
+          cat(
+            "pdftools available, version:",
+            as.character(utils::packageVersion("pdftools")),
+            "\n"
+          )
+          RSCRIPT
 
       - name: Configure CRAN and install all PREIS R packages
         shell: bash
@@ -103,6 +135,13 @@ jobs:
             unset = "https://cloud.r-project.org"
           )
           options(repos = c(CRAN = cran))
+
+          site_libs <- c(
+            "/usr/local/lib/R/site-library",
+            "/usr/lib/R/site-library"
+          )
+          site_libs <- site_libs[dir.exists(site_libs)]
+          .libPaths(unique(c(site_libs, .libPaths())))
 
           pkgs <- c(
             "httr", "rvest", "xml2", "stringr", "dplyr",
@@ -224,6 +263,13 @@ jobs:
               )
             )
           )
+
+          site_libs <- c(
+            "/usr/local/lib/R/site-library",
+            "/usr/lib/R/site-library"
+          )
+          site_libs <- site_libs[dir.exists(site_libs)]
+          .libPaths(unique(c(site_libs, .libPaths())))
 
           pkgs <- c(
             "dplyr", "readr", "stringr", "tibble", "tidyr",
