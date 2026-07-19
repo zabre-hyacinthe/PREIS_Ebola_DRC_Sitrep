@@ -97,6 +97,13 @@ LOG_FILE <- file.path(
 
 DRY_RUN <- toupper(Sys.getenv("PREIS_DRY_RUN", "FALSE")) %in% c("TRUE", "1", "YES", "Y")
 
+# PREIS notification delegation.
+# This flag changes only the post-download email action.
+# Detection, PDF resolution, download, state and WhatsApp remain active.
+MONITOR_EMAIL_ENABLED <- toupper(
+  Sys.getenv("PREIS_MONITOR_EMAIL_ENABLED", "TRUE")
+) %in% c("TRUE", "1", "YES", "Y")
+
 log_msg <- function(...) {
   line <- paste0(
     "[",
@@ -386,7 +393,7 @@ already_sent <- function(sitrep_no) {
     ) |>
     dplyr::filter(
       .data$sitrep_no == !!as.integer(sitrep_no),
-      .data$email_status %in% c("sent", "dry_run")
+      .data$email_status %in% c("sent", "dry_run", "delegated")
     )
 
   nrow(hit) > 0
@@ -554,6 +561,7 @@ log_msg("============================================================")
 log_msg("PREIS Ebola RDC â€” Cloud SitRep Monitor started")
 log_msg("ROOT: ", ROOT)
 log_msg("DRY_RUN: ", DRY_RUN)
+log_msg("MONITOR_EMAIL_ENABLED: ", MONITOR_EMAIL_ENABLED)
 log_msg("MAX_PAGES: ", MAX_PAGES)
 
 latest <- scrape_latest_sitrep()
@@ -565,7 +573,7 @@ latest_page_url <- safe_chr(latest$post_url)
 latest_pdf_url <- safe_chr(latest$pdf_url)
 
 if (already_sent(latest_no)) {
-  log_msg("SitRep N", latest_no, " already sent. No duplicate email.")
+  log_msg("SitRep N", latest_no, " already handled. No duplicate notification.")
   quit(save = "no", status = 0)
 }
 
@@ -628,7 +636,16 @@ writeLines(
   useBytes = TRUE
 )
 
-if (DRY_RUN) {
+if (!MONITOR_EMAIL_ENABLED) {
+  email_status <- "delegated"
+  note <- paste(
+    "PDF detected and downloaded.",
+    "Email delegated to preis_email_enrichi.R after analytical validation."
+  )
+  log_msg(
+    "Monitor email delegated; detection and PDF download preserved."
+  )
+} else if (DRY_RUN) {
   log_msg("DRY_RUN=TRUE: email not sent.")
   email_status <- "dry_run"
   note <- "Dry run only; email not sent."
@@ -658,7 +675,7 @@ if (DRY_RUN) {
 state_row <- tibble::tibble(
   run_id = RUN_ID,
   detected_at_utc = format(Sys.time(), "%Y-%m-%d %H:%M:%S", tz = "UTC"),
-  sent_at_utc = if (email_status %in% c("sent", "dry_run")) {
+  sent_at_utc = if (email_status %in% c("sent", "dry_run", "delegated")) {
     format(Sys.time(), "%Y-%m-%d %H:%M:%S", tz = "UTC")
   } else {
     NA_character_
@@ -678,7 +695,8 @@ append_state(state_row)
 log_msg("State updated: ", STATE_FILE)
 log_msg("Email status: ", email_status)
 
-if (email_status == "sent" && exists("preis_send_whatsapp", mode = "function")) {
+if (email_status %in% c("sent", "delegated") &&
+    exists("preis_send_whatsapp", mode = "function")) {
   tryCatch(
     {
       wa <- preis_send_whatsapp(

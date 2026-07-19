@@ -790,6 +790,57 @@ extract_indicators <- function(line_table) {
     c(safe_num(m[1, 2]), safe_num(m[1, 3]))
   }
 
+  # PREIS PATCH EARLY PDF BRIDGE v1 — totaux nationaux avec séparateurs
+  # Exemples couverts : "2 181", "2181", "39,6 % (864 / 2 181)".
+  # Ces règles sont placées avant les anciennes règles ; add() conserve
+  # ensuite la première valeur valide pour chaque indicateur.
+  clean_count <- function(x) {
+    suppressWarnings(as.numeric(gsub("[^0-9]", "", as.character(x))))
+  }
+  count_pattern <- "([0-9]{1,3}(?:[ .\\u00A0][0-9]{3})+|[0-9]{1,6})"
+
+  global_cfr_pattern <- paste0(
+    "l[eé]talit[eé]\\s+globale\\s+(\\d+(?:[.,]\\d+)?)\\s*%\\s*\\(\\s*",
+    count_pattern,
+    "\\s*/\\s*",
+    count_pattern,
+    "\\s*\\)"
+  )
+  global_cfr_match <- stringr::str_match(
+    flat,
+    stringr::regex(global_cfr_pattern, ignore_case = TRUE)
+  )
+  if (!is.na(global_cfr_match[1, 2])) {
+    add("case_fatality_ratio", safe_num(global_cfr_match[1, 2]),
+        "narr_global_cfr_ratio", "deaths")
+    add("cumulative_deaths", clean_count(global_cfr_match[1, 3]),
+        "narr_global_cfr_ratio", "deaths")
+    add("cumulative_confirmed_cases", clean_count(global_cfr_match[1, 4]),
+        "narr_global_cfr_ratio", "cases")
+  }
+
+  total_spaced_pattern <- paste0(
+    "\\bTotal\\s+",
+    count_pattern,
+    "\\s+",
+    count_pattern,
+    "\\s+(\\d+(?:[.,]\\d+)?)\\s*%\\s+(\\d+)\\s+sur"
+  )
+  total_spaced_match <- stringr::str_match(
+    flat,
+    stringr::regex(total_spaced_pattern, ignore_case = TRUE)
+  )
+  if (!is.na(total_spaced_match[1, 2])) {
+    add("cumulative_confirmed_cases", clean_count(total_spaced_match[1, 2]),
+        "table_total_row_spaced", "cases")
+    add("cumulative_deaths", clean_count(total_spaced_match[1, 3]),
+        "table_total_row_spaced", "deaths")
+    add("case_fatality_ratio", safe_num(total_spaced_match[1, 4]),
+        "table_total_row_spaced", "deaths")
+    add("hz_affected_national", safe_num(total_spaced_match[1, 5]),
+        "table_total_row_spaced", "geography")
+  }
+
   # =========================================================
   # PRIORITY 1 — "Total" row of the spatial distribution table
   #   "Total 321 48 15,0% 23 sur 104 (22,1%) 12"
@@ -1213,8 +1264,8 @@ run_preis_pipeline <- function(
   scraped  <- scrape_insp_sitrep_list()
 
   if (nrow(scraped) == 0) {
-    cat("Impossible de scraper la page. Pipeline arrêté.\n")
-    return(invisible(NULL))
+    cat("Aucun post INSP accessible pendant ce run.\n")
+    cat("Le pipeline continue avec les PDF officiels déjà détectés et validés dans data/pdf/.\n")
   }
 
   registry <- load_registry()
@@ -1262,15 +1313,38 @@ run_preis_pipeline <- function(
   # Any data/pdf/SitRep_NN_2026.pdf not already in the registry
   # is added so it gets extracted too.
   # ----------------------------------------------------------
-  local_pdfs <- list.files(PDF_DIR, pattern = "^SitRep_\\d+_2026\\.pdf$",
-                           full.names = TRUE)
+  # PREIS PATCH EARLY PDF BRIDGE v1
+  # Accepte sans renommage les deux conventions officielles déjà utilisées :
+  #   SitRep_63_2026.pdf
+  #   PREIS_DRC_Ebola_SitRep_063.pdf
+  # Cela relie la détection précoce au pipeline analytique sans modifier
+  # le détecteur, le résolveur PDF ni le fichier source téléchargé.
+  local_pdfs <- list.files(
+    PDF_DIR,
+    pattern = "^(SitRep_\\d+_2026|PREIS_DRC_Ebola_SitRep_\\d{3})\\.pdf$",
+    full.names = TRUE
+  )
   if (length(local_pdfs) > 0) {
+    local_names <- basename(local_pdfs)
+    local_nos <- dplyr::case_when(
+      stringr::str_detect(local_names, "^SitRep_\\d+_2026\\.pdf$") ~
+        suppressWarnings(as.integer(stringr::str_match(
+          local_names, "^SitRep_(\\d+)_2026\\.pdf$"
+        )[, 2])),
+      stringr::str_detect(local_names, "^PREIS_DRC_Ebola_SitRep_\\d{3}\\.pdf$") ~
+        suppressWarnings(as.integer(stringr::str_match(
+          local_names, "^PREIS_DRC_Ebola_SitRep_(\\d{3})\\.pdf$"
+        )[, 2])),
+      TRUE ~ NA_integer_
+    )
+
     local_df <- tibble::tibble(
       local_pdf = local_pdfs,
-      sitrep_no = as.integer(stringr::str_match(
-        basename(local_pdfs), "SitRep_(\\d+)_2026")[, 2])
+      sitrep_no = local_nos
     ) %>%
-      dplyr::filter(!is.na(sitrep_no))
+      dplyr::filter(!is.na(sitrep_no)) %>%
+      dplyr::arrange(dplyr::desc(sitrep_no), local_pdf) %>%
+      dplyr::distinct(sitrep_no, .keep_all = TRUE)
 
     # Keep only those NOT already in registry (by sitrep_no)
     known_nos <- registry$sitrep_no[!is.na(registry$sitrep_no)]
@@ -1303,11 +1377,44 @@ run_preis_pipeline <- function(
   }
 
   # Select SitReps to process:
-  # - not yet extracted, OR force_redownload is TRUE
+  # - not yet extracted, OR absent de la base d'indicateurs,
+  #   OR force_redownload is TRUE
   # - always process from highest sitrep_no down (most recent first)
+  existing_indicator_nos <- integer()
+  existing_indicator_fp <- file.path(
+    DATA_FINAL_DIR,
+    "PREIS_indicators_long.csv"
+  )
+  if (file.exists(existing_indicator_fp)) {
+    existing_indicator_nos <- tryCatch(
+      {
+        existing_indicator_data <- readr::read_csv(
+          existing_indicator_fp,
+          show_col_types = FALSE
+        )
+        if ("sitrep_no" %in% names(existing_indicator_data)) {
+          unique(
+            suppressWarnings(
+              as.integer(existing_indicator_data$sitrep_no)
+            )
+          )
+        } else {
+          integer()
+        }
+      },
+      error = function(e) integer()
+    )
+    existing_indicator_nos <- existing_indicator_nos[
+      !is.na(existing_indicator_nos)
+    ]
+  }
+
   to_process <- registry %>%
     dplyr::filter(
-      is.na(extracted) | !extracted | force_redownload
+      is.na(extracted) |
+        !extracted |
+        !sitrep_no %in% existing_indicator_nos |
+        force_redownload
     ) %>%
     dplyr::arrange(dplyr::desc(sitrep_no)) %>%
     dplyr::slice_head(n = max_new)
@@ -1344,7 +1451,20 @@ run_preis_pipeline <- function(
       }
       cat("   Source: fichier local (GitHub INRB)\n")
     } else {
-      local_pdf <- download_sitrep_pdf(purl, sno)
+      # PREIS PATCH EARLY PDF BRIDGE v1
+      # Le résolveur précoce peut avoir déjà déposé le PDF canonique avant
+      # que la page publique soit complètement synchronisée.
+      early_pdf <- file.path(
+        PDF_DIR,
+        sprintf("PREIS_DRC_Ebola_SitRep_%03d.pdf", as.integer(sno))
+      )
+      if (file.exists(early_pdf) &&
+          file.info(early_pdf)$size > 10240) {
+        local_pdf <- early_pdf
+        cat("   Source: PDF officiel déjà détecté par le résolveur précoce\n")
+      } else {
+        local_pdf <- download_sitrep_pdf(purl, sno)
+      }
     }
     registry$downloaded[registry$pdf_url == purl] <- !is.na(local_pdf)
     registry$local_pdf[registry$pdf_url == purl]  <- local_pdf %||% NA_character_
@@ -1354,6 +1474,40 @@ run_preis_pipeline <- function(
     # Extract text
     lines <- extract_pdf_text(local_pdf, sno)
     if (is.null(lines) || nrow(lines) == 0) next
+
+    # PREIS PATCH EARLY PDF BRIDGE v1 — date officielle du PDF
+    # Ne complète date_raw que lorsqu'elle est absente, à partir de
+    # l'en-tête officiel "SitRep N°NNN/MVB_DD/MM/YYYY".
+    reg_idx <- which(registry$pdf_url == purl)
+    current_date_raw <- if (length(reg_idx) > 0) {
+      as.character(registry$date_raw[reg_idx[1]])
+    } else {
+      NA_character_
+    }
+    if (length(reg_idx) > 0 &&
+        (is.na(current_date_raw) || !nzchar(trimws(current_date_raw)))) {
+      header_text <- paste(
+        lines$line_text[lines$page <= 2],
+        collapse = " "
+      )
+      header_date <- stringr::str_match(
+        header_text,
+        stringr::regex(
+          "SitRep\\s*N[^0-9]*0*\\d{1,3}\\s*/\\s*MVB[_\\s-]*(\\d{2})/(\\d{2})/(\\d{4})",
+          ignore_case = TRUE
+        )
+      )
+      if (!is.na(header_date[1, 2])) {
+        registry$date_raw[reg_idx] <- paste(
+          header_date[1, 2],
+          header_date[1, 3],
+          header_date[1, 4],
+          sep = "-"
+        )
+        cat("   Date officielle extraite du PDF:",
+            registry$date_raw[reg_idx[1]], "\n")
+      }
+    }
 
     all_lines[[i]] <- lines
     registry$extracted[registry$pdf_url == purl] <- TRUE

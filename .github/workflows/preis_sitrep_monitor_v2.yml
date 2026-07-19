@@ -44,10 +44,11 @@ concurrency:
 jobs:
   monitor:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 45
 
     env:
       PREIS_DRY_RUN: 'FALSE'
+      PREIS_MONITOR_EMAIL_ENABLED: 'FALSE'
       PREIS_MAX_PAGES: '6'
 
       SMTP_USER: ${{ secrets.SMTP_USER }}
@@ -161,56 +162,40 @@ jobs:
         run: |
           Rscript --vanilla scripts/08_cloud_sitrep_monitor.R
 
-      # ------------------------------------------------------------
-      # PATCH 2026-07-15 P2/P3 : chaine d'extraction, indicateurs,
-      # analyse consolidee. Ces steps etaient absents du workflow,
-      # ce qui bloquait le dashboard sur son fallback (SR 28).
-      # continue-on-error: chaque etape peut echouer sans casser
-      # le download PDF ni les commits en aval.
-      # ------------------------------------------------------------
-      - name: Install R packages pipeline (extraction + analyse)
+      # PREIS END-TO-END ANALYTICS START
+      # La détection précoce et le téléchargement restent inchangés.
+      # Le pipeline maître traite ensuite le dernier PDF validé, y compris
+      # lorsqu'il n'est pas encore visible sur la page publique.
+      - name: Install R packages pipeline (master + analyse)
         run: |
-          Rscript --vanilla -e 'pkgs <- c("pdftools","tidyr","lubridate","ggplot2","openxlsx","zoo"); to_install <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly=TRUE)]; if(length(to_install)>0) install.packages(to_install, repos="https://cloud.r-project.org")'
+          Rscript --vanilla -e 'pkgs <- c("pdftools","tidyr","lubridate","ggplot2","openxlsx","zoo","glue"); to_install <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly=TRUE)]; if(length(to_install)>0) install.packages(to_install, repos="https://cloud.r-project.org")'
 
-      - name: Normaliser les noms de PDFs (P3)
-        if: always()
+      - name: Parse PREIS master and validation scripts
+        run: |
+          Rscript --vanilla -e 'parse(file="scripts/00_PREIS_MASTER_AUTOMATION.R", encoding="UTF-8"); parse(file="scripts/12_validate_pipeline_freshness.R", encoding="UTF-8"); cat("Master and validation scripts parse OK\n")'
+
+      - name: Run PREIS master automation
+        run: |
+          Rscript --vanilla scripts/00_PREIS_MASTER_AUTOMATION.R
+
+      - name: Indicateurs journaliers INRB
         continue-on-error: true
         run: |
-          if [ -f scripts/06_normalize_pdf_names.R ]; then
-            Rscript --vanilla scripts/06_normalize_pdf_names.R || echo "06_normalize_pdf_names.R en erreur"
-          else
-            echo "scripts/06_normalize_pdf_names.R absent - skip normalisation"
-          fi
+          Rscript --vanilla scripts/11_daily_indicators.R || echo "11_daily_indicators.R en attente de mise à jour INRB"
 
-      - name: Extraction PDFs vers texte (03_extract_pdf.R)
-        if: always()
-        continue-on-error: true
+      - name: Analyse consolidee - serie temporelle nationale
         run: |
-          Rscript --vanilla scripts/03_extract_pdf.R || echo "03_extract_pdf.R en erreur"
+          Rscript --vanilla scripts/03_analyse_consolidee.R
 
-      - name: Extraction indicateurs (04_extract_indicators.R)
-        if: always()
-        continue-on-error: true
+      - name: Validate SitRep pipeline freshness
         run: |
-          Rscript --vanilla scripts/04_extract_indicators.R || echo "04_extract_indicators.R en erreur"
-
-      - name: Indicateurs journaliers (11_daily_indicators.R)
-        if: always()
-        continue-on-error: true
-        run: |
-          Rscript --vanilla scripts/11_daily_indicators.R || echo "11_daily_indicators.R en erreur"
-
-      - name: Analyse consolidee - serie temporelle nationale (03_analyse_consolidee.R)
-        if: always()
-        continue-on-error: true
-        run: |
-          Rscript --vanilla scripts/03_analyse_consolidee.R || echo "03_analyse_consolidee.R en erreur"
-
+          Rscript --vanilla scripts/12_validate_pipeline_freshness.R
+      # PREIS END-TO-END ANALYTICS END
 
 
       # PREIS DASHBOARD DATA SYNC START
       - name: Synchroniser les donnees du dashboard
-        if: always()
+        if: success()
         run: |
           mkdir -p dashboard_ebola/data
           if [ -f outputs/analyse/serie_temporelle_nationale.csv ]; then
@@ -226,7 +211,7 @@ jobs:
       # PREIS DASHBOARD DATA SYNC END
       # PREIS ENRICHED EMAIL START
       - name: Send PREIS enriched email
-        if: always() && env.PREIS_SEND_EMAIL == 'true'
+        if: success() && env.PREIS_SEND_EMAIL == 'true'
         continue-on-error: true
         run: |
           if [ -f preis_email_enrichi.R ]; then
