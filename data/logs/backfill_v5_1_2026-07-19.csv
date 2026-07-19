@@ -1,0 +1,9 @@
+timestamp_utc,num,date,pdf_url,strategy,status,local_path,sha256,tries
+2026-07-19 11:49:20,21,ND,https://insp.cd/wp-content/uploads/2026/06/SitRep_MVE_RDC_N21_04_JUIN_2026-_JO_PA-FINAL_OK.pdf,H2_media_wide,downloaded,data/pdf/SitRep_N021_unknown.pdf,2a085f4451ee9222593c0938f21aa585d4027db607fea0275407ac4757363aec,1
+2026-07-19 11:50:53,29,ND,ND,all_v51_failed,confirmed_ND,ND,ND,ND
+2026-07-19 11:52:23,43,ND,ND,all_v51_failed,confirmed_ND,ND,ND,ND
+2026-07-19 11:53:52,45,ND,ND,all_v51_failed,confirmed_ND,ND,ND,ND
+2026-07-19 11:53:56,54,ND,https://insp.cd/wp-content/uploads/2026/07/Draft2_SitRep_MVE_RDC_N°054_07_07_2026.pdf,retry_download,downloaded,data/pdf/SitRep_N054_unknown.pdf,a8086420e34653d8803d7dd6371f5de83f23a7a526be8ceca61987edd932abbb,1
+2026-07-19 11:55:33,59,ND,ND,all_v51_failed,confirmed_ND,ND,ND,ND
+2026-07-19 11:57:10,60,ND,ND,all_v51_failed,confirmed_ND,ND,ND,ND
+2026-07-19 11:57:16,63,2026-07-16,https://insp.cd/wp-content/uploads/2026/07/SitRep_MVE_RDC_N_63_16-07-2026_Final.pdf,I_fast_guess,downloaded,data/pdf/SitRep_N063_2026-07-16.pdf,e09dc671dd7d68b6fcf99550e7d2a599fda66512d98dce30f1d5062440c6279f,1
