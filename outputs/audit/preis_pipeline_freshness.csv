@@ -1,2 +1,2 @@
 checked_utc,latest_valid_pdf_sitrep,max_indicators_sitrep,max_series_sitrep,cumulative_cases,cumulative_deaths,required_indicators_ok,status,details
-2026-07-20 03:40:14 UTC,65,64,64,NA,NA,FALSE,FAIL,"Décalage PDF/indicateurs : PDF N65 mais PREIS_indicators_long.csv N64. | Décalage PDF/série : PDF N65 mais serie_temporelle_nationale.csv N64. | Indicateurs obligatoires absents pour N65 : cumulative_confirmed_cases, cumulative_deaths."
+2026-07-20 04:10:25 UTC,65,64,64,NA,NA,FALSE,FAIL,"Décalage PDF/indicateurs : PDF N65 mais PREIS_indicators_long.csv N64. | Décalage PDF/série : PDF N65 mais serie_temporelle_nationale.csv N64. | Indicateurs obligatoires absents pour N65 : cumulative_confirmed_cases, cumulative_deaths."
