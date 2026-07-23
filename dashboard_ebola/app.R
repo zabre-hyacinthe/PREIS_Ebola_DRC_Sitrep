@@ -166,6 +166,15 @@ HAS_NARR <- file.exists(.narr_fp)
 if (HAS_NARR) source(.narr_fp)
 
 # ── Module DHIS2 (chargement unique) ──────────────────────
+# ===== PREIS DHIS2 online patch (installe automatiquement) =====
+.preis_paths_fp <- file.path(normalizePath(getwd(), winslash='/', mustWork=FALSE), 'preis_paths.R')
+if (file.exists(.preis_paths_fp)) source(.preis_paths_fp)
+if (exists('preis_resolve_module')) {
+  .m_dhis2 <- preis_resolve_module('app_dhis2_module.R')
+  if (!is.na(.m_dhis2) && file.exists(.m_dhis2)) try(source(.m_dhis2, encoding='UTF-8'), silent=TRUE)
+}
+# ================================================================
+
 .dhis2_mod <- normalizePath('../source_line_list/scripts/app_dhis2_module.R',
                             mustWork=FALSE)
 if (file.exists(.dhis2_mod)) {

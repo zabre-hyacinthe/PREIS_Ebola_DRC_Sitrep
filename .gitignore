@@ -153,3 +153,7 @@ outputs/tables/
 outputs/validation/
 outputs/checks/
 outputs/qc/
+
+# Exception : donnees AGREGEES DHIS2 publiables (aucune ligne individuelle)
+!dashboard_ebola/data/dhis2_public/
+!dashboard_ebola/data/dhis2_public/**

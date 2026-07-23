@@ -42,5 +42,20 @@ copy_if(file.path(BASE_DIR, "scripts", "05_synthese_narrative.R"),
 src_africa <- file.path(BASE_DIR, "data", "curated", "africa_countries_rcc.geojson")
 copy_if(src_africa, file.path(DASH_CURATED, "africa_countries_rcc.geojson"))
 
+
+# --- DHIS2 Situation Room : copie des 4 CSV AGREGES (0 donnee individuelle) ---
+DHIS2_PUB <- file.path(DASH_DATA, 'dhis2_public')
+dir.create(DHIS2_PUB, recursive = TRUE, showWarnings = FALSE)
+.agg_names <- c('dhis2_mve_situation_room.csv','dhis2_mve_situation_room_zones.csv',
+                'dhis2_mve_situation_room_priority_zones.csv','dhis2_mve_situation_room_epi_curve.csv')
+.agg_src_dirs <- c(file.path(BASE_DIR,'source_line_list','data'),
+                   file.path(BASE_DIR,'source_line_list'),
+                   file.path(BASE_DIR,'outputs','dhis2'),
+                   file.path(BASE_DIR,'data','dhis2_public'))
+for (.nm in .agg_names) {
+  .hit <- NA_character_
+  for (.d in .agg_src_dirs) { .p <- file.path(.d, .nm); if (file.exists(.p)) { .hit <- .p; break } }
+  if (!is.na(.hit)) copy_if(.hit, file.path(DHIS2_PUB, .nm)) else cat('  MANQUANT (agrege):', .nm, '\n')
+}
 cat("\nDashboard prêt. Pour le lancer localement :\n")
 cat('  shiny::runApp("', DASH_DIR, '")\n', sep = "")
