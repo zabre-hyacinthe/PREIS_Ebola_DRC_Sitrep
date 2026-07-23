@@ -742,3 +742,17 @@ sitrep_no,indicator_code,domain,value,extraction_rule,value_source,source_type,p
 67,case_fatality_ratio,epidemiology,40.4,backfill_total_row,observed,pdf_backfill,1
 67,cumulative_confirmed_cases,epidemiology,2473,backfill_total_row,observed,pdf_backfill,1
 67,cumulative_deaths,epidemiology,999,backfill_total_row,observed,pdf_backfill,1
+68,case_fatality_ratio,deaths,40.7,table_total_row_spaced,NA,NA,NA
+68,cases_ituri,cases,23,narr_ituri,NA,NA,NA
+68,cases_nordkivu,cases,259,table_nk,NA,NA,NA
+68,cases_sudkivu,cases,3,table_sk,NA,NA,NA
+68,cumulative_confirmed_cases,cases,2531,table_total_row_spaced,NA,NA,NA
+68,cumulative_deaths,deaths,1033,table_total_row_spaced,NA,NA,NA
+68,deaths_community,deaths,2,regex_deaths_community,NA,NA,NA
+68,deaths_nordkivu,deaths,152,table_nk,NA,NA,NA
+68,deaths_sudkivu,deaths,1,table_sk,NA,NA,NA
+68,hz_affected_ituri,geography,28,regex_hz_ituri,NA,NA,NA
+68,hz_affected_national,geography,47,table_total_row_spaced,NA,NA,NA
+68,hz_affected_nordkivu,geography,11,regex_hz_nordkivu,NA,NA,NA
+68,hz_affected_sudkivu,geography,1,regex_hz_sudkivu,NA,NA,NA
+68,new_confirmed_cases,cases,63,narr_nouveaux,NA,NA,NA
