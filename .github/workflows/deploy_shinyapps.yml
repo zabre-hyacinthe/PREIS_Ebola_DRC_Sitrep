@@ -50,7 +50,15 @@ jobs:
 
       - name: Verify secrets are set
         run: |
-          Rscript --vanilla -e 'req <- c("SHINYAPPS_ACCOUNT","SHINYAPPS_TOKEN","SHINYAPPS_SECRET"); miss <- req[!nzchar(Sys.getenv(req))]; if (length(miss)) stop("Secrets manquants : ", paste(miss, collapse=", "), ". Configurer dans Settings > Secrets > Actions."); cat("Secrets shinyapps.io OK\n")'
+          miss=""
+          for v in SHINYAPPS_ACCOUNT SHINYAPPS_TOKEN SHINYAPPS_SECRET; do
+            if [ -z "${!v}" ]; then miss="$miss $v"; fi
+          done
+          if [ -n "$miss" ]; then
+            echo "::error::Secrets manquants :$miss. Configurer dans Settings > Secrets > Actions."
+            exit 1
+          fi
+          echo "Secrets shinyapps.io OK"
 
       - name: Setup R
         uses: r-lib/actions/setup-r@v2
