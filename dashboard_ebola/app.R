@@ -229,8 +229,8 @@ if (file.exists(.source_alerts_mod)) {
     message('[SOURCE ALERTS] Module non charge : ', conditionMessage(e))
   })
 }
-if (!exists('ui_source_alerts_tab')) {
-  ui_source_alerts_tab <- shinydashboard::tabItem(
+if (!exists('ui_source_alerts_tab', mode = 'function')) {
+  ui_source_alerts_tab <- function()shinydashboard::tabItem(
     tabName = 'source_alerts',
     shiny::fluidRow(
       shinydashboard::box(

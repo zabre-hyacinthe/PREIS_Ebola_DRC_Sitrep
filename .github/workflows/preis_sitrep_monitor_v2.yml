@@ -255,6 +255,15 @@ jobs:
         run: |
           Rscript scripts/00_PREIS_MASTER_AUTOMATION.R
 
+      # PREIS FILET DE SECURITE (N65+)
+      # Complete les cumuls nationaux MANQUANTS directement dans la base a
+      # partir des PDF, pour que la serie et la validation suivent le dernier
+      # SitRep meme si l'extraction du master rate le plus recent.
+      - name: Backfill cumuls nationaux (filet de securite)
+        continue-on-error: true
+        run: |
+          Rscript scripts/preis_backfill_national.R
+
       - name: Indicateurs journaliers INRB
         continue-on-error: true
         run: |
