@@ -756,3 +756,17 @@ sitrep_no,indicator_code,domain,value,extraction_rule,value_source,source_type,p
 68,hz_affected_nordkivu,geography,11,regex_hz_nordkivu,NA,NA,NA
 68,hz_affected_sudkivu,geography,1,regex_hz_sudkivu,NA,NA,NA
 68,new_confirmed_cases,cases,63,narr_nouveaux,NA,NA,NA
+69,case_fatality_ratio,deaths,43.7,table_total_row_spaced,NA,NA,NA
+69,cases_nordkivu,cases,275,table_nk,NA,NA,NA
+69,cases_sudkivu,cases,3,table_sk,NA,NA,NA
+69,cumulative_confirmed_cases,cases,2905,table_total_row_spaced,NA,NA,NA
+69,cumulative_deaths,deaths,1269,table_total_row_spaced,NA,NA,NA
+69,deaths_community,deaths,115,regex_deaths_community,NA,NA,NA
+69,deaths_nordkivu,deaths,172,table_nk,NA,NA,NA
+69,deaths_sudkivu,deaths,1,table_sk,NA,NA,NA
+69,hz_affected_ituri,geography,28,regex_hz_ituri,NA,NA,NA
+69,hz_affected_national,geography,47,table_total_row_spaced,NA,NA,NA
+69,hz_affected_nordkivu,geography,11,regex_hz_nordkivu,NA,NA,NA
+69,hz_affected_sudkivu,geography,1,regex_hz_sudkivu,NA,NA,NA
+69,new_confirmed_cases,cases,97,narr_nouveaux,NA,NA,NA
+69,recovered,cases,1,box_value_row,NA,NA,NA
