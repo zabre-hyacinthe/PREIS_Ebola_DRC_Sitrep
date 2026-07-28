@@ -146,7 +146,7 @@ I18N <- list(
 )
 
 # GLOBAL_TR : tr() global pour l'UI statique (langue par defaut FR)
-.UI_LANG_DEFAULT <- 'fr'
+.UI_LANG_DEFAULT <- 'en'
 tr <- function(key) {
   l <- if (exists('.UI_LANG_DEFAULT')) .UI_LANG_DEFAULT else 'fr'
   val <- I18N[[l]][[key]]

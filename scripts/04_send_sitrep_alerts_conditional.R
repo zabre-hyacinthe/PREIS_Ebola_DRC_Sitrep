@@ -2,18 +2,24 @@
 # PREIS EBOLA DRC
 # 04_send_sitrep_alerts_conditional.R
 #
-# Adapté de 63_send_alerts_conditional.R (logique PREIS V10).
-# Envoi conditionnel par SitRep, avec déduplication.
+# Adapted from 63_send_alerts_conditional.R (PREIS V10 logic).
+# Conditional per-SitRep sending, with deduplication.
 #
-# LOGIQUE :
-#   - sent_log_sitrep.csv = source de vérité (jamais 2x le même SitRep)
-#   - Pour chaque destinataire actif : envoie uniquement les SitReps
-#     non encore envoyés à CETTE adresse
-#   - Réutilise preis_send_email() de R/60_email.R
-#   - Corps = résumé + signaux + recommandations + lien dashboard
+# LOGIC:
+#   - sent_log_sitrep.csv = source of truth (never sends the same
+#     SitRep twice to the same address)
+#   - For each active recipient: sends only the SitReps not yet
+#     sent to THAT address
+#   - Reuses preis_send_email() from R/60_email.R
+#   - Body = summary + signals + recommendations + dashboard link
 #
-# Destinataires : data/final/alert_recipients.csv
-#   colonnes : active, type, name, email
+# Recipients: data/final/alert_recipients.csv
+#   columns: active, type, name, email
+#
+# CHANGE (this version): email subject/body translated to English
+# (previously French). No logic, column names, or file paths were
+# changed — only the visible text. See claude/PREIS_dashboard_inventaire.md
+# ("Emails automatiques ... -> reecrire les gabarits en anglais").
 ############################################################
 
 suppressPackageStartupMessages({
@@ -22,7 +28,7 @@ suppressPackageStartupMessages({
 
 ROOT <- normalizePath(getwd(), winslash = "/", mustWork = TRUE)
 
-# Chemins (cohérents avec le pipeline PREIS Ebola)
+# Paths (consistent with the PREIS Ebola pipeline)
 BASE_DIR    <- "D:/PREIS_Ebola_DRC_Sitrep_FV_12.06.26"
 DATA_FINAL  <- file.path(BASE_DIR, "data/final")
 OUT_DIR     <- file.path(BASE_DIR, "outputs/analyse")
@@ -30,12 +36,12 @@ SERIE_FP    <- file.path(OUT_DIR, "serie_temporelle_nationale.csv")
 RECIP_FP    <- file.path(BASE_DIR, "data", "alert_recipients.csv")
 SENT_LOG_FP <- file.path(DATA_FINAL, "sent_log_sitrep.csv")
 
-if (!file.exists(SERIE_FP)) stop("Série introuvable : ", SERIE_FP,
-                                 "\nLance d'abord 03_analyse_consolidee.R.")
-if (!file.exists(RECIP_FP)) stop("Destinataires introuvables : ", RECIP_FP)
+if (!file.exists(SERIE_FP)) stop("Series not found: ", SERIE_FP,
+                                 "\nRun 03_analyse_consolidee.R first.")
+if (!file.exists(RECIP_FP)) stop("Recipients file not found: ", RECIP_FP)
 
-# Fonction d'envoi centralisée (réutilise ton infra existante).
-# Tes scripts sont dans scripts/ — on cherche 60_email.R là en priorité.
+# Centralised send function (reuses your existing infra).
+# Your scripts live in scripts/ -- look for 60_email.R there first.
 email_candidates <- c(
   file.path(BASE_DIR, "scripts", "60_email.R"),
   file.path(BASE_DIR, "scripts", "60_email_FV.R"),
@@ -44,11 +50,11 @@ email_candidates <- c(
 )
 email_fn <- email_candidates[file.exists(email_candidates)][1]
 if (is.na(email_fn) || length(email_fn) == 0) {
-  stop("Fonction d'envoi introuvable (60_email.R cherché dans scripts/). ",
-       "Verifie le nom exact du fichier, ou utilise 04_send_email_alert.R (blastula).")
+  stop("Send function not found (looked for 60_email.R in scripts/). ",
+       "Check the exact file name, or use 04_send_email_alert.R (blastula).")
 }
 source(email_fn)
-cat("[alerts] Fonction email chargée depuis :", email_fn, "\n")
+cat("[alerts] Email function loaded from:", email_fn, "\n")
 
 dash_url <- Sys.getenv("PREIS_DASHBOARD_URL", "")
 
@@ -56,10 +62,10 @@ safe_read_csv <- function(path) {
   if (!file.exists(path)) return(tibble())
   tryCatch(read_csv(path, show_col_types = FALSE), error = function(e) tibble())
 }
-fmt <- function(x) if (is.na(x)) "non disponible" else format(x, big.mark = " ")
+fmt <- function(x) if (is.na(x)) "not available" else format(x, big.mark = ",")
 
 # ------------------------------------------------------------
-# 1) Charger la série + destinataires + log
+# 1) Load series + recipients + log
 # ------------------------------------------------------------
 serie <- read_csv(SERIE_FP, show_col_types = FALSE) %>% arrange(sitrep_no)
 
@@ -77,7 +83,7 @@ recips <- recips %>%
   filter(active %in% c("TRUE","T","1","YES","OUI"),
          !is.na(email), email != "")
 
-if (nrow(recips) == 0) stop("Aucun destinataire actif dans ", RECIP_FP)
+if (nrow(recips) == 0) stop("No active recipients in ", RECIP_FP)
 
 sent_log <- safe_read_csv(SENT_LOG_FP)
 log_cols <- c("date","recipient_name","recipient_email",
@@ -92,7 +98,7 @@ if (nrow(sent_log) == 0) {
 }
 
 # ------------------------------------------------------------
-# 2) Construire le corps (résumé + signaux + recommandations)
+# 2) Build the body (summary + signals + recommendations)
 # ------------------------------------------------------------
 build_sitrep_body <- function(rec_name, sno) {
   row  <- serie %>% filter(sitrep_no == sno)
@@ -106,67 +112,67 @@ build_sitrep_body <- function(rec_name, sno) {
 
   signaux <- character(); recos <- character()
   if (!is.na(row$cfr) && row$cfr >= 15) {
-    signaux <- c(signaux, sprintf("[ROUGE] Letalite elevee : CFR %.1f%%", row$cfr))
+    signaux <- c(signaux, sprintf("[RED] High lethality: CFR %.1f%%", row$cfr))
     recos <- c(recos, paste0(
-      "CFR eleve — verifier delais presentation->soins, proportion de deces ",
-      "communautaires, capacite de prise en charge dans les zones actives."))
+      "High CFR -- check the presentation-to-care delay, proportion of ",
+      "community deaths, and case-management capacity in active zones."))
   }
   if (!is.na(ndeces) && ndeces > 0) {
-    signaux <- c(signaux, sprintf("[ROUGE] %d nouveau(x) deces", as.integer(ndeces)))
+    signaux <- c(signaux, sprintf("[RED] %d new death(s)", as.integer(ndeces)))
     recos <- c(recos, paste0(
-      "Nouveaux deces — investiguer chaque deces (lieu, delai, statut contact connu) ",
-      "pour distinguer transmission active vs deces communautaires."))
+      "New deaths -- investigate each death (location, delay, known contact ",
+      "status) to distinguish active transmission from community deaths."))
   }
   if (!is.na(ncas) && ncas > 0) {
-    signaux <- c(signaux, sprintf("[ORANGE] %d nouveau(x) cas confirme(s)", as.integer(ncas)))
+    signaux <- c(signaux, sprintf("[ORANGE] %d new confirmed case(s)", as.integer(ncas)))
     recos <- c(recos, paste0(
-      "Nouveaux cas — confirmer la part issue de contacts deja listes ",
-      "(transmission maitrisee) vs cas hors liste (chaines non elucidees)."))
+      "New cases -- confirm the share originating from already-listed contacts ",
+      "(controlled transmission) versus cases outside the list (unexplained chains)."))
   }
-  if (!length(signaux)) signaux <- "[VERT] Aucun signal critique sur ce SitRep."
-  if (!length(recos))   recos   <- "Poursuivre la surveillance de routine."
+  if (!length(signaux)) signaux <- "[GREEN] No critical signal on this SitRep."
+  if (!length(recos))   recos   <- "Continue routine surveillance."
 
-  delta_txt <- function(d) if (is.na(d)) "" else sprintf(" (%+d vs precedent)", as.integer(d))
+  delta_txt <- function(d) if (is.na(d)) "" else sprintf(" (%+d vs previous)", as.integer(d))
 
   lines <- c(
-    sprintf("PREIS Ebola RDC — Alerte SitRep N°%d", sno),
-    sprintf("Date du rapport : %s", row$date),
-    "17e epidemie (Bundibugyo — Ituri / Nord-Kivu / Sud-Kivu)",
+    sprintf("PREIS Ebola DRC -- SitRep Alert No. %d", sno),
+    sprintf("Report date: %s", row$date),
+    "17th outbreak (Bundibugyo -- Ituri / North Kivu / South Kivu)",
     "",
-    "DONNEES CLES (cumuls nationaux, source INRB validee) :",
-    sprintf("- Cas confirmes cumules : %s%s", fmt(row$cas_cumules), delta_txt(d_cas)),
-    sprintf("- Deces cumules         : %s%s", fmt(row$deces_cumules), delta_txt(d_dec)),
-    sprintf("- Nouveaux deces        : %s", fmt(ndeces)),
-    sprintf("- Letalite (CFR provis.): %s", ifelse(is.na(row$cfr),"n/d",paste0(row$cfr,"%"))),
+    "KEY DATA (national cumulative totals, validated INRB source):",
+    sprintf("- Cumulative confirmed cases: %s%s", fmt(row$cas_cumules), delta_txt(d_cas)),
+    sprintf("- Cumulative deaths         : %s%s", fmt(row$deces_cumules), delta_txt(d_dec)),
+    sprintf("- New deaths                : %s", fmt(ndeces)),
+    sprintf("- Case-fatality ratio (prov.): %s", ifelse(is.na(row$cfr),"n/a",paste0(row$cfr,"%"))),
     "",
-    "SIGNAUX OPERATIONNELS :",
+    "OPERATIONAL SIGNALS:",
     paste0("  ", signaux),
     "",
-    "RECOMMANDATIONS :",
+    "RECOMMENDATIONS:",
     paste0("  - ", recos),
     "",
-    if (nzchar(dash_url)) paste0("Tableau de bord : ", dash_url) else "",
+    if (nzchar(dash_url)) paste0("Dashboard: ", dash_url) else "",
     "",
     "---",
-    "CFR provisoire : certains cas recents peuvent encore evoluer ; pas la letalite finale.",
-    "Drivers probables uniquement — pas de causalite etablie.",
-    "Cumuls nationaux = INRB valide ; details par zone = extraction PDF a valider.",
-    sprintf("Genere automatiquement le %s.", Sys.Date())
+    "Provisional CFR: some recent cases may still evolve; not the final case-fatality ratio.",
+    "Probable drivers only -- no established causality.",
+    "National cumulative totals = validated INRB data; zone-level detail = PDF extraction pending validation.",
+    sprintf("Automatically generated on %s.", Sys.Date())
   )
   paste(lines[lines != "" | TRUE], collapse = "\n")
 }
 
 # ------------------------------------------------------------
-# 3) Boucle destinataires : envoyer les SitReps non encore envoyés
+# 3) Recipient loop: send SitReps not yet sent
 # ------------------------------------------------------------
 all_snos <- sort(unique(serie$sitrep_no))
 new_log <- list()
 
-# Détecter le support des pièces jointes par ta fonction
+# Detect attachment support in your send function
 send_formals <- tryCatch(names(formals(preis_send_email)), error = function(e) character(0))
 supports_attach <- "attachments" %in% send_formals
 
-# Pièces jointes par défaut : les graphiques d'analyse
+# Default attachments: the analysis charts
 default_attach <- file.path(OUT_DIR, c(
   "g1_courbe_epidemique.png","g2_courbe_mortalite.png",
   "g3_evolution_cfr.png","carte_zones_intensite.png"))
@@ -176,7 +182,7 @@ for (i in seq_len(nrow(recips))) {
   addr   <- recips$email[i]
   nm_rec <- recips$name[i]
 
-  # SitReps déjà envoyés à CETTE adresse
+  # SitReps already sent to THIS address
   done <- sent_log %>%
     filter(recipient_email == addr,
            toupper(message_type) == "SITREP",
@@ -185,14 +191,14 @@ for (i in seq_len(nrow(recips))) {
 
   to_send <- setdiff(all_snos, done)
 
-  # Par défaut : envoyer SEULEMENT le dernier SitRep non envoyé
-  # (évite d'inonder à la première exécution). Pour tout envoyer,
-  # mettre PREIS_SEND_ALL_SITREPS=true dans .Renviron.
+  # By default: send ONLY the latest unsent SitRep (avoids flooding
+  # on first run). To send everything, set
+  # PREIS_SEND_ALL_SITREPS=true in .Renviron.
   send_all <- tolower(Sys.getenv("PREIS_SEND_ALL_SITREPS","false")) %in% c("true","1","yes")
   if (!send_all && length(to_send) > 0) to_send <- max(to_send)
 
   if (length(to_send) == 0) {
-    cat(sprintf("[alerts] Aucun nouveau SitRep pour %s (%s)\n", nm_rec, addr))
+    cat(sprintf("[alerts] No new SitRep for %s (%s)\n", nm_rec, addr))
     next
   }
 
@@ -201,9 +207,9 @@ for (i in seq_len(nrow(recips))) {
     if (is.null(body)) next
 
     row <- serie %>% filter(sitrep_no == sno)
-    subject <- sprintf("[PREIS Ebola RDC] SitRep N°%d — %s cas, %s deces (CFR %s%%)",
+    subject <- sprintf("[PREIS Ebola DRC] SitRep No. %d -- %s cases, %s deaths (CFR %s%%)",
                        sno, fmt(row$cas_cumules), fmt(row$deces_cumules),
-                       ifelse(is.na(row$cfr),"n/d",row$cfr))
+                       ifelse(is.na(row$cfr),"n/a",row$cfr))
 
     ok <- TRUE
     tryCatch({
@@ -215,10 +221,10 @@ for (i in seq_len(nrow(recips))) {
         preis_send_email(to = addr, subject = subject,
                          body_text = body, dry_run = FALSE)
       }
-      cat(sprintf("[alerts] SitRep %d envoye a %s (%s)\n", sno, nm_rec, addr))
+      cat(sprintf("[alerts] SitRep %d sent to %s (%s)\n", sno, nm_rec, addr))
     }, error = function(e) {
       ok <<- FALSE
-      cat(sprintf("[alerts] ECHEC SitRep %d pour %s : %s\n",
+      cat(sprintf("[alerts] FAILED SitRep %d for %s: %s\n",
                   sno, addr, conditionMessage(e)))
     })
 
@@ -233,13 +239,13 @@ for (i in seq_len(nrow(recips))) {
 }
 
 # ------------------------------------------------------------
-# 4) Mettre à jour le log
+# 4) Update the log
 # ------------------------------------------------------------
 if (length(new_log) > 0) {
   add <- bind_rows(new_log)
   sent_log <- if (nrow(sent_log) > 0) bind_rows(sent_log, add) else add
   write_csv(sent_log, SENT_LOG_FP, na = "")
-  cat(sprintf("[alerts] sent_log mis a jour : %d nouvelle(s) ligne(s)\n", nrow(add)))
+  cat(sprintf("[alerts] sent_log updated: %d new row(s)\n", nrow(add)))
 } else {
-  cat("[alerts] Aucun envoi effectue.\n")
+  cat("[alerts] No email sent.\n")
 }
