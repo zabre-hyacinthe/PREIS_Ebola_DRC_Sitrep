@@ -43,7 +43,28 @@ suppressPackageStartupMessages({
 })
 
 # ---- Paths ----------------------------------------------------
-BASE_DIR    <- Sys.getenv("PREIS_BASE_DIR", "D:/PREIS_Ebola_DRC_Sitrep_FV_12.06.26")
+# FIX 2026-07-29 : detection robuste du dossier racine. L'ancienne
+# version retombait directement sur le chemin Windows de dev des que
+# PREIS_BASE_DIR n'etait pas defini -- sur le runner GitHub Actions
+# (Linux), ce chemin n'existe pas, stopifnot() plus bas echouait
+# immediatement et AUCUN docx n'etait genere (silencieusement avale
+# par continue-on-error: true dans le workflow). Meme logique
+# d'auto-detection que 05_send_africacdc_sitrep_email.R : priorite a
+# GITHUB_WORKSPACE (fourni par le runner), puis au repertoire courant
+# s'il contient bien un fichier reconnaissable du pipeline, et
+# seulement en dernier recours le chemin Windows de dev.
+.detect_base_dir <- function() {
+  gw <- Sys.getenv("GITHUB_WORKSPACE", "")
+  if (nzchar(gw) && file.exists(file.path(gw, "data/final/sitrep_registry.csv"))) return(gw)
+
+  envd <- Sys.getenv("PREIS_BASE_DIR", "")
+  if (nzchar(envd) && file.exists(file.path(envd, "data/final/sitrep_registry.csv"))) return(envd)
+
+  if (file.exists(file.path(getwd(), "data/final/sitrep_registry.csv"))) return(getwd())
+
+  "D:/PREIS_Ebola_DRC_Sitrep_FV_12.06.26"
+}
+BASE_DIR    <- .detect_base_dir()
 DATA_FINAL  <- file.path(BASE_DIR, "data/final")
 OUT_DIR     <- file.path(BASE_DIR, "outputs/rapports")
 CHART_DIR   <- file.path(OUT_DIR, "charts_tmp")
