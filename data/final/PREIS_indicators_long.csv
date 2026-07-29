@@ -821,3 +821,15 @@ sitrep_no,indicator_code,domain,value,extraction_rule,value_source,source_type,p
 73,hz_affected_sudkivu,geography,1,regex_hz_sudkivu,NA,NA,NA
 73,new_confirmed_cases,cases,62,narr_nouveaux,NA,NA,NA
 73,recovered,cases,65,box_value_row,NA,NA,NA
+74,case_fatality_ratio,deaths,44.3,table_total_row_spaced,NA,NA,NA
+74,cases_sudkivu,cases,3,table_sk,NA,NA,NA
+74,cumulative_confirmed_cases,cases,3360,table_total_row_spaced,NA,NA,NA
+74,cumulative_deaths,deaths,1487,table_total_row_spaced,NA,NA,NA
+74,deaths_community,deaths,108,regex_deaths_community,NA,NA,NA
+74,deaths_sudkivu,deaths,1,table_sk,NA,NA,NA
+74,hz_affected_ituri,geography,28,regex_hz_ituri,NA,NA,NA
+74,hz_affected_national,geography,48,table_total_row_spaced,NA,NA,NA
+74,hz_affected_nordkivu,geography,11,regex_hz_nordkivu,NA,NA,NA
+74,hz_affected_sudkivu,geography,1,regex_hz_sudkivu,NA,NA,NA
+74,new_confirmed_cases,cases,98,narr_nouveaux,NA,NA,NA
+74,recovered,cases,68,box_value_row,NA,NA,NA
