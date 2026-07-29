@@ -273,6 +273,16 @@ jobs:
         run: |
           Rscript scripts/03_analyse_consolidee.R
 
+      - name: Generate Africa CDC SitRep supplement
+        continue-on-error: true
+        run: |
+          Rscript scripts/06_generate_africa_cdc_sitrep_final.R
+
+      - name: Send Africa CDC SitRep email
+        continue-on-error: true
+        run: |
+          Rscript scripts/05_send_africacdc_sitrep_email.R
+
       - name: Validate SitRep pipeline freshness
         run: |
           Rscript scripts/12_validate_pipeline_freshness.R
@@ -311,6 +321,7 @@ jobs:
       - name: Commit monitor + pipeline outputs
         if: always()
         run: |
+          git add outputs/rapports/*.docx || true
           git config user.name "PREIS Ebola Automation"
           git config user.email "actions@github.com"
           git add data/monitor_state/ data/pdf/ data/logs/ outputs/cloud_monitor/ || true
