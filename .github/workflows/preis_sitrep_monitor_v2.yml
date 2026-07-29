@@ -340,6 +340,7 @@ jobs:
           git add outputs/analyse/tableau_zones_sante.csv || true
           git add outputs/audit/ || true
           git add data/preis_email_enrichi_state.csv || true
+          git add data/preis_africacdc_email_state.csv || true
           git add dashboard_ebola/data/serie_temporelle_nationale.csv || true
           git add dashboard_ebola/data/tableau_zones_sante.csv || true
           git status --short
