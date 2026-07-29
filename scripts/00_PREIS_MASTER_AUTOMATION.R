@@ -799,6 +799,14 @@ extract_indicators <- function(line_table) {
   sno   <- line_table$sitrep_no[1]
   lines <- line_table$line_text
   flat  <- stringr::str_squish(paste(lines, collapse = " "))
+  # FIX 2026-07-29 espaces exotiques
+  # Normalise TOUTES les espaces Unicode exotiques (nbsp, narrow nbsp,
+  # thin space, figure space...) en espace simple, AVANT tout regex.
+  # Recommande depuis l'incident N65 (claude/PREIS_fix_N65_correctif.md)
+  # mais jamais reellement applique -- seul U+00A0 etait gere dans
+  # count_pattern. Cause confirmee du blocage N65/66/67 du 2026-07-29.
+  flat <- stringr::str_replace_all(flat, "[\u00A0\u202F\u2009\u2007\u2002\u2003\u2005\u2006\u200A]", " ")
+  flat <- stringr::str_squish(flat)
   flat_low <- normalize_text(stringr::str_to_lower(flat))
 
   results <- list()

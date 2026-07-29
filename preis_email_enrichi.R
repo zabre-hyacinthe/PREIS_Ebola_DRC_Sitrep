@@ -11,16 +11,25 @@
 #   - points saillants calcules a partir des donnees analysees ;
 #   - PDF officiel uniquement en piece jointe.
 #
-# Securites :
+# Securites (INCHANGEES) :
 #   - aucun lien dashboard ;
 #   - aucun graphique ni carte joints ;
 #   - validation du numero inscrit dans le PDF ;
 #   - blocage si un PDF officiel plus recent que la serie existe ;
 #   - anti-doublon : data/preis_email_enrichi_state.csv.
 #
+# CHANGE 2026-07-29 : email bilingue (anglais par defaut, comme le
+# reste du dashboard -- I18N app.R). Controle par la variable
+# d'environnement PREIS_EMAIL_LANG ("en" ou "fr", "en" par defaut).
+# Aucune logique metier modifiee -- uniquement le texte affiche.
+# Le document Africa CDC (docx) N'EST PAS joint ici : cette
+# securite est deliberee et reste intacte. Il part dans un email
+# SEPARE -- voir 05_send_africacdc_sitrep_email.R.
+#
 # Usage interactif :
 #   source("preis_email_enrichi.R")
 #   preis_email_enrichi(force = TRUE)
+#   preis_email_enrichi(force = TRUE, lang = "fr")  # pour forcer le francais
 ############################################################
 
 .env_get <- function(names, default = "") {
@@ -31,10 +40,10 @@
   default
 }
 
-.fmt <- function(x) {
+.fmt <- function(x, lang = "en") {
   x <- suppressWarnings(as.numeric(x)[1])
-  if (length(x) == 0 || is.na(x)) return("n/d")
-  formatC(round(x), format = "d", big.mark = " ")
+  if (length(x) == 0 || is.na(x)) return(if (lang == "fr") "n/d" else "n/a")
+  formatC(round(x), format = "d", big.mark = if (lang == "fr") " " else ",")
 }
 
 .html_escape <- function(x) {
@@ -45,6 +54,77 @@
   x <- gsub('"', "&quot;", x, fixed = TRUE)
   x <- gsub("'", "&#39;", x, fixed = TRUE)
   x
+}
+
+# ---- Bilingual string table (same pattern as I18N in app.R) --------
+# Falls back to English if a key is somehow missing for the chosen
+# language, same fallback convention as the dashboard's tr().
+.EMAIL_L <- list(
+  en = c(
+    title             = "PREIS \u2014 Ebola DRC",
+    subtitle          = "Automatic summary \u2014 SitRep No.",
+    kpi_cases         = "Cumulative confirmed cases",
+    kpi_deaths        = "Cumulative deaths",
+    kpi_cfr           = "Case fatality (CFR)",
+    evolution_since   = "Change since SitRep No.",
+    evolution_note    = "The change in cumulative totals may include new notifications and retrospective consolidations.",
+    zones_title       = "Most affected health zones",
+    zone_col_name     = "Health zone",
+    zone_col_cases    = "Cumulative cases",
+    highlights_title  = "Key highlights",
+    unit_cases        = "cases",
+    unit_deaths       = "deaths",
+    in_national_total = "in the national cumulative total",
+    change_cases_na   = "case change: n/a",
+    change_deaths_na  = "death change: n/a",
+    zone_top_lead     = "Among the reported zones, ",
+    zone_top_mid      = " has the highest cumulative total, with ",
+    zone_top_tail     = " cases. ",
+    zone_unavailable  = "The health-zone breakdown is not available in the analysed file. ",
+    evo_lead          = "Since SitRep No. ",
+    evo_mid1          = ", the national cumulative total changed by ",
+    evo_mid2          = " and ",
+    evo_tail          = ".",
+    evo_unavailable   = "The change since the previous SitRep is not available.",
+    footer_text       = "The complete official report, validated as SitRep No. %s, is attached as a PDF. Provisional data, source: MoH DRC (INSP/INRB).",
+    plain_fallback    = "See the PREIS summary and the attached official report.",
+    subject_fmt       = "PREIS Ebola DRC - SitRep No.%03d: %s cases / %s deaths (CFR %s)"
+  ),
+  fr = c(
+    title             = "PREIS \u2014 MVE Ebola RDC",
+    subtitle          = "Synth\u00e8se automatique \u2014 SitRep N\u00b0",
+    kpi_cases         = "Cas confirm\u00e9s cumul\u00e9s",
+    kpi_deaths        = "D\u00e9c\u00e8s cumul\u00e9s",
+    kpi_cfr           = "L\u00e9talit\u00e9 (CFR)",
+    evolution_since   = "\u00c9volution depuis le SitRep N\u00b0",
+    evolution_note    = "La variation du cumul peut inclure les nouvelles notifications et des consolidations r\u00e9trospectives.",
+    zones_title       = "Zones les plus touch\u00e9es",
+    zone_col_name     = "Zone de sant\u00e9",
+    zone_col_cases    = "Cas cumul\u00e9s",
+    highlights_title  = "Points saillants",
+    unit_cases        = "cas",
+    unit_deaths       = "d\u00e9c\u00e8s",
+    in_national_total = "dans le cumul national",
+    change_cases_na   = "variation des cas : n/d",
+    change_deaths_na  = "variation des d\u00e9c\u00e8s : n/d",
+    zone_top_lead     = "Parmi les zones renseign\u00e9es, ",
+    zone_top_mid      = " pr\u00e9sente le cumul le plus \u00e9lev\u00e9, avec ",
+    zone_top_tail     = " cas. ",
+    zone_unavailable  = "La r\u00e9partition par zone de sant\u00e9 n'est pas disponible dans le fichier analys\u00e9. ",
+    evo_lead          = "Depuis le SitRep N\u00b0",
+    evo_mid1          = ", le cumul national a vari\u00e9 de ",
+    evo_mid2          = " et de ",
+    evo_tail          = ".",
+    evo_unavailable   = "La variation depuis le SitRep pr\u00e9c\u00e9dent n'est pas disponible.",
+    footer_text       = "Le rapport officiel complet, valid\u00e9 comme SitRep N\u00b0%s, est joint au format PDF. Donn\u00e9es provisoires, source INSP/INRB RDC.",
+    plain_fallback    = "Consultez la synth\u00e8se PREIS et le rapport officiel joint.",
+    subject_fmt       = "PREIS MVE RDC - SitRep N%03d : %s cas / %s deces (CFR %s)"
+  )
+)
+.tr <- function(key, lang) {
+  v <- .EMAIL_L[[lang]][[key]]
+  if (is.null(v) || is.na(v)) v <- .EMAIL_L[["en"]][[key]]
+  v
 }
 
 .pdf_internal_numbers <- function(pdf_file, max_pages = 2L) {
@@ -63,77 +143,43 @@
 
   if (length(pages) == 0) return(integer())
 
-  txt <- paste(head(pages, max_pages), collapse = "\n")
-  txt <- tolower(enc2utf8(txt))
+  header_text <- paste(pages[seq_len(min(2, length(pages)))], collapse = " ")
+  matches <- stringr::str_match_all(
+    header_text,
+    stringr::regex("SitRep\\s*N\\s*[\u00b0\u00bao]?\\s*0*([0-9]{1,3})", ignore_case = TRUE)
+  )[[1]][, 2]
 
-  patterns <- c(
-    "sitrep\\s*n\\s*[°ºo]?\\s*0*([0-9]{1,3})",
-    "sitrep[^0-9]{0,20}0*([0-9]{1,3})"
-  )
-
-  nums <- integer()
-
-  for (pattern in patterns) {
-    m <- gregexpr(pattern, txt, perl = TRUE, ignore.case = TRUE)
-    hits <- regmatches(txt, m)[[1]]
-
-    if (length(hits) > 0 && !identical(hits, character(0))) {
-      extracted <- suppressWarnings(
-        as.integer(sub(pattern, "\\1", hits, perl = TRUE, ignore.case = TRUE))
-      )
-      nums <- c(nums, extracted)
-    }
-  }
-
-  unique(nums[!is.na(nums)])
+  suppressWarnings(as.integer(unique(matches)))
 }
 
-.latest_valid_higher_pdf <- function(pdf_dir, current_sitrep) {
-  if (!dir.exists(pdf_dir)) return(NULL)
-
-  files <- list.files(
-    pdf_dir,
-    pattern = "^PREIS_DRC_Ebola_SitRep_[0-9]{3}\\.pdf$",
-    full.names = TRUE,
-    ignore.case = TRUE
-  )
-
+.latest_valid_higher_pdf <- function(pdf_dir, sno) {
+  files <- list.files(pdf_dir, pattern = "\\.pdf$", full.names = TRUE)
   if (length(files) == 0) return(NULL)
 
-  file_numbers <- suppressWarnings(
-    as.integer(sub(
-      ".*_([0-9]{3})\\.pdf$",
-      "\\1",
-      basename(files),
-      ignore.case = TRUE
-    ))
-  )
+  nums <- suppressWarnings(as.integer(
+    stringr::str_match(basename(files), "SitRep_(\\d+)_2026\\.pdf")[, 2]
+  ))
+  nums2 <- suppressWarnings(as.integer(
+    stringr::str_match(basename(files), "PREIS_DRC_Ebola_SitRep_(\\d+)\\.pdf")[, 2]
+  ))
+  nums <- ifelse(is.na(nums), nums2, nums)
 
-  keep <- !is.na(file_numbers) & file_numbers > current_sitrep
-  files <- files[keep]
-  file_numbers <- file_numbers[keep]
+  higher <- which(!is.na(nums) & nums > sno)
+  if (length(higher) == 0) return(NULL)
 
-  if (length(files) == 0) return(NULL)
-
-  ord <- order(file_numbers, decreasing = TRUE)
-  files <- files[ord]
-  file_numbers <- file_numbers[ord]
-
-  for (i in seq_along(files)) {
-    internal <- tryCatch(
-      .pdf_internal_numbers(files[i]),
-      error = function(e) integer()
-    )
-
-    if (file_numbers[i] %in% internal) {
-      return(list(number = file_numbers[i], file = files[i]))
+  for (i in higher[order(-nums[higher])]) {
+    internal <- tryCatch(.pdf_internal_numbers(files[i]), error = function(e) integer())
+    if (nums[i] %in% internal) {
+      return(list(number = nums[i], file = files[i]))
     }
   }
-
   NULL
 }
 
-preis_email_enrichi <- function(root = NULL, force = FALSE) {
+preis_email_enrichi <- function(root = NULL, force = FALSE,
+                                 lang = Sys.getenv("PREIS_EMAIL_LANG", "en")) {
+  lang <- if (tolower(lang) %in% c("fr", "francais", "french")) "fr" else "en"
+
   old_wd <- getwd()
   on.exit(setwd(old_wd), add = TRUE)
 
@@ -157,6 +203,7 @@ preis_email_enrichi <- function(root = NULL, force = FALSE) {
   suppressPackageStartupMessages({
     library(readr)
     library(jsonlite)
+    library(stringr)
   })
 
   serie_fp <- "outputs/analyse/serie_temporelle_nationale.csv"
@@ -296,15 +343,15 @@ preis_email_enrichi <- function(root = NULL, force = FALSE) {
         .html_escape(z$nom),
         "</td>",
         "<td style='padding:6px 10px;border-bottom:1px solid #e6e6e6;text-align:right'><b>",
-        vapply(z$cas, .fmt, character(1)),
+        vapply(z$cas, .fmt, character(1), lang = lang),
         "</b></td></tr>",
         collapse = ""
       )
 
       top_html <- paste0(
         "<table role='presentation' style='border-collapse:collapse;margin-top:6px;min-width:360px'>",
-        "<tr><th style='text-align:left;padding:6px 10px;background:#f3f5f4'>Zone de sant&eacute;</th>",
-        "<th style='text-align:right;padding:6px 10px;background:#f3f5f4'>Cas cumul&eacute;s</th></tr>",
+        "<tr><th style='text-align:left;padding:6px 10px;background:#f3f5f4'>", .tr("zone_col_name", lang), "</th>",
+        "<th style='text-align:right;padding:6px 10px;background:#f3f5f4'>", .tr("zone_col_cases", lang), "</th></tr>",
         rows,
         "</table>"
       )
@@ -343,87 +390,82 @@ preis_email_enrichi <- function(root = NULL, force = FALSE) {
       "<td style='padding:14px 18px;background:", col,
       ";color:#fff;border-radius:10px'>",
       "<div style='font-size:26px;font-weight:700'>", val, "</div>",
-      "<div style='font-size:12px;opacity:.95'>", lab, "</div></td>"
+      "<div style='font-size:12px;margin-top:2px'>", lab, "</div>",
+      "</td>"
     )
   }
 
   variation_cases <- if (!is.na(nvx_cas)) {
     paste0(
       if (nvx_cas >= 0) "+" else "",
-      .fmt(nvx_cas),
-      " cas dans le cumul national"
+      .fmt(nvx_cas, lang),
+      " ", .tr("unit_cases", lang), " ", .tr("in_national_total", lang)
     )
   } else {
-    "variation des cas : n/d"
+    .tr("change_cases_na", lang)
   }
 
   variation_deaths <- if (!is.na(nvx_dec)) {
     paste0(
       if (nvx_dec >= 0) "+" else "",
-      .fmt(nvx_dec),
-      " d&eacute;c&egrave;s dans le cumul national"
+      .fmt(nvx_dec, lang),
+      " ", .tr("unit_deaths", lang), " ", .tr("in_national_total", lang)
     )
   } else {
-    "variation des d&eacute;c&egrave;s : n/d"
+    .tr("change_deaths_na", lang)
   }
 
   point_zone <- if (!is.null(z) && nrow(z) > 0) {
     paste0(
-      "Parmi les zones renseign&eacute;es, <b>",
-      .html_escape(z$nom[1]),
-      "</b> pr&eacute;sente le cumul le plus &eacute;lev&eacute;, avec <b>",
-      .fmt(z$cas[1]),
-      " cas</b>. "
+      .tr("zone_top_lead", lang),
+      "<b>", .html_escape(z$nom[1]), "</b>",
+      .tr("zone_top_mid", lang),
+      "<b>", .fmt(z$cas[1], lang), .tr("zone_top_tail", lang), "</b>"
     )
   } else {
-    paste0(
-      "La r&eacute;partition par zone de sant&eacute; n'est pas disponible ",
-      "dans le fichier analys&eacute;. "
-    )
+    .tr("zone_unavailable", lang)
   }
 
   point_evolution <- if (!is.na(nvx_cas) && !is.na(nvx_dec)) {
     paste0(
-      "Depuis le SitRep N&deg;", sprintf("%03d", prev_sno),
-      ", le cumul national a vari&eacute; de <b>",
-      if (nvx_cas >= 0) "+" else "",
-      .fmt(nvx_cas),
-      " cas</b> et de <b>",
-      if (nvx_dec >= 0) "+" else "",
-      .fmt(nvx_dec),
-      " d&eacute;c&egrave;s</b>."
+      .tr("evo_lead", lang), sprintf("%03d", prev_sno),
+      .tr("evo_mid1", lang),
+      "<b>", if (nvx_cas >= 0) "+" else "", .fmt(nvx_cas, lang), " ", .tr("unit_cases", lang), "</b>",
+      .tr("evo_mid2", lang),
+      "<b>", if (nvx_dec >= 0) "+" else "", .fmt(nvx_dec, lang), " ", .tr("unit_deaths", lang), "</b>",
+      .tr("evo_tail", lang)
     )
   } else {
-    "La variation depuis le SitRep pr&eacute;c&eacute;dent n'est pas disponible."
+    .tr("evo_unavailable", lang)
   }
 
   html <- paste0(
     "<div style='font-family:Segoe UI,Arial,sans-serif;color:#252525;max-width:700px;line-height:1.45'>",
 
     "<div style='background:#0B4F3C;color:#fff;padding:18px 22px;border-radius:10px'>",
-    "<div style='font-size:19px;font-weight:700'>PREIS &mdash; MVE Ebola RDC</div>",
-    "<div style='font-size:14px;margin-top:3px'>Synth&egrave;se automatique &mdash; SitRep N&deg;",
+    "<div style='font-size:19px;font-weight:700'>", .tr("title", lang), "</div>",
+    "<div style='font-size:14px;margin-top:3px'>", .tr("subtitle", lang), " ",
     sprintf("%03d", sno),
     if (nzchar(d_date) && d_date != "NA") paste0(" (", .html_escape(d_date), ")") else "",
     "</div></div>",
 
     "<table role='presentation' style='border-spacing:9px 0;margin:16px 0;width:100%'><tr>",
-    kpi(.fmt(cas), "Cas confirm&eacute;s cumul&eacute;s", "#C83A2D"),
-    kpi(.fmt(dec), "D&eacute;c&egrave;s cumul&eacute;s", "#33485D"),
-    kpi(cfr_txt, "L&eacute;talit&eacute; (CFR)", "#EF7F1A"),
+    kpi(.fmt(cas, lang), .tr("kpi_cases", lang), "#C83A2D"),
+    kpi(.fmt(dec, lang), .tr("kpi_deaths", lang), "#33485D"),
+    kpi(cfr_txt, .tr("kpi_cfr", lang), "#EF7F1A"),
     "</tr></table>",
 
     "<div style='background:#F4F6F7;border-left:4px solid #0B4F3C;padding:12px 14px;margin:14px 0'>",
-    "<b>&Eacute;volution depuis le SitRep N&deg;", sprintf("%03d", prev_sno), " :</b> ",
+    "<b>", .tr("evolution_since", lang), sprintf("%03d", prev_sno), " :</b> ",
     variation_cases, ", ", variation_deaths, ".",
     "<div style='font-size:11px;color:#666;margin-top:5px'>",
-    "La variation du cumul peut inclure les nouvelles notifications et des consolidations r&eacute;trospectives.",
+    .tr("evolution_note", lang),
     "</div></div>",
 
     if (nzchar(top_html)) {
       paste0(
         "<div style='margin-top:18px'>",
-        "<div style='font-size:16px;font-weight:700;margin-bottom:6px'>Zones les plus touch&eacute;es</div>",
+        "<div style='font-size:16px;font-weight:700;margin-bottom:6px'>", .tr("zones_title", lang), "</div>",
         top_html,
         "</div>"
       )
@@ -432,22 +474,21 @@ preis_email_enrichi <- function(root = NULL, force = FALSE) {
     },
 
     "<div style='background:#FFF8E8;border-left:4px solid #EF7F1A;padding:12px 14px;margin-top:18px'>",
-    "<div style='font-weight:700;margin-bottom:4px'>Points saillants</div>",
+    "<div style='font-weight:700;margin-bottom:4px'>", .tr("highlights_title", lang), "</div>",
     point_zone,
     point_evolution,
     "</div>",
 
     "<p style='font-size:12px;color:#666;margin-top:18px'>",
-    "Le rapport officiel complet, valid&eacute; comme SitRep N&deg;", sprintf("%03d", sno),
-    ", est joint au format PDF. Donn&eacute;es provisoires, source INSP/INRB RDC.",
+    sprintf(.tr("footer_text", lang), sprintf("%03d", sno)),
     "</p>",
 
     "</div>"
   )
 
   subject <- sprintf(
-    "PREIS MVE RDC - SitRep N%03d : %s cas / %s deces (CFR %s)",
-    sno, .fmt(cas), .fmt(dec), cfr_txt
+    .tr("subject_fmt", lang),
+    sno, .fmt(cas, lang), .fmt(dec, lang), cfr_txt
   )
 
   smtp_user <- .env_get(c("SMTP_USER", "SMTP_USERNAME"))
@@ -492,6 +533,7 @@ preis_email_enrichi <- function(root = NULL, force = FALSE) {
     to = as.list(to_vec),
     subject = subject,
     html = html,
+    plain = .tr("plain_fallback", lang),
     attachments = as.list(atts)
   )
 
@@ -516,7 +558,7 @@ preis_email_enrichi <- function(root = NULL, force = FALSE) {
     "msg['From'] = cfg['from']",
     "msg['To'] = ', '.join(cfg['to'])",
     "msg['Subject'] = cfg['subject']",
-    "msg.set_content('Consultez la synthese PREIS et le rapport officiel joint.')",
+    "msg.set_content(cfg.get('plain', 'See the attached report.'))",
     "msg.add_alternative(cfg['html'], subtype='html')",
     "for a in cfg.get('attachments', []):",
     "    p = Path(a)",
@@ -601,6 +643,7 @@ preis_email_enrichi <- function(root = NULL, force = FALSE) {
     "\nE-mail enrichi ENVOYE pour SitRep", sno,
     "->", paste(to_vec, collapse = ", "), "\n"
   )
+  cat("Langue :", lang, "\n")
   cat("Piece jointe :", basename(pdf_fp), "\n")
   cat("Etat anti-doublon enregistre :", state_written, "\n")
 
