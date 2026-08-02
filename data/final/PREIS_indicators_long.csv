@@ -860,3 +860,17 @@ sitrep_no,indicator_code,domain,value,extraction_rule,value_source,source_type,p
 78,hz_affected_nordkivu,geography,11,regex_hz_nordkivu,NA,NA,NA
 78,hz_affected_sudkivu,geography,1,regex_hz_sudkivu,NA,NA,NA
 78,new_confirmed_cases,cases,69,narr_nouveaux,NA,NA,NA
+79,case_fatality_ratio,deaths,44.2,table_total_row_spaced,NA,NA,NA
+79,cases_nordkivu,cases,400,table_nk,NA,NA,NA
+79,cases_sudkivu,cases,3,table_sk,NA,NA,NA
+79,contacts_listed,contacts,78,box_h_contacts,NA,NA,NA
+79,cumulative_confirmed_cases,cases,3748,table_total_row_spaced,NA,NA,NA
+79,cumulative_deaths,deaths,1657,table_total_row_spaced,NA,NA,NA
+79,deaths_community,deaths,77,regex_deaths_community,NA,NA,NA
+79,deaths_nordkivu,deaths,262,table_nk,NA,NA,NA
+79,deaths_sudkivu,deaths,1,table_sk,NA,NA,NA
+79,hz_affected_ituri,geography,28,regex_hz_ituri,NA,NA,NA
+79,hz_affected_national,geography,50,table_total_row_spaced,NA,NA,NA
+79,hz_affected_nordkivu,geography,11,regex_hz_nordkivu,NA,NA,NA
+79,hz_affected_sudkivu,geography,1,regex_hz_sudkivu,NA,NA,NA
+79,new_confirmed_cases,cases,74,narr_nouveaux,NA,NA,NA
