@@ -89,3 +89,5 @@ sitrep_no,indicator_code,pdf_value,inrb_value,diff,match
 78,cumulative_deaths,1621,NA,NA,no_ref
 79,cumulative_confirmed_cases,3748,NA,NA,no_ref
 79,cumulative_deaths,1657,NA,NA,no_ref
+80,cumulative_confirmed_cases,3802,NA,NA,no_ref
+80,cumulative_deaths,1707,NA,NA,no_ref
