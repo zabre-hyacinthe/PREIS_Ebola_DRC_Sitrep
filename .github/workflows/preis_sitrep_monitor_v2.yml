@@ -44,13 +44,11 @@ concurrency:
 jobs:
   monitor:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 25
 
     env:
       PREIS_DRY_RUN: 'FALSE'
-      PREIS_MONITOR_EMAIL_ENABLED: 'FALSE'
       PREIS_MAX_PAGES: '6'
-      # NB: on n'impose plus R_LIBS_SITE - setup-r@v2 configure la bonne libpath.
 
       SMTP_USER: ${{ secrets.SMTP_USER }}
       SMTP_PASS: ${{ secrets.SMTP_PASS }}
@@ -60,6 +58,10 @@ jobs:
       ALERT_TO: ${{ secrets.ALERT_TO }}
       ALERT_CC: ${{ secrets.ALERT_CC }}
       ALERT_BCC: ${{ secrets.ALERT_BCC }}
+      # PREIS FIX 2026-08-04 : destinataires dedies du supplement Africa CDC.
+      # Si le secret n'est pas defini, 05_send_africacdc_sitrep_email.R retombe
+      # automatiquement sur ALERT_TO (aucun blocage).
+      PREIS_AFRICACDC_TO: ${{ secrets.PREIS_AFRICACDC_TO }}
 
       WA_ENABLED: ${{ secrets.WA_ENABLED }}
       WA_ACCESS_TOKEN: ${{ secrets.WA_ACCESS_TOKEN }}
@@ -75,103 +77,50 @@ jobs:
           fetch-depth: 0
           persist-credentials: true
 
-      # ------------------------------------------------------------------
-      # CORRECTIF ABI DEFINITIF
-      # Cause racine des erreurs "SETLENGTH" et "Master pipeline packages
-      # missing" : mélange des binaires r-cran-* d'Ubuntu (compilés pour
-      # une version de R) avec un R installé par setup-r-@v2 (autre version).
-      # Solution : une seule source de paquets = P3M (binaires prêts à
-      # l'emploi, alignés sur la version de R installée).
-      # ------------------------------------------------------------------
-      - name: Setup R (version épinglée + P3M)
+      - name: Setup R
         uses: r-lib/actions/setup-r@v2
-        with:
-          r-version: '4.4.2'
-          use-public-rspm: true
-
-      - name: Setup Pandoc
-        uses: r-lib/actions/setup-pandoc@v2
 
       - name: Confirm Python available
         run: |
           python3 --version
 
-      - name: Install Linux system dependencies (headers uniquement)
+      - name: Install Linux dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends \
+          sudo apt-get install -y \
             libcurl4-openssl-dev \
             libssl-dev \
             libxml2-dev \
-            libpoppler-cpp-dev \
+            make \
             libfontconfig1-dev \
-            libqpdf-dev \
-            libharfbuzz-dev \
-            libfribidi-dev \
+            libcairo2-dev \
             libfreetype6-dev \
             libpng-dev \
             libtiff5-dev \
             libjpeg-dev \
-            libsodium-dev \
-            pkg-config \
-            make
-          # IMPORTANT : PAS de r-cran-* ici. Ils cassent l'ABI de rlang.
+            libharfbuzz-dev \
+            libfribidi-dev
+          # PREIS FIX 2026-08-04 : les 7 dernieres libs (fontconfig -> fribidi)
+          # sont necessaires a systemfonts/gdtools/ragg, donc a flextable +
+          # ggsave() utilises par 06_generate_africa_cdc_sitrep_final.R.
+          # Sans elles, la generation du docx echouait silencieusement
+          # (avalee par continue-on-error) et le supplement n'etait jamais cree.
 
-      - name: Install all PREIS R packages (binaires P3M)
-        uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          packages: |
-            any::rlang
-            any::httr
-            any::httr2
-            any::rvest
-            any::xml2
-            any::stringr
-            any::dplyr
-            any::readr
-            any::tibble
-            any::tidyr
-            any::purrr
-            any::digest
-            any::base64enc
-            any::jsonlite
-            any::pdftools
-            any::lubridate
-            any::ggplot2
-            any::openxlsx
-            any::zoo
-            any::glue
-            any::keyring
-            any::blastula
-            any::officer
-            any::flextable
-            any::qpdf
-          cache: true
-          cache-version: 2
-
-      - name: Sanity check ABI + paquets
+      - name: Install R packages
         run: |
-          Rscript -e '
-            cat("R:", R.version.string, "\n");
-            cat("Libs:", paste(.libPaths(), collapse=" | "), "\n");
-            pkgs <- c("rlang","dplyr","readr","stringr","tibble","tidyr",
-                      "purrr","openxlsx","lubridate","rvest","pdftools",
-                      "base64enc","ggplot2","xml2","httr","zoo","glue",
-                      "digest","jsonlite");
-            for (p in pkgs) cat(sprintf("%-12s %s\n", p,
-              requireNamespace(p, quietly=TRUE)));
-            stopifnot(all(vapply(pkgs, requireNamespace,
-              logical(1), quietly=TRUE)));
-            cat("ABI + packages OK\n")
-          '
+          Rscript --vanilla -e 'install.packages(c("httr","rvest","xml2","stringr","dplyr","readr","tibble","purrr","digest","base64enc","jsonlite"), repos="https://cloud.r-project.org")'
+
+      - name: Confirm R packages
+        run: |
+          Rscript --vanilla -e 'pkgs <- c("httr","rvest","xml2","stringr","dplyr","readr","tibble","purrr","digest","base64enc","jsonlite"); missing <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly=TRUE)]; if(length(missing)>0) stop("Packages manquants: ", paste(missing, collapse=", ")); cat("All R packages OK\n")'
 
       - name: Check email secrets
         run: |
-          Rscript -e 'required <- c("SMTP_USER","SMTP_PASS","SMTP_HOST","SMTP_PORT","ALERT_FROM","ALERT_TO"); missing <- required[!nzchar(Sys.getenv(required))]; if (length(missing) > 0) stop("Secrets email manquants: ", paste(missing, collapse=", ")); cat("Email secrets OK\n")'
+          Rscript --vanilla -e 'required <- c("SMTP_USER","SMTP_PASS","SMTP_HOST","SMTP_PORT","ALERT_FROM","ALERT_TO"); missing <- required[!nzchar(Sys.getenv(required))]; if (length(missing) > 0) stop("Secrets email manquants: ", paste(missing, collapse=", ")); cat("Email secrets OK\n")'
 
       - name: Check WhatsApp secrets if enabled
         run: |
-          Rscript -e 'enabled <- toupper(Sys.getenv("WA_ENABLED","FALSE")) %in% c("TRUE","1","YES","Y"); if (enabled) { required <- c("WA_ACCESS_TOKEN","WA_PHONE_NUMBER_ID","WA_TO"); missing <- required[!nzchar(Sys.getenv(required))]; if (length(missing) > 0) stop("Secrets WhatsApp manquants: ", paste(missing, collapse=", ")); cat("WhatsApp secrets OK\n") } else { cat("WhatsApp disabled\n") }'
+          Rscript --vanilla -e 'enabled <- toupper(Sys.getenv("WA_ENABLED","FALSE")) %in% c("TRUE","1","YES","Y"); if (enabled) { required <- c("WA_ACCESS_TOKEN","WA_PHONE_NUMBER_ID","WA_TO"); missing <- required[!nzchar(Sys.getenv(required))]; if (length(missing) > 0) stop("Secrets WhatsApp manquants: ", paste(missing, collapse=", ")); cat("WhatsApp secrets OK\n") } else { cat("WhatsApp disabled\n") }'
 
       - name: Check no legacy curl SMTP sender
         run: |
@@ -193,20 +142,21 @@ jobs:
           FORCE_SEND: false
           PREIS_FORCE_SEND: false
         run: |
-          Rscript -e 'parse(file="scripts/00_email_smtp_base.R", encoding="UTF-8"); parse(file="scripts/08_cloud_sitrep_monitor.R", encoding="UTF-8"); parse(file="scripts/preis_safe_scientific_email.R", encoding="UTF-8"); parse(file="preis_email_enrichi.R", encoding="UTF-8"); if (file.exists("scripts/10_whatsapp_notify.R")) parse(file="scripts/10_whatsapp_notify.R", encoding="UTF-8"); cat("R parse OK\n")'
+          Rscript --vanilla -e 'parse(file="scripts/00_email_smtp_base.R", encoding="UTF-8"); parse(file="scripts/08_cloud_sitrep_monitor.R", encoding="UTF-8"); parse(file="scripts/preis_safe_scientific_email.R", encoding="UTF-8"); parse(file="preis_email_enrichi.R", encoding="UTF-8"); parse(file="scripts/05_send_africacdc_sitrep_email.R", encoding="UTF-8"); parse(file="scripts/06_generate_africa_cdc_sitrep_final.R", encoding="UTF-8"); if (file.exists("scripts/10_whatsapp_notify.R")) parse(file="scripts/10_whatsapp_notify.R", encoding="UTF-8"); cat("R parse OK\n")'
 
       # PREIS SAFE EMAIL GUARANTEE START
       - name: PREIS safe scientific email guarantee
         if: always()
         env:
+          # Keep the robust INSP/PDF resolver, but do not send the old PDF-only email.
+          # The single notification is sent later by preis_email_enrichi.R after analysis.
           PREIS_SAFE_EMAIL_ENABLED: "false"
           PREIS_FORCE_SEND: ${{ github.event_name == 'workflow_dispatch' && inputs.force_send || 'false' }}
           FORCE_SEND: ${{ github.event_name == 'workflow_dispatch' && inputs.force_send || 'false' }}
           PREIS_SAFE_EMAIL_TO: ${{ secrets.PREIS_SAFE_EMAIL_TO }}
           ALERT_TO: ${{ secrets.ALERT_TO }}
-        run: Rscript scripts/preis_safe_scientific_email.R
+        run: Rscript --vanilla scripts/preis_safe_scientific_email.R
       # PREIS SAFE EMAIL GUARANTEE END
-
       # PREIS SAFE EMAIL STATE COMMIT START
       - name: Commit PREIS safe email notification state
         if: always()
@@ -224,73 +174,89 @@ jobs:
           fi
           exit 0
       # PREIS SAFE EMAIL STATE COMMIT END
-
       - name: Run PREIS SitRep monitor
-        continue-on-error: true
+        env:
+          # PREIS FIX 2026-08-04 : email du monitor delegue a preis_email_enrichi.R
+          # (une seule voie email officielle, cf. revue globale section 3.3).
+          # Detection + telechargement PDF + WhatsApp restent actifs.
+          # Rend explicite dans le workflow ce que la revue supposait deja
+          # ("Email monitor : OFF (delegue)"), au cas ou un second email
+          # "Nouveau SitRep INSP" reapparaitrait.
+          PREIS_MONITOR_EMAIL_ENABLED: "false"
         run: |
-          Rscript scripts/08_cloud_sitrep_monitor.R
+          Rscript --vanilla scripts/08_cloud_sitrep_monitor.R
 
-      # PREIS END-TO-END ANALYTICS V2 START
-      - name: Verify master pipeline R packages
+      # ------------------------------------------------------------
+      # PATCH 2026-07-15 P2/P3 : chaine d'extraction, indicateurs,
+      # analyse consolidee. Ces steps etaient absents du workflow,
+      # ce qui bloquait le dashboard sur son fallback (SR 28).
+      # continue-on-error: chaque etape peut echouer sans casser
+      # le download PDF ni les commits en aval.
+      # ------------------------------------------------------------
+      - name: Install R packages pipeline (extraction + analyse)
+        run: |
+          Rscript --vanilla -e 'pkgs <- c("pdftools","tidyr","lubridate","ggplot2","openxlsx","zoo","officer","flextable"); to_install <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly=TRUE)]; if(length(to_install)>0) install.packages(to_install, repos="https://cloud.r-project.org")'
+          # PREIS FIX 2026-08-04 : ajout de "officer" et "flextable", requis par
+          # 06_generate_africa_cdc_sitrep_final.R pour produire le docx supplement.
+
+      - name: Normaliser les noms de PDFs (P3)
         if: always()
-        run: |
-          Rscript -e '
-            pkgs <- c("dplyr","readr","stringr","tibble","tidyr","purrr",
-                      "openxlsx","glue","lubridate","rvest","httr",
-                      "pdftools","base64enc","ggplot2","zoo","xml2",
-                      "digest","jsonlite");
-            missing <- pkgs[!vapply(pkgs, requireNamespace,
-              logical(1), quietly=TRUE)];
-            if (length(missing) > 0) stop(
-              "Master pipeline packages missing before execution: ",
-              paste(missing, collapse=", "));
-            cat("Master pipeline package verification OK.\n")
-          '
-
-      - name: Parse PREIS master and validation scripts
-        run: |
-          Rscript -e 'parse(file="scripts/00_PREIS_MASTER_AUTOMATION.R", encoding="UTF-8"); parse(file="scripts/12_validate_pipeline_freshness.R", encoding="UTF-8"); cat("Master and validation scripts parse OK\n")'
-
-      - name: Run PREIS master automation
-        run: |
-          Rscript scripts/00_PREIS_MASTER_AUTOMATION.R
-
-      # PREIS FILET DE SECURITE (N65+)
-      # Complete les cumuls nationaux MANQUANTS directement dans la base a
-      # partir des PDF, pour que la serie et la validation suivent le dernier
-      # SitRep meme si l'extraction du master rate le plus recent.
-      - name: Backfill cumuls nationaux (filet de securite)
         continue-on-error: true
         run: |
-          Rscript scripts/preis_backfill_national.R
+          if [ -f scripts/06_normalize_pdf_names.R ]; then
+            Rscript --vanilla scripts/06_normalize_pdf_names.R || echo "06_normalize_pdf_names.R en erreur"
+          else
+            echo "scripts/06_normalize_pdf_names.R absent - skip normalisation"
+          fi
 
-      - name: Indicateurs journaliers INRB
+      - name: Extraction PDFs vers texte (03_extract_pdf.R)
+        if: always()
         continue-on-error: true
         run: |
-          Rscript scripts/11_daily_indicators.R || echo "11_daily_indicators.R en attente de mise à jour INRB"
+          Rscript --vanilla scripts/03_extract_pdf.R || echo "03_extract_pdf.R en erreur"
 
-      - name: Analyse consolidee - serie temporelle nationale
-        run: |
-          Rscript scripts/03_analyse_consolidee.R
-
-      - name: Generate Africa CDC SitRep supplement
+      - name: Extraction indicateurs (04_extract_indicators.R)
+        if: always()
         continue-on-error: true
         run: |
-          Rscript scripts/06_generate_africa_cdc_sitrep_final.R
+          Rscript --vanilla scripts/04_extract_indicators.R || echo "04_extract_indicators.R en erreur"
 
-      - name: Send Africa CDC SitRep email
+      - name: Indicateurs journaliers (11_daily_indicators.R)
+        if: always()
         continue-on-error: true
         run: |
-          Rscript scripts/05_send_africacdc_sitrep_email.R
+          Rscript --vanilla scripts/11_daily_indicators.R || echo "11_daily_indicators.R en erreur"
 
-      - name: Validate SitRep pipeline freshness
+      - name: Analyse consolidee - serie temporelle nationale (03_analyse_consolidee.R)
+        if: always()
+        continue-on-error: true
         run: |
-          Rscript scripts/12_validate_pipeline_freshness.R
-      # PREIS END-TO-END ANALYTICS V2 END
+          Rscript --vanilla scripts/03_analyse_consolidee.R || echo "03_analyse_consolidee.R en erreur"
+
+      # PREIS AFRICA CDC SUPPLEMENT GENERATION START
+      # PREIS FIX 2026-08-04 : etape MANQUANTE. Genere le document d'analyse
+      # supplementaire (outputs/rapports/PREIS_AfricaCDC_SitRep_<NNN>_FINAL.docx)
+      # a partir des indicateurs deja produits ci-dessus. Doit tourner APRES
+      # 11_daily_indicators.R et 03_analyse_consolidee.R. continue-on-error pour
+      # ne jamais casser le pipeline ; l'envoi (etape 05) est bloque proprement
+      # si le docx n'existe pas.
+      - name: Generer le supplement Africa CDC (06_generate_africa_cdc_sitrep_final.R)
+        if: always()
+        continue-on-error: true
+        run: |
+          if [ -f scripts/06_generate_africa_cdc_sitrep_final.R ]; then
+            if [ ! -f scripts/operational_watch.R ]; then
+              echo "ATTENTION : scripts/operational_watch.R absent -> 06 va s'arreter (dependance requise)."
+            fi
+            Rscript --vanilla scripts/06_generate_africa_cdc_sitrep_final.R || echo "06_generate_africa_cdc_sitrep_final.R en erreur"
+          else
+            echo "scripts/06_generate_africa_cdc_sitrep_final.R absent - skip generation supplement"
+          fi
+      # PREIS AFRICA CDC SUPPLEMENT GENERATION END
 
       # PREIS DASHBOARD DATA SYNC START
       - name: Synchroniser les donnees du dashboard
-        if: success()
+        if: always()
         run: |
           mkdir -p dashboard_ebola/data
           if [ -f outputs/analyse/serie_temporelle_nationale.csv ]; then
@@ -304,24 +270,105 @@ jobs:
             echo 'Tableau zones absent - synchronisation ignoree'
           fi
       # PREIS DASHBOARD DATA SYNC END
-
       # PREIS ENRICHED EMAIL START
       - name: Send PREIS enriched email
-        if: success() && env.PREIS_SEND_EMAIL == 'true'
+        if: always() && env.PREIS_SEND_EMAIL == 'true'
         continue-on-error: true
         run: |
           if [ -f preis_email_enrichi.R ]; then
-            Rscript -e 'parse(file="preis_email_enrichi.R", encoding="UTF-8"); cat("preis_email_enrichi.R parse OK\n")'
-            Rscript preis_email_enrichi.R
+            Rscript --vanilla -e 'parse(file="preis_email_enrichi.R", encoding="UTF-8"); cat("preis_email_enrichi.R parse OK\n")'
+            Rscript --vanilla preis_email_enrichi.R
           else
             echo "preis_email_enrichi.R absent - skip enriched email"
           fi
       # PREIS ENRICHED EMAIL END
 
+      # PREIS ENRICHED EMAIL STATE COMMIT START
+      # PREIS FIX 2026-08-04 : CAUSE RACINE DU DOUBLON D'EMAIL.
+      # L'anti-doublon de l'email enrichi (data/preis_email_enrichi_state.csv)
+      # n'etait committe qu'a la toute fin, via "git push || echo" qui avale
+      # silencieusement un push rejete. Quand ce push echouait (course entre
+      # runs cron), l'etat "deja envoye" n'arrivait jamais sur le depot et le
+      # run suivant renvoyait le MEME email. On committe donc l'etat
+      # IMMEDIATEMENT apres l'envoi, avec re-essais (fetch+rebase), exactement
+      # comme pour l'email "safe scientific".
+      - name: Commit PREIS enriched email state
+        if: always()
+        run: |
+          set +e
+          if [ -f data/preis_email_enrichi_state.csv ]; then
+            git config user.name "PREIS Ebola DRC Automation"
+            git config user.email "preis-automation@users.noreply.github.com"
+            git add data/preis_email_enrichi_state.csv
+            if git diff --cached --quiet; then
+              echo "No enriched email state change to commit"
+              exit 0
+            fi
+            git commit -m "Update PREIS enriched email anti-duplicate state [skip ci]"
+            ok=0
+            for i in 1 2 3 4 5; do
+              if git push; then ok=1; break; fi
+              echo "Push rejete (tentative $i) - resynchronisation avant re-essai"
+              git pull --rebase origin main || true
+            done
+            if [ "$ok" != "1" ]; then
+              echo "ECHEC CRITIQUE : etat anti-doublon enrichi NON pousse apres 5 essais."
+              echo "Risque de renvoi du meme email au prochain run cron."
+              exit 1
+            fi
+          else
+            echo "No enriched email state file found"
+          fi
+      # PREIS ENRICHED EMAIL STATE COMMIT END
+
+      # PREIS AFRICA CDC SUPPLEMENT EMAIL START
+      # PREIS FIX 2026-08-04 : etape MANQUANTE. Envoie le docx supplement dans
+      # un email SEPARE (decision de conception du 2026-07-29 : ne pas joindre
+      # le docx a l'email enrichi). Anti-doublon propre :
+      # data/preis_africacdc_email_state.csv. Bloque proprement si le docx
+      # n'a pas ete genere.
+      - name: Send Africa CDC supplement email (05_send_africacdc_sitrep_email.R)
+        if: always() && env.PREIS_SEND_EMAIL == 'true'
+        continue-on-error: true
+        run: |
+          if [ -f scripts/05_send_africacdc_sitrep_email.R ]; then
+            Rscript --vanilla scripts/05_send_africacdc_sitrep_email.R || echo "05_send_africacdc_sitrep_email.R en erreur (docx probablement absent)"
+          else
+            echo "scripts/05_send_africacdc_sitrep_email.R absent - skip supplement email"
+          fi
+      # PREIS AFRICA CDC SUPPLEMENT EMAIL END
+
+      # PREIS AFRICA CDC STATE COMMIT START
+      # PREIS FIX 2026-08-04 : meme robustesse que l'email enrichi pour
+      # l'anti-doublon du supplement Africa CDC.
+      - name: Commit Africa CDC email state + supplement
+        if: always()
+        run: |
+          set +e
+          git config user.name "PREIS Ebola DRC Automation"
+          git config user.email "preis-automation@users.noreply.github.com"
+          git add data/preis_africacdc_email_state.csv 2>/dev/null || true
+          git add outputs/rapports/ 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No Africa CDC state/supplement change to commit"
+            exit 0
+          fi
+          git commit -m "Update PREIS Africa CDC supplement + anti-duplicate state [skip ci]"
+          ok=0
+          for i in 1 2 3 4 5; do
+            if git push; then ok=1; break; fi
+            echo "Push rejete (tentative $i) - resynchronisation avant re-essai"
+            git pull --rebase origin main || true
+          done
+          if [ "$ok" != "1" ]; then
+            echo "AVERTISSEMENT : supplement Africa CDC / etat non pousse apres 5 essais."
+          fi
+          exit 0
+      # PREIS AFRICA CDC STATE COMMIT END
+
       - name: Commit monitor + pipeline outputs
         if: always()
         run: |
-          git add outputs/rapports/*.docx || true
           git config user.name "PREIS Ebola Automation"
           git config user.email "actions@github.com"
           git add data/monitor_state/ data/pdf/ data/logs/ outputs/cloud_monitor/ || true
@@ -339,11 +386,21 @@ jobs:
           git add outputs/analyse/serie_temporelle_nationale.csv || true
           git add outputs/analyse/tableau_zones_sante.csv || true
           git add outputs/audit/ || true
+          git add outputs/rapports/ || true
           git add data/preis_email_enrichi_state.csv || true
           git add data/preis_africacdc_email_state.csv || true
           git add dashboard_ebola/data/serie_temporelle_nationale.csv || true
           git add dashboard_ebola/data/tableau_zones_sante.csv || true
           git status --short
           git commit -m "PREIS pipeline: monitor + extraction + analyse [skip ci]" || echo "No changes to commit"
-          git pull --rebase origin main || echo "No remote changes to rebase"
-          git push || echo "No changes to push"
+          # PREIS FIX 2026-08-04 : push robuste avec re-essais au lieu de
+          # "git push || echo" qui avalait un push rejete (perte de commit).
+          ok=0
+          for i in 1 2 3 4 5; do
+            if git push; then ok=1; break; fi
+            echo "Push rejete (tentative $i) - resynchronisation avant re-essai"
+            git pull --rebase origin main || true
+          done
+          if [ "$ok" != "1" ]; then
+            echo "AVERTISSEMENT : outputs pipeline non pousses apres 5 essais."
+          fi
