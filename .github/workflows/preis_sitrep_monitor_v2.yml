@@ -195,9 +195,16 @@ jobs:
       # ------------------------------------------------------------
       - name: Install R packages pipeline (extraction + analyse)
         run: |
-          Rscript --vanilla -e 'pkgs <- c("pdftools","tidyr","lubridate","ggplot2","openxlsx","zoo","officer","flextable"); to_install <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly=TRUE)]; if(length(to_install)>0) install.packages(to_install, repos="https://cloud.r-project.org")'
-          # PREIS FIX 2026-08-04 : ajout de "officer" et "flextable", requis par
-          # 06_generate_africa_cdc_sitrep_final.R pour produire le docx supplement.
+          # PREIS FIX 2026-08-05 : installation en BINAIRES via Posit Package
+          # Manager (P3M) au lieu du CRAN source. Sans cela, flextable/officer
+          # (et leurs deps gdtools/systemfonts/ragg) compilent depuis les
+          # sources sur le runner et echouent silencieusement -> 06 plantait sur
+          # "there is no package called 'flextable'".
+          # - le codename Ubuntu est detecte dynamiquement (jammy/noble...) ;
+          # - HTTPUserAgent est OBLIGATOIRE pour que P3M serve des binaires
+          #   Linux (ignore par Rprofile a cause de --vanilla, donc pose ici) ;
+          # - verification finale : le step ECHOUE si un package manque.
+          Rscript --vanilla -e 'os <- readLines("/etc/os-release"); cn <- sub("^VERSION_CODENAME=", "", grep("^VERSION_CODENAME=", os, value=TRUE)); if (length(cn)==0 || !nzchar(cn)) cn <- "jammy"; repo <- sprintf("https://packagemanager.posit.co/cran/__linux__/%s/latest", cn); options(HTTPUserAgent = sprintf("R/%s R (%s)", getRversion(), paste(getRversion(), R.version$platform, R.version$arch, R.version$os))); pkgs <- c("pdftools","tidyr","lubridate","ggplot2","openxlsx","zoo","officer","flextable"); ti <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly=TRUE)]; if (length(ti)>0) install.packages(ti, repos=c(P3M=repo, CRAN="https://cloud.r-project.org")); miss <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly=TRUE)]; if (length(miss)>0) stop("Packages pipeline non installes: ", paste(miss, collapse=", ")); cat("Pipeline packages OK on", cn, "\n")'
 
       - name: Normaliser les noms de PDFs (P3)
         if: always()
