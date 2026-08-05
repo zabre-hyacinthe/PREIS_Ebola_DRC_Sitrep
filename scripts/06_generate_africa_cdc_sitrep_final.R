@@ -113,8 +113,9 @@ nat_prev  <- if (nrow(nat) >= 2) nat[nrow(nat) - 1, ] else nat_last
 # OWN latest available date, and the document says so explicitly
 # wherever that date differs from the national one, instead of
 # hiding the lag.
-zone_last_date <- daily %>% filter(level == "Zone") %>% pull(date) %>% max()
-zone_data_lagging <- as.character(zone_last_date) != as.character(last_date)
+zone_dates <- daily %>% filter(level == "Zone", !is.na(date)) %>% pull(date)
+zone_last_date <- if (length(zone_dates) > 0) max(zone_dates) else last_date
+zone_data_lagging <- isTRUE(as.character(zone_last_date) != as.character(last_date))
 
 provinces <- daily %>% filter(level == "Province", date == zone_last_date) %>% arrange(desc(cum_cases))
 zones     <- daily %>% filter(level == "Zone", date == zone_last_date) %>% arrange(desc(cum_cases)) %>% slice_head(n = 8)
