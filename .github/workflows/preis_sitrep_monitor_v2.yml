@@ -99,11 +99,14 @@ jobs:
             libtiff5-dev \
             libjpeg-dev \
             libharfbuzz-dev \
-            libfribidi-dev
-          # PREIS FIX 2026-08-04 : les 7 dernieres libs (fontconfig -> fribidi)
-          # sont necessaires a systemfonts/gdtools/ragg, donc a flextable +
+            libfribidi-dev \
+            libpoppler-cpp-dev
+          # PREIS FIX 2026-08-04 : les 7 libs (fontconfig -> fribidi) sont
+          # necessaires a systemfonts/gdtools/ragg, donc a flextable +
           # ggsave() utilises par 06_generate_africa_cdc_sitrep_final.R.
-          # Sans elles, la generation du docx echouait silencieusement
+          # PREIS FIX 2026-08-05 : libpoppler-cpp-dev requis par pdftools si
+          # celui-ci doit compiler depuis les sources (filet de securite).
+          # Sans ces libs, la generation du docx echouait silencieusement
           # (avalee par continue-on-error) et le supplement n'etait jamais cree.
 
       - name: Install R packages
@@ -204,7 +207,7 @@ jobs:
           # - HTTPUserAgent est OBLIGATOIRE pour que P3M serve des binaires
           #   Linux (ignore par Rprofile a cause de --vanilla, donc pose ici) ;
           # - verification finale : le step ECHOUE si un package manque.
-          Rscript --vanilla -e 'os <- readLines("/etc/os-release"); cn <- sub("^VERSION_CODENAME=", "", grep("^VERSION_CODENAME=", os, value=TRUE)); if (length(cn)==0 || !nzchar(cn)) cn <- "jammy"; repo <- sprintf("https://packagemanager.posit.co/cran/__linux__/%s/latest", cn); options(HTTPUserAgent = sprintf("R/%s R (%s)", getRversion(), paste(getRversion(), R.version$platform, R.version$arch, R.version$os))); pkgs <- c("pdftools","tidyr","lubridate","ggplot2","openxlsx","zoo","officer","flextable"); ti <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly=TRUE)]; if (length(ti)>0) install.packages(ti, repos=c(P3M=repo, CRAN="https://cloud.r-project.org")); miss <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly=TRUE)]; if (length(miss)>0) stop("Packages pipeline non installes: ", paste(miss, collapse=", ")); cat("Pipeline packages OK on", cn, "\n")'
+          Rscript --vanilla -e 'os <- readLines("/etc/os-release"); cn <- sub("^VERSION_CODENAME=", "", grep("^VERSION_CODENAME=", os, value=TRUE)); if (length(cn)==0 || !nzchar(cn)) cn <- "jammy"; repo <- sprintf("https://packagemanager.posit.co/cran/__linux__/%s/latest", cn); options(HTTPUserAgent = sprintf("R/%s R (%s)", getRversion(), paste(getRversion(), R.version$platform, R.version$arch, R.version$os)), repos = c(P3M = repo)); pkgs <- c("pdftools","tidyr","lubridate","ggplot2","openxlsx","zoo","officer","flextable"); ti <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly=TRUE)]; if (length(ti)>0) install.packages(ti); miss <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly=TRUE)]; if (length(miss)>0) stop("Packages pipeline non installes: ", paste(miss, collapse=", ")); cat("Pipeline packages OK on", cn, "\n")'
 
       - name: Normaliser les noms de PDFs (P3)
         if: always()
