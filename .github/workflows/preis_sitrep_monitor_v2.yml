@@ -251,8 +251,7 @@ jobs:
       # PREIS ENRICHED EMAIL END
       # PREIS WATCHDOG START
       # Garde-fou : alerte par email si un SitRep a ete telecharge mais
-      # jamais envoye (ex. SR82 rate pendant la panne GitHub du 06/08).
-      # if: always() -> tourne meme si une etape precedente a echoue.
+      # jamais envoye. if: always() -> tourne meme si une etape a echoue.
       - name: PREIS watchdog gap alert
         if: always()
         continue-on-error: true
