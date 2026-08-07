@@ -134,7 +134,7 @@ latest_available <- if (length(available)) max(available) else 0L
 # 3) Diagnostic de l'ecart
 # ------------------------------------------------------------
 missing <- sort(setdiff(available, emailed))          # existent mais jamais envoyes
-missing <- missing[missing >= floor_sno]
+missing <- missing[missing > last_emailed]
 extraction_stuck <- downloaded_max > series_max        # PDF present, serie en retard
 
 force <- .is_true(Sys.getenv("PREIS_WATCHDOG_FORCE", "false"))
