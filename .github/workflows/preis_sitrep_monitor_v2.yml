@@ -58,10 +58,6 @@ jobs:
       ALERT_TO: ${{ secrets.ALERT_TO }}
       ALERT_CC: ${{ secrets.ALERT_CC }}
       ALERT_BCC: ${{ secrets.ALERT_BCC }}
-      # PREIS FIX 2026-08-04 : destinataires dedies du supplement Africa CDC.
-      # Si le secret n'est pas defini, 05_send_africacdc_sitrep_email.R retombe
-      # automatiquement sur ALERT_TO (aucun blocage).
-      PREIS_AFRICACDC_TO: ${{ secrets.PREIS_AFRICACDC_TO }}
 
       WA_ENABLED: ${{ secrets.WA_ENABLED }}
       WA_ACCESS_TOKEN: ${{ secrets.WA_ACCESS_TOKEN }}
@@ -91,23 +87,7 @@ jobs:
             libcurl4-openssl-dev \
             libssl-dev \
             libxml2-dev \
-            make \
-            libfontconfig1-dev \
-            libcairo2-dev \
-            libfreetype6-dev \
-            libpng-dev \
-            libtiff5-dev \
-            libjpeg-dev \
-            libharfbuzz-dev \
-            libfribidi-dev \
-            libpoppler-cpp-dev
-          # PREIS FIX 2026-08-04 : les 7 libs (fontconfig -> fribidi) sont
-          # necessaires a systemfonts/gdtools/ragg, donc a flextable +
-          # ggsave() utilises par 06_generate_africa_cdc_sitrep_final.R.
-          # PREIS FIX 2026-08-05 : libpoppler-cpp-dev requis par pdftools si
-          # celui-ci doit compiler depuis les sources (filet de securite).
-          # Sans ces libs, la generation du docx echouait silencieusement
-          # (avalee par continue-on-error) et le supplement n'etait jamais cree.
+            make
 
       - name: Install R packages
         run: |
@@ -145,7 +125,7 @@ jobs:
           FORCE_SEND: false
           PREIS_FORCE_SEND: false
         run: |
-          Rscript --vanilla -e 'parse(file="scripts/00_email_smtp_base.R", encoding="UTF-8"); parse(file="scripts/08_cloud_sitrep_monitor.R", encoding="UTF-8"); parse(file="scripts/preis_safe_scientific_email.R", encoding="UTF-8"); parse(file="preis_email_enrichi.R", encoding="UTF-8"); parse(file="scripts/05_send_africacdc_sitrep_email.R", encoding="UTF-8"); parse(file="scripts/06_generate_africa_cdc_sitrep_final.R", encoding="UTF-8"); if (file.exists("scripts/10_whatsapp_notify.R")) parse(file="scripts/10_whatsapp_notify.R", encoding="UTF-8"); cat("R parse OK\n")'
+          Rscript --vanilla -e 'parse(file="scripts/00_email_smtp_base.R", encoding="UTF-8"); parse(file="scripts/08_cloud_sitrep_monitor.R", encoding="UTF-8"); parse(file="scripts/preis_safe_scientific_email.R", encoding="UTF-8"); parse(file="preis_email_enrichi.R", encoding="UTF-8"); if (file.exists("scripts/10_whatsapp_notify.R")) parse(file="scripts/10_whatsapp_notify.R", encoding="UTF-8"); cat("R parse OK\n")'
 
       # PREIS SAFE EMAIL GUARANTEE START
       - name: PREIS safe scientific email guarantee
@@ -178,14 +158,6 @@ jobs:
           exit 0
       # PREIS SAFE EMAIL STATE COMMIT END
       - name: Run PREIS SitRep monitor
-        env:
-          # PREIS FIX 2026-08-04 : email du monitor delegue a preis_email_enrichi.R
-          # (une seule voie email officielle, cf. revue globale section 3.3).
-          # Detection + telechargement PDF + WhatsApp restent actifs.
-          # Rend explicite dans le workflow ce que la revue supposait deja
-          # ("Email monitor : OFF (delegue)"), au cas ou un second email
-          # "Nouveau SitRep INSP" reapparaitrait.
-          PREIS_MONITOR_EMAIL_ENABLED: "false"
         run: |
           Rscript --vanilla scripts/08_cloud_sitrep_monitor.R
 
@@ -198,16 +170,7 @@ jobs:
       # ------------------------------------------------------------
       - name: Install R packages pipeline (extraction + analyse)
         run: |
-          # PREIS FIX 2026-08-05 : installation en BINAIRES via Posit Package
-          # Manager (P3M) au lieu du CRAN source. Sans cela, flextable/officer
-          # (et leurs deps gdtools/systemfonts/ragg) compilent depuis les
-          # sources sur le runner et echouent silencieusement -> 06 plantait sur
-          # "there is no package called 'flextable'".
-          # - le codename Ubuntu est detecte dynamiquement (jammy/noble...) ;
-          # - HTTPUserAgent est OBLIGATOIRE pour que P3M serve des binaires
-          #   Linux (ignore par Rprofile a cause de --vanilla, donc pose ici) ;
-          # - verification finale : le step ECHOUE si un package manque.
-          Rscript --vanilla -e 'os <- readLines("/etc/os-release"); cn <- sub("^VERSION_CODENAME=", "", grep("^VERSION_CODENAME=", os, value=TRUE)); if (length(cn)==0 || !nzchar(cn)) cn <- "jammy"; repo <- sprintf("https://packagemanager.posit.co/cran/__linux__/%s/latest", cn); options(HTTPUserAgent = sprintf("R/%s R (%s)", getRversion(), paste(getRversion(), R.version$platform, R.version$arch, R.version$os)), repos = c(P3M = repo)); pkgs <- c("pdftools","tidyr","lubridate","ggplot2","openxlsx","zoo","officer","flextable"); ti <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly=TRUE)]; if (length(ti)>0) install.packages(ti); miss <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly=TRUE)]; if (length(miss)>0) stop("Packages pipeline non installes: ", paste(miss, collapse=", ")); cat("Pipeline packages OK on", cn, "\n")'
+          Rscript --vanilla -e 'pkgs <- c("pdftools","tidyr","lubridate","ggplot2","openxlsx","zoo"); to_install <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly=TRUE)]; if(length(to_install)>0) install.packages(to_install, repos="https://cloud.r-project.org")'
 
       - name: Normaliser les noms de PDFs (P3)
         if: always()
@@ -243,26 +206,7 @@ jobs:
         run: |
           Rscript --vanilla scripts/03_analyse_consolidee.R || echo "03_analyse_consolidee.R en erreur"
 
-      # PREIS AFRICA CDC SUPPLEMENT GENERATION START
-      # PREIS FIX 2026-08-04 : etape MANQUANTE. Genere le document d'analyse
-      # supplementaire (outputs/rapports/PREIS_AfricaCDC_SitRep_<NNN>_FINAL.docx)
-      # a partir des indicateurs deja produits ci-dessus. Doit tourner APRES
-      # 11_daily_indicators.R et 03_analyse_consolidee.R. continue-on-error pour
-      # ne jamais casser le pipeline ; l'envoi (etape 05) est bloque proprement
-      # si le docx n'existe pas.
-      - name: Generer le supplement Africa CDC (06_generate_africa_cdc_sitrep_final.R)
-        if: always()
-        continue-on-error: true
-        run: |
-          if [ -f scripts/06_generate_africa_cdc_sitrep_final.R ]; then
-            if [ ! -f scripts/operational_watch.R ]; then
-              echo "ATTENTION : scripts/operational_watch.R absent -> 06 va s'arreter (dependance requise)."
-            fi
-            Rscript --vanilla scripts/06_generate_africa_cdc_sitrep_final.R || echo "06_generate_africa_cdc_sitrep_final.R en erreur"
-          else
-            echo "scripts/06_generate_africa_cdc_sitrep_final.R absent - skip generation supplement"
-          fi
-      # PREIS AFRICA CDC SUPPLEMENT GENERATION END
+
 
       # PREIS DASHBOARD DATA SYNC START
       - name: Synchroniser les donnees du dashboard
@@ -292,90 +236,20 @@ jobs:
             echo "preis_email_enrichi.R absent - skip enriched email"
           fi
       # PREIS ENRICHED EMAIL END
-
-      # PREIS ENRICHED EMAIL STATE COMMIT START
-      # PREIS FIX 2026-08-04 : CAUSE RACINE DU DOUBLON D'EMAIL.
-      # L'anti-doublon de l'email enrichi (data/preis_email_enrichi_state.csv)
-      # n'etait committe qu'a la toute fin, via "git push || echo" qui avale
-      # silencieusement un push rejete. Quand ce push echouait (course entre
-      # runs cron), l'etat "deja envoye" n'arrivait jamais sur le depot et le
-      # run suivant renvoyait le MEME email. On committe donc l'etat
-      # IMMEDIATEMENT apres l'envoi, avec re-essais (fetch+rebase), exactement
-      # comme pour l'email "safe scientific".
-      - name: Commit PREIS enriched email state
+      # PREIS WATCHDOG START
+      # Garde-fou : alerte par email si un SitRep a ete telecharge mais
+      # jamais envoye (ex. SR82 rate pendant la panne GitHub du 06/08).
+      # if: always() -> tourne meme si une etape precedente a echoue.
+      - name: PREIS watchdog gap alert
         if: always()
-        run: |
-          set +e
-          if [ -f data/preis_email_enrichi_state.csv ]; then
-            git config user.name "PREIS Ebola DRC Automation"
-            git config user.email "preis-automation@users.noreply.github.com"
-            git add data/preis_email_enrichi_state.csv
-            if git diff --cached --quiet; then
-              echo "No enriched email state change to commit"
-              exit 0
-            fi
-            git commit -m "Update PREIS enriched email anti-duplicate state [skip ci]"
-            ok=0
-            for i in 1 2 3 4 5; do
-              if git push; then ok=1; break; fi
-              echo "Push rejete (tentative $i) - resynchronisation avant re-essai"
-              git pull --rebase origin main || true
-            done
-            if [ "$ok" != "1" ]; then
-              echo "ECHEC CRITIQUE : etat anti-doublon enrichi NON pousse apres 5 essais."
-              echo "Risque de renvoi du meme email au prochain run cron."
-              exit 1
-            fi
-          else
-            echo "No enriched email state file found"
-          fi
-      # PREIS ENRICHED EMAIL STATE COMMIT END
-
-      # PREIS AFRICA CDC SUPPLEMENT EMAIL START
-      # PREIS FIX 2026-08-04 : etape MANQUANTE. Envoie le docx supplement dans
-      # un email SEPARE (decision de conception du 2026-07-29 : ne pas joindre
-      # le docx a l'email enrichi). Anti-doublon propre :
-      # data/preis_africacdc_email_state.csv. Bloque proprement si le docx
-      # n'a pas ete genere.
-      - name: Send Africa CDC supplement email (05_send_africacdc_sitrep_email.R)
-        if: always() && env.PREIS_SEND_EMAIL == 'true'
         continue-on-error: true
         run: |
-          if [ -f scripts/05_send_africacdc_sitrep_email.R ]; then
-            Rscript --vanilla scripts/05_send_africacdc_sitrep_email.R || echo "05_send_africacdc_sitrep_email.R en erreur (docx probablement absent)"
+          if [ -f preis_watchdog_gap_alert.R ]; then
+            Rscript --vanilla preis_watchdog_gap_alert.R || echo "watchdog en erreur (non bloquant)"
           else
-            echo "scripts/05_send_africacdc_sitrep_email.R absent - skip supplement email"
+            echo "preis_watchdog_gap_alert.R absent - skip watchdog"
           fi
-      # PREIS AFRICA CDC SUPPLEMENT EMAIL END
-
-      # PREIS AFRICA CDC STATE COMMIT START
-      # PREIS FIX 2026-08-04 : meme robustesse que l'email enrichi pour
-      # l'anti-doublon du supplement Africa CDC.
-      - name: Commit Africa CDC email state + supplement
-        if: always()
-        run: |
-          set +e
-          git config user.name "PREIS Ebola DRC Automation"
-          git config user.email "preis-automation@users.noreply.github.com"
-          git add data/preis_africacdc_email_state.csv 2>/dev/null || true
-          git add outputs/rapports/ 2>/dev/null || true
-          if git diff --cached --quiet; then
-            echo "No Africa CDC state/supplement change to commit"
-            exit 0
-          fi
-          git commit -m "Update PREIS Africa CDC supplement + anti-duplicate state [skip ci]"
-          ok=0
-          for i in 1 2 3 4 5; do
-            if git push; then ok=1; break; fi
-            echo "Push rejete (tentative $i) - resynchronisation avant re-essai"
-            git pull --rebase origin main || true
-          done
-          if [ "$ok" != "1" ]; then
-            echo "AVERTISSEMENT : supplement Africa CDC / etat non pousse apres 5 essais."
-          fi
-          exit 0
-      # PREIS AFRICA CDC STATE COMMIT END
-
+      # PREIS WATCHDOG END
       - name: Commit monitor + pipeline outputs
         if: always()
         run: |
@@ -396,21 +270,11 @@ jobs:
           git add outputs/analyse/serie_temporelle_nationale.csv || true
           git add outputs/analyse/tableau_zones_sante.csv || true
           git add outputs/audit/ || true
-          git add outputs/rapports/ || true
           git add data/preis_email_enrichi_state.csv || true
-          git add data/preis_africacdc_email_state.csv || true
+          git add data/preis_watchdog_state.csv || true
           git add dashboard_ebola/data/serie_temporelle_nationale.csv || true
           git add dashboard_ebola/data/tableau_zones_sante.csv || true
           git status --short
           git commit -m "PREIS pipeline: monitor + extraction + analyse [skip ci]" || echo "No changes to commit"
-          # PREIS FIX 2026-08-04 : push robuste avec re-essais au lieu de
-          # "git push || echo" qui avalait un push rejete (perte de commit).
-          ok=0
-          for i in 1 2 3 4 5; do
-            if git push; then ok=1; break; fi
-            echo "Push rejete (tentative $i) - resynchronisation avant re-essai"
-            git pull --rebase origin main || true
-          done
-          if [ "$ok" != "1" ]; then
-            echo "AVERTISSEMENT : outputs pipeline non pousses apres 5 essais."
-          fi
+          git pull --rebase origin main || echo "No remote changes to rebase"
+          git push || echo "No changes to push"
