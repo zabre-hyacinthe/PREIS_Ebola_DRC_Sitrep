@@ -87,6 +87,7 @@ jobs:
             libcurl4-openssl-dev \
             libssl-dev \
             libxml2-dev \
+            libpoppler-cpp-dev \
             make
 
       - name: Install R packages
