@@ -121,7 +121,12 @@ if (dir.exists(PDF_DIR)) {
   pdf_nums <- pdf_nums[!is.na(pdf_nums)]
 }
 
-available <- sort(unique(c(series_nums, downloaded_nums, pdf_nums)))
+# Un SitRep n'est reellement "envoyable" que s'il existe un PDF officiel
+# (downloaded=TRUE au registre OU fichier PDF present). On EXCLUT les
+# numeros presents uniquement dans la serie (dates interpolees) : sinon
+# un SitRep jamais publie par l'INSP -- ex. N63, saute entre N62 et N64 --
+# serait signale a tort comme "manquant".
+available <- sort(unique(c(downloaded_nums, pdf_nums)))
 available <- available[!is.na(available) & available >= floor_sno]
 latest_available <- if (length(available)) max(available) else 0L
 
