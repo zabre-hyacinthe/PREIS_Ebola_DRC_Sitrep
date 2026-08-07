@@ -200,6 +200,19 @@ jobs:
         run: |
           Rscript --vanilla scripts/11_daily_indicators.R || echo "11_daily_indicators.R en erreur"
 
+      # CHAINON MANQUANT : extrait les cumuls nationaux du dernier PDF vers
+      # PREIS_indicators_long.csv (fail-safe). Sans ca, la serie cloud ne
+      # depassait jamais le dernier SitRep extrait EN LOCAL -> run vert / pas d'email.
+      - name: Extraction cumuls nationaux cloud (preis_extract_cloud_national.R)
+        if: always()
+        continue-on-error: true
+        run: |
+          if [ -f scripts/preis_extract_cloud_national.R ]; then
+            Rscript --vanilla scripts/preis_extract_cloud_national.R || echo "extraction cloud en erreur (non bloquant)"
+          else
+            echo "scripts/preis_extract_cloud_national.R absent - skip"
+          fi
+
       - name: Analyse consolidee - serie temporelle nationale (03_analyse_consolidee.R)
         if: always()
         continue-on-error: true
