@@ -74,6 +74,17 @@ send_africacdc_sitrep_email <- function(root = NULL, force = FALSE) {
   }
 
   sno <- max(suppressWarnings(as.integer(reg$sitrep_no)), na.rm = TRUE)
+  # ROBUSTESSE CLOUD : sitrep_registry.csv n'est pas mis a jour dans le cloud.
+  # On aligne le numero cible sur la serie reellement produite (comme 06), pour
+  # que le supplement porte le meme SitRep que l'email de synthese.
+  .serie_fp <- "outputs/analyse/serie_temporelle_nationale.csv"
+  if (file.exists(.serie_fp)) {
+    .s <- tryCatch(readr::read_csv(.serie_fp, show_col_types = FALSE), error = function(e) NULL)
+    if (!is.null(.s) && "sitrep_no" %in% names(.s)) {
+      .smax <- suppressWarnings(max(as.integer(.s$sitrep_no), na.rm = TRUE))
+      if (is.finite(.smax) && (!is.finite(sno) || .smax >= sno)) sno <- .smax
+    }
+  }
   if (!is.finite(sno)) {
     cat("Aucun SitRep valide dans le registre.\n")
     return(invisible(FALSE))
