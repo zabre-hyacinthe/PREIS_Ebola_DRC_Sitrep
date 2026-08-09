@@ -87,6 +87,7 @@ jobs:
             libcurl4-openssl-dev \
             libssl-dev \
             libxml2-dev \
+            libpoppler-cpp-dev \
             make
 
       - name: Install R packages
@@ -170,7 +171,7 @@ jobs:
       # ------------------------------------------------------------
       - name: Install R packages pipeline (extraction + analyse)
         run: |
-          Rscript --vanilla -e 'pkgs <- c("tidyr","lubridate","ggplot2","openxlsx","zoo"); to_install <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly=TRUE)]; if(length(to_install)>0) install.packages(to_install, repos="https://packagemanager.posit.co/cran/__linux__/jammy/latest")'
+          Rscript --vanilla -e 'pkgs <- c("pdftools","tidyr","lubridate","ggplot2","openxlsx","zoo"); to_install <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly=TRUE)]; if(length(to_install)>0) install.packages(to_install, repos="https://packagemanager.posit.co/cran/__linux__/jammy/latest")'
 
       - name: Normaliser les noms de PDFs (P3)
         if: always()
