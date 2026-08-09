@@ -291,13 +291,17 @@ preis_email_enrichi <- function(root = NULL, force = FALSE,
     return(invisible(FALSE))
   }
 
-  pdf_fp <- file.path(
-    pdf_dir,
-    sprintf("PREIS_DRC_Ebola_SitRep_%03d.pdf", sno)
-  )
+ pdf_candidates <- file.path(pdf_dir, c(
+    sprintf("PREIS_DRC_Ebola_SitRep_%03d.pdf", sno),
+    sprintf("PREIS_DRC_Ebola_SitRep_%d.pdf",   sno),
+    sprintf("SitRep_%02d_2026.pdf",            sno),
+    sprintf("SitRep_%d_2026.pdf",              sno)
+  ))
+  pdf_fp <- pdf_candidates[file.exists(pdf_candidates)][1]
 
-  if (!file.exists(pdf_fp)) {
-    cat("Envoi bloque : PDF officiel introuvable :", pdf_fp, "\n")
+  if (is.na(pdf_fp)) {
+    cat("Envoi bloque : PDF officiel introuvable. Cherche :",
+        paste(basename(pdf_candidates), collapse = ", "), "\n")
     return(invisible(FALSE))
   }
 
