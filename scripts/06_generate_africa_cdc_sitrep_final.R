@@ -95,9 +95,26 @@ RULECLR   <- "#E4E2DC"
 daily    <- read_csv(DAILY_FP, show_col_types = FALSE)
 signals  <- if (file.exists(SIGNALS_FP)) read_csv(SIGNALS_FP, show_col_types = FALSE) else tibble()
 registry <- read_csv(REGISTRY_FP, show_col_types = FALSE) %>% arrange(desc(sitrep_no))
-
 latest_sno  <- registry$sitrep_no[1]
 latest_date <- registry$date_raw[1]
+# ROBUSTESSE CLOUD : dans le cloud, sitrep_registry.csv n'est PAS mis a jour
+# (seul le master local l'ecrit) -> il peut etre en retard. On aligne le numero
+# de reference sur la serie reellement produite (celle qui alimente l'email de
+# synthese), pour que le supplement porte le bon SitRep.
+.serie_fp <- file.path(BASE_DIR, "outputs", "analyse", "serie_temporelle_nationale.csv")
+if (file.exists(.serie_fp)) {
+  .s <- tryCatch(readr::read_csv(.serie_fp, show_col_types = FALSE), error = function(e) NULL)
+  if (!is.null(.s) && "sitrep_no" %in% names(.s)) {
+    .smax <- suppressWarnings(max(as.integer(.s$sitrep_no), na.rm = TRUE))
+    if (is.finite(.smax) && (is.na(latest_sno) || .smax >= as.integer(latest_sno))) {
+      latest_sno  <- .smax
+      .rd <- registry$date_raw[match(.smax, as.integer(registry$sitrep_no))]
+      latest_date <- if (!is.na(.rd)) .rd
+                     else if ("date" %in% names(.s)) as.character(.s$date[which.max(as.integer(.s$sitrep_no))])
+                     else latest_date
+    }
+  }
+}
 today_str   <- format(Sys.Date(), "%d %B %Y")
 
 nat <- daily %>% filter(level == "National") %>% arrange(date) %>% mutate(date = as.Date(date))
