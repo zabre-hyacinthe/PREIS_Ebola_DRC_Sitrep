@@ -88,6 +88,14 @@ jobs:
             libssl-dev \
             libxml2-dev \
             libpoppler-cpp-dev \
+            libfontconfig1-dev \
+            libfreetype6-dev \
+            libharfbuzz-dev \
+            libfribidi-dev \
+            libpng-dev \
+            libtiff5-dev \
+            libjpeg-dev \
+            libcairo2-dev \
             make
 
       - name: Install R packages
@@ -171,7 +179,7 @@ jobs:
       # ------------------------------------------------------------
       - name: Install R packages pipeline (extraction + analyse)
         run: |
-          Rscript --vanilla -e 'pkgs <- c("pdftools","tidyr","lubridate","ggplot2","openxlsx","zoo"); to_install <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly=TRUE)]; if(length(to_install)>0) install.packages(to_install, repos="https://packagemanager.posit.co/cran/__linux__/jammy/latest")'
+          Rscript --vanilla -e 'pkgs <- c("pdftools","tidyr","lubridate","ggplot2","openxlsx","zoo","officer","flextable","ragg"); to_install <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly=TRUE)]; if(length(to_install)>0) install.packages(to_install, repos="https://packagemanager.posit.co/cran/__linux__/jammy/latest")'
 
       - name: Normaliser les noms de PDFs (P3)
         if: always()
@@ -250,6 +258,29 @@ jobs:
             echo "preis_email_enrichi.R absent - skip enriched email"
           fi
       # PREIS ENRICHED EMAIL END
+      # PREIS AFRICA CDC SUPPLEMENT START
+      # Genere le supplement Africa CDC (docx) puis l'envoie en email SEPARE.
+      # continue-on-error : un souci de rendu docx ne casse pas le reste du pipeline.
+      - name: Generer supplement Africa CDC (06_generate_africa_cdc_sitrep_final.R)
+        if: always()
+        continue-on-error: true
+        run: |
+          if [ -f scripts/06_generate_africa_cdc_sitrep_final.R ]; then
+            Rscript --vanilla scripts/06_generate_africa_cdc_sitrep_final.R || echo "06 en erreur (non bloquant)"
+          else
+            echo "scripts/06_generate_africa_cdc_sitrep_final.R absent - skip"
+          fi
+
+      - name: Envoyer supplement Africa CDC (05_send_africacdc_sitrep_email.R)
+        if: always() && env.PREIS_SEND_EMAIL == 'true'
+        continue-on-error: true
+        run: |
+          if [ -f scripts/05_send_africacdc_sitrep_email.R ]; then
+            Rscript --vanilla scripts/05_send_africacdc_sitrep_email.R || echo "05 en erreur (non bloquant)"
+          else
+            echo "scripts/05_send_africacdc_sitrep_email.R absent - skip"
+          fi
+      # PREIS AFRICA CDC SUPPLEMENT END
       # PREIS WATCHDOG START
       # Garde-fou : alerte par email si un SitRep a ete telecharge mais
       # jamais envoye. if: always() -> tourne meme si une etape a echoue.
@@ -285,6 +316,8 @@ jobs:
           git add outputs/audit/ || true
           git add data/preis_email_enrichi_state.csv || true
           git add data/preis_watchdog_state.csv || true
+          git add data/preis_africacdc_email_state.csv || true
+          git add outputs/rapports/ || true
           git add dashboard_ebola/data/serie_temporelle_nationale.csv || true
           git add dashboard_ebola/data/tableau_zones_sante.csv || true
           git status --short
