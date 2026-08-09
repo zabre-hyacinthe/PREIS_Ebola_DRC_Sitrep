@@ -177,7 +177,7 @@ extract_sitrep_no <- function(x) {
   x <- paste(as.character(x), collapse = " ")
   x <- stringr::str_to_lower(x)
 
-  m1 <- stringr::str_match(x, "sitrep-n(\\d+)-mvb")[, 2]
+  m1 <- stringr::str_match(x, "sitrep-n0*(\\d+)")[, 2]
   if (!is.na(m1)) {
     return(as.integer(m1))
   }
@@ -292,7 +292,7 @@ scrape_latest_sitrep <- function() {
     ) |>
       dplyr::filter(
         !is.na(post_url),
-        stringr::str_detect(post_url, "sitrep-n\\d+-mvb")
+        stringr::str_detect(post_url, "sitrep-n\\d+")
       ) |>
       dplyr::mutate(
         post_url = normalize_url(post_url, "https://insp.cd"),
