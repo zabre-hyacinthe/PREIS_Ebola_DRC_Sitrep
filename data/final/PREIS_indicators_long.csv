@@ -954,3 +954,6 @@
 "104","cumulative_confirmed_cases","cases","5713","cloud_inrb_daily","observed","inrb_validated","1"
 "104","cumulative_deaths","deaths","2755","cloud_inrb_daily","observed","inrb_validated","1"
 "104","case_fatality_ratio","deaths","48.2","cloud_inrb_daily","observed","inrb_validated","1"
+"94","cumulative_confirmed_cases","cases","4945","cloud_inrb_daily","observed","inrb_validated","1"
+"94","cumulative_deaths","deaths","2325","cloud_inrb_daily","observed","inrb_validated","1"
+"94","case_fatality_ratio","deaths","47","cloud_inrb_daily","observed","inrb_validated","1"
