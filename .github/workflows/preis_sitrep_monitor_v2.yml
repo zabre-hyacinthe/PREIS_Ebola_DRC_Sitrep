@@ -228,6 +228,12 @@ jobs:
         run: |
           Rscript --vanilla scripts/03_analyse_consolidee.R || echo "03_analyse_consolidee.R en erreur"
 
+      - name: Generer les donnees Situation Room EOC
+        if: always()
+        continue-on-error: true
+        run: |
+          Rscript --vanilla scripts/16_generate_situation_room_data.R || echo "16_generate_situation_room_data.R en erreur"
+
 
 
       # PREIS DASHBOARD DATA SYNC START
@@ -313,6 +319,7 @@ jobs:
           git add data/final/sitrep_registry.csv || true
           git add outputs/analyse/serie_temporelle_nationale.csv || true
           git add outputs/analyse/tableau_zones_sante.csv || true
+          git add situation_room/data/situation_room_data.json || true
           git add outputs/audit/ || true
           git add data/preis_email_enrichi_state.csv || true
           git add data/preis_watchdog_state.csv || true
