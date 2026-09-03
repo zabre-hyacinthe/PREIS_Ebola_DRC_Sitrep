@@ -1,0 +1,1247 @@
+{
+  "generated_at": "2026-09-03T12:56:39Z",
+  "asof": "2026-08-03",
+  "sitrep": "110",
+  "sitrep_date": "2026-08-03",
+  "kpi": {
+    "cases": 6186,
+    "deaths": 3007,
+    "cfr": 48.6,
+    "new": 86,
+    "ma7": 80.3,
+    "doubling": 21.6,
+    "recovered": 68,
+    "isolation": 25,
+    "hz": 51,
+    "provinces": 3,
+    "beds_occ": null,
+    "beds_deficit": null
+  },
+  "surv": {
+    "alerts_reported": 1071,
+    "alerts_investigated": 170,
+    "investigation_rate": 88.5,
+    "contacts_followed": 92,
+    "suspects": 136,
+    "samples_analyzed": 132,
+    "lab_positivity": 30.3,
+    "vaccine": 190,
+    "community_deaths": 30,
+    "recovered": 68,
+    "isolation": 25
+  },
+  "surv_meta": {
+    "sitrep": {
+      "alerts_reported": 50,
+      "alerts_investigated": 17,
+      "investigation_rate": 17,
+      "contacts_followed": 61,
+      "suspects": 30,
+      "samples_analyzed": 48,
+      "lab_positivity": 18,
+      "vaccine": 12,
+      "community_deaths": 81,
+      "recovered": 74,
+      "isolation": 80
+    },
+    "staleness_sitreps": {
+      "alerts_reported": 60,
+      "alerts_investigated": 93,
+      "investigation_rate": 93,
+      "contacts_followed": 49,
+      "suspects": 80,
+      "samples_analyzed": 62,
+      "lab_positivity": 92,
+      "vaccine": 98,
+      "community_deaths": 29,
+      "recovered": 36,
+      "isolation": 30
+    }
+  },
+  "series": [
+    {
+      "d": "2026-05-14",
+      "nc": null,
+      "ma7": null,
+      "cum": 8
+    },
+    {
+      "d": "2026-05-17",
+      "nc": 5,
+      "ma7": 5,
+      "cum": 13
+    },
+    {
+      "d": "2026-05-18",
+      "nc": null,
+      "ma7": 5,
+      "cum": 33
+    },
+    {
+      "d": "2026-05-19",
+      "nc": 18,
+      "ma7": 11.5,
+      "cum": 51
+    },
+    {
+      "d": "2026-05-20",
+      "nc": 13,
+      "ma7": 15.5,
+      "cum": 64
+    },
+    {
+      "d": "2026-05-21",
+      "nc": 19,
+      "ma7": 16.67,
+      "cum": 83
+    },
+    {
+      "d": "2026-05-22",
+      "nc": 8,
+      "ma7": 13.33,
+      "cum": 91
+    },
+    {
+      "d": "2026-05-23",
+      "nc": 10,
+      "ma7": 12.33,
+      "cum": 101
+    },
+    {
+      "d": "2026-05-24",
+      "nc": 4,
+      "ma7": 7.33,
+      "cum": 105
+    },
+    {
+      "d": "2026-05-25",
+      "nc": 1,
+      "ma7": 5,
+      "cum": 106
+    },
+    {
+      "d": "2026-05-26",
+      "nc": 15,
+      "ma7": 6.67,
+      "cum": 121
+    },
+    {
+      "d": "2026-05-27",
+      "nc": 4,
+      "ma7": 6.67,
+      "cum": 125
+    },
+    {
+      "d": "2026-05-28",
+      "nc": 85,
+      "ma7": 34.67,
+      "cum": 210
+    },
+    {
+      "d": "2026-05-29",
+      "nc": 53,
+      "ma7": 47.33,
+      "cum": 263
+    },
+    {
+      "d": "2026-05-31",
+      "nc": null,
+      "ma7": 69,
+      "cum": 321
+    },
+    {
+      "d": "2026-06-01",
+      "nc": 23,
+      "ma7": 38,
+      "cum": 344
+    },
+    {
+      "d": "2026-06-02",
+      "nc": 19,
+      "ma7": 21,
+      "cum": 363
+    },
+    {
+      "d": "2026-06-03",
+      "nc": 18,
+      "ma7": 20,
+      "cum": 381
+    },
+    {
+      "d": "2026-06-04",
+      "nc": 71,
+      "ma7": 36,
+      "cum": 452
+    },
+    {
+      "d": "2026-06-05",
+      "nc": 36,
+      "ma7": 41.67,
+      "cum": 488
+    },
+    {
+      "d": "2026-06-06",
+      "nc": 27,
+      "ma7": 44.67,
+      "cum": 515
+    },
+    {
+      "d": "2026-06-07",
+      "nc": 35,
+      "ma7": 32.67,
+      "cum": 550
+    },
+    {
+      "d": "2026-06-08",
+      "nc": 48,
+      "ma7": 36.67,
+      "cum": 598
+    },
+    {
+      "d": "2026-06-09",
+      "nc": 37,
+      "ma7": 40,
+      "cum": 635
+    },
+    {
+      "d": "2026-06-10",
+      "nc": 41,
+      "ma7": 42,
+      "cum": 676
+    },
+    {
+      "d": "2026-06-11",
+      "nc": 13,
+      "ma7": 30.33,
+      "cum": 689
+    },
+    {
+      "d": "2026-06-13",
+      "nc": null,
+      "ma7": 27,
+      "cum": 782
+    },
+    {
+      "d": "2026-06-14",
+      "nc": 26,
+      "ma7": 19.5,
+      "cum": 808
+    },
+    {
+      "d": "2026-06-15",
+      "nc": 29,
+      "ma7": 27.5,
+      "cum": 837
+    },
+    {
+      "d": "2026-06-16",
+      "nc": 38,
+      "ma7": 31,
+      "cum": 875
+    },
+    {
+      "d": "2026-06-17",
+      "nc": 21,
+      "ma7": 29.33,
+      "cum": 896
+    },
+    {
+      "d": "2026-06-18",
+      "nc": 37,
+      "ma7": 32,
+      "cum": 933
+    },
+    {
+      "d": "2026-06-19",
+      "nc": 23,
+      "ma7": 27,
+      "cum": 956
+    },
+    {
+      "d": "2026-06-20",
+      "nc": 47,
+      "ma7": 35.67,
+      "cum": 1003
+    },
+    {
+      "d": "2026-06-21",
+      "nc": 45,
+      "ma7": 38.33,
+      "cum": 1048
+    },
+    {
+      "d": "2026-06-22",
+      "nc": 46,
+      "ma7": 46,
+      "cum": 1094
+    },
+    {
+      "d": "2026-06-23",
+      "nc": 24,
+      "ma7": 38.33,
+      "cum": 1118
+    },
+    {
+      "d": "2026-06-24",
+      "nc": 37,
+      "ma7": 35.67,
+      "cum": 1155
+    },
+    {
+      "d": "2026-06-25",
+      "nc": 48,
+      "ma7": 36.33,
+      "cum": 1203
+    },
+    {
+      "d": "2026-06-27",
+      "nc": null,
+      "ma7": 42.5,
+      "cum": 1274
+    },
+    {
+      "d": "2026-06-29",
+      "nc": null,
+      "ma7": 48,
+      "cum": 1333
+    },
+    {
+      "d": "2026-06-30",
+      "nc": 73,
+      "ma7": 73,
+      "cum": 1406
+    },
+    {
+      "d": "2026-07-01",
+      "nc": 54,
+      "ma7": 63.5,
+      "cum": 1460
+    },
+    {
+      "d": "2026-07-02",
+      "nc": 42,
+      "ma7": 56.33,
+      "cum": 1502
+    },
+    {
+      "d": "2026-07-02",
+      "nc": 26,
+      "ma7": 40.67,
+      "cum": 1528
+    },
+    {
+      "d": "2026-07-04",
+      "nc": 33,
+      "ma7": 33.67,
+      "cum": 1561
+    },
+    {
+      "d": "2026-07-05",
+      "nc": 63,
+      "ma7": 40.67,
+      "cum": 1624
+    },
+    {
+      "d": "2026-07-06",
+      "nc": 84,
+      "ma7": 60,
+      "cum": 1708
+    },
+    {
+      "d": "2026-07-07",
+      "nc": 51,
+      "ma7": 66,
+      "cum": 1759
+    },
+    {
+      "d": "2026-07-08",
+      "nc": 33,
+      "ma7": 56,
+      "cum": 1792
+    },
+    {
+      "d": "2026-07-09",
+      "nc": 38,
+      "ma7": 40.67,
+      "cum": 1830
+    },
+    {
+      "d": "2026-07-10",
+      "nc": 43,
+      "ma7": 38,
+      "cum": 1873
+    },
+    {
+      "d": "2026-07-11",
+      "nc": 53,
+      "ma7": 44.67,
+      "cum": 1926
+    },
+    {
+      "d": "2026-07-12",
+      "nc": 37,
+      "ma7": 44.33,
+      "cum": 1963
+    },
+    {
+      "d": "2026-07-13",
+      "nc": 48,
+      "ma7": 46,
+      "cum": 2011
+    },
+    {
+      "d": "2026-07-14",
+      "nc": 62,
+      "ma7": 49,
+      "cum": 2073
+    },
+    {
+      "d": "2026-07-15",
+      "nc": 51,
+      "ma7": 53.67,
+      "cum": 2124
+    },
+    {
+      "d": "2026-07-16",
+      "nc": 57,
+      "ma7": 56.67,
+      "cum": 2181
+    },
+    {
+      "d": "2026-07-17",
+      "nc": 86,
+      "ma7": 64.67,
+      "cum": 2267
+    },
+    {
+      "d": "2026-07-18",
+      "nc": 77,
+      "ma7": 73.33,
+      "cum": 2344
+    },
+    {
+      "d": "2026-07-19",
+      "nc": 79,
+      "ma7": 80.67,
+      "cum": 2423
+    },
+    {
+      "d": "2026-07-20",
+      "nc": 50,
+      "ma7": 68.67,
+      "cum": 2473
+    },
+    {
+      "d": "2026-07-21",
+      "nc": 58,
+      "ma7": 62.33,
+      "cum": 2531
+    },
+    {
+      "d": "2026-07-22",
+      "nc": 374,
+      "ma7": 160.67,
+      "cum": 2905
+    },
+    {
+      "d": "2026-07-23",
+      "nc": 68,
+      "ma7": 166.67,
+      "cum": 2973
+    },
+    {
+      "d": "2026-07-24",
+      "nc": 102,
+      "ma7": 181.33,
+      "cum": 3075
+    },
+    {
+      "d": "2026-07-25",
+      "nc": 125,
+      "ma7": 98.33,
+      "cum": 3200
+    },
+    {
+      "d": "2026-07-26",
+      "nc": 62,
+      "ma7": 96.33,
+      "cum": 3262
+    },
+    {
+      "d": "2026-07-27",
+      "nc": 98,
+      "ma7": 95,
+      "cum": 3360
+    },
+    {
+      "d": "2026-07-30",
+      "nc": null,
+      "ma7": 80,
+      "cum": 3605
+    },
+    {
+      "d": "2026-07-31",
+      "nc": 69,
+      "ma7": 83.5,
+      "cum": 3674
+    },
+    {
+      "d": "2026-08-01",
+      "nc": 74,
+      "ma7": 71.5,
+      "cum": 3748
+    },
+    {
+      "d": "2026-08-02",
+      "nc": 54,
+      "ma7": 65.67,
+      "cum": 3802
+    },
+    {
+      "d": "2026-08-03",
+      "nc": 72,
+      "ma7": 66.67,
+      "cum": 3874
+    },
+    {
+      "d": "2026-08-03",
+      "nc": 99,
+      "ma7": 75,
+      "cum": 3973
+    },
+    {
+      "d": "2026-08-03",
+      "nc": 0,
+      "ma7": 57,
+      "cum": 3973
+    },
+    {
+      "d": "2026-08-03",
+      "nc": null,
+      "ma7": 49.5,
+      "cum": 3973
+    },
+    {
+      "d": "2026-08-03",
+      "nc": null,
+      "ma7": 0,
+      "cum": 4449
+    },
+    {
+      "d": "2026-08-03",
+      "nc": 117,
+      "ma7": 117,
+      "cum": 4566
+    },
+    {
+      "d": "2026-08-03",
+      "nc": 0,
+      "ma7": 58.5,
+      "cum": 4566
+    },
+    {
+      "d": "2026-08-03",
+      "nc": 0,
+      "ma7": 39,
+      "cum": 4566
+    },
+    {
+      "d": "2026-08-03",
+      "nc": 379,
+      "ma7": 126.33,
+      "cum": 4945
+    },
+    {
+      "d": "2026-08-03",
+      "nc": 0,
+      "ma7": 126.33,
+      "cum": 4945
+    },
+    {
+      "d": "2026-08-03",
+      "nc": null,
+      "ma7": 189.5,
+      "cum": 5105
+    },
+    {
+      "d": "2026-08-03",
+      "nc": 0,
+      "ma7": 0,
+      "cum": 5105
+    },
+    {
+      "d": "2026-08-03",
+      "nc": 185,
+      "ma7": 92.5,
+      "cum": 5290
+    },
+    {
+      "d": "2026-08-03",
+      "nc": 85,
+      "ma7": 90,
+      "cum": 5375
+    },
+    {
+      "d": "2026-08-03",
+      "nc": 0,
+      "ma7": 90,
+      "cum": 5375
+    },
+    {
+      "d": "2026-08-03",
+      "nc": 139,
+      "ma7": 74.67,
+      "cum": 5514
+    },
+    {
+      "d": "2026-08-03",
+      "nc": 0,
+      "ma7": 46.33,
+      "cum": 5514
+    },
+    {
+      "d": "2026-08-03",
+      "nc": 0,
+      "ma7": 46.33,
+      "cum": 5514
+    },
+    {
+      "d": "2026-08-03",
+      "nc": 199,
+      "ma7": 66.33,
+      "cum": 5713
+    },
+    {
+      "d": "2026-08-03",
+      "nc": 81,
+      "ma7": 93.33,
+      "cum": 5794
+    },
+    {
+      "d": "2026-08-03",
+      "nc": 0,
+      "ma7": 93.33,
+      "cum": 5794
+    },
+    {
+      "d": "2026-08-03",
+      "nc": 151,
+      "ma7": 77.33,
+      "cum": 5945
+    },
+    {
+      "d": "2026-08-03",
+      "nc": 0,
+      "ma7": 50.33,
+      "cum": 5945
+    },
+    {
+      "d": "2026-08-03",
+      "nc": 155,
+      "ma7": 102,
+      "cum": 6100
+    },
+    {
+      "d": "2026-08-03",
+      "nc": 86,
+      "ma7": 80.33,
+      "cum": 6186
+    }
+  ],
+  "provinces": [
+    {
+      "name": "Ituri",
+      "cum": 4791,
+      "deaths": 1827,
+      "cfr": 38.1,
+      "hz": 20
+    },
+    {
+      "name": "Nord-Kivu",
+      "cum": 799,
+      "deaths": 548,
+      "cfr": 68.6,
+      "hz": 10
+    },
+    {
+      "name": "Sud-Kivu",
+      "cum": 3,
+      "deaths": 1,
+      "cfr": 33.3,
+      "hz": 1
+    }
+  ],
+  "zones": [
+    {
+      "name": "Bunia",
+      "cum": 1413,
+      "new": 6,
+      "lat": 1.565,
+      "lon": 30.244
+    },
+    {
+      "name": "Rwampara",
+      "cum": 964,
+      "new": 7,
+      "lat": 1.53,
+      "lon": 30.18
+    },
+    {
+      "name": "Nizi",
+      "cum": 670,
+      "new": 6,
+      "lat": 1.7,
+      "lon": 30.06
+    },
+    {
+      "name": "Mongbwalu",
+      "cum": 615,
+      "new": 3,
+      "lat": 1.96,
+      "lon": 30.04
+    },
+    {
+      "name": "Katwa",
+      "cum": 408,
+      "new": 4,
+      "lat": -0.47,
+      "lon": 29.25
+    },
+    {
+      "name": "Mangala",
+      "cum": 263,
+      "new": 6,
+      "lat": 1.6,
+      "lon": 30.4
+    },
+    {
+      "name": "Nia-Nia",
+      "cum": 251,
+      "new": 0,
+      "lat": null,
+      "lon": null
+    },
+    {
+      "name": "Lita",
+      "cum": 224,
+      "new": 4,
+      "lat": 1.69,
+      "lon": 30.3
+    },
+    {
+      "name": "Butembo",
+      "cum": 180,
+      "new": 6,
+      "lat": 0.131,
+      "lon": 29.29
+    },
+    {
+      "name": "Bambu",
+      "cum": 165,
+      "new": 0,
+      "lat": 1.87,
+      "lon": 30.08
+    },
+    {
+      "name": "Beni",
+      "cum": 146,
+      "new": 5,
+      "lat": 0.491,
+      "lon": 29.473
+    },
+    {
+      "name": "Nyankunde",
+      "cum": 124,
+      "new": 0,
+      "lat": 1.42,
+      "lon": 30.15
+    },
+    {
+      "name": "Komanda",
+      "cum": 92,
+      "new": 5,
+      "lat": 1.36,
+      "lon": 29.77
+    },
+    {
+      "name": "Isiro",
+      "cum": 85,
+      "new": 0,
+      "lat": null,
+      "lon": null
+    },
+    {
+      "name": "Musienene",
+      "cum": 83,
+      "new": 0,
+      "lat": null,
+      "lon": null
+    },
+    {
+      "name": "Wamba",
+      "cum": 78,
+      "new": 0,
+      "lat": null,
+      "lon": null
+    },
+    {
+      "name": "Fataki",
+      "cum": 77,
+      "new": 1,
+      "lat": 2.1,
+      "lon": 30.7
+    },
+    {
+      "name": "Tchomia",
+      "cum": 57,
+      "new": 0,
+      "lat": 1.48,
+      "lon": 30.53
+    },
+    {
+      "name": "Pawa",
+      "cum": 37,
+      "new": 0,
+      "lat": null,
+      "lon": null
+    },
+    {
+      "name": "Mandima",
+      "cum": 36,
+      "new": 0,
+      "lat": null,
+      "lon": null
+    },
+    {
+      "name": "Kilo",
+      "cum": 32,
+      "new": 0,
+      "lat": 1.83,
+      "lon": 30.13
+    },
+    {
+      "name": "Damas",
+      "cum": 28,
+      "new": 0,
+      "lat": 1.6,
+      "lon": 30.3
+    },
+    {
+      "name": "Boma Mangbetu",
+      "cum": 27,
+      "new": 0,
+      "lat": null,
+      "lon": null
+    },
+    {
+      "name": "Lolwa",
+      "cum": 22,
+      "new": 0,
+      "lat": null,
+      "lon": null
+    },
+    {
+      "name": "Mambasa",
+      "cum": 17,
+      "new": 0,
+      "lat": 1.36,
+      "lon": 29.05
+    },
+    {
+      "name": "Kalunguta",
+      "cum": 16,
+      "new": 0,
+      "lat": 0.3,
+      "lon": 29.35
+    },
+    {
+      "name": "Kyondo",
+      "cum": 16,
+      "new": 0,
+      "lat": 0.15,
+      "lon": 29.4
+    },
+    {
+      "name": "Drodro",
+      "cum": 14,
+      "new": 0,
+      "lat": null,
+      "lon": null
+    },
+    {
+      "name": "Aungba",
+      "cum": 12,
+      "new": 0,
+      "lat": 2.3,
+      "lon": 30.9
+    },
+    {
+      "name": "Makiso-Kisangani",
+      "cum": 12,
+      "new": 0,
+      "lat": null,
+      "lon": null
+    },
+    {
+      "name": "Adja",
+      "cum": 11,
+      "new": 0,
+      "lat": null,
+      "lon": null
+    },
+    {
+      "name": "Logo",
+      "cum": 11,
+      "new": 0,
+      "lat": 2.7,
+      "lon": 30.7
+    },
+    {
+      "name": "Masereka",
+      "cum": 11,
+      "new": 2,
+      "lat": 0.2,
+      "lon": 29.3
+    },
+    {
+      "name": "Rimba",
+      "cum": 11,
+      "new": 1,
+      "lat": 2,
+      "lon": 30.5
+    },
+    {
+      "name": "Ariwara",
+      "cum": 8,
+      "new": 0,
+      "lat": null,
+      "lon": null
+    },
+    {
+      "name": "Aru",
+      "cum": 8,
+      "new": 0,
+      "lat": 2.88,
+      "lon": 30.91
+    },
+    {
+      "name": "Oicha",
+      "cum": 7,
+      "new": 0,
+      "lat": 0.7,
+      "lon": 29.52
+    },
+    {
+      "name": "Gety",
+      "cum": 6,
+      "new": 0,
+      "lat": 1.35,
+      "lon": 30.19
+    },
+    {
+      "name": "Mabalako",
+      "cum": 6,
+      "new": 1,
+      "lat": 0.42,
+      "lon": 29.42
+    },
+    {
+      "name": "Miti-Murhesa",
+      "cum": 6,
+      "new": 0,
+      "lat": -2.35,
+      "lon": 28.77
+    },
+    {
+      "name": "Vuhovi",
+      "cum": 6,
+      "new": 0,
+      "lat": 0.45,
+      "lon": 29.3
+    },
+    {
+      "name": "Mahagi",
+      "cum": 4,
+      "new": 0,
+      "lat": null,
+      "lon": null
+    },
+    {
+      "name": "Rumba",
+      "cum": 4,
+      "new": 0,
+      "lat": null,
+      "lon": null
+    },
+    {
+      "name": "Gombari",
+      "cum": 3,
+      "new": 0,
+      "lat": null,
+      "lon": null
+    },
+    {
+      "name": "Kabondo",
+      "cum": 3,
+      "new": 0,
+      "lat": null,
+      "lon": null
+    },
+    {
+      "name": "Lubero",
+      "cum": 3,
+      "new": 0,
+      "lat": null,
+      "lon": null
+    },
+    {
+      "name": "Mangobo",
+      "cum": 3,
+      "new": 0,
+      "lat": null,
+      "lon": null
+    },
+    {
+      "name": "Bafwasende",
+      "cum": 2,
+      "new": 0,
+      "lat": null,
+      "lon": null
+    },
+    {
+      "name": "Boga",
+      "cum": 2,
+      "new": 0,
+      "lat": null,
+      "lon": null
+    },
+    {
+      "name": "Ganga",
+      "cum": 2,
+      "new": 0,
+      "lat": null,
+      "lon": null
+    },
+    {
+      "name": "Kambala",
+      "cum": 2,
+      "new": 0,
+      "lat": 1.7,
+      "lon": 30.2
+    },
+    {
+      "name": "Lubunga",
+      "cum": 2,
+      "new": 0,
+      "lat": null,
+      "lon": null
+    },
+    {
+      "name": "Manguredjipa",
+      "cum": 2,
+      "new": 0,
+      "lat": 0.7,
+      "lon": 29
+    },
+    {
+      "name": "Mutwanga",
+      "cum": 2,
+      "new": 0,
+      "lat": null,
+      "lon": null
+    },
+    {
+      "name": "Biena",
+      "cum": 1,
+      "new": 0,
+      "lat": null,
+      "lon": null
+    },
+    {
+      "name": "Buta",
+      "cum": 1,
+      "new": 0,
+      "lat": null,
+      "lon": null
+    },
+    {
+      "name": "Goma",
+      "cum": 1,
+      "new": 0,
+      "lat": -1.679,
+      "lon": 29.235
+    },
+    {
+      "name": "Rungu",
+      "cum": 1,
+      "new": 0,
+      "lat": null,
+      "lon": null
+    },
+    {
+      "name": "Tshopo",
+      "cum": 1,
+      "new": 0,
+      "lat": null,
+      "lon": null
+    },
+    {
+      "name": "Viadana",
+      "cum": 1,
+      "new": 0,
+      "lat": null,
+      "lon": null
+    },
+    {
+      "name": "Wanierukula",
+      "cum": 1,
+      "new": 0,
+      "lat": null,
+      "lon": null
+    }
+  ],
+  "gaps": [
+    {
+      "k": "High lethality",
+      "v": "Beni",
+      "rule": "Beni: provisional lethality 71.4% (14 cases)",
+      "level": "bad",
+      "detected_on": "2026-06-15"
+    },
+    {
+      "k": "High lethality",
+      "v": "Katwa",
+      "rule": "Katwa: provisional lethality 57.1% (21 cases)",
+      "level": "warn",
+      "detected_on": "2026-06-15"
+    },
+    {
+      "k": "Localized acceleration",
+      "v": "Mongbwalu",
+      "rule": "Mongbwalu: 7-day average of new cases 6.4 → 12.9/day (x2.0)",
+      "level": "warn",
+      "detected_on": "2026-06-15"
+    },
+    {
+      "k": "Rising lethality",
+      "v": "Mongbwalu",
+      "rule": "Mongbwalu provisional lethality: 27.2% → 44.5% (+17.3 pts in ~7 days, 164 cumulative cases)",
+      "level": "warn",
+      "detected_on": "2026-06-15"
+    },
+    {
+      "k": "Data revision",
+      "v": "National",
+      "rule": "Downward revision of the national cumulative total on 30/05 (INRB reclassification).",
+      "level": "warn",
+      "detected_on": "2026-06-15"
+    },
+    {
+      "k": "Rt / R0",
+      "v": "non calcule",
+      "rule": "Necessite des dates de debut des symptomes (donnees individuelles) -- indisponibles avec des SitReps agreges. Temps de doublement affiche a la place.",
+      "level": "info",
+      "detected_on": "2026-09-03"
+    },
+    {
+      "k": "Occupation des lits",
+      "v": "non automatise",
+      "rule": "Aucune source CI ne produit ce chiffre en continu actuellement (script 15_bed_occupancy_analysis_v2.R non branche au workflow). Mise a jour manuelle requise.",
+      "level": "warn",
+      "detected_on": "2026-09-03"
+    },
+    {
+      "k": "Fraicheur pipeline",
+      "v": "31 j depuis SitRep 110",
+      "rule": "Aucun nouveau SitRep detecte depuis 31 jours -- verifier le cron GitHub Actions (habituellement ~quotidien).",
+      "level": "bad",
+      "detected_on": "2026-09-03"
+    },
+    {
+      "k": "Reference INRB",
+      "v": "80 SitReps de retard",
+      "rule": "La reference nationale INRB utilisee pour la contre-validation independante des cumuls n'a plus ete mise a jour depuis le SitRep 30 (2026-06-13) -- 80 SitReps plus tard, les cumuls officiels ne sont plus contre-verifies (validation = 'no_ref').",
+      "level": "bad",
+      "detected_on": "2026-09-03"
+    },
+    {
+      "k": "Repartition par province",
+      "v": "ecart 9.6%",
+      "rule": "La somme des cumuls par province (5,593) ne correspond pas exactement au total national (6,186) -- ecart de 9.6%. La ventilation par province extraite des SitReps est probablement incomplete pour certaines lignes ; ne pas sur-interpreter de petits ecarts entre provinces.",
+      "level": "warn",
+      "detected_on": "2026-09-03"
+    },
+    {
+      "k": "Zone acceleration",
+      "v": "Komanda",
+      "rule": "Komanda: 41 cases in the last 14 days vs 13 in the prior 14 days (215% increase, computed from cumulative counts, 5-case minimum applied).",
+      "level": "bad",
+      "detected_on": "2026-09-03"
+    },
+    {
+      "k": "Zone acceleration",
+      "v": "Butembo",
+      "rule": "Butembo: 62 cases in the last 14 days vs 26 in the prior 14 days (138% increase, computed from cumulative counts, 5-case minimum applied).",
+      "level": "bad",
+      "detected_on": "2026-09-03"
+    },
+    {
+      "k": "Zone acceleration",
+      "v": "Tchomia",
+      "rule": "Tchomia:  8 cases in the last 14 days vs  4 in the prior 14 days (100% increase, computed from cumulative counts, 5-case minimum applied).",
+      "level": "bad",
+      "detected_on": "2026-09-03"
+    },
+    {
+      "k": "CFR reading",
+      "v": "small-denominator caveat",
+      "rule": "Zones with very few cumulative cases can show 100% CFR from a single death -- this is not comparable to a high CFR over a large case count. Always check the case count (shown alongside CFR) before treating a zone as a mortality-review priority.",
+      "level": "info",
+      "detected_on": "2026-09-03"
+    }
+  ],
+  "sources": [
+    {
+      "name": "SitRep (INSP)",
+      "cadence": "Per report",
+      "last": "2026-08-03",
+      "detail": "N°110"
+    },
+    {
+      "name": "INRB reference",
+      "cadence": "Daily",
+      "last": "2026-06-13",
+      "detail": "Reference nationale"
+    },
+    {
+      "name": "Daily indicators",
+      "cadence": "Daily",
+      "last": "2026-09-01",
+      "detail": "Province/zone"
+    }
+  ],
+  "highlights": ["86 new confirmed cases in the latest report; 7-day average 80/day.", "Cumulative cases doubling approximately every 21.6 days (trailing 14-day growth).", "Case-fatality ratio 48.6% (provisional); 68 recovered, 25 in isolation.", "51 health zones affected across 3 provinces."],
+  "manual": {
+    "beds": {},
+    "bed_sites": [],
+    "events": [],
+    "onehealth": {},
+    "correlation": [],
+    "new_areas": [],
+    "detection_delay": {},
+    "contacts_by_province": {},
+    "poe": {},
+    "ipc_hcw": {},
+    "eds": {},
+    "special_populations": {},
+    "line_list_rt": {},
+    "last_manual_update": null
+  },
+  "diagnostics": {
+    "build_version": "v4.0-auto",
+    "build_date": "2026-09-03",
+    "generator": "scripts/16_generate_situation_room_data.R",
+    "latest_sitrep_no": 110,
+    "zones_missing_coords": ["Adja", "Ariwara", "Bafwasende", "Biena", "Boga", "Boma Mangbetu", "Buta", "Drodro", "Ganga", "Gombari", "Isiro", "Kabondo", "Lolwa", "Lubero", "Lubunga", "Mahagi", "Makiso-Kisangani", "Mandima", "Mangobo", "Musienene", "Mutwanga", "Nia-Nia", "Pawa", "Rumba", "Rungu", "Tshopo", "Viadana", "Wamba", "Wanierukula"]
+  }
+}
