@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-04T09:32:33Z",
+  "generated_at": "2026-09-04T10:03:24Z",
   "asof": "2026-08-03",
   "sitrep": "111",
   "sitrep_date": "2026-08-03",
@@ -657,16 +657,16 @@
   "provinces": [
     {
       "name": "Ituri",
-      "cum": 4791,
-      "deaths": 1827,
-      "cfr": 38.1,
+      "cum": 4849,
+      "deaths": 1839,
+      "cfr": 37.9,
       "hz": 20
     },
     {
       "name": "Nord-Kivu",
-      "cum": 799,
-      "deaths": 548,
-      "cfr": 68.6,
+      "cum": 821,
+      "deaths": 560,
+      "cfr": 68.2,
       "hz": 10
     },
     {
@@ -680,77 +680,77 @@
   "zones": [
     {
       "name": "Bunia",
-      "cum": 1413,
-      "new": 6,
+      "cum": 1444,
+      "new": 31,
       "lat": 1.565,
       "lon": 30.244
     },
     {
       "name": "Rwampara",
-      "cum": 964,
+      "cum": 971,
       "new": 7,
       "lat": 1.53,
       "lon": 30.18
     },
     {
       "name": "Nizi",
-      "cum": 670,
-      "new": 6,
+      "cum": 675,
+      "new": 5,
       "lat": 1.7,
       "lon": 30.06
     },
     {
       "name": "Mongbwalu",
-      "cum": 615,
-      "new": 3,
+      "cum": 616,
+      "new": 1,
       "lat": 1.96,
       "lon": 30.04
     },
     {
       "name": "Katwa",
-      "cum": 408,
-      "new": 4,
+      "cum": 416,
+      "new": 8,
       "lat": -0.47,
       "lon": 29.25
     },
     {
       "name": "Mangala",
-      "cum": 263,
-      "new": 6,
+      "cum": 271,
+      "new": 8,
       "lat": 1.6,
       "lon": 30.4
     },
     {
       "name": "Nia-Nia",
-      "cum": 251,
+      "cum": 253,
       "new": 0,
       "lat": null,
       "lon": null
     },
     {
       "name": "Lita",
-      "cum": 224,
-      "new": 4,
+      "cum": 225,
+      "new": 1,
       "lat": 1.69,
       "lon": 30.3
     },
     {
       "name": "Butembo",
-      "cum": 180,
+      "cum": 186,
       "new": 6,
       "lat": 0.131,
       "lon": 29.29
     },
     {
       "name": "Bambu",
-      "cum": 165,
-      "new": 0,
+      "cum": 168,
+      "new": 3,
       "lat": 1.87,
       "lon": 30.08
     },
     {
       "name": "Beni",
-      "cum": 146,
+      "cum": 151,
       "new": 5,
       "lat": 0.491,
       "lon": 29.473
@@ -765,27 +765,27 @@
     {
       "name": "Komanda",
       "cum": 92,
-      "new": 5,
+      "new": 0,
       "lat": 1.36,
       "lon": 29.77
     },
     {
       "name": "Isiro",
-      "cum": 85,
+      "cum": 86,
       "new": 0,
       "lat": null,
       "lon": null
     },
     {
       "name": "Musienene",
-      "cum": 83,
+      "cum": 85,
       "new": 0,
       "lat": null,
       "lon": null
     },
     {
       "name": "Wamba",
-      "cum": 78,
+      "cum": 79,
       "new": 0,
       "lat": null,
       "lon": null
@@ -793,20 +793,20 @@
     {
       "name": "Fataki",
       "cum": 77,
-      "new": 1,
+      "new": 0,
       "lat": 2.1,
       "lon": 30.7
     },
     {
       "name": "Tchomia",
-      "cum": 57,
-      "new": 0,
+      "cum": 59,
+      "new": 2,
       "lat": 1.48,
       "lon": 30.53
     },
     {
       "name": "Pawa",
-      "cum": 37,
+      "cum": 39,
       "new": 0,
       "lat": null,
       "lon": null
@@ -875,6 +875,13 @@
       "lon": null
     },
     {
+      "name": "Makiso-Kisangani",
+      "cum": 13,
+      "new": 0,
+      "lat": null,
+      "lon": null
+    },
+    {
       "name": "Aungba",
       "cum": 12,
       "new": 0,
@@ -882,11 +889,11 @@
       "lon": 30.9
     },
     {
-      "name": "Makiso-Kisangani",
+      "name": "Masereka",
       "cum": 12,
-      "new": 0,
-      "lat": null,
-      "lon": null
+      "new": 1,
+      "lat": 0.2,
+      "lon": 29.3
     },
     {
       "name": "Adja",
@@ -903,16 +910,9 @@
       "lon": 30.7
     },
     {
-      "name": "Masereka",
-      "cum": 11,
-      "new": 2,
-      "lat": 0.2,
-      "lon": 29.3
-    },
-    {
       "name": "Rimba",
       "cum": 11,
-      "new": 1,
+      "new": 0,
       "lat": 2,
       "lon": 30.5
     },
@@ -932,10 +932,17 @@
     },
     {
       "name": "Oicha",
-      "cum": 7,
-      "new": 0,
+      "cum": 8,
+      "new": 1,
       "lat": 0.7,
       "lon": 29.52
+    },
+    {
+      "name": "Mabalako",
+      "cum": 7,
+      "new": 1,
+      "lat": 0.42,
+      "lon": 29.42
     },
     {
       "name": "Gety",
@@ -943,13 +950,6 @@
       "new": 0,
       "lat": 1.35,
       "lon": 30.19
-    },
-    {
-      "name": "Mabalako",
-      "cum": 6,
-      "new": 1,
-      "lat": 0.42,
-      "lon": 29.42
     },
     {
       "name": "Miti-Murhesa",
@@ -964,6 +964,20 @@
       "new": 0,
       "lat": 0.45,
       "lon": 29.3
+    },
+    {
+      "name": "Kabondo",
+      "cum": 4,
+      "new": 0,
+      "lat": null,
+      "lon": null
+    },
+    {
+      "name": "Lubero",
+      "cum": 4,
+      "new": 0,
+      "lat": null,
+      "lon": null
     },
     {
       "name": "Mahagi",
@@ -981,20 +995,6 @@
     },
     {
       "name": "Gombari",
-      "cum": 3,
-      "new": 0,
-      "lat": null,
-      "lon": null
-    },
-    {
-      "name": "Kabondo",
-      "cum": 3,
-      "new": 0,
-      "lat": null,
-      "lon": null
-    },
-    {
-      "name": "Lubero",
       "cum": 3,
       "new": 0,
       "lat": null,
@@ -1057,6 +1057,13 @@
       "lon": null
     },
     {
+      "name": "Rungu",
+      "cum": 2,
+      "new": 0,
+      "lat": null,
+      "lon": null
+    },
+    {
       "name": "Biena",
       "cum": 1,
       "new": 0,
@@ -1076,13 +1083,6 @@
       "new": 0,
       "lat": -1.679,
       "lon": 29.235
-    },
-    {
-      "name": "Rungu",
-      "cum": 1,
-      "new": 0,
-      "lat": null,
-      "lon": null
     },
     {
       "name": "Tshopo",
@@ -1172,29 +1172,29 @@
     },
     {
       "k": "Repartition par province",
-      "v": "ecart 10.5%",
-      "rule": "La somme des cumuls par province (5,593) ne correspond pas exactement au total national (6,250) -- ecart de 10.5%. La ventilation par province extraite des SitReps est probablement incomplete pour certaines lignes ; ne pas sur-interpreter de petits ecarts entre provinces.",
+      "v": "ecart 9.2%",
+      "rule": "La somme des cumuls par province (5,673) ne correspond pas exactement au total national (6,250) -- ecart de 9.2%. La ventilation par province extraite des SitReps est probablement incomplete pour certaines lignes ; ne pas sur-interpreter de petits ecarts entre provinces.",
       "level": "warn",
       "detected_on": "2026-09-04"
     },
     {
       "k": "Zone acceleration",
+      "v": "Mabalako",
+      "rule": "Mabalako:  5 cases in the last 14 days vs  1 in the prior 14 days (400% increase, computed from cumulative counts, 5-case minimum applied).",
+      "level": "bad",
+      "detected_on": "2026-09-04"
+    },
+    {
+      "k": "Zone acceleration",
       "v": "Komanda",
-      "rule": "Komanda: 41 cases in the last 14 days vs 13 in the prior 14 days (215% increase, computed from cumulative counts, 5-case minimum applied).",
+      "rule": "Komanda: 39 cases in the last 14 days vs 15 in the prior 14 days (160% increase, computed from cumulative counts, 5-case minimum applied).",
       "level": "bad",
       "detected_on": "2026-09-04"
     },
     {
       "k": "Zone acceleration",
-      "v": "Butembo",
-      "rule": "Butembo: 62 cases in the last 14 days vs 26 in the prior 14 days (138% increase, computed from cumulative counts, 5-case minimum applied).",
-      "level": "bad",
-      "detected_on": "2026-09-04"
-    },
-    {
-      "k": "Zone acceleration",
-      "v": "Tchomia",
-      "rule": "Tchomia:  8 cases in the last 14 days vs  4 in the prior 14 days (100% increase, computed from cumulative counts, 5-case minimum applied).",
+      "v": "Masereka",
+      "rule": "Masereka:  5 cases in the last 14 days vs  2 in the prior 14 days (150% increase, computed from cumulative counts, 5-case minimum applied).",
       "level": "bad",
       "detected_on": "2026-09-04"
     },
@@ -1222,7 +1222,7 @@
     {
       "name": "Daily indicators",
       "cadence": "Daily",
-      "last": "2026-09-01",
+      "last": "2026-09-02",
       "detail": "Province/zone"
     }
   ],
@@ -1240,7 +1240,8 @@
     "ipc_hcw": {},
     "eds": {},
     "special_populations": {},
-    "line_list_rt": {}
+    "line_list_rt": {},
+    "last_manual_update": null
   },
   "diagnostics": {
     "build_version": "v4.0-auto",
