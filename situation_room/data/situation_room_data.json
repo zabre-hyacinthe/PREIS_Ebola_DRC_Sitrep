@@ -1,14 +1,14 @@
 {
-  "generated_at": "2026-09-04T06:32:04Z",
+  "generated_at": "2026-09-04T07:02:59Z",
   "asof": "2026-08-03",
-  "sitrep": "110",
+  "sitrep": "111",
   "sitrep_date": "2026-08-03",
   "kpi": {
-    "cases": 6186,
-    "deaths": 3007,
+    "cases": 6250,
+    "deaths": 3039,
     "cfr": 48.6,
-    "new": 86,
-    "ma7": 80.3,
+    "new": 64,
+    "ma7": 101.7,
     "doubling": 21.6,
     "recovered": 68,
     "isolation": 25,
@@ -45,17 +45,17 @@
       "isolation": 80
     },
     "staleness_sitreps": {
-      "alerts_reported": 60,
-      "alerts_investigated": 93,
-      "investigation_rate": 93,
-      "contacts_followed": 49,
-      "suspects": 80,
-      "samples_analyzed": 62,
-      "lab_positivity": 92,
-      "vaccine": 98,
-      "community_deaths": 29,
-      "recovered": 36,
-      "isolation": 30
+      "alerts_reported": 61,
+      "alerts_investigated": 94,
+      "investigation_rate": 94,
+      "contacts_followed": 50,
+      "suspects": 81,
+      "samples_analyzed": 63,
+      "lab_positivity": 93,
+      "vaccine": 99,
+      "community_deaths": 30,
+      "recovered": 37,
+      "isolation": 31
     }
   },
   "series": [
@@ -646,6 +646,12 @@
       "nc": 86,
       "ma7": 80.33,
       "cum": 6186
+    },
+    {
+      "d": "2026-08-03",
+      "nc": 64,
+      "ma7": 101.67,
+      "cum": 6250
     }
   ],
   "provinces": [
@@ -1152,22 +1158,22 @@
     },
     {
       "k": "Fraicheur pipeline",
-      "v": "32 j depuis SitRep 110",
+      "v": "32 j depuis SitRep 111",
       "rule": "Aucun nouveau SitRep detecte depuis 32 jours -- verifier le cron GitHub Actions (habituellement ~quotidien).",
       "level": "bad",
       "detected_on": "2026-09-04"
     },
     {
       "k": "Reference INRB",
-      "v": "80 SitReps de retard",
-      "rule": "La reference nationale INRB utilisee pour la contre-validation independante des cumuls n'a plus ete mise a jour depuis le SitRep 30 (2026-06-13) -- 80 SitReps plus tard, les cumuls officiels ne sont plus contre-verifies (validation = 'no_ref').",
+      "v": "81 SitReps de retard",
+      "rule": "La reference nationale INRB utilisee pour la contre-validation independante des cumuls n'a plus ete mise a jour depuis le SitRep 30 (2026-06-13) -- 81 SitReps plus tard, les cumuls officiels ne sont plus contre-verifies (validation = 'no_ref').",
       "level": "bad",
       "detected_on": "2026-09-04"
     },
     {
       "k": "Repartition par province",
-      "v": "ecart 9.6%",
-      "rule": "La somme des cumuls par province (5,593) ne correspond pas exactement au total national (6,186) -- ecart de 9.6%. La ventilation par province extraite des SitReps est probablement incomplete pour certaines lignes ; ne pas sur-interpreter de petits ecarts entre provinces.",
+      "v": "ecart 10.5%",
+      "rule": "La somme des cumuls par province (5,593) ne correspond pas exactement au total national (6,250) -- ecart de 10.5%. La ventilation par province extraite des SitReps est probablement incomplete pour certaines lignes ; ne pas sur-interpreter de petits ecarts entre provinces.",
       "level": "warn",
       "detected_on": "2026-09-04"
     },
@@ -1205,7 +1211,7 @@
       "name": "SitRep (INSP)",
       "cadence": "Per report",
       "last": "2026-08-03",
-      "detail": "N°110"
+      "detail": "N°111"
     },
     {
       "name": "INRB reference",
@@ -1220,7 +1226,7 @@
       "detail": "Province/zone"
     }
   ],
-  "highlights": ["86 new confirmed cases in the latest report; 7-day average 80/day.", "Cumulative cases doubling approximately every 21.6 days (trailing 14-day growth).", "Case-fatality ratio 48.6% (provisional); 68 recovered, 25 in isolation.", "51 health zones affected across 3 provinces."],
+  "highlights": ["64 new confirmed cases in the latest report; 7-day average 102/day.", "Cumulative cases doubling approximately every 21.6 days (trailing 14-day growth).", "Case-fatality ratio 48.6% (provisional); 68 recovered, 25 in isolation.", "51 health zones affected across 3 provinces."],
   "manual": {
     "beds": {},
     "bed_sites": [],
@@ -1234,13 +1240,14 @@
     "ipc_hcw": {},
     "eds": {},
     "special_populations": {},
-    "line_list_rt": {}
+    "line_list_rt": {},
+    "last_manual_update": null
   },
   "diagnostics": {
     "build_version": "v4.0-auto",
     "build_date": "2026-09-04",
     "generator": "scripts/16_generate_situation_room_data.R",
-    "latest_sitrep_no": 110,
+    "latest_sitrep_no": 111,
     "zones_missing_coords": ["Adja", "Ariwara", "Bafwasende", "Biena", "Boga", "Boma Mangbetu", "Buta", "Drodro", "Ganga", "Gombari", "Isiro", "Kabondo", "Lolwa", "Lubero", "Lubunga", "Mahagi", "Makiso-Kisangani", "Mandima", "Mangobo", "Musienene", "Mutwanga", "Nia-Nia", "Pawa", "Rumba", "Rungu", "Tshopo", "Viadana", "Wamba", "Wanierukula"]
   }
 }
