@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-04T23:32:43Z",
+  "generated_at": "2026-09-05T00:02:58Z",
   "asof": "2026-08-03",
   "sitrep": "111",
   "sitrep_date": "2026-08-03",
@@ -1147,63 +1147,63 @@
       "v": "non calcule",
       "rule": "Necessite des dates de debut des symptomes (donnees individuelles) -- indisponibles avec des SitReps agreges. Temps de doublement affiche a la place.",
       "level": "info",
-      "detected_on": "2026-09-04"
+      "detected_on": "2026-09-05"
     },
     {
       "k": "Occupation des lits",
       "v": "non automatise",
       "rule": "Aucune source CI ne produit ce chiffre en continu actuellement (script 15_bed_occupancy_analysis_v2.R non branche au workflow). Mise a jour manuelle requise.",
       "level": "warn",
-      "detected_on": "2026-09-04"
+      "detected_on": "2026-09-05"
     },
     {
       "k": "Fraicheur pipeline",
-      "v": "32 j depuis SitRep 111",
-      "rule": "Aucun nouveau SitRep detecte depuis 32 jours -- verifier le cron GitHub Actions (habituellement ~quotidien).",
+      "v": "33 j depuis SitRep 111",
+      "rule": "Aucun nouveau SitRep detecte depuis 33 jours -- verifier le cron GitHub Actions (habituellement ~quotidien).",
       "level": "bad",
-      "detected_on": "2026-09-04"
+      "detected_on": "2026-09-05"
     },
     {
       "k": "Reference INRB",
       "v": "81 SitReps de retard",
       "rule": "La reference nationale INRB utilisee pour la contre-validation independante des cumuls n'a plus ete mise a jour depuis le SitRep 30 (2026-06-13) -- 81 SitReps plus tard, les cumuls officiels ne sont plus contre-verifies (validation = 'no_ref').",
       "level": "bad",
-      "detected_on": "2026-09-04"
+      "detected_on": "2026-09-05"
     },
     {
       "k": "Repartition par province",
       "v": "ecart 9.2%",
       "rule": "La somme des cumuls par province (5,673) ne correspond pas exactement au total national (6,250) -- ecart de 9.2%. La ventilation par province extraite des SitReps est probablement incomplete pour certaines lignes ; ne pas sur-interpreter de petits ecarts entre provinces.",
       "level": "warn",
-      "detected_on": "2026-09-04"
+      "detected_on": "2026-09-05"
     },
     {
       "k": "Zone acceleration",
       "v": "Mabalako",
       "rule": "Mabalako:  5 cases in the last 14 days vs  1 in the prior 14 days (400% increase, computed from cumulative counts, 5-case minimum applied).",
       "level": "bad",
-      "detected_on": "2026-09-04"
+      "detected_on": "2026-09-05"
     },
     {
       "k": "Zone acceleration",
       "v": "Komanda",
       "rule": "Komanda: 39 cases in the last 14 days vs 15 in the prior 14 days (160% increase, computed from cumulative counts, 5-case minimum applied).",
       "level": "bad",
-      "detected_on": "2026-09-04"
+      "detected_on": "2026-09-05"
     },
     {
       "k": "Zone acceleration",
       "v": "Masereka",
       "rule": "Masereka:  5 cases in the last 14 days vs  2 in the prior 14 days (150% increase, computed from cumulative counts, 5-case minimum applied).",
       "level": "bad",
-      "detected_on": "2026-09-04"
+      "detected_on": "2026-09-05"
     },
     {
       "k": "CFR reading",
       "v": "small-denominator caveat",
       "rule": "Zones with very few cumulative cases can show 100% CFR from a single death -- this is not comparable to a high CFR over a large case count. Always check the case count (shown alongside CFR) before treating a zone as a mortality-review priority.",
       "level": "info",
-      "detected_on": "2026-09-04"
+      "detected_on": "2026-09-05"
     }
   ],
   "sources": [
@@ -1240,12 +1240,11 @@
     "ipc_hcw": {},
     "eds": {},
     "special_populations": {},
-    "line_list_rt": {},
-    "last_manual_update": null
+    "line_list_rt": {}
   },
   "diagnostics": {
     "build_version": "v4.0-auto",
-    "build_date": "2026-09-04",
+    "build_date": "2026-09-05",
     "generator": "scripts/16_generate_situation_room_data.R",
     "latest_sitrep_no": 111,
     "zones_missing_coords": ["Adja", "Ariwara", "Bafwasende", "Biena", "Boga", "Boma Mangbetu", "Buta", "Drodro", "Ganga", "Gombari", "Isiro", "Kabondo", "Lolwa", "Lubero", "Lubunga", "Mahagi", "Makiso-Kisangani", "Mandima", "Mangobo", "Musienene", "Mutwanga", "Nia-Nia", "Pawa", "Rumba", "Rungu", "Tshopo", "Viadana", "Wamba", "Wanierukula"]
