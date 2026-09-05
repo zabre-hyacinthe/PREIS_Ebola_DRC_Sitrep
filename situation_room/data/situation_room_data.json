@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-05T14:32:26Z",
+  "generated_at": "2026-09-05T15:02:17Z",
   "asof": "2026-08-03",
   "sitrep": "112",
   "sitrep_date": "2026-08-03",
@@ -663,16 +663,16 @@
   "provinces": [
     {
       "name": "Ituri",
-      "cum": 4849,
-      "deaths": 1839,
-      "cfr": 37.9,
+      "cum": 4906,
+      "deaths": 1849,
+      "cfr": 37.7,
       "hz": 20
     },
     {
       "name": "Nord-Kivu",
-      "cum": 821,
-      "deaths": 560,
-      "cfr": 68.2,
+      "cum": 846,
+      "deaths": 569,
+      "cfr": 67.3,
       "hz": 10
     },
     {
@@ -686,77 +686,77 @@
   "zones": [
     {
       "name": "Bunia",
-      "cum": 1444,
-      "new": 31,
+      "cum": 1455,
+      "new": 11,
       "lat": 1.565,
       "lon": 30.244
     },
     {
       "name": "Rwampara",
-      "cum": 971,
-      "new": 7,
+      "cum": 977,
+      "new": 6,
       "lat": 1.53,
       "lon": 30.18
     },
     {
       "name": "Nizi",
-      "cum": 675,
-      "new": 5,
+      "cum": 683,
+      "new": 8,
       "lat": 1.7,
       "lon": 30.06
     },
     {
       "name": "Mongbwalu",
-      "cum": 616,
-      "new": 1,
+      "cum": 623,
+      "new": 7,
       "lat": 1.96,
       "lon": 30.04
     },
     {
       "name": "Katwa",
-      "cum": 416,
-      "new": 8,
+      "cum": 427,
+      "new": 11,
       "lat": -0.47,
       "lon": 29.25
     },
     {
       "name": "Mangala",
-      "cum": 271,
-      "new": 8,
+      "cum": 278,
+      "new": 7,
       "lat": 1.6,
       "lon": 30.4
     },
     {
       "name": "Nia-Nia",
-      "cum": 253,
+      "cum": 256,
       "new": 0,
       "lat": null,
       "lon": null
     },
     {
       "name": "Lita",
-      "cum": 225,
-      "new": 1,
+      "cum": 231,
+      "new": 6,
       "lat": 1.69,
       "lon": 30.3
     },
     {
       "name": "Butembo",
-      "cum": 186,
-      "new": 6,
+      "cum": 193,
+      "new": 7,
       "lat": 0.131,
       "lon": 29.29
     },
     {
       "name": "Bambu",
-      "cum": 168,
-      "new": 3,
+      "cum": 170,
+      "new": 2,
       "lat": 1.87,
       "lon": 30.08
     },
     {
       "name": "Beni",
-      "cum": 151,
+      "cum": 156,
       "new": 5,
       "lat": 0.491,
       "lon": 29.473
@@ -770,14 +770,14 @@
     },
     {
       "name": "Komanda",
-      "cum": 92,
-      "new": 0,
+      "cum": 98,
+      "new": 6,
       "lat": 1.36,
       "lon": 29.77
     },
     {
       "name": "Isiro",
-      "cum": 86,
+      "cum": 89,
       "new": 0,
       "lat": null,
       "lon": null
@@ -791,7 +791,7 @@
     },
     {
       "name": "Wamba",
-      "cum": 79,
+      "cum": 83,
       "new": 0,
       "lat": null,
       "lon": null
@@ -805,8 +805,8 @@
     },
     {
       "name": "Tchomia",
-      "cum": 59,
-      "new": 2,
+      "cum": 60,
+      "new": 1,
       "lat": 1.48,
       "lon": 30.53
     },
@@ -833,14 +833,14 @@
     },
     {
       "name": "Damas",
-      "cum": 28,
-      "new": 0,
+      "cum": 30,
+      "new": 2,
       "lat": 1.6,
       "lon": 30.3
     },
     {
       "name": "Boma Mangbetu",
-      "cum": 27,
+      "cum": 29,
       "new": 0,
       "lat": null,
       "lon": null
@@ -853,18 +853,18 @@
       "lon": null
     },
     {
+      "name": "Kalunguta",
+      "cum": 17,
+      "new": 1,
+      "lat": 0.3,
+      "lon": 29.35
+    },
+    {
       "name": "Mambasa",
       "cum": 17,
       "new": 0,
       "lat": 1.36,
       "lon": 29.05
-    },
-    {
-      "name": "Kalunguta",
-      "cum": 16,
-      "new": 0,
-      "lat": 0.3,
-      "lon": 29.35
     },
     {
       "name": "Kyondo",
@@ -888,6 +888,13 @@
       "lon": null
     },
     {
+      "name": "Masereka",
+      "cum": 13,
+      "new": 1,
+      "lat": 0.2,
+      "lon": 29.3
+    },
+    {
       "name": "Aungba",
       "cum": 12,
       "new": 0,
@@ -895,11 +902,11 @@
       "lon": 30.9
     },
     {
-      "name": "Masereka",
+      "name": "Logo",
       "cum": 12,
       "new": 1,
-      "lat": 0.2,
-      "lon": 29.3
+      "lat": 2.7,
+      "lon": 30.7
     },
     {
       "name": "Adja",
@@ -907,13 +914,6 @@
       "new": 0,
       "lat": null,
       "lon": null
-    },
-    {
-      "name": "Logo",
-      "cum": 11,
-      "new": 0,
-      "lat": 2.7,
-      "lon": 30.7
     },
     {
       "name": "Rimba",
@@ -939,14 +939,14 @@
     {
       "name": "Oicha",
       "cum": 8,
-      "new": 1,
+      "new": 0,
       "lat": 0.7,
       "lon": 29.52
     },
     {
       "name": "Mabalako",
       "cum": 7,
-      "new": 1,
+      "new": 0,
       "lat": 0.42,
       "lon": 29.42
     },
@@ -1178,8 +1178,8 @@
     },
     {
       "k": "Repartition par province",
-      "v": "ecart 10.5%",
-      "rule": "La somme des cumuls par province (5,673) ne correspond pas exactement au total national (6,342) -- ecart de 10.5%. La ventilation par province extraite des SitReps est probablement incomplete pour certaines lignes ; ne pas sur-interpreter de petits ecarts entre provinces.",
+      "v": "ecart 9.3%",
+      "rule": "La somme des cumuls par province (5,755) ne correspond pas exactement au total national (6,342) -- ecart de 9.3%. La ventilation par province extraite des SitReps est probablement incomplete pour certaines lignes ; ne pas sur-interpreter de petits ecarts entre provinces.",
       "level": "warn",
       "detected_on": "2026-09-05"
     },
@@ -1192,15 +1192,15 @@
     },
     {
       "k": "Zone acceleration",
-      "v": "Komanda",
-      "rule": "Komanda: 39 cases in the last 14 days vs 15 in the prior 14 days (160% increase, computed from cumulative counts, 5-case minimum applied).",
+      "v": "Masereka",
+      "rule": "Masereka:  6 cases in the last 14 days vs  2 in the prior 14 days (200% increase, computed from cumulative counts, 5-case minimum applied).",
       "level": "bad",
       "detected_on": "2026-09-05"
     },
     {
       "k": "Zone acceleration",
-      "v": "Masereka",
-      "rule": "Masereka:  5 cases in the last 14 days vs  2 in the prior 14 days (150% increase, computed from cumulative counts, 5-case minimum applied).",
+      "v": "Komanda",
+      "rule": "Komanda: 44 cases in the last 14 days vs 16 in the prior 14 days (175% increase, computed from cumulative counts, 5-case minimum applied).",
       "level": "bad",
       "detected_on": "2026-09-05"
     },
@@ -1228,7 +1228,7 @@
     {
       "name": "Daily indicators",
       "cadence": "Daily",
-      "last": "2026-09-02",
+      "last": "2026-09-03",
       "detail": "Province/zone"
     }
   ],
@@ -1246,7 +1246,8 @@
     "ipc_hcw": {},
     "eds": {},
     "special_populations": {},
-    "line_list_rt": {}
+    "line_list_rt": {},
+    "last_manual_update": null
   },
   "diagnostics": {
     "build_version": "v4.0-auto",
