@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-05T12:32:16Z",
+  "generated_at": "2026-09-05T13:02:20Z",
   "asof": "2026-08-03",
   "sitrep": "112",
   "sitrep_date": "2026-08-03",
@@ -1246,8 +1246,7 @@
     "ipc_hcw": {},
     "eds": {},
     "special_populations": {},
-    "line_list_rt": {},
-    "last_manual_update": null
+    "line_list_rt": {}
   },
   "diagnostics": {
     "build_version": "v4.0-auto",
