@@ -93,6 +93,21 @@ compute_doubling <- function(s, window_days = 14) {
 }
 doubling <- compute_doubling(serie)
 
+# Variation d'incidence 7 jours vs 7 jours precedents -- meme methode que
+# nat_growth_txt dans 06_generate_africa_cdc_sitrep_final.R ("7-day incidence
+# changed by -35% vs. the prior 7 days"), pour que la Situation Room et le
+# supplement SitRep officiel racontent le meme chiffre.
+compute_growth7 <- function(s) {
+  s2 <- s %>% filter(!is.na(nouveaux_cas_calc)) %>% arrange(date)
+  n <- nrow(s2)
+  if (n < 14) return(NA_real_)
+  inc7 <- sum(pmax(tail(s2$nouveaux_cas_calc, 7), 0), na.rm = TRUE)
+  inc7prev <- sum(pmax(s2$nouveaux_cas_calc[(n - 13):(n - 7)], 0), na.rm = TRUE)
+  if (inc7prev <= 0) return(NA_real_)
+  round(100 * (inc7 - inc7prev) / inc7prev, 0)
+}
+growth7 <- compute_growth7(serie)
+
 series_out <- serie %>%
   filter(!is.na(date)) %>%
   transmute(d = as.character(date),
@@ -227,8 +242,8 @@ if (nrow(daily) > 0 && !is.na(zone_latest_date)) {
     mutate(health_zone = canon_zone(zone)) %>%
     group_by(health_zone) %>%
     summarise(cum_di = sum(cum_cases, na.rm = TRUE), deaths = sum(cum_deaths, na.rm = TRUE),
-              new = sum(new_cases, na.rm = TRUE), .groups = "drop")
-} else zone_detail <- tibble(health_zone = character(), cum_di = numeric(), deaths = numeric(), new = numeric())
+              new = sum(new_cases, na.rm = TRUE), cfr_di = mean(cfr, na.rm = TRUE), .groups = "drop")
+} else zone_detail <- tibble(health_zone = character(), cum_di = numeric(), deaths = numeric(), new = numeric(), cfr_di = numeric())
 
 if (nrow(tabzones) > 0) {
   name_col <- intersect(c("nom","zone","health_zone"), names(tabzones))[1]
@@ -245,57 +260,105 @@ z <- zone_base %>%
   # cumul = le plus grand des deux (le detail journalier peut etre legerement
   # en retard sur le cumul officiel si une zone n'a pas de ligne a la derniere date)
   mutate(cum = pmax(coalesce(cum_tz, 0), coalesce(cum_di, 0)),
-         new = coalesce(new, 0)) %>%
+         new = coalesce(new, 0),
+         cfr = ifelse(!is.na(cfr_di), round(cfr_di, 1),
+                       ifelse(cum > 0 & !is.na(deaths), round(100 * deaths / cum, 1), NA))) %>%
   filter(cum > 0) %>%
   left_join(zone_coords, by = "health_zone")
 zones_missing_coords <- z$health_zone[is.na(z$lat)]
 zones_out <- z %>% transmute(name = health_zone, cum, new, lat, lon) %>% arrange(desc(cum))
 
-# ---- Tendance par zone : acceleration / deceleration sur 14 jours glissants ----
-# Methode inspiree des decks EOC hebdomadaires (comparaison 2 semaines vs 2
-# semaines precedentes), mais calculee ici directement depuis cum_cases (plus
-# robuste que sommer new_cases, qui contient des corrections/valeurs negatives
-# ponctuelles liees aux revisions). Seuil minimal de cas pour eviter le meme
-# piege "petit denominateur" que les zones a CFR 100%/1 cas signalees dans les
-# decks : une zone qui passe de 1 a 2 cas n'est pas une "acceleration x2".
-zone_trend <- function(daily_df, min_recent_cases = 5) {
-  if (nrow(daily_df) == 0) return(tibble())
-  d <- daily_df %>% filter(level == "Zone", !is.na(cum_cases)) %>%
+# ---- Dynamique 21 jours par zone (pour la carte Situation Room) ----
+# Cas/deces des 21 DERNIERS JOURS (pas juste le cumul total) -- au niveau
+# le plus fin disponible dans les donnees agregees (zone de sante). Un
+# niveau plus fin (aire de sante/village) exigerait la line list
+# individuelle, indisponible ici -- on ne l'invente pas.
+zone_dyn21 <- tibble()
+if (nrow(daily) > 0 && !is.na(zone_latest_date)) {
+  zd <- daily %>% filter(level == "Zone", !is.na(cum_cases)) %>%
     mutate(health_zone = canon_zone(zone)) %>%
     group_by(health_zone, date) %>%
-    summarise(cum_cases = max(cum_cases, na.rm = TRUE), .groups = "drop") %>%
-    filter(is.finite(cum_cases))
-  if (nrow(d) == 0) return(tibble())
-  last_date <- max(d$date, na.rm = TRUE)
-  at_date <- function(hz, target) {
-    sub <- d %>% filter(health_zone == hz, date <= target)
+    summarise(cum_cases = max(cum_cases, na.rm = TRUE),
+              cum_deaths = suppressWarnings(max(cum_deaths, na.rm = TRUE)), .groups = "drop") %>%
+    filter(is.finite(cum_cases)) %>%
+    mutate(cum_deaths = ifelse(is.finite(cum_deaths), cum_deaths, NA_real_))
+  at_date21 <- function(hz, target, col) {
+    sub <- zd %>% filter(health_zone == hz, date <= target)
     if (nrow(sub) == 0) return(NA_real_)
-    sub %>% arrange(desc(date)) %>% slice(1) %>% pull(cum_cases)
+    sub %>% arrange(desc(date)) %>% slice(1) %>% pull(.data[[col]])
   }
-  hzs <- unique(d$health_zone)
-  purrr::map_dfr(hzs, function(hz) {
-    c_now  <- at_date(hz, last_date)
-    c_14   <- at_date(hz, last_date - 14)
-    c_28   <- at_date(hz, last_date - 28)
-    recent <- c_now - c_14; prior <- c_14 - c_28
-    tibble(health_zone = hz, recent_14d = recent, prior_14d = prior)
-  }) %>% filter(!is.na(recent_14d), !is.na(prior_14d), recent_14d >= min_recent_cases)
+  hzs21 <- unique(zd$health_zone)
+  zone_dyn21 <- purrr::map_dfr(hzs21, function(hz) {
+    c_now <- at_date21(hz, zone_latest_date, "cum_cases")
+    c_21  <- at_date21(hz, zone_latest_date - 21, "cum_cases")
+    d_now <- at_date21(hz, zone_latest_date, "cum_deaths")
+    d_21  <- at_date21(hz, zone_latest_date - 21, "cum_deaths")
+    tibble(name = hz,
+           cases_last21d  = ifelse(is.na(c_now) || is.na(c_21), NA_real_, pmax(0, c_now - c_21)),
+           deaths_last21d = ifelse(is.na(d_now) || is.na(d_21), NA_real_, pmax(0, d_now - d_21)))
+  })
 }
-ZONE_TREND_MIN_CASES <- 5
-zone_trends <- zone_trend(daily, min_recent_cases = ZONE_TREND_MIN_CASES)
-accelerating <- zone_trends %>%
-  mutate(ratio = ifelse(prior_14d > 0, recent_14d / prior_14d, ifelse(recent_14d > 0, Inf, NA))) %>%
-  filter(!is.na(ratio), ratio >= 1.4) %>%
-  arrange(desc(ratio)) %>% slice_head(n = 3)
-trend_gaps <- if (nrow(accelerating) > 0) {
-  accelerating %>% rowwise() %>% mutate(
-    pct_txt = if (is.finite(ratio)) glue("{round((ratio-1)*100)}% increase") else "newly emerging cluster"
-  ) %>% ungroup() %>% transmute(
-    k = "Zone acceleration",
-    v = health_zone,
-    rule = glue("{health_zone}: {fmt(recent_14d)} cases in the last 14 days vs {fmt(prior_14d)} in the prior 14 days ({pct_txt}, computed from cumulative counts, {ZONE_TREND_MIN_CASES}-case minimum applied).") %>% as.character(),
-    level = ifelse(!is.finite(ratio) | ratio >= 2, "bad", "warn"),
-    detected_on = as.character(Sys.Date())
+zones_out <- zones_out %>% left_join(zone_dyn21, by = "name") %>%
+  mutate(cases_last21d = coalesce(cases_last21d, 0), deaths_last21d = coalesce(deaths_last21d, 0))
+
+# ---- CFR vs cases (scatter) : meme paire de variables que
+# cfr_scatter_plot dans 06_generate_africa_cdc_sitrep_final.R (le supplement
+# SitRep officiel envoye par email) -- reutilisee ici telle quelle pour que
+# la Situation Room et le document officiel racontent exactement la meme
+# histoire.
+cfr_scatter_out <- z %>% filter(!is.na(cfr)) %>%
+  transmute(name = health_zone, cum, cfr) %>% arrange(desc(cum))
+
+# ---- Statut de transmission par zone : jours depuis le dernier nouveau cas
+# (logique identique et copiee telle quelle de 06_generate_africa_cdc_sitrep_final.R,
+# "Transmission status by zone" -- meme calcul, meme lecture) -- utile pour
+# reperer a la fois les zones en silence prolonge (verification active
+# recommandee) et les candidates a la levee de vigilance.
+transmission_status_out <- tibble()
+if (nrow(daily) > 0) {
+  zone_hist <- daily %>% filter(level == "Zone") %>% arrange(zone, province, date) %>%
+    group_by(zone, province) %>%
+    mutate(new_case_day = coalesce(cum_cases - lag(cum_cases), 0) > 0) %>%
+    ungroup()
+  transmission_status_out <- zone_hist %>% filter(new_case_day) %>%
+    group_by(zone, province) %>%
+    summarise(last_case_date = max(date), .groups = "drop") %>%
+    mutate(days_since = as.integer(as.Date(zone_latest_date) - as.Date(last_case_date))) %>%
+    arrange(desc(days_since)) %>%
+    transmute(name = zone, province, last_case_date = as.character(last_case_date), days_since) %>%
+    slice_head(n = 12)
+}
+
+# ---- Watch operationnel : REUTILISE tel quel le module partage
+# scripts/operational_watch.R (les 4 memes regles RED/ORANGE que le
+# supplement SitRep officiel envoye par email et que 04_send_sitrep_alerts_conditional.R)
+# plutot que de reimplementer une logique de detection differente ici.
+OW_HELPER_FP <- file.path(BASE_DIR, "scripts", "operational_watch.R")
+watch_zones_out <- tibble()
+if (file.exists(OW_HELPER_FP) && nrow(daily) > 0 && !is.na(zone_latest_date)) {
+  source(OW_HELPER_FP)
+  ow <- tryCatch(compute_operational_watch(daily, zone_latest_date, min_cases = 10),
+                 error = function(e) { cat("  [!] operational_watch:", conditionMessage(e), "\n"); data.frame() })
+  if (nrow(ow) > 0) {
+    watch_zones_out <- ow %>% transmute(
+      zone, province, cum_cases, cfr = round(cfr, 1), new_24h = new_24h, new_7d = new_7d,
+      severity, reason, action) %>% as_tibble()
+  }
+} else {
+  cat("  [!] operational_watch.R introuvable a", OW_HELPER_FP, "-- watch operationnel omis (pas de donnees fabriquees).\n")
+}
+
+# ---- Gaps derives du watch operationnel officiel (voir plus haut,
+# watch_zones_out) : on ne reimplemente pas une 2e logique de detection ici --
+# une seule source de verite pour "quelle zone regarder", coherente avec le
+# supplement SitRep officiel envoye par email. Seules les zones RED (les plus
+# urgentes) remontent dans les gaps ; la table complete (RED+ORANGE) est dans
+# watch_zones_out / le panneau dedie.
+trend_gaps <- if (nrow(watch_zones_out) > 0) {
+  watch_zones_out %>% filter(severity == "RED") %>% slice_head(n = 3) %>% transmute(
+    k = "Operational watch", v = zone,
+    rule = glue("{zone} ({province}): {reason}. {action}") %>% as.character(),
+    level = "bad", detected_on = as.character(Sys.Date())
   )
 } else tibble()
 
@@ -392,7 +455,7 @@ sources_out <- tibble::tribble(
 kpi <- list(
   cases = last_row$cas_cumules[1], deaths = last_row$deces_cumules[1],
   cfr = last_row$cfr[1], new = last_row$nouveaux_cas_calc[1] %||% last_row$nouveaux_cas[1],
-  ma7 = round(last_row$moy_mobile_cas[1], 1), doubling = doubling,
+  ma7 = round(last_row$moy_mobile_cas[1], 1), doubling = doubling, growth7 = growth7,
   recovered = surv$recovered, isolation = surv$isolation,
   hz = latest_indicator("hz_affected_national")$value,
   provinces = if (nrow(provinces_out) > 0) nrow(provinces_out) else NA,
@@ -400,10 +463,11 @@ kpi <- list(
 )
 
 highlights <- c(
-  glue("{fmt(kpi$new)} new confirmed cases in the latest report; 7-day average {fmt(kpi$ma7)}/day.") %>% as.character(),
+  glue("{fmt(kpi$new)} new confirmed cases in the latest report; 7-day average {fmt(kpi$ma7)}/day{if (!is.na(growth7)) glue(' ({ifelse(growth7>=0,\"+\",\"\")}{growth7}% vs. the prior 7 days)') else ''}.") %>% as.character(),
   if (!is.na(doubling)) glue("Cumulative cases doubling approximately every {doubling} days (trailing 14-day growth).") else "Case growth flat/declining over the trailing 14 days -- no doubling time to report.",
   glue("Case-fatality ratio {kpi$cfr}% (provisional); {fmt(surv$recovered %||% NA)} recovered, {fmt(surv$isolation %||% NA)} in isolation."),
-  glue("{fmt(kpi$hz)} health zones affected across {fmt(kpi$provinces)} provinces.")
+  glue("{fmt(kpi$hz)} health zones affected across {fmt(kpi$provinces)} provinces."),
+  if (nrow(watch_zones_out) > 0) glue("Operational watch: {sum(watch_zones_out$severity=='RED')} zone(s) RED, {sum(watch_zones_out$severity=='ORANGE')} ORANGE for priority verification.") else NA
 )
 highlights <- highlights[!is.na(highlights)]
 
@@ -455,12 +519,15 @@ SR_DATA <- list(
   series = series_out,
   provinces = provinces_out,
   zones = zones_out,
+  cfr_scatter = cfr_scatter_out,
+  transmission_status = transmission_status_out,
+  watch_zones = watch_zones_out,
   gaps = gaps_out,
   sources = sources_out,
   highlights = highlights,
   manual = manual_block,
   diagnostics = list(
-    build_version = "v4.0-auto",
+    build_version = "v5.0-auto",
     build_date = as.character(Sys.Date()),
     generator = "scripts/16_generate_situation_room_data.R",
     latest_sitrep_no = latest_sitrep_no,
@@ -468,7 +535,7 @@ SR_DATA <- list(
   )
 )
 
-jsonlite::write_json(SR_DATA, SR_JSON, auto_unbox = TRUE, na = "null", pretty = TRUE, dataframe = "rows")
+jsonlite::write_json(SR_DATA, SR_JSON, auto_unbox = TRUE, na = "null", null = "null", pretty = TRUE, dataframe = "rows")
 cat("OK ->", SR_JSON, "\n")
 cat("SitRep", latest_sitrep_no, "-", as.character(last_row$date[1]),
     "| cas:", kpi$cases, "| deces:", kpi$deaths, "| CFR:", kpi$cfr, "\n")
