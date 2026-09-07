@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-06T23:32:26Z",
+  "generated_at": "2026-09-07T00:02:41Z",
   "asof": "2026-08-03",
   "sitrep": "113",
   "sitrep_date": "2026-08-03",
@@ -1694,63 +1694,63 @@
       "v": "non calcule",
       "rule": "Necessite des dates de debut des symptomes (donnees individuelles) -- indisponibles avec des SitReps agreges. Temps de doublement affiche a la place.",
       "level": "info",
-      "detected_on": "2026-09-06"
+      "detected_on": "2026-09-07"
     },
     {
       "k": "Occupation des lits",
       "v": "non automatise",
       "rule": "Aucune source CI ne produit ce chiffre en continu actuellement (script 15_bed_occupancy_analysis_v2.R non branche au workflow). Mise a jour manuelle requise.",
       "level": "warn",
-      "detected_on": "2026-09-06"
+      "detected_on": "2026-09-07"
     },
     {
       "k": "Fraicheur pipeline",
-      "v": "34 j depuis SitRep 113",
-      "rule": "Aucun nouveau SitRep detecte depuis 34 jours -- verifier le cron GitHub Actions (habituellement ~quotidien).",
+      "v": "35 j depuis SitRep 113",
+      "rule": "Aucun nouveau SitRep detecte depuis 35 jours -- verifier le cron GitHub Actions (habituellement ~quotidien).",
       "level": "bad",
-      "detected_on": "2026-09-06"
+      "detected_on": "2026-09-07"
     },
     {
       "k": "Reference INRB",
       "v": "83 SitReps de retard",
       "rule": "La reference nationale INRB utilisee pour la contre-validation independante des cumuls n'a plus ete mise a jour depuis le SitRep 30 (2026-06-13) -- 83 SitReps plus tard, les cumuls officiels ne sont plus contre-verifies (validation = 'no_ref').",
       "level": "bad",
-      "detected_on": "2026-09-06"
+      "detected_on": "2026-09-07"
     },
     {
       "k": "Repartition par province",
       "v": "ecart 9.5%",
       "rule": "La somme des cumuls par province (5,823) ne correspond pas exactement au total national (6,436) -- ecart de 9.5%. La ventilation par province extraite des SitReps est probablement incomplete pour certaines lignes ; ne pas sur-interpreter de petits ecarts entre provinces.",
       "level": "warn",
-      "detected_on": "2026-09-06"
+      "detected_on": "2026-09-07"
     },
     {
       "k": "Operational watch",
       "v": "Katwa",
       "rule": "Katwa (Nord-Kivu): High-lethality active transmission. Verify time-to-care and isolation delay; check the community-death ratio and ETC/IPC capacity in this zone.",
       "level": "bad",
-      "detected_on": "2026-09-06"
+      "detected_on": "2026-09-07"
     },
     {
       "k": "Operational watch",
       "v": "Lita",
       "rule": "Lita (Ituri): High-lethality active transmission. Verify time-to-care and isolation delay; check the community-death ratio and ETC/IPC capacity in this zone.",
       "level": "bad",
-      "detected_on": "2026-09-06"
+      "detected_on": "2026-09-07"
     },
     {
       "k": "Operational watch",
       "v": "Butembo",
       "rule": "Butembo (Nord-Kivu): High-lethality active transmission. Verify time-to-care and isolation delay; check the community-death ratio and ETC/IPC capacity in this zone.",
       "level": "bad",
-      "detected_on": "2026-09-06"
+      "detected_on": "2026-09-07"
     },
     {
       "k": "CFR reading",
       "v": "small-denominator caveat",
       "rule": "Zones with very few cumulative cases can show 100% CFR from a single death -- this is not comparable to a high CFR over a large case count. Always check the case count (shown alongside CFR) before treating a zone as a mortality-review priority.",
       "level": "info",
-      "detected_on": "2026-09-06"
+      "detected_on": "2026-09-07"
     }
   ],
   "sources": [
@@ -1787,12 +1787,11 @@
     "ipc_hcw": {},
     "eds": {},
     "special_populations": {},
-    "line_list_rt": {},
-    "last_manual_update": null
+    "line_list_rt": {}
   },
   "diagnostics": {
     "build_version": "v5.0-auto",
-    "build_date": "2026-09-06",
+    "build_date": "2026-09-07",
     "generator": "scripts/16_generate_situation_room_data.R",
     "latest_sitrep_no": 113,
     "zones_missing_coords": ["Adja", "Ariwara", "Bafwasende", "Biena", "Boga", "Boma Mangbetu", "Buta", "Drodro", "Ganga", "Gombari", "Isiro", "Kabondo", "Kayna", "Lolwa", "Lubero", "Lubunga", "Mahagi", "Makiso-Kisangani", "Mandima", "Mangobo", "Musienene", "Mutwanga", "Nia-Nia", "Pawa", "Rumba", "Rungu", "Tshopo", "Viadana", "Wamba", "Wanierukula"]
