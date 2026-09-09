@@ -1,16 +1,16 @@
 {
-  "generated_at": "2026-09-09T19:32:33Z",
+  "generated_at": "2026-09-09T20:02:46Z",
   "asof": "2026-08-03",
-  "sitrep": "116",
+  "sitrep": "117",
   "sitrep_date": "2026-08-03",
   "kpi": {
-    "cases": 6686,
-    "deaths": 3226,
+    "cases": 6757,
+    "deaths": 3267,
     "cfr": 48.3,
-    "new": null,
-    "ma7": 90,
+    "new": 71,
+    "ma7": 78.5,
     "doubling": 21.6,
-    "growth7": 1,
+    "growth7": 50,
     "recovered": 68,
     "isolation": 25,
     "hz": 51,
@@ -46,17 +46,17 @@
       "isolation": 80
     },
     "staleness_sitreps": {
-      "alerts_reported": 66,
-      "alerts_investigated": 99,
-      "investigation_rate": 99,
-      "contacts_followed": 55,
-      "suspects": 86,
-      "samples_analyzed": 68,
-      "lab_positivity": 98,
-      "vaccine": 104,
-      "community_deaths": 35,
-      "recovered": 42,
-      "isolation": 36
+      "alerts_reported": 67,
+      "alerts_investigated": 100,
+      "investigation_rate": 100,
+      "contacts_followed": 56,
+      "suspects": 87,
+      "samples_analyzed": 69,
+      "lab_positivity": 99,
+      "vaccine": 105,
+      "community_deaths": 36,
+      "recovered": 43,
+      "isolation": 37
     }
   },
   "series": [
@@ -677,6 +677,12 @@
       "nc": null,
       "ma7": 90,
       "cum": 6686
+    },
+    {
+      "d": "2026-08-03",
+      "nc": 71,
+      "ma7": 78.5,
+      "cum": 6757
     }
   ],
   "provinces": [
@@ -1739,22 +1745,22 @@
     },
     {
       "k": "Fraicheur pipeline",
-      "v": "37 j depuis SitRep 116",
+      "v": "37 j depuis SitRep 117",
       "rule": "Aucun nouveau SitRep detecte depuis 37 jours -- verifier le cron GitHub Actions (habituellement ~quotidien).",
       "level": "bad",
       "detected_on": "2026-09-09"
     },
     {
       "k": "Reference INRB",
-      "v": "86 SitReps de retard",
-      "rule": "La reference nationale INRB utilisee pour la contre-validation independante des cumuls n'a plus ete mise a jour depuis le SitRep 30 (2026-06-13) -- 86 SitReps plus tard, les cumuls officiels ne sont plus contre-verifies (validation = 'no_ref').",
+      "v": "87 SitReps de retard",
+      "rule": "La reference nationale INRB utilisee pour la contre-validation independante des cumuls n'a plus ete mise a jour depuis le SitRep 30 (2026-06-13) -- 87 SitReps plus tard, les cumuls officiels ne sont plus contre-verifies (validation = 'no_ref').",
       "level": "bad",
       "detected_on": "2026-09-09"
     },
     {
       "k": "Repartition par province",
-      "v": "ecart 9.9%",
-      "rule": "La somme des cumuls par province (6,023) ne correspond pas exactement au total national (6,686) -- ecart de 9.9%. La ventilation par province extraite des SitReps est probablement incomplete pour certaines lignes ; ne pas sur-interpreter de petits ecarts entre provinces.",
+      "v": "ecart 10.9%",
+      "rule": "La somme des cumuls par province (6,023) ne correspond pas exactement au total national (6,757) -- ecart de 10.9%. La ventilation par province extraite des SitReps est probablement incomplete pour certaines lignes ; ne pas sur-interpreter de petits ecarts entre provinces.",
       "level": "warn",
       "detected_on": "2026-09-09"
     },
@@ -1792,7 +1798,7 @@
       "name": "SitRep (INSP)",
       "cadence": "Per report",
       "last": "2026-08-03",
-      "detail": "N°116"
+      "detail": "N°117"
     },
     {
       "name": "INRB reference",
@@ -1807,7 +1813,7 @@
       "detail": "Province/zone"
     }
   ],
-  "highlights": ["— new confirmed cases in the latest report; 7-day average 90/day (+1% vs. the prior 7 days).", "Cumulative cases doubling approximately every 21.6 days (trailing 14-day growth).", "Case-fatality ratio 48.3% (provisional); 68 recovered, 25 in isolation.", "51 health zones affected across 3 provinces.", "Operational watch: 12 zone(s) RED, 5 ORANGE for priority verification."],
+  "highlights": ["71 new confirmed cases in the latest report; 7-day average 78/day (+50% vs. the prior 7 days).", "Cumulative cases doubling approximately every 21.6 days (trailing 14-day growth).", "Case-fatality ratio 48.3% (provisional); 68 recovered, 25 in isolation.", "51 health zones affected across 3 provinces.", "Operational watch: 12 zone(s) RED, 5 ORANGE for priority verification."],
   "manual": {
     "beds": {},
     "bed_sites": [],
@@ -1821,14 +1827,13 @@
     "ipc_hcw": {},
     "eds": {},
     "special_populations": {},
-    "line_list_rt": {},
-    "last_manual_update": null
+    "line_list_rt": {}
   },
   "diagnostics": {
     "build_version": "v5.0-auto",
     "build_date": "2026-09-09",
     "generator": "scripts/16_generate_situation_room_data.R",
-    "latest_sitrep_no": 116,
+    "latest_sitrep_no": 117,
     "zones_missing_coords": ["Adja", "Ariwara", "Bafwasende", "Biena", "Boga", "Boma Mangbetu", "Buta", "Drodro", "Ganga", "Gombari", "Isiro", "Kabondo", "Kayna", "Lolwa", "Lubero", "Lubunga", "Mahagi", "Makiso-Kisangani", "Mandima", "Mangobo", "Musienene", "Mutwanga", "Nia-Nia", "Pawa", "Rumba", "Rungu", "Tshopo", "Viadana", "Wamba", "Wanierukula"]
   }
 }
