@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-10T10:32:31Z",
+  "generated_at": "2026-09-10T11:02:29Z",
   "asof": "2026-08-03",
   "sitrep": "117",
   "sitrep_date": "2026-08-03",
@@ -688,16 +688,16 @@
   "provinces": [
     {
       "name": "Ituri",
-      "cum": 5072,
-      "deaths": 1905,
-      "cfr": 37.6,
+      "cum": 5124,
+      "deaths": 1914,
+      "cfr": 37.4,
       "hz": 20
     },
     {
       "name": "Nord-Kivu",
-      "cum": 948,
-      "deaths": 633,
-      "cfr": 66.8,
+      "cum": 973,
+      "deaths": 644,
+      "cfr": 66.2,
       "hz": 11
     },
     {
@@ -711,61 +711,61 @@
   "zones": [
     {
       "name": "Bunia",
-      "cum": 1502,
-      "new": 14,
+      "cum": 1523,
+      "new": 21,
       "lat": 1.565,
       "lon": 30.244,
-      "cases_last21d": 308,
-      "deaths_last21d": 99
+      "cases_last21d": 329,
+      "deaths_last21d": 104
     },
     {
       "name": "Rwampara",
-      "cum": 992,
-      "new": 5,
+      "cum": 999,
+      "new": 7,
       "lat": 1.53,
       "lon": 30.18,
-      "cases_last21d": 129,
-      "deaths_last21d": 15
+      "cases_last21d": 136,
+      "deaths_last21d": 16
     },
     {
       "name": "Nizi",
-      "cum": 709,
-      "new": 2,
+      "cum": 723,
+      "new": 14,
       "lat": 1.7,
       "lon": 30.06,
-      "cases_last21d": 166,
+      "cases_last21d": 180,
       "deaths_last21d": 33
     },
     {
       "name": "Mongbwalu",
-      "cum": 638,
-      "new": 4,
+      "cum": 640,
+      "new": 2,
       "lat": 1.96,
       "lon": 30.04,
-      "cases_last21d": 47,
-      "deaths_last21d": 9
+      "cases_last21d": 49,
+      "deaths_last21d": 11
     },
     {
       "name": "Katwa",
-      "cum": 468,
-      "new": 11,
+      "cum": 477,
+      "new": 9,
       "lat": -0.47,
       "lon": 29.25,
-      "cases_last21d": 162,
-      "deaths_last21d": 103
+      "cases_last21d": 171,
+      "deaths_last21d": 106
     },
     {
       "name": "Mangala",
-      "cum": 295,
-      "new": 5,
+      "cum": 297,
+      "new": 2,
       "lat": 1.6,
       "lon": 30.4,
-      "cases_last21d": 130,
+      "cases_last21d": 132,
       "deaths_last21d": 49
     },
     {
       "name": "Nia-Nia",
-      "cum": 262,
+      "cum": 263,
       "new": 0,
       "lat": null,
       "lon": null,
@@ -774,30 +774,30 @@
     },
     {
       "name": "Lita",
-      "cum": 245,
-      "new": 3,
+      "cum": 247,
+      "new": 2,
       "lat": 1.69,
       "lon": 30.3,
-      "cases_last21d": 62,
+      "cases_last21d": 64,
       "deaths_last21d": 18
     },
     {
       "name": "Butembo",
-      "cum": 211,
-      "new": 3,
+      "cum": 217,
+      "new": 6,
       "lat": 0.131,
       "lon": 29.29,
-      "cases_last21d": 93,
-      "deaths_last21d": 50
+      "cases_last21d": 99,
+      "deaths_last21d": 52
     },
     {
       "name": "Beni",
-      "cum": 181,
-      "new": 5,
+      "cum": 185,
+      "new": 4,
       "lat": 0.491,
       "lon": 29.473,
-      "cases_last21d": 85,
-      "deaths_last21d": 64
+      "cases_last21d": 89,
+      "deaths_last21d": 67
     },
     {
       "name": "Bambu",
@@ -819,16 +819,16 @@
     },
     {
       "name": "Komanda",
-      "cum": 117,
-      "new": 4,
+      "cum": 118,
+      "new": 1,
       "lat": 1.36,
       "lon": 29.77,
-      "cases_last21d": 66,
-      "deaths_last21d": 44
+      "cases_last21d": 67,
+      "deaths_last21d": 45
     },
     {
       "name": "Musienene",
-      "cum": 100,
+      "cum": 101,
       "new": 0,
       "lat": null,
       "lon": null,
@@ -846,7 +846,7 @@
     },
     {
       "name": "Wamba",
-      "cum": 84,
+      "cum": 86,
       "new": 0,
       "lat": null,
       "lon": null,
@@ -864,11 +864,11 @@
     },
     {
       "name": "Tchomia",
-      "cum": 62,
-      "new": 2,
+      "cum": 63,
+      "new": 1,
       "lat": 1.48,
       "lon": 30.53,
-      "cases_last21d": 13,
+      "cases_last21d": 14,
       "deaths_last21d": 0
     },
     {
@@ -882,7 +882,7 @@
     },
     {
       "name": "Mandima",
-      "cum": 42,
+      "cum": 44,
       "new": 0,
       "lat": null,
       "lon": null,
@@ -900,11 +900,11 @@
     },
     {
       "name": "Damas",
-      "cum": 30,
-      "new": 0,
+      "cum": 32,
+      "new": 2,
       "lat": 1.6,
       "lon": 30.3,
-      "cases_last21d": 7,
+      "cases_last21d": 9,
       "deaths_last21d": 0
     },
     {
@@ -917,6 +917,15 @@
       "deaths_last21d": 0
     },
     {
+      "name": "Kyondo",
+      "cum": 25,
+      "new": 2,
+      "lat": 0.15,
+      "lon": 29.4,
+      "cases_last21d": 10,
+      "deaths_last21d": 5
+    },
+    {
       "name": "Lolwa",
       "cum": 25,
       "new": 0,
@@ -926,21 +935,12 @@
       "deaths_last21d": 0
     },
     {
-      "name": "Kyondo",
-      "cum": 23,
-      "new": 0,
-      "lat": 0.15,
-      "lon": 29.4,
-      "cases_last21d": 8,
-      "deaths_last21d": 3
-    },
-    {
       "name": "Kalunguta",
-      "cum": 18,
-      "new": 0,
+      "cum": 20,
+      "new": 2,
       "lat": 0.3,
       "lon": 29.35,
-      "cases_last21d": 6,
+      "cases_last21d": 8,
       "deaths_last21d": 4
     },
     {
@@ -1025,6 +1025,15 @@
       "deaths_last21d": 6
     },
     {
+      "name": "Vuhovi",
+      "cum": 10,
+      "new": 2,
+      "lat": 0.45,
+      "lon": 29.3,
+      "cases_last21d": 6,
+      "deaths_last21d": 3
+    },
+    {
       "name": "Biena",
       "cum": 9,
       "new": 0,
@@ -1061,15 +1070,6 @@
       "deaths_last21d": 0
     },
     {
-      "name": "Vuhovi",
-      "cum": 8,
-      "new": 1,
-      "lat": 0.45,
-      "lon": 29.3,
-      "cases_last21d": 4,
-      "deaths_last21d": 2
-    },
-    {
       "name": "Gety",
       "cum": 7,
       "new": 0,
@@ -1080,7 +1080,7 @@
     },
     {
       "name": "Lubero",
-      "cum": 6,
+      "cum": 7,
       "new": 0,
       "lat": null,
       "lon": null,
@@ -1093,6 +1093,15 @@
       "new": 0,
       "lat": -2.35,
       "lon": 28.77,
+      "cases_last21d": 0,
+      "deaths_last21d": 0
+    },
+    {
+      "name": "Bafwasende",
+      "cum": 4,
+      "new": 0,
+      "lat": null,
+      "lon": null,
       "cases_last21d": 0,
       "deaths_last21d": 0
     },
@@ -1117,7 +1126,7 @@
     {
       "name": "Manguredjipa",
       "cum": 4,
-      "new": 1,
+      "new": 0,
       "lat": 0.7,
       "lon": 29,
       "cases_last21d": 4,
@@ -1144,15 +1153,6 @@
     {
       "name": "Mangobo",
       "cum": 3,
-      "new": 0,
-      "lat": null,
-      "lon": null,
-      "cases_last21d": 0,
-      "deaths_last21d": 0
-    },
-    {
-      "name": "Bafwasende",
-      "cum": 2,
       "new": 0,
       "lat": null,
       "lon": null,
@@ -1271,47 +1271,47 @@
   "cfr_scatter": [
     {
       "name": "Bunia",
-      "cum": 1502,
-      "cfr": 31.4
+      "cum": 1523,
+      "cfr": 31.3
     },
     {
       "name": "Rwampara",
-      "cum": 992,
-      "cfr": 35
+      "cum": 999,
+      "cfr": 34.8
     },
     {
       "name": "Nizi",
-      "cum": 709,
-      "cfr": 38.5
+      "cum": 723,
+      "cfr": 37.8
     },
     {
       "name": "Mongbwalu",
-      "cum": 638,
-      "cfr": 45.6
+      "cum": 640,
+      "cfr": 45.8
     },
     {
       "name": "Katwa",
-      "cum": 468,
-      "cfr": 64.5
+      "cum": 477,
+      "cfr": 63.9
     },
     {
       "name": "Mangala",
-      "cum": 295,
-      "cfr": 47.8
+      "cum": 297,
+      "cfr": 47.5
     },
     {
       "name": "Lita",
-      "cum": 245,
-      "cfr": 49.8
+      "cum": 247,
+      "cfr": 49.4
     },
     {
       "name": "Butembo",
-      "cum": 211,
-      "cfr": 69.2
+      "cum": 217,
+      "cfr": 68.2
     },
     {
       "name": "Beni",
-      "cum": 181,
+      "cum": 185,
       "cfr": 74.6
     },
     {
@@ -1326,8 +1326,8 @@
     },
     {
       "name": "Komanda",
-      "cum": 117,
-      "cfr": 67.5
+      "cum": 118,
+      "cfr": 67.8
     },
     {
       "name": "Fataki",
@@ -1336,8 +1336,8 @@
     },
     {
       "name": "Tchomia",
-      "cum": 62,
-      "cfr": 40.3
+      "cum": 63,
+      "cfr": 39.7
     },
     {
       "name": "Kilo",
@@ -1346,18 +1346,18 @@
     },
     {
       "name": "Damas",
-      "cum": 30,
-      "cfr": 30
+      "cum": 32,
+      "cfr": 28.1
     },
     {
       "name": "Kyondo",
-      "cum": 23,
-      "cfr": 65.2
+      "cum": 25,
+      "cfr": 68
     },
     {
       "name": "Kalunguta",
-      "cum": 18,
-      "cfr": 50
+      "cum": 20,
+      "cfr": 45
     },
     {
       "name": "Mambasa",
@@ -1390,6 +1390,11 @@
       "cfr": 70
     },
     {
+      "name": "Vuhovi",
+      "cum": 10,
+      "cfr": 50
+    },
+    {
       "name": "Oicha",
       "cum": 9,
       "cfr": 66.7
@@ -1398,11 +1403,6 @@
       "name": "Aru",
       "cum": 8,
       "cfr": 75
-    },
-    {
-      "name": "Vuhovi",
-      "cum": 8,
-      "cfr": 50
     },
     {
       "name": "Gety",
@@ -1435,83 +1435,83 @@
       "name": "Kambala",
       "province": "Ituri",
       "last_case_date": "2026-06-30",
-      "days_since": 69
+      "days_since": 70
     },
     {
       "name": "Goma",
       "province": "Nord-Kivu",
       "last_case_date": "2026-07-02",
-      "days_since": 67
+      "days_since": 68
     },
     {
       "name": "Aungba",
       "province": "Ituri",
       "last_case_date": "2026-08-20",
-      "days_since": 18
+      "days_since": 19
     },
     {
       "name": "Mambasa",
       "province": "Ituri",
       "last_case_date": "2026-08-25",
-      "days_since": 13
+      "days_since": 14
     },
     {
       "name": "Aru",
       "province": "Ituri",
       "last_case_date": "2026-08-28",
-      "days_since": 10
+      "days_since": 11
     },
     {
       "name": "Rimba",
       "province": "Ituri",
       "last_case_date": "2026-09-01",
-      "days_since": 6
-    },
-    {
-      "name": "Damas",
-      "province": "Ituri",
-      "last_case_date": "2026-09-03",
-      "days_since": 4
+      "days_since": 7
     },
     {
       "name": "Logo",
       "province": "Ituri",
       "last_case_date": "2026-09-04",
-      "days_since": 3
+      "days_since": 4
     },
     {
       "name": "Kilo",
       "province": "Ituri",
       "last_case_date": "2026-09-05",
-      "days_since": 2
+      "days_since": 3
     },
     {
       "name": "Masereka",
       "province": "Nord-Kivu",
       "last_case_date": "2026-09-05",
-      "days_since": 2
+      "days_since": 3
     },
     {
       "name": "Bambu",
       "province": "Ituri",
       "last_case_date": "2026-09-06",
-      "days_since": 1
+      "days_since": 2
     },
     {
       "name": "Fataki",
       "province": "Ituri",
       "last_case_date": "2026-09-06",
-      "days_since": 1
+      "days_since": 2
+    },
+    {
+      "name": "Gety",
+      "province": "Ituri",
+      "last_case_date": "2026-09-06",
+      "days_since": 2
     }
   ],
   "watch_zones": [
     {
       "zone": "Mongbwalu",
       "province": "Ituri",
-      "cum_cases": 638,
-      "cfr": 45.6,
-      "new_24h": 4,
-      "new_7d": 26,
+      "cum_cases": 640,
+      "cfr": 45.8,
+      "new_24h": 2,
+      "new_7d": 25,
       "severity": "RED",
       "reason": "Rapid case acceleration (7d doubling)",
       "action": "Investigate transmission chains and contact-tracing coverage; confirm whether new cases come from already-listed contacts or unlisted chains."
@@ -1519,10 +1519,10 @@
     {
       "zone": "Katwa",
       "province": "Nord-Kivu",
-      "cum_cases": 468,
-      "cfr": 64.5,
-      "new_24h": 11,
-      "new_7d": 64,
+      "cum_cases": 477,
+      "cfr": 63.9,
+      "new_24h": 9,
+      "new_7d": 69,
       "severity": "RED",
       "reason": "High-lethality active transmission",
       "action": "Verify time-to-care and isolation delay; check the community-death ratio and ETC/IPC capacity in this zone."
@@ -1530,9 +1530,9 @@
     {
       "zone": "Butembo",
       "province": "Nord-Kivu",
-      "cum_cases": 211,
-      "cfr": 69.2,
-      "new_24h": 3,
+      "cum_cases": 217,
+      "cfr": 68.2,
+      "new_24h": 6,
       "new_7d": 37,
       "severity": "RED",
       "reason": "High-lethality active transmission",
@@ -1541,10 +1541,10 @@
     {
       "zone": "Beni",
       "province": "Nord-Kivu",
-      "cum_cases": 181,
+      "cum_cases": 185,
       "cfr": 74.6,
-      "new_24h": 5,
-      "new_7d": 40,
+      "new_24h": 4,
+      "new_7d": 39,
       "severity": "RED",
       "reason": "High-lethality active transmission",
       "action": "Verify time-to-care and isolation delay; check the community-death ratio and ETC/IPC capacity in this zone."
@@ -1552,10 +1552,10 @@
     {
       "zone": "Komanda",
       "province": "Ituri",
-      "cum_cases": 117,
-      "cfr": 67.5,
-      "new_24h": 4,
-      "new_7d": 30,
+      "cum_cases": 118,
+      "cfr": 67.8,
+      "new_24h": 1,
+      "new_7d": 26,
       "severity": "RED",
       "reason": "High-lethality active transmission",
       "action": "Verify time-to-care and isolation delay; check the community-death ratio and ETC/IPC capacity in this zone."
@@ -1563,10 +1563,10 @@
     {
       "zone": "Tchomia",
       "province": "Ituri",
-      "cum_cases": 62,
-      "cfr": 40.3,
-      "new_24h": 2,
-      "new_7d": 5,
+      "cum_cases": 63,
+      "cfr": 39.7,
+      "new_24h": 1,
+      "new_7d": 6,
       "severity": "RED",
       "reason": "Rapid case acceleration (7d doubling)",
       "action": "Investigate transmission chains and contact-tracing coverage; confirm whether new cases come from already-listed contacts or unlisted chains."
@@ -1574,76 +1574,43 @@
     {
       "zone": "Damas",
       "province": "Ituri",
-      "cum_cases": 30,
-      "cfr": 30,
-      "new_24h": 0,
-      "new_7d": 2,
+      "cum_cases": 32,
+      "cfr": 28.1,
+      "new_24h": 2,
+      "new_7d": 4,
       "severity": "RED",
       "reason": "Rapid case acceleration (7d doubling)",
       "action": "Investigate transmission chains and contact-tracing coverage; confirm whether new cases come from already-listed contacts or unlisted chains."
     },
     {
-      "zone": "Kalunguta",
+      "zone": "Kyondo",
       "province": "Nord-Kivu",
-      "cum_cases": 18,
-      "cfr": 50,
-      "new_24h": 0,
-      "new_7d": 2,
-      "severity": "RED",
-      "reason": "Rapid case acceleration (7d doubling)",
-      "action": "Investigate transmission chains and contact-tracing coverage; confirm whether new cases come from already-listed contacts or unlisted chains."
-    },
-    {
-      "zone": "Masereka",
-      "province": "Nord-Kivu",
-      "cum_cases": 15,
-      "cfr": 40,
-      "new_24h": 0,
-      "new_7d": 6,
-      "severity": "RED",
-      "reason": "Rapid case acceleration (7d doubling)",
-      "action": "Investigate transmission chains and contact-tracing coverage; confirm whether new cases come from already-listed contacts or unlisted chains."
-    },
-    {
-      "zone": "Mabalako",
-      "province": "Nord-Kivu",
-      "cum_cases": 10,
-      "cfr": 70,
-      "new_24h": 0,
-      "new_7d": 5,
-      "severity": "RED",
-      "reason": "Rapid case acceleration (7d doubling)",
-      "action": "Investigate transmission chains and contact-tracing coverage; confirm whether new cases come from already-listed contacts or unlisted chains."
-    },
-    {
-      "zone": "Vuhovi",
-      "province": "Nord-Kivu",
-      "cum_cases": 8,
-      "cfr": 50,
-      "new_24h": 1,
-      "new_7d": 2,
+      "cum_cases": 25,
+      "cfr": 68,
+      "new_24h": 2,
+      "new_7d": 9,
       "severity": "RED",
       "reason": "High-lethality active transmission",
       "action": "Verify time-to-care and isolation delay; check the community-death ratio and ETC/IPC capacity in this zone."
     },
     {
-      "zone": "Manguredjipa",
+      "zone": "Vuhovi",
       "province": "Nord-Kivu",
-      "cum_cases": 4,
-      "cfr": 75,
-      "new_24h": 1,
-      "new_7d": 3,
+      "cum_cases": 10,
+      "cfr": 50,
+      "new_24h": 2,
+      "new_7d": 4,
       "severity": "RED",
-      "reason": "High-lethality active transmission",
+      "reason": "High-lethality active transmission; Rapid case acceleration (7d doubling)",
       "action": "Verify time-to-care and isolation delay; check the community-death ratio and ETC/IPC capacity in this zone."
     },
     {
       "zone": "Mangala",
       "province": "Ituri",
-      "cum_cases": 295,
-      "cfr": 47.8,
-      "new_24h": 5,
-      "new_7d": 38,
+      "cum_cases": 297,
+      "cfr": 47.5,
+      "new_24h": 2,
+      "new_7d": 34,
       "severity": "ORANGE",
       "reason": "Sustained high lethality",
       "action": "Monitor; confirm case-management capacity is not saturated in this zone."
@@ -1651,21 +1618,21 @@
     {
       "zone": "Lita",
       "province": "Ituri",
-      "cum_cases": 245,
-      "cfr": 49.8,
-      "new_24h": 3,
-      "new_7d": 25,
+      "cum_cases": 247,
+      "cfr": 49.4,
+      "new_24h": 2,
+      "new_7d": 23,
       "severity": "ORANGE",
       "reason": "Sustained high lethality",
       "action": "Monitor; confirm case-management capacity is not saturated in this zone."
     },
     {
-      "zone": "Kyondo",
+      "zone": "Kalunguta",
       "province": "Nord-Kivu",
-      "cum_cases": 23,
-      "cfr": 65.2,
-      "new_24h": 0,
-      "new_7d": 7,
+      "cum_cases": 20,
+      "cfr": 45,
+      "new_24h": 2,
+      "new_7d": 4,
       "severity": "ORANGE",
       "reason": "Sustained high lethality",
       "action": "Monitor; confirm case-management capacity is not saturated in this zone."
@@ -1682,12 +1649,34 @@
       "action": "Monitor; confirm case-management capacity is not saturated in this zone."
     },
     {
+      "zone": "Masereka",
+      "province": "Nord-Kivu",
+      "cum_cases": 15,
+      "cfr": 40,
+      "new_24h": 0,
+      "new_7d": 4,
+      "severity": "ORANGE",
+      "reason": "Sustained high lethality",
+      "action": "Monitor; confirm case-management capacity is not saturated in this zone."
+    },
+    {
       "zone": "Aungba",
       "province": "Ituri",
       "cum_cases": 12,
       "cfr": 41.7,
       "new_24h": 0,
       "new_7d": 0,
+      "severity": "ORANGE",
+      "reason": "Sustained high lethality",
+      "action": "Monitor; confirm case-management capacity is not saturated in this zone."
+    },
+    {
+      "zone": "Mabalako",
+      "province": "Nord-Kivu",
+      "cum_cases": 10,
+      "cfr": 70,
+      "new_24h": 0,
+      "new_7d": 4,
       "severity": "ORANGE",
       "reason": "Sustained high lethality",
       "action": "Monitor; confirm case-management capacity is not saturated in this zone."
@@ -1759,8 +1748,8 @@
     },
     {
       "k": "Repartition par province",
-      "v": "ecart 10.9%",
-      "rule": "La somme des cumuls par province (6,023) ne correspond pas exactement au total national (6,757) -- ecart de 10.9%. La ventilation par province extraite des SitReps est probablement incomplete pour certaines lignes ; ne pas sur-interpreter de petits ecarts entre provinces.",
+      "v": "ecart 9.7%",
+      "rule": "La somme des cumuls par province (6,100) ne correspond pas exactement au total national (6,757) -- ecart de 9.7%. La ventilation par province extraite des SitReps est probablement incomplete pour certaines lignes ; ne pas sur-interpreter de petits ecarts entre provinces.",
       "level": "warn",
       "detected_on": "2026-09-10"
     },
@@ -1809,11 +1798,11 @@
     {
       "name": "Daily indicators",
       "cadence": "Daily",
-      "last": "2026-09-07",
+      "last": "2026-09-08",
       "detail": "Province/zone"
     }
   ],
-  "highlights": ["71 new confirmed cases in the latest report; 7-day average 78/day (+50% vs. the prior 7 days).", "Cumulative cases doubling approximately every 21.6 days (trailing 14-day growth).", "Case-fatality ratio 48.3% (provisional); 68 recovered, 25 in isolation.", "51 health zones affected across 3 provinces.", "Operational watch: 12 zone(s) RED, 5 ORANGE for priority verification."],
+  "highlights": ["71 new confirmed cases in the latest report; 7-day average 78/day (+50% vs. the prior 7 days).", "Cumulative cases doubling approximately every 21.6 days (trailing 14-day growth).", "Case-fatality ratio 48.3% (provisional); 68 recovered, 25 in isolation.", "51 health zones affected across 3 provinces.", "Operational watch: 9 zone(s) RED, 7 ORANGE for priority verification."],
   "manual": {
     "beds": {},
     "bed_sites": [],
@@ -1827,7 +1816,8 @@
     "ipc_hcw": {},
     "eds": {},
     "special_populations": {},
-    "line_list_rt": {}
+    "line_list_rt": {},
+    "last_manual_update": null
   },
   "diagnostics": {
     "build_version": "v5.0-auto",
