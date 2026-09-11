@@ -993,3 +993,6 @@
 "117","cumulative_confirmed_cases","cases","6757","cloud_inrb_daily","observed","inrb_validated","1"
 "117","cumulative_deaths","deaths","3267","cloud_inrb_daily","observed","inrb_validated","1"
 "117","case_fatality_ratio","deaths","48.3","cloud_inrb_daily","observed","inrb_validated","1"
+"118","cumulative_confirmed_cases","cases","6843","cloud_inrb_daily","observed","inrb_validated","1"
+"118","cumulative_deaths","deaths","3310","cloud_inrb_daily","observed","inrb_validated","1"
+"118","case_fatality_ratio","deaths","48.4","cloud_inrb_daily","observed","inrb_validated","1"
