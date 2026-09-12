@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-12T12:32:41Z",
+  "generated_at": "2026-09-12T12:48:44Z",
   "asof": "2026-09-04",
   "sitrep": "119",
   "sitrep_date": "2026-09-04",
@@ -1756,9 +1756,9 @@
     },
     {
       "k": "Reference INRB",
-      "v": "89 SitReps de retard",
-      "rule": "La reference nationale INRB utilisee pour la contre-validation independante des cumuls n'a plus ete mise a jour depuis le SitRep 30 (2026-06-13) -- 89 SitReps plus tard, les cumuls officiels ne sont plus contre-verifies (validation = 'no_ref').",
-      "level": "bad",
+      "v": "6 SitReps de retard",
+      "rule": "La reference nationale INRB utilisee pour la contre-validation independante des cumuls n'a plus ete mise a jour depuis le SitRep 113 (2026-09-04) -- 6 SitReps plus tard, les cumuls officiels ne sont plus contre-verifies (validation = 'no_ref').",
+      "level": "warn",
       "detected_on": "2026-09-12"
     },
     {
@@ -1828,7 +1828,7 @@
     {
       "name": "INRB reference",
       "cadence": "Daily",
-      "last": "2026-06-13",
+      "last": "2026-09-04",
       "detail": "Reference nationale"
     },
     {
