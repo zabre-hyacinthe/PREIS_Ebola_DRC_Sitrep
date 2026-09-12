@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-09-12T09:02:42Z",
-  "asof": "2026-08-03",
+  "generated_at": "2026-09-12T10:02:21Z",
+  "asof": "2026-09-04",
   "sitrep": "119",
-  "sitrep_date": "2026-08-03",
+  "sitrep_date": "2026-09-04",
   "kpi": {
     "cases": 6942,
     "deaths": 3349,
     "cfr": 48.2,
     "new": 99,
     "ma7": 85.3,
-    "doubling": 21.6,
+    "doubling": 53.9,
     "growth7": -12,
     "recovered": 68,
     "isolation": 25,
@@ -505,193 +505,193 @@
       "cum": 3874
     },
     {
-      "d": "2026-08-03",
+      "d": "2026-08-04",
       "nc": 99,
       "ma7": 75,
       "cum": 3973
     },
     {
-      "d": "2026-08-03",
+      "d": "2026-08-05",
       "nc": 0,
       "ma7": 57,
       "cum": 3973
     },
     {
-      "d": "2026-08-03",
+      "d": "2026-08-07",
       "nc": null,
       "ma7": 49.5,
       "cum": 3973
     },
     {
-      "d": "2026-08-03",
+      "d": "2026-08-11",
       "nc": null,
       "ma7": 0,
       "cum": 4449
     },
     {
-      "d": "2026-08-03",
+      "d": "2026-08-12",
       "nc": 117,
       "ma7": 117,
       "cum": 4566
     },
     {
-      "d": "2026-08-03",
+      "d": "2026-08-13",
       "nc": 0,
       "ma7": 58.5,
       "cum": 4566
     },
     {
-      "d": "2026-08-03",
+      "d": "2026-08-14",
       "nc": 0,
       "ma7": 39,
       "cum": 4566
     },
     {
-      "d": "2026-08-03",
+      "d": "2026-08-15",
       "nc": 379,
       "ma7": 126.33,
       "cum": 4945
     },
     {
-      "d": "2026-08-03",
+      "d": "2026-08-16",
       "nc": 0,
       "ma7": 126.33,
       "cum": 4945
     },
     {
-      "d": "2026-08-03",
+      "d": "2026-08-18",
       "nc": null,
       "ma7": 189.5,
       "cum": 5105
     },
     {
-      "d": "2026-08-03",
+      "d": "2026-08-19",
       "nc": 0,
       "ma7": 0,
       "cum": 5105
     },
     {
-      "d": "2026-08-03",
+      "d": "2026-08-20",
       "nc": 185,
       "ma7": 92.5,
       "cum": 5290
     },
     {
-      "d": "2026-08-03",
+      "d": "2026-08-21",
       "nc": 85,
       "ma7": 90,
       "cum": 5375
     },
     {
-      "d": "2026-08-03",
+      "d": "2026-08-22",
       "nc": 0,
       "ma7": 90,
       "cum": 5375
     },
     {
-      "d": "2026-08-03",
+      "d": "2026-08-23",
       "nc": 139,
       "ma7": 74.67,
       "cum": 5514
     },
     {
-      "d": "2026-08-03",
+      "d": "2026-08-24",
       "nc": 0,
       "ma7": 46.33,
       "cum": 5514
     },
     {
-      "d": "2026-08-03",
+      "d": "2026-08-25",
       "nc": 0,
       "ma7": 46.33,
       "cum": 5514
     },
     {
-      "d": "2026-08-03",
+      "d": "2026-08-26",
       "nc": 199,
       "ma7": 66.33,
       "cum": 5713
     },
     {
-      "d": "2026-08-03",
+      "d": "2026-08-27",
       "nc": 81,
       "ma7": 93.33,
       "cum": 5794
     },
     {
-      "d": "2026-08-03",
+      "d": "2026-08-28",
       "nc": 0,
       "ma7": 93.33,
       "cum": 5794
     },
     {
-      "d": "2026-08-03",
+      "d": "2026-08-29",
       "nc": 151,
       "ma7": 77.33,
       "cum": 5945
     },
     {
-      "d": "2026-08-03",
+      "d": "2026-08-30",
       "nc": 0,
       "ma7": 50.33,
       "cum": 5945
     },
     {
-      "d": "2026-08-03",
+      "d": "2026-08-31",
       "nc": 155,
       "ma7": 102,
       "cum": 6100
     },
     {
-      "d": "2026-08-03",
+      "d": "2026-09-01",
       "nc": 86,
       "ma7": 80.33,
       "cum": 6186
     },
     {
-      "d": "2026-08-03",
+      "d": "2026-09-02",
       "nc": 64,
       "ma7": 101.67,
       "cum": 6250
     },
     {
-      "d": "2026-08-03",
+      "d": "2026-09-03",
       "nc": 92,
       "ma7": 80.67,
       "cum": 6342
     },
     {
-      "d": "2026-08-03",
+      "d": "2026-09-04",
       "nc": 94,
       "ma7": 83.33,
       "cum": 6436
     },
     {
-      "d": "2026-08-03",
+      "d": "2026-09-04",
       "nc": 86,
       "ma7": 90.67,
       "cum": 6522
     },
     {
-      "d": "2026-08-03",
+      "d": "2026-09-04",
       "nc": null,
       "ma7": 90,
       "cum": 6686
     },
     {
-      "d": "2026-08-03",
+      "d": "2026-09-04",
       "nc": 71,
       "ma7": 78.5,
       "cum": 6757
     },
     {
-      "d": "2026-08-03",
+      "d": "2026-09-04",
       "nc": 86,
       "ma7": 78.5,
       "cum": 6843
     },
     {
-      "d": "2026-08-03",
+      "d": "2026-09-04",
       "nc": 99,
       "ma7": 85.33,
       "cum": 6942
@@ -1746,8 +1746,8 @@
     },
     {
       "k": "Fraicheur pipeline",
-      "v": "40 j depuis SitRep 119",
-      "rule": "Aucun nouveau SitRep detecte depuis 40 jours -- verifier le cron GitHub Actions (habituellement ~quotidien).",
+      "v": "8 j depuis SitRep 119",
+      "rule": "Aucun nouveau SitRep detecte depuis 8 jours -- verifier le cron GitHub Actions (habituellement ~quotidien).",
       "level": "bad",
       "detected_on": "2026-09-12"
     },
@@ -1798,7 +1798,7 @@
     {
       "name": "SitRep (INSP)",
       "cadence": "Per report",
-      "last": "2026-08-03",
+      "last": "2026-09-04",
       "detail": "N°119"
     },
     {
@@ -1814,7 +1814,7 @@
       "detail": "Province/zone"
     }
   ],
-  "highlights": ["99 new confirmed cases in the latest report; 7-day average 85/day (-12% vs. the prior 7 days).", "Cumulative cases doubling approximately every 21.6 days (trailing 14-day growth).", "Case-fatality ratio 48.2% (provisional); 68 recovered, 25 in isolation.", "51 health zones affected across 3 provinces.", "Operational watch: 10 zone(s) RED, 6 ORANGE for priority verification."],
+  "highlights": ["99 new confirmed cases in the latest report; 7-day average 85/day (-12% vs. the prior 7 days).", "Cumulative cases doubling approximately every 53.9 days (trailing 14-day growth).", "Case-fatality ratio 48.2% (provisional); 68 recovered, 25 in isolation.", "51 health zones affected across 3 provinces.", "Operational watch: 10 zone(s) RED, 6 ORANGE for priority verification."],
   "manual": {
     "beds": {},
     "bed_sites": [],
@@ -1828,7 +1828,8 @@
     "ipc_hcw": {},
     "eds": {},
     "special_populations": {},
-    "line_list_rt": {}
+    "line_list_rt": {},
+    "last_manual_update": null
   },
   "diagnostics": {
     "build_version": "v5.0-auto",
