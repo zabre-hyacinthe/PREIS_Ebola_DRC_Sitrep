@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-12T10:02:21Z",
+  "generated_at": "2026-09-12T11:02:43Z",
   "asof": "2026-09-04",
   "sitrep": "119",
   "sitrep_date": "2026-09-04",
@@ -23,6 +23,7 @@
     "alerts_investigated": 170,
     "investigation_rate": 88.5,
     "contacts_followed": 92,
+    "contacts_listed": 78,
     "suspects": 136,
     "samples_analyzed": 132,
     "lab_positivity": 30.3,
@@ -37,6 +38,7 @@
       "alerts_investigated": 17,
       "investigation_rate": 17,
       "contacts_followed": 61,
+      "contacts_listed": 81,
       "suspects": 30,
       "samples_analyzed": 48,
       "lab_positivity": 18,
@@ -50,6 +52,7 @@
       "alerts_investigated": 102,
       "investigation_rate": 102,
       "contacts_followed": 58,
+      "contacts_listed": 38,
       "suspects": 89,
       "samples_analyzed": 71,
       "lab_positivity": 101,
@@ -1766,6 +1769,13 @@
       "detected_on": "2026-09-12"
     },
     {
+      "k": "Source cumuls nationaux",
+      "v": "cloud_inrb_daily vs PDF SitRep officiel",
+      "rule": "Les cumuls nationaux de ce tableau de bord proviennent d'un sync cloud INRB continu (cloud_inrb_daily), pas d'une extraction directe du PDF SitRep publie. Verification manuelle ponctuelle le 2026-09-06 : le PDF officiel N113/MVEBDB/04-09-2026 indique 6522 cas / 3134 deces, contre 6436/3095 ici pour la meme date -- ecart ~1.3%, non reconcilie. A traiter comme deux sources independantes tant que non rapproche.",
+      "level": "warn",
+      "detected_on": "2026-09-06"
+    },
+    {
       "k": "Operational watch",
       "v": "Mongbwalu",
       "rule": "Mongbwalu (Ituri): Rapid case acceleration (7d doubling). Investigate transmission chains and contact-tracing coverage; confirm whether new cases come from already-listed contacts or unlisted chains.",
@@ -1784,6 +1794,20 @@
       "v": "Butembo",
       "rule": "Butembo (Nord-Kivu): High-lethality active transmission. Verify time-to-care and isolation delay; check the community-death ratio and ETC/IPC capacity in this zone.",
       "level": "bad",
+      "detected_on": "2026-09-12"
+    },
+    {
+      "k": "Zones par province",
+      "v": "Ituri",
+      "rule": "Ituri : 28 zones extraites du texte SitRep 81 vs 20 calculees depuis le detail par zone (SitRep 119). Ecart possible du a un decalage temporel entre les deux extractions ou a une zone frontaliere reclassee.",
+      "level": "info",
+      "detected_on": "2026-09-12"
+    },
+    {
+      "k": "Zones par province",
+      "v": "Nord-Kivu",
+      "rule": "Nord-Kivu : 12 zones extraites du texte SitRep 81 vs 11 calculees depuis le detail par zone (SitRep 119). Ecart possible du a un decalage temporel entre les deux extractions ou a une zone frontaliere reclassee.",
+      "level": "info",
       "detected_on": "2026-09-12"
     },
     {
@@ -1816,19 +1840,19 @@
   ],
   "highlights": ["99 new confirmed cases in the latest report; 7-day average 85/day (-12% vs. the prior 7 days).", "Cumulative cases doubling approximately every 53.9 days (trailing 14-day growth).", "Case-fatality ratio 48.2% (provisional); 68 recovered, 25 in isolation.", "51 health zones affected across 3 provinces.", "Operational watch: 10 zone(s) RED, 6 ORANGE for priority verification."],
   "manual": {
-    "beds": {},
+    "beds": null,
     "bed_sites": [],
     "events": [],
-    "onehealth": {},
+    "onehealth": null,
     "correlation": [],
     "new_areas": [],
-    "detection_delay": {},
-    "contacts_by_province": {},
-    "poe": {},
-    "ipc_hcw": {},
-    "eds": {},
-    "special_populations": {},
-    "line_list_rt": {},
+    "detection_delay": null,
+    "contacts_by_province": null,
+    "poe": null,
+    "ipc_hcw": null,
+    "eds": null,
+    "special_populations": null,
+    "line_list_rt": null,
     "last_manual_update": null
   },
   "diagnostics": {
