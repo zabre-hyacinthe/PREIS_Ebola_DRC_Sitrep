@@ -228,6 +228,18 @@ jobs:
         run: |
           Rscript --vanilla scripts/03_analyse_consolidee.R || echo "03_analyse_consolidee.R en erreur"
 
+      # AJOUT 2026-09-12 : reference INRB independante (validation croisee des
+      # cumuls nationaux). Doit tourner APRES 03_analyse_consolidee.R (elle lit
+      # outputs/analyse/serie_temporelle_nationale.csv pour le mapping SitRep<->date)
+      # et AVANT 16_generate_situation_room_data.R (qui lit son fichier de sortie
+      # pour le badge "INRB reference"). continue-on-error : une source externe
+      # indisponible ne doit pas casser le reste du pipeline.
+      - name: Reference INRB (validation croisee)
+        if: always()
+        continue-on-error: true
+        run: |
+          Rscript --vanilla scripts/02_fetch_inrb_reference_data.R || echo "02_fetch_inrb_reference_data.R en erreur"
+
       - name: Generer les donnees Situation Room EOC
         if: always()
         continue-on-error: true
@@ -316,6 +328,7 @@ jobs:
           git add data/final/PREIS_signals_text.txt || true
           git add data/final/PREIS_validation_signals.csv || true
           git add data/final/PREIS_validation_vs_INRB.csv || true
+          git add data/final/INRB_reference_national.csv || true
           git add data/final/sitrep_registry.csv || true
           git add outputs/analyse/serie_temporelle_nationale.csv || true
           git add outputs/analyse/tableau_zones_sante.csv || true
