@@ -73,7 +73,14 @@ sitrep_dates <- tibble::tribble(
   22,"2026-06-05",23,"2026-06-06",24,"2026-06-07",25,"2026-06-08",
   26,"2026-06-09",27,"2026-06-10",28,"2026-06-11",29,"2026-06-12",
   30,"2026-06-13",31,"2026-06-14",32,"2026-06-15",33,"2026-06-16",
-  34,"2026-06-17",35,"2026-06-18"
+  34,"2026-06-17",35,"2026-06-18",
+  # ---- Point d'ancrage ajoute le 2026-09-06 : SEULE date verifiee au-dela
+  # de la table ci-dessus. Source : capture d'ecran de la page de garde
+  # officielle du SitRep N113/MVEBDB/04/09/2026 fournie directement par
+  # l'utilisateur (pas une extraction automatique, pas une estimation).
+  # Corrige le bug ou stats::approx(rule=2) repetait indefiniment le
+  # 2026-08-03 (derniere date du registre) pour tous les SitReps 82-113.
+  113,"2026-09-04"
 ) %>% dplyr::mutate(date = as.Date(date))
 ## ---- PREIS PATCH SERIE DATES+CLEAN v3 (auto) : dates registry ----
 .reg_fp_dates <- file.path(DATA_FINAL, 'sitrep_registry.csv')
@@ -185,12 +192,34 @@ for (.i in seq_len(nrow(wide))) {
 if (length(.drop) > 0) cat('   [PATCH] SitRep ecartes (cumul non-monotone):', paste(.drop, collapse = ', '), '\n')
 wide <- wide[.ok, , drop = FALSE]
 ## dates manquantes comblees par interpolation sur sitrep_no
+## CORRECTIF 2026-09-06 : rule=2 (extrapolation constante) repetait la
+## derniere date connue pour TOUT sitrep_no au-dela du dernier point
+## connu (bug confirme : 32 SitReps 82-113 tous dates "2026-08-03").
+## Avec l'ancrage 113 ajoute ci-dessus, ces entrees sont maintenant de
+## l'interpolation (entre 2 points reels) et non plus de l'extrapolation
+## (repetition indefinie) -- mais on garde le garde-fou explicite pour
+## la prochaine fois que le registre prendra du retard.
+wide$date_quality <- ifelse(!is.na(wide$date), "observed", NA_character_)
 if (any(is.na(wide$date)) && sum(!is.na(wide$date)) >= 2) {
   .kn <- !is.na(wide$date)
+  .xmin <- min(wide$sitrep_no[.kn]); .xmax <- max(wide$sitrep_no[.kn])
   .y <- stats::approx(x = wide$sitrep_no[.kn], y = as.numeric(wide$date[.kn]),
                       xout = wide$sitrep_no, rule = 2)$y
+  .was_na <- is.na(wide$date)
   wide$date <- as.Date(round(.y), origin = '1970-01-01')
-  cat('   [PATCH] dates manquantes comblees par interpolation\n')
+  # Interpolation = comble entre 2 points reels (fiable) ; extrapolation =
+  # au-dela du dernier point reel connu (repete une valeur, a signaler).
+  .extrap <- .was_na & (wide$sitrep_no < .xmin | wide$sitrep_no > .xmax)
+  .interp <- .was_na & !.extrap
+  wide$date_quality[.interp] <- "interpolated"
+  wide$date_quality[.extrap] <- "extrapolated_unreliable"
+  cat('   [PATCH] dates manquantes comblees par interpolation (',
+      sum(.interp), 'interpolees,', sum(.extrap), 'extrapolees )\n')
+  if (any(.extrap)) {
+    cat('   [ATTENTION] SitRep au-dela du dernier point de reference connu (date repetee, non fiable) :',
+        paste(wide$sitrep_no[.extrap], collapse = ', '), '\n')
+    cat('   -> Le registre (sitrep_registry.csv) doit etre mis a jour avec des SitReps plus recents.\n')
+  }
 }
 ## CFR complete par 100*deces/cas quand absent (definition standard)
 wide <- wide %>% dplyr::mutate(
