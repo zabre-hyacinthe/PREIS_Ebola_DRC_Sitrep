@@ -17,8 +17,19 @@
 ## ============================================================
 
 # Bornes d'un numéro de SitRep réaliste
+# CORRECTIF 2026-09-06 : la borne haute était fixee a 60 tot dans
+# l'epidemie ("borne realiste" a l'epoque). L'epidemie a depasse ce
+# seuil depuis des semaines (SitRep 113 confirme le 04/09/2026) --
+# chaque numero au-dela de 60 etait donc rejete par cette validation
+# et traite comme "non identifiable". C'est la cause racine confirmee
+# du blocage : le pipeline ne reconnaissait plus aucun SitRep recent.
+# 400 plutot qu'une valeur illimitee : garde la protection contre le
+# faux positif historique documente dans l'auto-test ci-dessous (752,
+# vraisemblablement un numero de visa mal interprete comme un SitRep),
+# tout en laissant une marge tres large (plus d'un an de rapports
+# quotidiens) au-dela du 113 actuel.
 SITREP_MIN <- 1L
-SITREP_MAX <- 60L
+SITREP_MAX <- 400L
 
 # Année de l'épidémie en cours (pour le nommage canonique)
 SITREP_YEAR <- 2026L
@@ -36,9 +47,9 @@ sitrep_no_from_filename <- function(path) {
 
   # Patterns du plus strict au plus souple
   patterns <- c(
-    "sitrep[_ -]*0*([0-9]{1,2})[_ -]*2026",        # SitRep_28_2026.pdf
-    "sitrep[_ -]*n?[\u00b0\u00ba o]*0*([0-9]{1,2})", # sitrep n28 / sitrep-28
-    "sitrep[^0-9]{0,6}0*([0-9]{1,2})"              # 'sitrep' puis nombre proche
+    "sitrep[_ -]*0*([0-9]{1,3})[_ -]*2026",        # SitRep_28_2026.pdf
+    "sitrep[_ -]*n?[\u00b0\u00ba o]*0*([0-9]{1,3})", # sitrep n28 / sitrep-28
+    "sitrep[^0-9]{0,12}0*([0-9]{1,3})"              # 'sitrep' puis nombre proche (ex: SitRep_MVEBDB_109_...)
   )
   for (p in patterns) {
     m <- regmatches(b, regexec(p, b, perl = TRUE))[[1]]
@@ -63,9 +74,9 @@ sitrep_no_from_web <- function(text) {
   if (!grepl("mvb|mve|ebola|bundibugyo", t)) return(NA_integer_)
 
   patterns <- c(
-    "sitrep[ _-]*n[\u00b0\u00ba o]*0*([0-9]{1,2})",  # SitRep N°28
-    "sitrep[ _-]*0*([0-9]{1,2})",                     # SitRep 28
-    "n[\u00b0\u00ba]\\s*0*([0-9]{1,2})"               # N°28 (avec sitrep déjà confirmé)
+    "sitrep[ _-]*n[\u00b0\u00ba o]*0*([0-9]{1,3})",  # SitRep N°28
+    "sitrep[ _-]*0*([0-9]{1,3})",                     # SitRep 28
+    "n[\u00b0\u00ba]\\s*0*([0-9]{1,3})"               # N°28 (avec sitrep déjà confirmé)
   )
   for (p in patterns) {
     m <- regmatches(t, regexec(p, t, perl = TRUE))[[1]]
