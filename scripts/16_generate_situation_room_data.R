@@ -137,6 +137,7 @@ surv_codes <- list(
   alerts_investigated   = "alerts_investigated",
   investigation_rate    = "alerts_investigation_rate",
   contacts_followed     = "contacts_followed_up",
+  contacts_listed       = "contacts_listed",
   suspects              = "suspected_cases_investigation",
   samples_analyzed      = "samples_analyzed",
   lab_positivity        = "lab_positivity_rate",
@@ -225,6 +226,68 @@ if (nrow(daily) > 0 && !is.na(prov_latest_date)) {
     left_join(hz_per_prov, by = c("name" = "province")) %>%
     mutate(hz = coalesce(hz, 0L)) %>%
     arrange(desc(cum))
+}
+
+# ---- Verification croisee : zones affectees par province -- extraction
+# directe du texte SitRep (hz_affected_ituri/nordkivu/sudkivu) vs compte
+# derive de la fusion des donnees zone-level ci-dessus. Meme logique de
+# transparence que la verification cumuls nationaux plus haut : signale
+# l'ecart au lieu de le masquer, ne remplace pas silencieusement l'un par
+# l'autre.
+hz_prov_codes <- c("Ituri" = "hz_affected_ituri", "Nord-Kivu" = "hz_affected_nordkivu", "Sud-Kivu" = "hz_affected_sudkivu")
+hz_prov_gaps <- tibble()
+if (nrow(provinces_out) > 0) {
+  rows <- purrr::imap(hz_prov_codes, function(code, prov) {
+    off <- latest_indicator(code)
+    if (is.na(off$value)) return(NULL)
+    derived_row <- provinces_out %>% filter(name == prov)
+    if (nrow(derived_row) == 0) return(NULL)
+    tibble(province = prov, official = off$value, official_sitrep = off$sitrep, derived = derived_row$hz[1])
+  })
+  hz_prov_gaps <- dplyr::bind_rows(rows[!vapply(rows, is.null, logical(1))])
+}
+
+# ---- Meme principe pour cas/deces par province (extraction directe vs
+# somme des zones de sante -- deux sources independantes dans le pipeline) ----
+case_prov_codes <- c("Ituri" = "cases_ituri", "Nord-Kivu" = "cases_nordkivu", "Sud-Kivu" = "cases_sudkivu")
+death_prov_codes <- c("Ituri" = "deaths_ituri", "Nord-Kivu" = "deaths_nordkivu", "Sud-Kivu" = "deaths_sudkivu")
+case_prov_gaps <- tibble()
+if (nrow(provinces_out) > 0) {
+  rows <- purrr::imap(case_prov_codes, function(code, prov) {
+    off <- latest_indicator(code)
+    dth <- latest_indicator(death_prov_codes[[prov]])
+    derived_row <- provinces_out %>% filter(name == prov)
+    if (nrow(derived_row) == 0) return(NULL)
+    # N'inclure que si au moins une des deux valeurs officielles est fraiche
+    # (meme SitRep +/- 2 que le national) -- sinon comparer une valeur figee
+    # de mi-parcours au cumul actuel n'a pas de sens et fabriquerait un faux
+    # signal d'ecart.
+    if (is.na(off$value) && is.na(dth$value)) return(NULL)
+    if (!is.na(off$sitrep) && (latest_sitrep_no - off$sitrep) > 5) return(NULL)
+    tibble(province = prov, official_cases = off$value, official_deaths = dth$value,
+           official_sitrep = off$sitrep, derived_cases = derived_row$cum[1], derived_deaths = derived_row$deaths[1])
+  })
+  case_prov_gaps <- dplyr::bind_rows(rows[!vapply(rows, is.null, logical(1))])
+}
+
+province_crosscheck_gaps <- tibble()
+if (nrow(hz_prov_gaps) > 0) {
+  mism <- hz_prov_gaps %>% filter(official != derived)
+  if (nrow(mism) > 0) {
+    province_crosscheck_gaps <- bind_rows(province_crosscheck_gaps, mism %>% rowwise() %>% transmute(
+      k = "Zones par province", v = province,
+      rule = glue("{province} : {official} zones extraites du texte SitRep {official_sitrep} vs {derived} calculees depuis le detail par zone (SitRep {latest_sitrep_no}). Ecart possible du a un decalage temporel entre les deux extractions ou a une zone frontaliere reclassee.") %>% as.character(),
+      level = "info", detected_on = as.character(Sys.Date())))
+  }
+}
+if (nrow(case_prov_gaps) > 0) {
+  mism <- case_prov_gaps %>% filter(!is.na(official_cases) & official_cases != derived_cases)
+  if (nrow(mism) > 0) {
+    province_crosscheck_gaps <- bind_rows(province_crosscheck_gaps, mism %>% rowwise() %>% transmute(
+      k = "Cas par province", v = province,
+      rule = glue("{province} : {fmt(official_cases)} cas extraits du texte SitRep {official_sitrep} vs {fmt(derived_cases)} calcules depuis le detail par zone (SitRep {latest_sitrep_no}) -- deux sources independantes dans le pipeline, pas encore reconciliees.") %>% as.character(),
+      level = "info", detected_on = as.character(Sys.Date())))
+  }
 }
 
 # ---- Zones : fusion de 2 sources plutot que la seule PREIS_daily_indicators.csv ----
@@ -429,9 +492,12 @@ structural_gaps <- tibble::tribble(
       glue("La somme des cumuls par province ({fmt(prov_sum)}) ne correspond pas exactement au total national ({fmt(national_cases)}) -- ecart de {prov_gap_pct}%. La ventilation par province extraite des SitReps est probablement incomplete pour certaines lignes ; ne pas sur-interpreter de petits ecarts entre provinces.")
     else "Coherent avec le total national."),
     if (!is.na(prov_gap_pct) && abs(prov_gap_pct) > 5) "warn" else "info",
-    as.character(Sys.Date())
+    as.character(Sys.Date()),
+  "Source cumuls nationaux", "cloud_inrb_daily vs PDF SitRep officiel",
+    "Les cumuls nationaux de ce tableau de bord proviennent d'un sync cloud INRB continu (cloud_inrb_daily), pas d'une extraction directe du PDF SitRep publie. Verification manuelle ponctuelle le 2026-09-06 : le PDF officiel N113/MVEBDB/04-09-2026 indique 6522 cas / 3134 deces, contre 6436/3095 ici pour la meme date -- ecart ~1.3%, non reconcilie. A traiter comme deux sources independantes tant que non rapproche.",
+    "warn", "2026-09-06"
 )
-gaps_out <- bind_rows(gaps_out, structural_gaps, trend_gaps,
+gaps_out <- bind_rows(gaps_out, structural_gaps, trend_gaps, province_crosscheck_gaps,
   tibble::tibble(k = "CFR reading", v = "small-denominator caveat",
     rule = "Zones with very few cumulative cases can show 100% CFR from a single death -- this is not comparable to a high CFR over a large case count. Always check the case count (shown alongside CFR) before treating a zone as a mortality-review priority.",
     level = "info", detected_on = as.character(Sys.Date())))
@@ -499,8 +565,23 @@ if (file.exists(SR_JSON)) {
   if (!is.null(prev) && !is.null(prev$manual)) {
     # Fusion champ par champ : un champ absent de l'ancien JSON garde son
     # defaut ci-dessus plutot que de disparaitre (cas d'un JSON genere avant
-    # l'ajout de ce champ).
-    for (k in names(prev$manual)) manual_block[[k]] <- prev$manual[[k]]
+    # l'ajout de ce champ). MAIS on ne preserve que des valeurs REELLEMENT
+    # non vides -- un {} JSON (liste vide en R apres fromJSON) ne doit
+    # jamais ecraser le defaut NULL propre, sinon un ancien {} issu d'un
+    # bug de serialisation anterieur se perpetue indefiniment d'une
+    # execution a l'autre (c'est exactement ce qui s'est produit avant
+    # ce correctif : line_list_rt restait {} meme apres avoir corrige
+    # write_json, parce que ce {} etait recopie depuis le JSON precedent
+    # a chaque run).
+    is_meaningful <- function(v) {
+      if (is.null(v)) return(FALSE)
+      if (is.list(v) && length(v) == 0) return(FALSE)
+      TRUE
+    }
+    for (k in names(prev$manual)) {
+      v <- prev$manual[[k]]
+      if (is_meaningful(v)) manual_block[[k]] <- v
+    }
   }
 }
 
