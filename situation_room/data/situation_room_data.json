@@ -1,14 +1,14 @@
 {
-  "generated_at": "2026-09-17T06:03:40Z",
+  "generated_at": "2026-09-17T06:33:06Z",
   "asof": "2026-09-04",
-  "sitrep": "122",
+  "sitrep": "124",
   "sitrep_date": "2026-09-04",
   "kpi": {
-    "cases": 7022,
-    "deaths": 3398,
+    "cases": 7258,
+    "deaths": 3510,
     "cfr": 48.4,
-    "new": 0,
-    "ma7": 49.5,
+    "new": null,
+    "ma7": 0,
     "doubling": 53.9,
     "growth7": -2,
     "recovered": 68,
@@ -48,18 +48,18 @@
       "isolation": 80
     },
     "staleness_sitreps": {
-      "alerts_reported": 72,
-      "alerts_investigated": 105,
-      "investigation_rate": 105,
-      "contacts_followed": 61,
-      "contacts_listed": 41,
-      "suspects": 92,
-      "samples_analyzed": 74,
-      "lab_positivity": 104,
-      "vaccine": 110,
-      "community_deaths": 41,
-      "recovered": 48,
-      "isolation": 42
+      "alerts_reported": 74,
+      "alerts_investigated": 107,
+      "investigation_rate": 107,
+      "contacts_followed": 63,
+      "contacts_listed": 43,
+      "suspects": 94,
+      "samples_analyzed": 76,
+      "lab_positivity": 106,
+      "vaccine": 112,
+      "community_deaths": 43,
+      "recovered": 50,
+      "isolation": 44
     }
   },
   "series": [
@@ -710,6 +710,12 @@
       "nc": 0,
       "ma7": 49.5,
       "cum": 7022
+    },
+    {
+      "d": "2026-09-04",
+      "nc": null,
+      "ma7": 0,
+      "cum": 7258
     }
   ],
   "provinces": [
@@ -1781,22 +1787,22 @@
     },
     {
       "k": "Fraicheur pipeline",
-      "v": "13 j depuis SitRep 122",
+      "v": "13 j depuis SitRep 124",
       "rule": "Aucun nouveau SitRep detecte depuis 13 jours -- verifier le cron GitHub Actions (habituellement ~quotidien).",
       "level": "bad",
       "detected_on": "2026-09-17"
     },
     {
       "k": "Reference INRB",
-      "v": "9 SitReps de retard",
-      "rule": "La reference nationale INRB utilisee pour la contre-validation independante des cumuls n'a plus ete mise a jour depuis le SitRep 113 (2026-09-04) -- 9 SitReps plus tard, les cumuls officiels ne sont plus contre-verifies (validation = 'no_ref').",
-      "level": "warn",
+      "v": "11 SitReps de retard",
+      "rule": "La reference nationale INRB utilisee pour la contre-validation independante des cumuls n'a plus ete mise a jour depuis le SitRep 113 (2026-09-04) -- 11 SitReps plus tard, les cumuls officiels ne sont plus contre-verifies (validation = 'no_ref').",
+      "level": "bad",
       "detected_on": "2026-09-17"
     },
     {
       "k": "Repartition par province",
-      "v": "ecart 8.4%",
-      "rule": "La somme des cumuls par province (6,431) ne correspond pas exactement au total national (7,022) -- ecart de 8.4%. La ventilation par province extraite des SitReps est probablement incomplete pour certaines lignes ; ne pas sur-interpreter de petits ecarts entre provinces.",
+      "v": "ecart 11.4%",
+      "rule": "La somme des cumuls par province (6,431) ne correspond pas exactement au total national (7,258) -- ecart de 11.4%. La ventilation par province extraite des SitReps est probablement incomplete pour certaines lignes ; ne pas sur-interpreter de petits ecarts entre provinces.",
       "level": "warn",
       "detected_on": "2026-09-17"
     },
@@ -1831,14 +1837,14 @@
     {
       "k": "Zones par province",
       "v": "Ituri",
-      "rule": "Ituri : 28 zones extraites du texte SitRep 81 vs 20 calculees depuis le detail par zone (SitRep 122). Ecart possible du a un decalage temporel entre les deux extractions ou a une zone frontaliere reclassee.",
+      "rule": "Ituri : 28 zones extraites du texte SitRep 81 vs 20 calculees depuis le detail par zone (SitRep 124). Ecart possible du a un decalage temporel entre les deux extractions ou a une zone frontaliere reclassee.",
       "level": "info",
       "detected_on": "2026-09-17"
     },
     {
       "k": "Zones par province",
       "v": "Nord-Kivu",
-      "rule": "Nord-Kivu : 12 zones extraites du texte SitRep 81 vs 11 calculees depuis le detail par zone (SitRep 122). Ecart possible du a un decalage temporel entre les deux extractions ou a une zone frontaliere reclassee.",
+      "rule": "Nord-Kivu : 12 zones extraites du texte SitRep 81 vs 11 calculees depuis le detail par zone (SitRep 124). Ecart possible du a un decalage temporel entre les deux extractions ou a une zone frontaliere reclassee.",
       "level": "info",
       "detected_on": "2026-09-17"
     },
@@ -1855,7 +1861,7 @@
       "name": "SitRep (INSP)",
       "cadence": "Per report",
       "last": "2026-09-04",
-      "detail": "N°122"
+      "detail": "N°124"
     },
     {
       "name": "INRB reference",
@@ -1870,7 +1876,7 @@
       "detail": "Province/zone"
     }
   ],
-  "highlights": ["0 new confirmed cases in the latest report; 7-day average 50/day (-2% vs. the prior 7 days).", "Cumulative cases doubling approximately every 53.9 days (trailing 14-day growth).", "Case-fatality ratio 48.4% (provisional); 68 recovered, 25 in isolation.", "51 health zones affected across 3 provinces.", "Operational watch: 9 zone(s) RED, 8 ORANGE for priority verification."],
+  "highlights": ["— new confirmed cases in the latest report; 7-day average 0/day (-2% vs. the prior 7 days).", "Cumulative cases doubling approximately every 53.9 days (trailing 14-day growth).", "Case-fatality ratio 48.4% (provisional); 68 recovered, 25 in isolation.", "51 health zones affected across 3 provinces.", "Operational watch: 9 zone(s) RED, 8 ORANGE for priority verification."],
   "manual": {
     "beds": null,
     "bed_sites": [],
@@ -1891,7 +1897,7 @@
     "build_version": "v5.0-auto",
     "build_date": "2026-09-17",
     "generator": "scripts/16_generate_situation_room_data.R",
-    "latest_sitrep_no": 122,
+    "latest_sitrep_no": 124,
     "zones_missing_coords": ["Adja", "Ariwara", "Bafwasende", "Biena", "Boga", "Boma Mangbetu", "Bulu", "Buta", "Drodro", "Ganga", "Gombari", "Isiro", "Kabondo", "Kayna", "Lolwa", "Lubero", "Lubunga", "Mahagi", "Makiso-Kisangani", "Mandima", "Mangobo", "Musienene", "Mutwanga", "Nia-Nia", "Pawa", "Rumba", "Rungu", "Tshopo", "Viadana", "Wamba", "Wanierukula"]
   }
 }
