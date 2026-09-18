@@ -97,16 +97,34 @@ doubling <- compute_doubling(serie)
 # nat_growth_txt dans 06_generate_africa_cdc_sitrep_final.R ("7-day incidence
 # changed by -35% vs. the prior 7 days"), pour que la Situation Room et le
 # supplement SitRep officiel racontent le meme chiffre.
-compute_growth7 <- function(s) {
-  s2 <- s %>% filter(!is.na(nouveaux_cas_calc)) %>% arrange(date)
-  n <- nrow(s2)
-  if (n < 14) return(NA_real_)
-  inc7 <- sum(pmax(tail(s2$nouveaux_cas_calc, 7), 0), na.rm = TRUE)
-  inc7prev <- sum(pmax(s2$nouveaux_cas_calc[(n - 13):(n - 7)], 0), na.rm = TRUE)
-  if (inc7prev <= 0) return(NA_real_)
-  round(100 * (inc7 - inc7prev) / inc7prev, 0)
+compute_growth7_generic <- function(s, col, offset = 0) {
+  s2 <- s %>% filter(!is.na(.data[[col]])) %>% arrange(date)
+  n <- nrow(s2) - offset
+  if (n < 14) return(list(sum7 = NA_real_, growth = NA_real_))
+  x <- s2[[col]][seq_len(n)]
+  inc7 <- sum(pmax(tail(x, 7), 0), na.rm = TRUE)
+  inc7prev <- sum(pmax(x[(n - 13):(n - 7)], 0), na.rm = TRUE)
+  g <- if (inc7prev <= 0) NA_real_ else round(100 * (inc7 - inc7prev) / inc7prev, 0)
+  list(sum7 = inc7, growth = g)
 }
-growth7 <- compute_growth7(serie)
+compute_growth7 <- function(s) compute_growth7_generic(s, "nouveaux_cas_calc", 0)$growth
+
+TREND_BAND_PCT <- 10
+classify_trend <- function(s, col) {
+  now  <- compute_growth7_generic(s, col, offset = 0)
+  prev <- compute_growth7_generic(s, col, offset = 7)
+  dir_of <- function(g) {
+    if (is.na(g)) return(NA_character_)
+    if (g > TREND_BAND_PCT) "INCREASING" else if (g < -TREND_BAND_PCT) "DECREASING" else "STABLE"
+  }
+  d_now <- dir_of(now$growth); d_prev <- dir_of(prev$growth)
+  persisted <- !is.na(d_now) && !is.na(d_prev) && d_now == d_prev && d_now != "STABLE"
+  list(sum7 = now$sum7, growth7 = now$growth, direction = d_now,
+       persisted_2_periods = persisted)
+}
+cases_trend  <- classify_trend(serie, "nouveaux_cas_calc")
+deaths_trend <- classify_trend(serie, "nouveaux_deces")
+growth7 <- cases_trend$growth7
 
 series_out <- serie %>%
   filter(!is.na(date)) %>%
@@ -144,7 +162,8 @@ surv_codes <- list(
   vaccine               = "doses_vaccine_administered",
   community_deaths      = "deaths_community",
   recovered             = "recovered",
-  isolation             = "patients_in_isolation"
+  isolation             = "patients_in_isolation",
+  alerts_validated      = "alerts_validated"
 )
 surv_vals <- purrr::map(surv_codes, latest_indicator)
 surv <- purrr::map(surv_vals, "value")
@@ -198,7 +217,8 @@ zone_coords <- tibble::tribble(
   "Goma",         "Nord-Kivu",   -1.679,  29.235,
   "Karisimbi",    "Nord-Kivu",   -1.700,  29.230,
   "Miti-Murhesa", "Sud-Kivu",    -2.350,  28.770,
-  "Jiba",         "Ituri",        2.400,  30.900
+  "Jiba",         "Ituri",        2.400,  30.900,
+  "Bulu",         "Sud-Ubangi",   NA,      NA
 )
 canon_zone <- function(x) {
   x <- str_squish(as.character(x))
@@ -364,6 +384,59 @@ if (nrow(daily) > 0 && !is.na(zone_latest_date)) {
 zones_out <- zones_out %>% left_join(zone_dyn21, by = "name") %>%
   mutate(cases_last21d = coalesce(cases_last21d, 0), deaths_last21d = coalesce(deaths_last21d, 0))
 
+REACTIVATION_DAYS <- 42
+zone_hist_fp <- file.path(DATA_FINAL, "zone_health_history.csv")
+today_str <- as.character(Sys.Date())
+zone_province_lookup <- zone_coords %>% distinct(health_zone, province)
+current_zones <- zones_out %>%
+  mutate(province = zone_province_lookup$province[match(name, zone_province_lookup$health_zone)])
+new_hz_gaps <- tibble(); new_province_gaps <- tibble(); reactivated_gaps <- tibble()
+if (!file.exists(zone_hist_fp)) {
+  zone_hist <- current_zones %>%
+    transmute(health_zone = name, province = coalesce(province, "a verifier"),
+              first_seen = today_str, last_seen = today_str)
+  readr::write_csv(zone_hist, zone_hist_fp)
+  cat("   [NEW_HZ] Historique amorce (", nrow(zone_hist), "zones).\n")
+} else {
+  zone_hist <- readr::read_csv(zone_hist_fp, show_col_types = FALSE,
+    col_types = readr::cols(health_zone = readr::col_character(), province = readr::col_character(),
+                             first_seen = readr::col_character(), last_seen = readr::col_character()))
+  known_provinces <- unique(zone_hist$province[zone_hist$province != "a verifier"])
+  for (i in seq_len(nrow(current_zones))) {
+    hz <- current_zones$name[i]; prov <- coalesce(current_zones$province[i], "a verifier")
+    prior <- zone_hist %>% filter(health_zone == hz)
+    if (nrow(prior) == 0) {
+      new_hz_gaps <- bind_rows(new_hz_gaps, tibble(
+        k = "NEW_HEALTH_ZONE", v = hz,
+        rule = paste0("Zone de sante active pour la premiere fois depuis le debut du suivi (province : ", prov, ")."),
+        level = "warn", detected_on = today_str))
+      if (prov != "a verifier" && !(prov %in% known_provinces)) {
+        new_province_gaps <- bind_rows(new_province_gaps, tibble(
+          k = "NEW_PROVINCE", v = prov,
+          rule = paste0("Premiere zone touchee dans cette province : ", hz, "."),
+          level = "bad", detected_on = today_str))
+        known_provinces <- c(known_provinces, prov)
+      }
+      zone_hist <- bind_rows(zone_hist, tibble(health_zone = hz, province = prov,
+                                                first_seen = today_str, last_seen = today_str))
+    } else {
+      days_silent <- as.integer(as.Date(today_str) - as.Date(prior$last_seen[1]))
+      if (days_silent >= REACTIVATION_DAYS) {
+        reactivated_gaps <- bind_rows(reactivated_gaps, tibble(
+          k = "REACTIVATED_HEALTH_ZONE", v = hz,
+          rule = paste0(hz, " : silencieuse depuis ", days_silent,
+                        " jours (>= 42j, seuil OMS de fin de chaine de transmission), un nouveau cas est signale."),
+          level = "bad", detected_on = today_str))
+      }
+      zone_hist$last_seen[zone_hist$health_zone == hz] <- today_str
+      if (zone_hist$province[zone_hist$health_zone == hz][1] == "a verifier" && prov != "a verifier") {
+        zone_hist$province[zone_hist$health_zone == hz] <- prov
+      }
+    }
+  }
+  readr::write_csv(zone_hist, zone_hist_fp)
+}
+
 # ---- CFR vs cases (scatter) : meme paire de variables que
 # cfr_scatter_plot dans 06_generate_africa_cdc_sitrep_final.R (le supplement
 # SitRep officiel envoye par email) -- reutilisee ici telle quelle pour que
@@ -460,6 +533,12 @@ if (nrow(signals) > 0) {
 days_since_sitrep <- as.integer(Sys.Date() - last_row$date[1])
 inrb_max_sitrep <- if (nrow(inrb_ref) > 0) max(inrb_ref$sitrep_no, na.rm = TRUE) else NA_integer_
 inrb_max_date   <- if (nrow(inrb_ref) > 0) max(inrb_ref$sitrep_date, na.rm = TRUE) else NA
+
+registry_max_sitrep <- if (nrow(registry) > 0) suppressWarnings(max(registry$sitrep_no, na.rm = TRUE)) else NA_integer_
+registry_last_scraped <- if (nrow(registry) > 0 && "scraped_at" %in% names(registry))
+  suppressWarnings(max(as.Date(substr(registry$scraped_at, 1, 10)), na.rm = TRUE)) else NA
+days_since_scrape <- if (!is.na(registry_last_scraped)) as.integer(Sys.Date() - registry_last_scraped) else NA_integer_
+scraper_lag <- if (!is.na(registry_max_sitrep) && !is.na(latest_sitrep_no)) latest_sitrep_no - registry_max_sitrep else NA_integer_
 inrb_lag <- if (!is.na(inrb_max_sitrep)) latest_sitrep_no - inrb_max_sitrep else NA_integer_
 prov_sum <- if (nrow(provinces_out) > 0) sum(provinces_out$cum, na.rm = TRUE) else NA_real_
 national_cases <- last_row$cas_cumules[1]
@@ -481,6 +560,12 @@ structural_gaps <- tibble::tribble(
       "Rythme normal."),
     if (days_since_sitrep > 5) "bad" else if (days_since_sitrep > 3) "warn" else "info",
     as.character(Sys.Date()),
+  "Detection scraper (INSP)", as.character(if (!is.na(scraper_lag)) glue("{scraper_lag} SitRep(s) de retard sur le registre") else "indisponible"),
+    as.character(if (!is.na(scraper_lag) && scraper_lag > 3)
+      glue("Le scraper (08_cloud_sitrep_monitor.R) n'a pas enregistre de nouveau SitRep depuis le N{registry_max_sitrep} ({if(!is.na(days_since_scrape)) glue('{days_since_scrape} jours') else 'date inconnue'}), alors que le numero courant (source cloud) est deja au N{latest_sitrep_no}.")
+    else "Le scraper suit le rythme du numero courant."),
+    if (!is.na(scraper_lag) && scraper_lag > 10) "bad" else if (!is.na(scraper_lag) && scraper_lag > 3) "warn" else "info",
+    as.character(Sys.Date()),
   "Reference INRB", as.character(if (!is.na(inrb_lag)) glue("{inrb_lag} SitReps de retard") else "indisponible"),
     as.character(if (!is.na(inrb_lag) && inrb_lag > 0)
       glue("La reference nationale INRB utilisee pour la contre-validation independante des cumuls n'a plus ete mise a jour depuis le SitRep {inrb_max_sitrep} ({inrb_max_date}) -- {inrb_lag} SitReps plus tard, les cumuls officiels ne sont plus contre-verifies (validation = 'no_ref').")
@@ -498,6 +583,7 @@ structural_gaps <- tibble::tribble(
     "warn", "2026-09-06"
 )
 gaps_out <- bind_rows(gaps_out, structural_gaps, trend_gaps, province_crosscheck_gaps,
+  new_hz_gaps, new_province_gaps, reactivated_gaps,
   tibble::tibble(k = "CFR reading", v = "small-denominator caveat",
     rule = "Zones with very few cumulative cases can show 100% CFR from a single death -- this is not comparable to a high CFR over a large case count. Always check the case count (shown alongside CFR) before treating a zone as a mortality-review priority.",
     level = "info", detected_on = as.character(Sys.Date())))
@@ -518,15 +604,39 @@ sources_out <- tibble::tribble(
 # ------------------------------------------------------------
 # 6. ASSEMBLAGE KPI + HIGHLIGHTS
 # ------------------------------------------------------------
+concentration_top3 <- if (nrow(zones_out) > 0) {
+  total_z <- sum(zones_out$cum, na.rm = TRUE)
+  top3_z  <- sum(head(sort(zones_out$cum, decreasing = TRUE), 3), na.rm = TRUE)
+  if (total_z > 0) round(100 * top3_z / total_z, 0) else NA_real_
+} else NA_real_
+completeness <- if (nrow(serie) > 0) round(100 * sum(!is.na(serie$cfr)) / nrow(serie), 0) else NA_real_
+
 kpi <- list(
   cases = last_row$cas_cumules[1], deaths = last_row$deces_cumules[1],
   cfr = last_row$cfr[1], new = last_row$nouveaux_cas_calc[1] %||% last_row$nouveaux_cas[1],
   ma7 = round(last_row$moy_mobile_cas[1], 1), doubling = doubling, growth7 = growth7,
+  cases_7d = cases_trend$sum7, cases_trend = cases_trend$direction,
+  cases_trend_persisted = cases_trend$persisted_2_periods,
+  deaths_7d = deaths_trend$sum7, deaths_growth7 = deaths_trend$growth7,
+  deaths_trend = deaths_trend$direction,
+  deaths_trend_persisted = deaths_trend$persisted_2_periods,
   recovered = surv$recovered, isolation = surv$isolation,
   hz = latest_indicator("hz_affected_national")$value,
   provinces = if (nrow(provinces_out) > 0) nrow(provinces_out) else NA,
+  concentration = concentration_top3, completeness = completeness,
   beds_occ = NA, beds_deficit = NA   # non automatise -- cf. gaps structurels
 )
+
+cfr_anomaly <- if (!is.na(kpi$cfr) && kpi$cfr > 50) "HIGH" else
+               if (!is.na(kpi$cfr) && kpi$cfr > 40) "WATCH" else NA_character_
+if (!is.na(cfr_anomaly)) {
+  gaps_out <- dplyr::bind_rows(gaps_out, tibble::tibble(
+    k = "CFR_ANOMALY", v = paste0(kpi$cfr, "%"),
+    rule = paste0("CFR soutenue au-dessus de la fourchette historique du virus Bundibugyo ",
+                  "(Ouganda 2007 ~25%, RDC 2012 ~36%). Seuils WATCH>40%/HIGH>50% : PROVISIONAL."),
+    level = if (cfr_anomaly == "HIGH") "bad" else "warn",
+    detected_on = as.character(Sys.Date())))
+}
 
 highlights <- c(
   glue("{fmt(kpi$new)} new confirmed cases in the latest report; 7-day average {fmt(kpi$ma7)}/day{if (!is.na(growth7)) glue(' ({ifelse(growth7>=0,\"+\",\"\")}{growth7}% vs. the prior 7 days)') else ''}.") %>% as.character(),
@@ -586,6 +696,120 @@ if (file.exists(SR_JSON)) {
 }
 
 # ------------------------------------------------------------
+# 7b. TABLEAU DE BORD DES INDICATEURS DE REPONSE (CDC/OMS) -- ajout 2026-09-18
+# Cadre officiel a 5 domaines + cibles, PUBLIE SPECIFIQUEMENT POUR CE FOYER :
+# Kabasele D et al. "Notes from the Field: Characteristics and Monitoring
+# of the 2026 Outbreak of Ebola Disease Caused by Bundibugyo Virus -- DRC,
+# August 2026." MMWR 2026;75:554-556. DOI 10.15585/mmwr.mm7535e1. Construit
+# sur l'experience de l'epidemie RDC 2018 (plan de reponse strategique
+# OMS/RDC). Cibles OFFICIELLES -- rien de PROVISIONAL ici, contrairement a
+# certains seuils de la section signaux.
+#
+# Chaque ligne : valeur calculee SI les donnees sources le permettent,
+# sitrep_no source (traçabilite), et fraicheur -- jamais une valeur
+# inventee pour combler un manque. Plusieurs lignes seront NA aujourd'hui
+# (extraction PDF partiellement cassee, cf. audit_indicateurs_eoc.md) --
+# c'est volontaire et honnete, pas une erreur d'implementation.
+sc_rows <- list()
+# status : "ok" (cible atteinte), "bad" (loin de la cible), "warn" (proche
+# mais pas atteinte), "nodata" (rien a evaluer). target_num/target_dir
+# permettent une comparaison simple ; les cibles composites (ex. ">=20")
+# sont couvertes par higher/lower avec le seuil numerique extrait.
+add_sc <- function(domain, indicator, target, value, unit, sitrep_src,
+                    note = NA_character_, target_num = NA_real_,
+                    target_dir = c(NA, "higher", "lower")) {
+  target_dir <- if (length(target_dir) > 1) NA_character_ else target_dir
+  status <- if (is.na(value) || is.na(target_num) || is.na(target_dir)) "nodata"
+    else if (target_dir == "higher") (if (value >= target_num) "ok" else if (value >= target_num * 0.8) "warn" else "bad")
+    else (if (value <= target_num) "ok" else if (value <= target_num * 1.2) "warn" else "bad")
+  sc_rows[[length(sc_rows) + 1]] <<- tibble::tibble(
+    domain = domain, indicator = indicator, target = target,
+    value = value, unit = unit, status = status,
+    sitrep_src = if (is.null(sitrep_src) || length(sitrep_src) == 0) NA_integer_ else as.integer(sitrep_src),
+    staleness_sitreps = if (is.null(sitrep_src) || length(sitrep_src) == 0 || is.na(sitrep_src)) NA_integer_ else staleness(sitrep_src),
+    note = note
+  )
+}
+# Cumul (cas ou deces) TEL QUE CONNU au SitRep donne -- pas le cumul actuel.
+# Indispensable pour tout ratio dont le numerateur est fige a un ancien
+# SitRep : diviser par le cumul ACTUEL produirait un ratio faux (trop bas,
+# car le denominateur a grossi depuis sans que le numerateur suive).
+cumul_at_sitrep <- function(sr, col) {
+  if (is.na(sr)) return(NA_real_)
+  row <- serie %>% filter(sitrep_no == sr)
+  if (nrow(row) == 0) return(NA_real_)
+  suppressWarnings(as.numeric(row[[col]][1]))
+}
+# Un ratio n'est calcule QUE si numerateur et denominateur viennent du MEME
+# SitRep (verifie le 18/09 : des ratios sur des points differents ont
+# produit des pourcentages impossibles -- 118%, 13200% -- lors du premier
+# test reel de cette section). Sinon : pas de nombre, note explicite.
+same_sitrep_ratio <- function(num_val, num_sr, den_val, den_sr, mult = 100, digits = 1) {
+  if (is.na(num_val) || is.na(den_val) || is.na(num_sr) || is.na(den_sr) || num_sr != den_sr || den_val == 0)
+    return(list(value = NA_real_,
+                note = if (!is.na(num_sr) && !is.na(den_sr) && num_sr != den_sr)
+                  paste0("Non calcule : numerateur (SitRep ", num_sr, ") et denominateur (SitRep ", den_sr,
+                         ") viennent de rapports differents -- un ratio entre points non comparables serait trompeur.")
+                else NA_character_))
+  list(value = round(mult * num_val / den_val, digits), note = NA_character_)
+}
+
+add_sc("Detection des cas", "% alertes investiguees", ">90%",
+       surv$investigation_rate, "%", surv_sitrep$investigation_rate,
+       target_num = 90, target_dir = "higher")
+
+cpc <- same_sitrep_ratio(surv$contacts_listed, surv_sitrep$contacts_listed,
+                          cumul_at_sitrep(surv_sitrep$contacts_listed, "cas_cumules"),
+                          surv_sitrep$contacts_listed, mult = 1, digits = 3)
+cpc_note <- coalesce(cpc$note, "Cadre CDC original : moyenne glissante 3 semaines, non reconstructible ici -- ratio cumule au SitRep source a la place")
+if (!is.na(cpc$value) && cpc$value < 1) {
+  cpc_note <- paste0(cpc_note, " -- valeur inhabituellement basse (contacts_listed=", surv$contacts_listed,
+                      " pour ", cumul_at_sitrep(surv_sitrep$contacts_listed, "cas_cumules"),
+                      " cas cumules a ce SitRep) : a verifier, peut refleter un probleme d'extraction plutot qu'une performance reelle.")
+}
+add_sc("Suivi des contacts", "Contacts identifies / cas (cumule au SitRep source)", ">=20",
+       cpc$value, "contacts/cas", surv_sitrep$contacts_listed, note = cpc_note,
+       target_num = 20, target_dir = "higher")
+
+cf <- same_sitrep_ratio(surv$contacts_followed, surv_sitrep$contacts_followed,
+                         surv$contacts_listed, surv_sitrep$contacts_listed)
+add_sc("Suivi des contacts", "Completude du suivi de contacts", ">95%",
+       cf$value, "%", surv_sitrep$contacts_followed, note = cf$note,
+       target_num = 95, target_dir = "higher")
+add_sc("Suivi des contacts", "% nouveaux cas = contacts deja connus", ">90%",
+       NA_real_, "%", NA_integer_,
+       note = "NOT AVAILABLE FROM SITREP -- absent meme d'une transcription tierce plus detaillee des memes SitReps (verifie 12/09/2026)")
+
+lt <- same_sitrep_ratio(surv$samples_analyzed, surv_sitrep$samples_analyzed,
+                         surv$alerts_validated, surv_sitrep$alerts_validated)
+add_sc("Tests de laboratoire", "% alertes validees testees", ">90%", lt$value, "%",
+       surv_sitrep$samples_analyzed, note = lt$note,
+       target_num = 90, target_dir = "higher")
+add_sc("Tests de laboratoire", "% tests positifs", "0% (plus bas = mieux)",
+       surv$lab_positivity, "%", surv_sitrep$lab_positivity,
+       target_num = 0, target_dir = "lower")
+
+add_sc("Isolement", "% occupation lits ETU", "<80%", kpi$beds_occ, "%", NA_integer_,
+       note = "Non automatise -- aucune source ne produit ce chiffre en continu (gap structurel deja documente)",
+       target_num = 80, target_dir = "lower")
+add_sc("Isolement", "% isole dans les 24h", ">90%", NA_real_, "%", NA_integer_,
+       note = "NOT AVAILABLE FROM SITREP")
+
+de <- same_sitrep_ratio(surv$community_deaths, surv_sitrep$community_deaths,
+                         cumul_at_sitrep(surv_sitrep$community_deaths, "deces_cumules"),
+                         surv_sitrep$community_deaths)
+add_sc("Enterrements securises", "% deces hors structure de soins (au SitRep source)", "0%",
+       de$value, "%", surv_sitrep$community_deaths,
+       note = coalesce(de$note, "Compare au cumul de deces TEL QUE CONNU a ce SitRep, pas au cumul actuel -- sinon ratio faussement bas"),
+       target_num = 0, target_dir = "lower")
+add_sc("Enterrements securises", "% zones touchees avec equipe EDS", "100%", NA_real_, "%", NA_integer_,
+       note = "NOT AVAILABLE FROM SITREP -- pas de donnee de localisation des equipes EDS dans l'extraction actuelle")
+add_sc("Enterrements securises", "% deces avec enterrement securise", "100%", NA_real_, "%", NA_integer_,
+       note = "NOT AVAILABLE FROM SITREP -- absent meme du niveau candidat de l'extraction")
+
+response_scorecard <- dplyr::bind_rows(sc_rows)
+
+# ------------------------------------------------------------
 # 8. ECRITURE JSON
 # ------------------------------------------------------------
 
@@ -597,6 +821,8 @@ SR_DATA <- list(
   kpi = kpi,
   surv = surv,
   surv_meta = list(sitrep = surv_sitrep, staleness_sitreps = surv_staleness),
+  response_scorecard = response_scorecard,
+  response_scorecard_source = "Kabasele et al., MMWR 75(35):554-556, 10 sept 2026 (DOI 10.15585/mmwr.mm7535e1)",
   series = series_out,
   provinces = provinces_out,
   zones = zones_out,
