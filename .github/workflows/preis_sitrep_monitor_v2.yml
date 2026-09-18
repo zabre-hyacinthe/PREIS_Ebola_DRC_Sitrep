@@ -203,6 +203,25 @@ jobs:
         run: |
           Rscript --vanilla scripts/04_extract_indicators.R || echo "04_extract_indicators.R en erreur"
 
+      # AJOUT 2026-09-18 : LE VRAI PIPELINE D'EXTRACTION. Les deux etapes
+      # ci-dessus (03_/04_) ne font que DEFINIR des fonctions -- rien ne les
+      # appelait jamais, ce qui explique pourquoi zones de sante, contacts,
+      # alertes etc. etaient figes depuis des mois malgre un workflow "vert".
+      # Cette etape source les 7 modules (01 a 07) et appelle le vrai
+      # orchestrateur run_preis_pipeline(). Regles d'extraction reecrites et
+      # verifiees valeur par valeur sur un vrai SitRep le 18/09/2026 -- seul
+      # le scraping reseau lui-meme n'a pas pu etre teste hors GitHub Actions
+      # (insp.cd non joignable depuis le sandbox de developpement).
+      - name: Pipeline complet extraction (00_run_full_pipeline_ci.R)
+        if: always()
+        continue-on-error: true
+        run: |
+          if [ -f scripts/00_run_full_pipeline_ci.R ]; then
+            Rscript --vanilla scripts/00_run_full_pipeline_ci.R || echo "00_run_full_pipeline_ci.R en erreur (non bloquant)"
+          else
+            echo "scripts/00_run_full_pipeline_ci.R absent - skip"
+          fi
+
       - name: Indicateurs journaliers (11_daily_indicators.R)
         if: always()
         continue-on-error: true
@@ -322,6 +341,7 @@ jobs:
           git add data/final/PREIS_daily_indicators.csv || true
           git add data/final/PREIS_indicators_validated.csv || true
           git add data/final/PREIS_health_zones.csv || true
+          git add data/final/PREIS_indicator_candidates.csv || true
           git add data/final/PREIS_QC_by_sitrep.csv || true
           git add data/final/PREIS_QC_issues.csv || true
           git add data/final/PREIS_signals.csv || true
