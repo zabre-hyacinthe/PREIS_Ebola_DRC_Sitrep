@@ -39,38 +39,78 @@ extract_candidates_from_row_text <- function(row_text, sitrep_no, source_type = 
     if (nrow(cand) > 0) out[[length(out) + 1]] <<- cand
   }
 
-  # Highest priority: total rows in tables or text-aligned table rows.
-  mt <- stringr::str_match(txt, stringr::regex("^\\s*Total\\s+(\\d{2,5})\\s+(\\d{1,5})\\s+(\\d+(?:[.,]\\d+)?)\\s*%?\\s+(\\d+)\\s+sur", ignore_case = TRUE))
-  if (!is.na(mt[1, 2])) {
-    add("cumulative_confirmed_cases", safe_num(mt[1, 2]), "cases", "total_row_cases_deaths_cfr_hz", 1)
-    add("cumulative_deaths", safe_num(mt[1, 3]), "deaths", "total_row_cases_deaths_cfr_hz", 1)
-    add("case_fatality_ratio", safe_num(mt[1, 4]), "deaths", "total_row_cases_deaths_cfr_hz", 1)
-    add("hz_affected_national", safe_num(mt[1, 5]), "geography", "total_row_cases_deaths_cfr_hz", 1)
+  # ------------------------------------------------------------
+  # RÉÉCRITURE 2026-09-18 — signatures de ligne completes, testees sur
+  # SitRep 125 reel (verifie valeur par valeur contre le document).
+  # Remplace les anciens motifs mi/mn/ms/mt/mt2 qui ne capturaient que
+  # 2-3 nombres generiques et se faisaient concurrencer par plusieurs
+  # tableaux au format proche (Tableau 1 vs Tableau 2), avec un choix
+  # "valeur la plus haute gagne" qui pouvait alors choisir le mauvais
+  # candidat (deaths_ituri capturait 5792, le chiffre des CAS, au lieu
+  # de 2642). Priorite 1 = la plus haute confiance disponible.
+  BIGNUM <- "(\\d{1,3}[ ]\\d{3}|\\d{1,5})"
+  PROVS  <- c("Ituri", "Nord-Kivu", "Haut-Uélé", "Tshopo", "Sud-Kivu", "Bas-Uélé", "Sud Ubangi")
+  PROV_CODE <- c("Ituri"="ituri", "Nord-Kivu"="nordkivu", "Haut-Uélé"="hautuele",
+                 "Tshopo"="tshopo", "Sud-Kivu"="sudkivu", "Bas-Uélé"="basuele", "Sud Ubangi"="sudubangi")
+
+  # Tableau 1 : {Province} {NouvCas24h} {CumCas} {CumDeces} {CFR}% {ZN}/{ZD}
+  t1_pat <- paste0("^\\s*(", paste(c(PROVS, "Total"), collapse = "|"), ")\\s+(\\d{1,4})\\s+",
+                    BIGNUM, "\\s+", BIGNUM, "\\s+(\\d{1,3}[.,]\\d)\\s*%\\s+(\\d{1,3})\\s*/\\s*(\\d{1,3})")
+  m1 <- stringr::str_match(txt, t1_pat)
+  if (!is.na(m1[1, 1])) {
+    prov <- m1[1, 2]; suf <- if (prov == "Total") "national" else PROV_CODE[[prov]]
+    if (prov != "Total") add(paste0("cases_", suf), safe_num(m1[1, 4]), "cases", "t1_province_row", 1)
+    if (prov == "Total") add("cumulative_confirmed_cases", safe_num(m1[1, 4]), "cases", "t1_total_row", 1)
+    if (prov != "Total") add(paste0("deaths_", suf), safe_num(m1[1, 5]), "deaths", "t1_province_row", 1)
+    if (prov == "Total") add("cumulative_deaths", safe_num(m1[1, 5]), "deaths", "t1_total_row", 1)
+    add(if (prov == "Total") "case_fatality_ratio" else paste0("cfr_", suf), safe_num(m1[1, 6]),
+        "deaths", "t1_province_row", 1)
+    add(if (prov == "Total") "new_confirmed_cases" else paste0("new_cases_", suf), safe_num(m1[1, 3]),
+        "cases", "t1_province_row", 1)
+    add(if (prov == "Total") "hz_affected_national" else paste0("hz_affected_", suf), safe_num(m1[1, 7]),
+        "geography", "t1_province_row", 1)
   }
 
-  # Alternative total table row where columns are tighter.
-  mt2 <- stringr::str_match(txt, stringr::regex("^\\s*Total\\s+(\\d{2,5})\\s+(\\d{1,5})\\s+(\\d+(?:[.,]\\d+)?)", ignore_case = TRUE))
-  if (!is.na(mt2[1, 2])) {
-    add("cumulative_confirmed_cases", safe_num(mt2[1, 2]), "cases", "total_row_cases_deaths_cfr", 2)
-    add("cumulative_deaths", safe_num(mt2[1, 3]), "deaths", "total_row_cases_deaths_cfr", 2)
-    add("case_fatality_ratio", safe_num(mt2[1, 4]), "deaths", "total_row_cases_deaths_cfr", 2)
+  # Tableau 3 : {DPS} {AlertVivants} {AlertDecedes} {TotalAlertes} {ValVivants}
+  #   {ValDecedes} {InvalVivants} {InvalDecedes} {SuspectsInvest} {SuspectsTransf}
+  t3_pat <- paste0("^\\s*(", paste(setdiff(PROVS, "Sud Ubangi"), collapse = "|"), ")\\s+",
+                    paste(rep(BIGNUM, 9), collapse = "\\s+"), "\\s*$")
+  m3 <- stringr::str_match(txt, t3_pat)
+  if (!is.na(m3[1, 1])) {
+    prov <- m3[1, 2]; suf <- PROV_CODE[[prov]]
+    add(paste0("alerts_received_", suf),    safe_num(m3[1, 3]) + safe_num(m3[1, 4]), "surveillance", "t3_alerts_row", 1)
+    add(paste0("alerts_total_", suf),       safe_num(m3[1, 5]), "surveillance", "t3_alerts_row", 1)
+    add(paste0("alerts_validated_", suf),   safe_num(m3[1, 6]) + safe_num(m3[1, 7]), "surveillance", "t3_alerts_row", 1)
+    add(paste0("suspects_investigated_", suf), safe_num(m3[1, 10]), "surveillance", "t3_alerts_row", 1)
+    add(paste0("suspects_transferred_", suf),  safe_num(m3[1, 11]), "surveillance", "t3_alerts_row", 1)
   }
 
-  mi <- stringr::str_match(txt, stringr::regex("^\\s*Ituri\\s+(\\d{1,5})\\s+(\\d{1,5})\\s+(\\d+(?:[.,]\\d+)?)", ignore_case = TRUE))
-  if (!is.na(mi[1, 2])) {
-    add("cases_ituri", safe_num(mi[1, 2]), "cases", "province_row_ituri", 2)
-    add("deaths_ituri", safe_num(mi[1, 3]), "deaths", "province_row_ituri", 2)
+  # Encadre KPI national (les 6 valeurs apparaissent groupees, apres le
+  # libelle "(Du Jour)", dans cet ordre fixe -- verifie sur SitRep 125).
+  kpi_pat <- paste0("\\(Du Jour\\)\\s+", BIGNUM, "\\s+", BIGNUM,
+                     "\\s+(\\d{1,3}[.,]\\d)\\s*%\\s+", BIGNUM, "\\s+", BIGNUM, "\\s+(\\d{1,3}[.,]\\d)\\s*%")
+  mk <- stringr::str_match(txt, kpi_pat)
+  if (!is.na(mk[1, 1])) {
+    add("cumulative_confirmed_cases", safe_num(mk[1, 2]), "cases", "kpi_box", 1)
+    add("cumulative_deaths",          safe_num(mk[1, 3]), "deaths", "kpi_box", 1)
+    add("case_fatality_ratio",        safe_num(mk[1, 4]), "deaths", "kpi_box", 1)
+    add("patients_in_isolation",      safe_num(mk[1, 5]), "case_management", "kpi_box", 1)
+    add("recovered",                  safe_num(mk[1, 6]), "case_management", "kpi_box", 1)
+    add("contact_followup_rate",      safe_num(mk[1, 7]), "contacts", "kpi_box", 1)
   }
-  mn <- stringr::str_match(txt, stringr::regex("^\\s*Nord[- ]?Kivu\\s+(\\d{1,5})\\s+(\\d{1,5})\\s+(\\d+(?:[.,]\\d+)?)", ignore_case = TRUE))
-  if (!is.na(mn[1, 2])) {
-    add("cases_nordkivu", safe_num(mn[1, 2]), "cases", "province_row_nordkivu", 2)
-    add("deaths_nordkivu", safe_num(mn[1, 3]), "deaths", "province_row_nordkivu", 2)
-  }
-  ms <- stringr::str_match(txt, stringr::regex("^\\s*Sud[- ]?Kivu\\s+(\\d{1,5})\\s+(\\d{1,5})\\s+(\\d+(?:[.,]\\d+)?)", ignore_case = TRUE))
-  if (!is.na(ms[1, 2])) {
-    add("cases_sudkivu", safe_num(ms[1, 2]), "cases", "province_row_sudkivu", 2)
-    add("deaths_sudkivu", safe_num(ms[1, 3]), "deaths", "province_row_sudkivu", 2)
-  }
+
+  # Contacts (narratif national) : "Parmi les N contacts en cours de
+  # suivi, M ont ete vus... proportion de suivi de P%"
+  add("contacts_listed", g_first(paste0("[Pp]armi les\\s*", BIGNUM, "\\s*contacts en cours de suivi"), txt),
+      "contacts", "narr_contacts_parmi", 1)
+  add("contacts_followed_up", g_first(paste0(BIGNUM, "\\s*ont [ée]t[ée] vus au cours des derni[èe]res 24"), txt),
+      "contacts", "narr_contacts_vus", 1)
+  add("contact_followup_rate", g_first("proportion de suivi de\\s*(\\d{1,3}[.,]\\d)\\s*%", txt),
+      "contacts", "narr_contact_followup_pct", 1)
+  add("alerts_validated", g_first(paste0(BIGNUM, "\\s*alertes ont [ée]t[ée] valid[ée]es comme cas suspects"), txt),
+      "surveillance", "narr_alerts_validated", 1)
+  add("hz_affected_national", g_first(paste0(BIGNUM, "\\s*zones de sant[ée] sur\\s*\\d{2,4}\\s*\\([\\d.,]+%\\)\\s*affect"), txt),
+      "geography", "narr_hz_national", 1)
 
   # Narrative and indicators.
   ## ---- PREIS PATCH 04 CUMUL NATIONAL (auto) ----
