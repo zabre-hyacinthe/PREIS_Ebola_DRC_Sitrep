@@ -99,9 +99,16 @@ scrape_insp_sitrep_list <- function(
       post_url  = links,
       post_text = texts
     ) %>%
+      # CORRECTIF 2026-09-18 : meme categorie de bug que 08_cloud_sitrep_monitor.R
+      # -- filtre trop strict ("sitrep-n\\d+-mvb" exact, sensible a la casse)
+      # qui rejette silencieusement tout SitRep dont le slug d'URL a evolue.
+      # Elargi au mot "sitrep" seul, insensible a la casse, verifie sur l'URL
+      # OU le texte du lien -- extract_sitrep_no ci-dessous reste la vraie
+      # validation (filter(!is.na(sitrep_no)) plus bas).
       dplyr::filter(
         !is.na(post_url),
-        stringr::str_detect(post_url, "sitrep-n\\d+-mvb")
+        stringr::str_detect(stringr::str_to_lower(post_url), "sitrep") |
+          stringr::str_detect(stringr::str_to_lower(dplyr::coalesce(post_text, "")), "sitrep")
       ) %>%
       dplyr::distinct(post_url, .keep_all = TRUE)
 
@@ -122,8 +129,15 @@ scrape_insp_sitrep_list <- function(
 
   posts <- posts %>%
     dplyr::mutate(
+      # CORRECTIF 2026-09-18 : extraction elargie (voir extract_sitrep_no dans
+      # 08_cloud_sitrep_monitor.R pour la meme logique a 2 niveaux -- ici
+      # simplifiee car ce fichier n'a pas encore cette fonction partagee).
       sitrep_no = suppressWarnings(as.integer(
-        stringr::str_match(post_url, "sitrep-n(\\d+)-mvb")[, 2]
+        dplyr::coalesce(
+          stringr::str_match(stringr::str_to_lower(post_url), "sitrep-n0*(\\d+)")[, 2],
+          stringr::str_match(stringr::str_to_lower(post_url), "sitrep[^0-9]{0,12}0*(\\d{1,3})")[, 2],
+          stringr::str_match(stringr::str_to_lower(post_text), "sitrep[^0-9]{0,12}0*(\\d{1,3})")[, 2]
+        )
       )),
       date_raw = stringr::str_match(
         post_url,
