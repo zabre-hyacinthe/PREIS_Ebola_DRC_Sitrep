@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-18T10:02:57Z",
+  "generated_at": "2026-09-18T11:08:24Z",
   "asof": "2026-09-04",
   "sitrep": "125",
   "sitrep_date": "2026-09-04",
@@ -11,10 +11,19 @@
     "ma7": 73,
     "doubling": 53.9,
     "growth7": 6,
+    "cases_7d": 582,
+    "cases_trend": "STABLE",
+    "cases_trend_persisted": false,
+    "deaths_7d": 252,
+    "deaths_growth7": -12,
+    "deaths_trend": "DECREASING",
+    "deaths_trend_persisted": false,
     "recovered": 68,
     "isolation": 25,
     "hz": 51,
     "provinces": 3,
+    "concentration": 45,
+    "completeness": 100,
     "beds_occ": null,
     "beds_deficit": null
   },
@@ -30,7 +39,8 @@
     "vaccine": 190,
     "community_deaths": 30,
     "recovered": 68,
-    "isolation": 25
+    "isolation": 25,
+    "alerts_validated": 1
   },
   "surv_meta": {
     "sitrep": {
@@ -45,7 +55,8 @@
       "vaccine": 12,
       "community_deaths": 81,
       "recovered": 74,
-      "isolation": 80
+      "isolation": 80,
+      "alerts_validated": 36
     },
     "staleness_sitreps": {
       "alerts_reported": 75,
@@ -59,9 +70,134 @@
       "vaccine": 113,
       "community_deaths": 44,
       "recovered": 51,
-      "isolation": 45
+      "isolation": 45,
+      "alerts_validated": 89
     }
   },
+  "response_scorecard": [
+    {
+      "domain": "Detection des cas",
+      "indicator": "% alertes investiguees",
+      "target": ">90%",
+      "value": 88.5,
+      "unit": "%",
+      "status": "warn",
+      "sitrep_src": 17,
+      "staleness_sitreps": 108,
+      "note": null
+    },
+    {
+      "domain": "Suivi des contacts",
+      "indicator": "Contacts identifies / cas (cumule au SitRep source)",
+      "target": ">=20",
+      "value": 0.02,
+      "unit": "contacts/cas",
+      "status": "bad",
+      "sitrep_src": 81,
+      "staleness_sitreps": 44,
+      "note": "Cadre CDC original : moyenne glissante 3 semaines, non reconstructible ici -- ratio cumule au SitRep source a la place -- valeur inhabituellement basse (contacts_listed=78 pour 3874 cas cumules a ce SitRep) : a verifier, peut refleter un probleme d'extraction plutot qu'une performance reelle."
+    },
+    {
+      "domain": "Suivi des contacts",
+      "indicator": "Completude du suivi de contacts",
+      "target": ">95%",
+      "value": null,
+      "unit": "%",
+      "status": "nodata",
+      "sitrep_src": 61,
+      "staleness_sitreps": 64,
+      "note": "Non calcule : numerateur (SitRep 61) et denominateur (SitRep 81) viennent de rapports differents -- un ratio entre points non comparables serait trompeur."
+    },
+    {
+      "domain": "Suivi des contacts",
+      "indicator": "% nouveaux cas = contacts deja connus",
+      "target": ">90%",
+      "value": null,
+      "unit": "%",
+      "status": "nodata",
+      "sitrep_src": null,
+      "staleness_sitreps": null,
+      "note": "NOT AVAILABLE FROM SITREP -- absent meme d'une transcription tierce plus detaillee des memes SitReps (verifie 12/09/2026)"
+    },
+    {
+      "domain": "Tests de laboratoire",
+      "indicator": "% alertes validees testees",
+      "target": ">90%",
+      "value": null,
+      "unit": "%",
+      "status": "nodata",
+      "sitrep_src": 48,
+      "staleness_sitreps": 77,
+      "note": "Non calcule : numerateur (SitRep 48) et denominateur (SitRep 36) viennent de rapports differents -- un ratio entre points non comparables serait trompeur."
+    },
+    {
+      "domain": "Tests de laboratoire",
+      "indicator": "% tests positifs",
+      "target": "0% (plus bas = mieux)",
+      "value": 30.3,
+      "unit": "%",
+      "status": "bad",
+      "sitrep_src": 18,
+      "staleness_sitreps": 107,
+      "note": null
+    },
+    {
+      "domain": "Isolement",
+      "indicator": "% occupation lits ETU",
+      "target": "<80%",
+      "value": null,
+      "unit": "%",
+      "status": "nodata",
+      "sitrep_src": null,
+      "staleness_sitreps": null,
+      "note": "Non automatise -- aucune source ne produit ce chiffre en continu (gap structurel deja documente)"
+    },
+    {
+      "domain": "Isolement",
+      "indicator": "% isole dans les 24h",
+      "target": ">90%",
+      "value": null,
+      "unit": "%",
+      "status": "nodata",
+      "sitrep_src": null,
+      "staleness_sitreps": null,
+      "note": "NOT AVAILABLE FROM SITREP"
+    },
+    {
+      "domain": "Enterrements securises",
+      "indicator": "% deces hors structure de soins (au SitRep source)",
+      "target": "0%",
+      "value": 1.7,
+      "unit": "%",
+      "status": "bad",
+      "sitrep_src": 81,
+      "staleness_sitreps": 44,
+      "note": "Compare au cumul de deces TEL QUE CONNU a ce SitRep, pas au cumul actuel -- sinon ratio faussement bas"
+    },
+    {
+      "domain": "Enterrements securises",
+      "indicator": "% zones touchees avec equipe EDS",
+      "target": "100%",
+      "value": null,
+      "unit": "%",
+      "status": "nodata",
+      "sitrep_src": null,
+      "staleness_sitreps": null,
+      "note": "NOT AVAILABLE FROM SITREP -- pas de donnee de localisation des equipes EDS dans l'extraction actuelle"
+    },
+    {
+      "domain": "Enterrements securises",
+      "indicator": "% deces avec enterrement securise",
+      "target": "100%",
+      "value": null,
+      "unit": "%",
+      "status": "nodata",
+      "sitrep_src": null,
+      "staleness_sitreps": null,
+      "note": "NOT AVAILABLE FROM SITREP -- absent meme du niveau candidat de l'extraction"
+    }
+  ],
+  "response_scorecard_source": "Kabasele et al., MMWR 75(35):554-556, 10 sept 2026 (DOI 10.15585/mmwr.mm7535e1)",
   "series": [
     {
       "d": "2026-05-14",
@@ -1799,6 +1935,13 @@
       "detected_on": "2026-09-18"
     },
     {
+      "k": "Detection scraper (INSP)",
+      "v": "0 SitRep(s) de retard sur le registre",
+      "rule": "Le scraper suit le rythme du numero courant.",
+      "level": "info",
+      "detected_on": "2026-09-18"
+    },
+    {
       "k": "Reference INRB",
       "v": "12 SitReps de retard",
       "rule": "La reference nationale INRB utilisee pour la contre-validation independante des cumuls n'a plus ete mise a jour depuis le SitRep 113 (2026-09-04) -- 12 SitReps plus tard, les cumuls officiels ne sont plus contre-verifies (validation = 'no_ref').",
@@ -1859,6 +2002,13 @@
       "v": "small-denominator caveat",
       "rule": "Zones with very few cumulative cases can show 100% CFR from a single death -- this is not comparable to a high CFR over a large case count. Always check the case count (shown alongside CFR) before treating a zone as a mortality-review priority.",
       "level": "info",
+      "detected_on": "2026-09-18"
+    },
+    {
+      "k": "CFR_ANOMALY",
+      "v": "48.3%",
+      "rule": "CFR soutenue au-dessus de la fourchette historique du virus Bundibugyo (Ouganda 2007 ~25%, RDC 2012 ~36%). Seuils WATCH>40%/HIGH>50% : PROVISIONAL.",
+      "level": "warn",
       "detected_on": "2026-09-18"
     }
   ],
