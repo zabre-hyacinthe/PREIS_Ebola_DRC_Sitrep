@@ -286,17 +286,32 @@ scrape_latest_sitrep <- function() {
       rvest::html_nodes("a") |>
       rvest::html_text(trim = TRUE)
 
+    # CORRECTIF 2026-09-18 : le filtre precedent, str_detect(post_url,
+    # "sitrep-n\\d+"), exigeait "sitrep-n" suivi IMMEDIATEMENT d'un chiffre,
+    # sensible a la casse. Le registre confirme que la detection s'est
+    # arretee net au SitRep 81 alors que les cumuls nationaux (source cloud,
+    # independante) ont continue de progresser jusqu'au SitRep 125+ -- signe
+    # que INSP a probablement fait evoluer son format de slug d'URL ou de
+    # texte de lien, et que ce filtre trop strict rejette silencieusement
+    # les nouveaux posts. Meme categorie de bug que celle deja corrigee dans
+    # 10_sitrep_identity.R.
     posts_pg <- tibble::tibble(
       post_url = links,
       post_text = texts
     ) |>
       dplyr::filter(
         !is.na(post_url),
-        stringr::str_detect(post_url, "sitrep-n\\d+")
+        stringr::str_detect(stringr::str_to_lower(post_url), "sitrep") |
+          stringr::str_detect(stringr::str_to_lower(dplyr::coalesce(post_text, "")), "sitrep")
       ) |>
       dplyr::mutate(
         post_url = normalize_url(post_url, "https://insp.cd"),
         sitrep_no = purrr::map_int(post_url, extract_sitrep_no),
+        sitrep_no = dplyr::if_else(
+          is.na(sitrep_no) & !is.na(post_text),
+          purrr::map_int(post_text, extract_sitrep_no),
+          sitrep_no
+        ),
         sitrep_date = purrr::map_chr(post_url, extract_sitrep_date)
       ) |>
       dplyr::filter(!is.na(sitrep_no)) |>
