@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-19T23:37:05Z",
+  "generated_at": "2026-09-20T00:08:07Z",
   "asof": "2026-09-04",
   "sitrep": "127",
   "sitrep_date": "2026-09-04",
@@ -1919,42 +1919,42 @@
       "v": "non calcule",
       "rule": "Necessite des dates de debut des symptomes (donnees individuelles) -- indisponibles avec des SitReps agreges. Temps de doublement affiche a la place.",
       "level": "info",
-      "detected_on": "2026-09-19"
+      "detected_on": "2026-09-20"
     },
     {
       "k": "Occupation des lits",
       "v": "non automatise",
       "rule": "Aucune source CI ne produit ce chiffre en continu actuellement (script 15_bed_occupancy_analysis_v2.R non branche au workflow). Mise a jour manuelle requise.",
       "level": "warn",
-      "detected_on": "2026-09-19"
+      "detected_on": "2026-09-20"
     },
     {
       "k": "Fraicheur pipeline",
-      "v": "15 j depuis SitRep 127",
-      "rule": "Aucun nouveau SitRep detecte depuis 15 jours -- verifier le cron GitHub Actions (habituellement ~quotidien).",
+      "v": "16 j depuis SitRep 127",
+      "rule": "Aucun nouveau SitRep detecte depuis 16 jours -- verifier le cron GitHub Actions (habituellement ~quotidien).",
       "level": "bad",
-      "detected_on": "2026-09-19"
+      "detected_on": "2026-09-20"
     },
     {
       "k": "Detection scraper (INSP)",
       "v": "0 SitRep(s) de retard sur le registre",
       "rule": "Le scraper suit le rythme du numero courant.",
       "level": "info",
-      "detected_on": "2026-09-19"
+      "detected_on": "2026-09-20"
     },
     {
       "k": "Reference INRB",
       "v": "14 SitReps de retard",
       "rule": "La reference nationale INRB utilisee pour la contre-validation independante des cumuls n'a plus ete mise a jour depuis le SitRep 113 (2026-09-04) -- 14 SitReps plus tard, les cumuls officiels ne sont plus contre-verifies (validation = 'no_ref').",
       "level": "bad",
-      "detected_on": "2026-09-19"
+      "detected_on": "2026-09-20"
     },
     {
       "k": "Repartition par province",
       "v": "ecart 11.7%",
       "rule": "La somme des cumuls par province (6,604) ne correspond pas exactement au total national (7,475) -- ecart de 11.7%. La ventilation par province extraite des SitReps est probablement incomplete pour certaines lignes ; ne pas sur-interpreter de petits ecarts entre provinces.",
       "level": "warn",
-      "detected_on": "2026-09-19"
+      "detected_on": "2026-09-20"
     },
     {
       "k": "Source cumuls nationaux",
@@ -1968,49 +1968,49 @@
       "v": "Katwa",
       "rule": "Katwa (Nord-Kivu): High-lethality active transmission. Verify time-to-care and isolation delay; check the community-death ratio and ETC/IPC capacity in this zone.",
       "level": "bad",
-      "detected_on": "2026-09-19"
+      "detected_on": "2026-09-20"
     },
     {
       "k": "Operational watch",
       "v": "Beni",
       "rule": "Beni (Nord-Kivu): High-lethality active transmission. Verify time-to-care and isolation delay; check the community-death ratio and ETC/IPC capacity in this zone.",
       "level": "bad",
-      "detected_on": "2026-09-19"
+      "detected_on": "2026-09-20"
     },
     {
       "k": "Operational watch",
       "v": "Butembo",
       "rule": "Butembo (Nord-Kivu): High-lethality active transmission. Verify time-to-care and isolation delay; check the community-death ratio and ETC/IPC capacity in this zone.",
       "level": "bad",
-      "detected_on": "2026-09-19"
+      "detected_on": "2026-09-20"
     },
     {
       "k": "Zones par province",
       "v": "Ituri",
       "rule": "Ituri : 28 zones extraites du texte SitRep 81 vs 20 calculees depuis le detail par zone (SitRep 127). Ecart possible du a un decalage temporel entre les deux extractions ou a une zone frontaliere reclassee.",
       "level": "info",
-      "detected_on": "2026-09-19"
+      "detected_on": "2026-09-20"
     },
     {
       "k": "Zones par province",
       "v": "Nord-Kivu",
       "rule": "Nord-Kivu : 12 zones extraites du texte SitRep 81 vs 11 calculees depuis le detail par zone (SitRep 127). Ecart possible du a un decalage temporel entre les deux extractions ou a une zone frontaliere reclassee.",
       "level": "info",
-      "detected_on": "2026-09-19"
+      "detected_on": "2026-09-20"
     },
     {
       "k": "CFR reading",
       "v": "small-denominator caveat",
       "rule": "Zones with very few cumulative cases can show 100% CFR from a single death -- this is not comparable to a high CFR over a large case count. Always check the case count (shown alongside CFR) before treating a zone as a mortality-review priority.",
       "level": "info",
-      "detected_on": "2026-09-19"
+      "detected_on": "2026-09-20"
     },
     {
       "k": "CFR_ANOMALY",
       "v": "48.2%",
       "rule": "CFR soutenue au-dessus de la fourchette historique du virus Bundibugyo (Ouganda 2007 ~25%, RDC 2012 ~36%). Seuils WATCH>40%/HIGH>50% : PROVISIONAL.",
       "level": "warn",
-      "detected_on": "2026-09-19"
+      "detected_on": "2026-09-20"
     }
   ],
   "sources": [
@@ -2052,7 +2052,7 @@
   },
   "diagnostics": {
     "build_version": "v5.0-auto",
-    "build_date": "2026-09-19",
+    "build_date": "2026-09-20",
     "generator": "scripts/16_generate_situation_room_data.R",
     "latest_sitrep_no": 127,
     "zones_missing_coords": ["Adja", "Ariwara", "Bafwasende", "Biena", "Boga", "Boma Mangbetu", "Bulu", "Buta", "Drodro", "Ganga", "Gombari", "Isiro", "Kabondo", "Kayna", "Lolwa", "Lubero", "Lubunga", "Mahagi", "Makiso-Kisangani", "Mandima", "Mangobo", "Musienene", "Mutwanga", "Nia-Nia", "Pawa", "Rumba", "Rungu", "Tshopo", "Viadana", "Wamba", "Wanierukula"]
