@@ -6,6 +6,28 @@ download_sitrep_pdf <- function(pdf_url, sitrep_no, pdf_dir = PDF_DIR, force_red
   fname <- paste0("SitRep_", sprintf("%02d", sitrep_no), "_2026.pdf")
   local_path <- file.path(pdf_dir, fname)
 
+  ## AJOUT 2026-09-26 : logging diagnostique non intrusif (aucun changement de
+  ## logique/retour). But : le pipeline echoue silencieusement a telecharger tout
+  ## SitRep >= #64 depuis le 2026-07-19 (preuve : data/final/sitrep_registry.csv,
+  ## downloaded=FALSE pour tous les SitReps 64-133) ; le runner GitHub Actions passe
+  ## ~5 min sur cette etape (retries) sans qu'aucune sortie ne change, donc l'echec
+  ## est reel mais sa cause exacte (code HTTP ? erreur reseau ? blocage anti-bot cote
+  ## insp.cd ?) n'etait visible que dans le log ephemere du run. On la persiste ici.
+  .dl_log_path <- file.path(dirname(pdf_dir), "logs", "download_diagnostics.csv")
+  .dl_log <- function(status = NA_character_, http_code = NA_integer_, content_type = NA_character_,
+                       size_kb = NA_real_, note = "") {
+    tryCatch({
+      dir.create(dirname(.dl_log_path), recursive = TRUE, showWarnings = FALSE)
+      row <- data.frame(
+        timestamp = as.character(Sys.time()), sitrep_no = sitrep_no, pdf_url = pdf_url,
+        status = status, http_code = http_code, content_type = content_type,
+        size_kb = size_kb, note = note, stringsAsFactors = FALSE
+      )
+      write.table(row, .dl_log_path, sep = ",", row.names = FALSE,
+                  col.names = !file.exists(.dl_log_path), append = file.exists(.dl_log_path))
+    }, error = function(e) invisible(NULL))
+  }
+
   if (!force_redownload && file.exists(local_path) && file.info(local_path)$size > 10240) {
     cat("   Already downloaded:", fname, "\n")
     return(local_path)
@@ -31,16 +53,24 @@ download_sitrep_pdf <- function(pdf_url, sitrep_no, pdf_dir = PDF_DIR, force_red
       ),
       error = function(e) {
         cat("   Attempt", attempt, "error:", conditionMessage(e), "\n")
+        .dl_log(status = "error", note = paste0("attempt ", attempt, ": ", conditionMessage(e)))
         NULL
       }
     )
 
+    if (!is.null(resp)) {
+      .dl_log(status = "response", http_code = httr::status_code(resp),
+              content_type = httr::headers(resp)[["content-type"]] %||% NA_character_,
+              size_kb = if (file.exists(local_path)) round(file.info(local_path)$size / 1024, 1) else NA_real_,
+              note = paste0("attempt ", attempt))
+    }
     if (!is.null(resp) && httr::status_code(resp) == 200 && file.exists(local_path)) {
       size_kb <- round(file.info(local_path)$size / 1024, 1)
       ct <- httr::headers(resp)[["content-type"]]
       is_pdf <- !is.null(ct) && grepl("pdf", ct, ignore.case = TRUE)
       if (size_kb >= 10 && (is_pdf || size_kb > 50)) {
         cat("   OK:", size_kb, "KB\n")
+        .dl_log(status = "success", http_code = httr::status_code(resp), size_kb = size_kb, note = paste0("attempt ", attempt))
         return(local_path)
       }
     }
@@ -61,10 +91,13 @@ download_sitrep_pdf <- function(pdf_url, sitrep_no, pdf_dir = PDF_DIR, force_red
   }, error = function(e) FALSE)
 
   if (isTRUE(ok)) {
-    cat("   OK fallback:", round(file.info(local_path)$size / 1024, 1), "KB\n")
+    size_kb_fb <- round(file.info(local_path)$size / 1024, 1)
+    cat("   OK fallback:", size_kb_fb, "KB\n")
+    .dl_log(status = "success_fallback", size_kb = size_kb_fb, note = "download.file() fallback")
     return(local_path)
   }
 
+  .dl_log(status = "failed_all_attempts", note = "GET + fallback download.file() ont tous echoue")
   if (file.exists(local_path)) file.remove(local_path)
   NA_character_
 }

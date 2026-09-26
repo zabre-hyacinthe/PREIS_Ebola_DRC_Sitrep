@@ -5,7 +5,11 @@
 ## shinyapps.io). À lancer après 03_analyse_consolidee.R.
 ## ============================================================
 
-BASE_DIR    <- "D:/PREIS_Ebola_DRC_Sitrep_FV_12.06.26"
+## CORRECTIF 2026-09-26 : chemin portable (identique au motif deja utilise
+## dans scripts/00_run_full_pipeline_ci.R) -- sans ca, ce script ne copiait
+## RIEN sur le runner GitHub Actions (BASE_DIR pointait vers un chemin Windows
+## inexistant en CI ; file.exists() renvoyait FALSE partout, sans erreur visible).
+BASE_DIR    <- Sys.getenv("GITHUB_WORKSPACE", unset = "D:/PREIS_Ebola_DRC_Sitrep_FV_12.06.26")
 ANALYSE_DIR <- file.path(BASE_DIR, "outputs", "analyse")
 DASH_DIR    <- file.path(BASE_DIR, "dashboard_ebola")
 DASH_DATA   <- file.path(DASH_DIR, "data")

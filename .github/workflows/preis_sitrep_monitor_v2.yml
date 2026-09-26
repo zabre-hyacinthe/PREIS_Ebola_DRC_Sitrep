@@ -268,20 +268,18 @@ jobs:
 
 
       # PREIS DASHBOARD DATA SYNC START
+      # CORRECTIF 2026-09-26 : cette etape ne copiait que 2 fichiers sur les 5 que
+      # dashboard_ebola/prepare_dashboard_data.R copie reellement (il manquait
+      # PREIS_daily_indicators.csv, PREIS_indicators_long.csv et les geojson curated).
+      # Consequence prouvee : dashboard_ebola/data/PREIS_daily_indicators.csv etait
+      # fige depuis 2026-07-24 alors que data/final/PREIS_daily_indicators.csv (racine)
+      # continuait d'etre mis a jour -- le dashboard deploye affichait donc toujours
+      # l'ancien instantane. On appelle desormais le script existant complet, deja
+      # correct, au lieu de dupliquer sa logique ici.
       - name: Synchroniser les donnees du dashboard
         if: always()
         run: |
-          mkdir -p dashboard_ebola/data
-          if [ -f outputs/analyse/serie_temporelle_nationale.csv ]; then
-            cp -f outputs/analyse/serie_temporelle_nationale.csv dashboard_ebola/data/serie_temporelle_nationale.csv
-          else
-            echo 'Serie nationale absente - synchronisation ignoree'
-          fi
-          if [ -f outputs/analyse/tableau_zones_sante.csv ]; then
-            cp -f outputs/analyse/tableau_zones_sante.csv dashboard_ebola/data/tableau_zones_sante.csv
-          else
-            echo 'Tableau zones absent - synchronisation ignoree'
-          fi
+          Rscript --vanilla dashboard_ebola/prepare_dashboard_data.R || echo "prepare_dashboard_data.R en erreur (non bloquant)"
       # PREIS DASHBOARD DATA SYNC END
       # PREIS ENRICHED EMAIL START
       - name: Send PREIS enriched email
@@ -360,6 +358,10 @@ jobs:
           git add outputs/rapports/ || true
           git add dashboard_ebola/data/serie_temporelle_nationale.csv || true
           git add dashboard_ebola/data/tableau_zones_sante.csv || true
+          git add dashboard_ebola/data/PREIS_daily_indicators.csv || true
+          git add dashboard_ebola/data/PREIS_indicators_long.csv || true
+          git add dashboard_ebola/data/curated/rdc_zones_sante_est.geojson || true
+          git add dashboard_ebola/data/curated/africa_countries_rcc.geojson || true
           git status --short
           git commit -m "PREIS pipeline: monitor + extraction + analyse [skip ci]" || echo "No changes to commit"
           git pull --rebase origin main || echo "No remote changes to rebase"
