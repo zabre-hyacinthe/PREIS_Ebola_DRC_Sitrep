@@ -45,33 +45,66 @@ run_preis_pipeline <- function(force_redownload = FALSE, force_reextract = FALSE
       purl <- row$pdf_url
       cat("\n>> SitRep", sno, ":", paste0("SitRep_", sprintf("%02d", sno), "_2026.pdf"), "\n")
 
-      local_pdf <- download_sitrep_pdf(purl, sno, force_redownload = force_redownload)
-      registry$downloaded[registry$pdf_url == purl] <- !is.na(local_pdf)
-      registry$local_pdf[registry$pdf_url == purl] <- local_pdf %||% NA_character_
-      if (is.na(local_pdf)) next
+      ## CORRECTIF 2026-09-26 : isolation par SitRep + trace des erreurs.
+      ## Preuve du bug corrige : une erreur non interceptee sur UN SitRep
+      ## (ex: variable manquante dans une fonction d'extraction -- vu en
+      ## production : "object 'KNOWN_HZ_DICT' not found", run GitHub Actions
+      ## #5941, commit eb0b093) arretait TOUT run_preis_pipeline() avant
+      ## save_registry() (voir plus bas) : aucun SitRep suivant n'etait
+      ## traite, et meme le SitRep dont le telechargement avait reussi
+      ## perdait la mise a jour de son statut "downloaded" (jamais
+      ## sauvegardee, puisque le crash survenait avant l'appel a
+      ## save_registry()). On isole maintenant chaque SitRep : une erreur
+      ## sur l'un n'empeche plus le traitement des autres, et elle est
+      ## tracee dans data/logs/pipeline_row_errors.csv au lieu de
+      ## disparaitre silencieusement dans le log ephemere du run.
+      row_status <- tryCatch({
+        local_pdf <- download_sitrep_pdf(purl, sno, force_redownload = force_redownload)
+        registry$downloaded[registry$pdf_url == purl] <- !is.na(local_pdf)
+        registry$local_pdf[registry$pdf_url == purl] <- local_pdf %||% NA_character_
 
-      bundle <- extract_pdf_bundle(local_pdf, sno, enable_tabulizer = enable_tabulizer)
-      lines <- bundle$lines
-      tables <- bundle$tables
-      if (nrow(lines) == 0) next
+        status <- "no_pdf"
+        if (!is.na(local_pdf)) {
+          bundle <- extract_pdf_bundle(local_pdf, sno, enable_tabulizer = enable_tabulizer)
+          lines <- bundle$lines
+          tables <- bundle$tables
+          status <- "no_lines"
+          if (nrow(lines) > 0) {
+            all_lines[[as.character(sno)]] <- lines
+            if (nrow(tables) > 0) all_tables[[as.character(sno)]] <- tables
 
-      all_lines[[as.character(sno)]] <- lines
-      if (nrow(tables) > 0) all_tables[[as.character(sno)]] <- tables
+            cand <- extract_indicator_candidates(lines, tables)
+            cat("   Indicator candidates:", nrow(cand), "\n")
+            if (nrow(cand) > 0) all_candidates[[as.character(sno)]] <- cand
 
-      cand <- extract_indicator_candidates(lines, tables)
-      cat("   Indicator candidates:", nrow(cand), "\n")
-      if (nrow(cand) > 0) all_candidates[[as.character(sno)]] <- cand
+            hz <- extract_hz_from_lines(lines)
+            n_hz <- if (nrow(hz) > 0) dplyr::n_distinct(hz$health_zone) else 0
+            n_hz_conf <- if (nrow(hz) > 0) dplyr::n_distinct(hz$health_zone[hz$confidence %in% c("high", "medium")]) else 0
+            cat("   Health zones found:", n_hz, "| high/medium confidence:", n_hz_conf, "\n")
+            if (nrow(hz) > 0) all_hz[[as.character(sno)]] <- hz
 
-      hz <- extract_hz_from_lines(lines)
-      n_hz <- if (nrow(hz) > 0) dplyr::n_distinct(hz$health_zone) else 0
-      n_hz_conf <- if (nrow(hz) > 0) dplyr::n_distinct(hz$health_zone[hz$confidence %in% c("high", "medium")]) else 0
-      cat("   Health zones found:", n_hz, "| high/medium confidence:", n_hz_conf, "\n")
-      if (nrow(hz) > 0) all_hz[[as.character(sno)]] <- hz
+            registry$extracted[registry$pdf_url == purl] <- TRUE
+            registry$analysed[registry$pdf_url == purl] <- TRUE
+            registry$last_updated[registry$pdf_url == purl] <- as.character(Sys.time())
+            status <- "success"
+          }
+        }
+        status
+      }, error = function(e) {
+        cat("   ERREUR SitRep", sno, ":", conditionMessage(e), "\n")
+        tryCatch({
+          err_log_fp <- file.path(LOG_DIR, "pipeline_row_errors.csv")
+          dir.create(dirname(err_log_fp), recursive = TRUE, showWarnings = FALSE)
+          errow <- data.frame(timestamp = as.character(Sys.time()), sitrep_no = sno,
+                               pdf_url = purl, error = conditionMessage(e),
+                               stringsAsFactors = FALSE)
+          write.table(errow, err_log_fp, sep = ",", row.names = FALSE,
+                      col.names = !file.exists(err_log_fp), append = file.exists(err_log_fp))
+        }, error = function(e2) invisible(NULL))
+        "error"
+      })
 
-      registry$extracted[registry$pdf_url == purl] <- TRUE
-      registry$analysed[registry$pdf_url == purl] <- TRUE
-      registry$last_updated[registry$pdf_url == purl] <- as.character(Sys.time())
-      processed_success <- c(processed_success, sno)
+      if (identical(row_status, "success")) processed_success <- c(processed_success, sno)
     }
     save_registry(registry)
   } else {

@@ -40,6 +40,34 @@ for (d in c(PDF_DIR, TABLE_DIR, DATA_FINAL, OUTPUT_DIR, LOG_DIR)) {
   dir.create(d, recursive = TRUE, showWarnings = FALSE)
 }
 
+## CORRECTIF 2026-09-26 : KNOWN_HZ_DICT n'etait jamais defini dans ce pipeline.
+## Preuve : ce script source 01_utils.R, 02_scrape_insp.R, 03_extract_pdf.R,
+## 04_extract_indicators.R, 05_qc_validate.R, 06_analyse_report.R, 07_run_pipeline.R
+## (liste ci-dessous) -- mais PAS scripts/00_config.R, seul endroit ou
+## KNOWN_HZ_DICT etait defini. La fonction extract_hz_from_lines(), dans
+## 04_extract_indicators.R (utilisee par 07_run_pipeline.R a l'etape 2, pour
+## CHAQUE SitRep telecharge), reference KNOWN_HZ_DICT sans le definir elle-meme
+## -> "object 'KNOWN_HZ_DICT' not found" des le premier SitRep traite, ce qui
+## interrompt run_preis_pipeline() avant save_registry() (verifie : annotation
+## d'erreur reelle sur le run GitHub Actions #5941, step "Pipeline complet
+## extraction (00_run_full_pipeline_ci.R)", commit eb0b093).
+## On ne source PAS 00_config.R ici (il redefinit SCRIPT_DIR/DATA_FINAL_DIR/
+## LOG_DIR/etc. avec une convention de chemins differente -- LOG_DIR="logs" au
+## lieu de "data/logs" -- et un repli Windows "PREIS_BASE_DIR" different de
+## GITHUB_WORKSPACE ; le sourcer casserait les chemins CI deja corrects
+## ci-dessus). La liste de zones de sante elle-meme est une constante fixe,
+## copiee a l'identique depuis scripts/00_config.R (ligne 65) et scripts/
+## 00_PREIS_MASTER_AUTOMATION*.R, ou elle est definie et utilisee de maniere
+## identique -- aucune donnee inventee.
+KNOWN_HZ_DICT <- c(
+  "Aru", "Aungba", "Bambu", "Bunia", "Damas", "Gety", "Gethy",
+  "Kilo", "Komanda", "Lita", "Logo", "Mambasa", "Mangala",
+  "Mongbwalu", "Nizi", "Nyankunde", "Rimba", "Rwampara",
+  "Beni", "Butembo", "Goma", "Kalunguta", "Katwa", "Kyondo", "Oicha",
+  "Miti-Murhesa"
+)
+
+
 INSP_CATEGORY_PAGE <- "https://insp.cd/category/sitrep/"
 INSP_MAX_PAGES     <- 6
 EPIDEMIC_LABEL      <- "MVE17-Bundibugyo-2026"
