@@ -12,9 +12,39 @@ run_preis_pipeline <- function(force_redownload = FALSE, force_reextract = FALSE
   cat("Run time:", as.character(Sys.time()), "\n")
   cat("============================================================\n\n")
 
+  ## DIAGNOSTIC 2026-09-27 (non intrusif : n'ajoute AUCUNE logique metier,
+  ## ne modifie ni ne filtre aucune donnee -- uniquement des traces d'execution).
+  ## Preuve du besoin : le run GitHub Actions #5970 (id 36298797906, commit
+  ## cd46f4a2 -- premier run apres la correction KNOWN_HZ_DICT) s'est termine
+  ## "success" en 15m39s, MAIS n'a produit ni nouveau PDF (data/pdf/ inchange),
+  ## ni la moindre ligne dans data/logs/download_diagnostics.csv ou
+  ## data/logs/pipeline_row_errors.csv, alors que 69 SitReps (65 a 133)
+  ## restent downloaded=FALSE dans data/final/sitrep_registry.csv. Impossible
+  ## de determiner sans le log brut de ce step (inaccessible : lecture
+  ## anonyme des logs GitHub Actions renvoie 404, l'API authentifiee n'est
+  ## pas accessible depuis ce sandbox) si (a) to_process se retrouve vide
+  ## (URLs du registre ne correspondant plus a celles fraichement resolues),
+  ## ou (b) le re-scraping interne consomme tout le temps avant meme
+  ## d'atteindre la boucle de telechargement. Ce bloc trace, de maniere
+  ## inconditionnelle, dans data/logs/pipeline_trace.csv, les faits qui
+  ## permettront de trancher au prochain run.
+  .trace_path <- file.path(LOG_DIR, "pipeline_trace.csv")
+  .trace <- function(event, note = "") {
+    tryCatch({
+      dir.create(dirname(.trace_path), recursive = TRUE, showWarnings = FALSE)
+      row <- data.frame(timestamp = as.character(Sys.time()), event = event,
+                         note = note, stringsAsFactors = FALSE)
+      write.table(row, .trace_path, sep = ",", row.names = FALSE,
+                  col.names = !file.exists(.trace_path), append = file.exists(.trace_path))
+    }, error = function(e) invisible(NULL))
+  }
+  .trace("enter_run_preis_pipeline")
+
   cat("--- ÉTAPE 1: Scraping INSP ---\n")
   scraped <- scrape_insp_sitrep_list()
+  .trace("scrape_done", paste0("n_scraped=", nrow(scraped)))
   if (nrow(scraped) == 0) {
+    .trace("scrape_empty_early_return")
     cat("Impossible de scraper la page. Pipeline arrêté.\n")
     return(invisible(NULL))
   }
@@ -24,6 +54,7 @@ run_preis_pipeline <- function(force_redownload = FALSE, force_reextract = FALSE
   registry <- merged$registry
   new_or_pending <- merged$new_or_pending
   save_registry(registry)
+  .trace("merge_done", paste0("n_registry=", nrow(registry), " n_new_or_pending=", nrow(new_or_pending)))
 
   if (process_all_known) {
     to_process <- registry %>% dplyr::filter(pdf_url %in% scraped$pdf_url)
@@ -33,6 +64,17 @@ run_preis_pipeline <- function(force_redownload = FALSE, force_reextract = FALSE
   }
   to_process <- to_process %>% dplyr::arrange(dplyr::desc(sitrep_no))
   if (!is.infinite(max_new)) to_process <- to_process %>% dplyr::slice_head(n = max_new)
+  .trace("to_process_ready", {
+    pending_urls <- registry$pdf_url[is.na(registry$extracted) | registry$extracted == FALSE]
+    n_mismatch <- sum(!(pending_urls %in% scraped$pdf_url))
+    paste0(
+      "n_to_process=", nrow(to_process),
+      " n_pending_registry=", length(pending_urls),
+      " n_pending_not_in_scraped=", n_mismatch,
+      " sample_scraped=[", paste(utils::head(scraped$pdf_url, 2), collapse = " ;; "), "]",
+      " sample_pending_registry=[", paste(utils::head(pending_urls, 2), collapse = " ;; "), "]"
+    )
+  })
 
   all_lines <- list(); all_tables <- list(); all_candidates <- list(); all_hz <- list()
   processed_success <- integer(0)
@@ -43,6 +85,7 @@ run_preis_pipeline <- function(force_redownload = FALSE, force_reextract = FALSE
       row <- to_process[i, ]
       sno <- row$sitrep_no
       purl <- row$pdf_url
+      .trace("row_start", paste0("i=", i, " sno=", sno))
       cat("\n>> SitRep", sno, ":", paste0("SitRep_", sprintf("%02d", sno), "_2026.pdf"), "\n")
 
       ## CORRECTIF 2026-09-26 : isolation par SitRep + trace des erreurs.
