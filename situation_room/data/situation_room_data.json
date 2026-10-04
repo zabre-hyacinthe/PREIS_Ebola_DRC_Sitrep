@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-04T14:12:36Z",
+  "generated_at": "2026-10-04T14:45:45Z",
   "asof": "2026-09-04",
   "sitrep": "141",
   "sitrep_date": "2026-09-04",
@@ -1765,8 +1765,8 @@
     {
       "name": "Fataki",
       "province": "Ituri",
-      "last_case_date": "2026-09-26",
-      "days_since": 3
+      "last_case_date": "2026-09-25",
+      "days_since": 4
     }
   ],
   "watch_zones": [
