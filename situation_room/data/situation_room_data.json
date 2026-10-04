@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-04T11:51:40Z",
+  "generated_at": "2026-10-04T12:17:35Z",
   "asof": "2026-09-04",
   "sitrep": "141",
   "sitrep_date": "2026-09-04",
@@ -1745,6 +1745,12 @@
       "days_since": 12
     },
     {
+      "name": "Manguredjipa",
+      "province": "Nord-Kivu",
+      "last_case_date": "2026-09-22",
+      "days_since": 7
+    },
+    {
       "name": "Fataki",
       "province": "Ituri",
       "last_case_date": "2026-09-26",
@@ -1761,12 +1767,6 @@
       "province": "Nord-Kivu",
       "last_case_date": "2026-09-26",
       "days_since": 3
-    },
-    {
-      "name": "Manguredjipa",
-      "province": "Nord-Kivu",
-      "last_case_date": "2026-09-26",
-      "days_since": 3
     }
   ],
   "watch_zones": [
@@ -1776,7 +1776,7 @@
       "cum_cases": 562,
       "cfr": 63.5,
       "new_24h": 7,
-      "new_7d": 18,
+      "new_7d": 14,
       "severity": "RED",
       "reason": "High-lethality active transmission",
       "action": "Verify time-to-care and isolation delay; check the community-death ratio and ETC/IPC capacity in this zone."
@@ -1787,7 +1787,7 @@
       "cum_cases": 348,
       "cfr": 65.8,
       "new_24h": 19,
-      "new_7d": 59,
+      "new_7d": 56,
       "severity": "RED",
       "reason": "High-lethality active transmission",
       "action": "Verify time-to-care and isolation delay; check the community-death ratio and ETC/IPC capacity in this zone."
@@ -1820,9 +1820,9 @@
       "cum_cases": 169,
       "cfr": 60.4,
       "new_24h": 3,
-      "new_7d": 22,
+      "new_7d": 16,
       "severity": "RED",
-      "reason": "High-lethality active transmission; Rapid case acceleration (7d doubling)",
+      "reason": "High-lethality active transmission",
       "action": "Verify time-to-care and isolation delay; check the community-death ratio and ETC/IPC capacity in this zone."
     },
     {
@@ -1842,7 +1842,7 @@
       "cum_cases": 26,
       "cfr": 53.8,
       "new_24h": 2,
-      "new_7d": 12,
+      "new_7d": 11,
       "severity": "RED",
       "reason": "High-lethality active transmission; Rapid case acceleration (7d doubling)",
       "action": "Verify time-to-care and isolation delay; check the community-death ratio and ETC/IPC capacity in this zone."
@@ -1853,7 +1853,7 @@
       "cum_cases": 701,
       "cfr": 47.2,
       "new_24h": 4,
-      "new_7d": 10,
+      "new_7d": 9,
       "severity": "ORANGE",
       "reason": "Sustained high lethality",
       "action": "Monitor; confirm case-management capacity is not saturated in this zone."
