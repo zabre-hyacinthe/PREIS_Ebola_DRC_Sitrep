@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-04T13:15:20Z",
+  "generated_at": "2026-10-04T13:52:58Z",
   "asof": "2026-09-04",
   "sitrep": "141",
   "sitrep_date": "2026-09-04",
@@ -1751,20 +1751,20 @@
       "days_since": 7
     },
     {
-      "name": "Fataki",
-      "province": "Ituri",
-      "last_case_date": "2026-09-26",
-      "days_since": 3
-    },
-    {
-      "name": "Kilo",
-      "province": "Ituri",
-      "last_case_date": "2026-09-26",
-      "days_since": 3
-    },
-    {
       "name": "Kyondo",
       "province": "Nord-Kivu",
+      "last_case_date": "2026-09-23",
+      "days_since": 6
+    },
+    {
+      "name": "Tchomia",
+      "province": "Ituri",
+      "last_case_date": "2026-09-23",
+      "days_since": 6
+    },
+    {
+      "name": "Fataki",
+      "province": "Ituri",
       "last_case_date": "2026-09-26",
       "days_since": 3
     }
