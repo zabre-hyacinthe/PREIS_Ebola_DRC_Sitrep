@@ -81,6 +81,61 @@ def changed_count(template_dir, edits):
     return n
 
 
+def _plain(x):
+    return (x.replace("&amp;", "&").replace("&lt;", "<").replace("&gt;", ">")
+             .replace("&quot;", '"').replace("&apos;", "'"))
+
+
+def ensure_issue_number(template_dir, edits, prev, expected):
+    """Garantit de facon DETERMINISTE le passage du numero d'Issue (ex. 131 -> 132).
+    Si, apres les edits du modele, un paragraphe affiche encore 'Issue No. <prev>', le chiffre
+    est remplace dans le run qui le contient (y compris si le nombre est coupe sur plusieurs runs).
+    Un numero deja change par le modele (meme faux) n'est jamais touche : il sera verifie ensuite.
+    Retourne la liste des corrections appliquees (pour information)."""
+    with open(os.path.join(template_dir, "word", "document.xml"), encoding="utf-8") as f:
+        xml = f.read()
+    runs = bd.get_runs(xml)
+    paras = [(m.start(), m.end()) for m in re.finditer(r"<w:p\b[^>]*>.*?</w:p>", xml, re.S)]
+    per_para = {}
+    for i, r in enumerate(runs):
+        for pi, (a, b) in enumerate(paras):
+            if a <= r.start() < b:
+                per_para.setdefault(pi, []).append(i)
+                break
+
+    def cur(i):
+        sp = edits.get(i)
+        if sp and sp["new"] is not None:
+            return sp["new"]
+        return _plain(bd.split_run(runs[i].group(0))[3])
+
+    pat = re.compile(r"Issue\s*No\.?\s*(\d+)", re.I)
+    fixed = []
+    for pi, idxs in per_para.items():
+        texts = [cur(i) for i in idxs]
+        joined = "".join(texts)
+        nums = {int(m.group(1)) for m in pat.finditer(joined)}
+        if prev not in nums or expected in nums:
+            continue
+        m = next(x for x in pat.finditer(joined) if int(x.group(1)) == prev)
+        start, end = m.start(1), m.end(1)
+        pos = 0
+        for i, t in zip(idxs, texts):
+            lo, hi = pos, pos + len(t)
+            pos = hi
+            if hi <= start or lo >= end:
+                continue
+            if lo <= start:      # run qui contient le debut du numero : on y met tout le nouveau numero
+                new = t[:start - lo] + str(expected) + (t[end - lo:] if end <= hi else "")
+            else:                # run suivant couvert par l'ancien numero (ex. '1' | '31') : on retire ces chiffres
+                new = t[end - lo:] if end < hi else ""
+            old = edits.get(i) or {"new": None, "comment": None}
+            com = old["comment"] or ("Numero d'Issue mis a jour automatiquement (%d -> %d)." % (prev, expected))
+            edits[i] = {"new": new, "comment": com}
+            fixed.append("run %d : Issue No. %d -> %d" % (i, prev, expected))
+    return fixed
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--sitrep-template", required=True)
@@ -121,6 +176,12 @@ def main():
         if errors:
             fail(2, "%d erreur(s) de validation, ex. :\n  - %s" % (len(errors), "\n  - ".join(errors[:10])))
 
+        warnings = []
+        if args.expected_issue_no is not None and args.prev_issue_no is not None \
+                and args.expected_issue_no != args.prev_issue_no:
+            for nm, d, ed in (("SitRep", sitrep_dir, s_edits), ("Brief", brief_dir, b_edits)):
+                for note in ensure_issue_number(d, ed, args.prev_issue_no, args.expected_issue_no):
+                    warnings.append("%s : numero d'Issue corrige automatiquement (%s)" % (nm, note))
         n_s, n_b = changed_count(sitrep_dir, s_edits), changed_count(brief_dir, b_edits)
         if n_s < args.min_sitrep_edits or n_b < args.min_brief_edits:
             fail(2, "reponse trop pauvre : %d run(s) SitRep modifie(s) (minimum %d), %d run(s) Brief "
@@ -148,7 +209,6 @@ def main():
         for d in (p["sitrep_propre"], p["sitrep_suivi"], p["brief_propre"], p["brief_suivi"]):
             shutil.rmtree(d + "_src", ignore_errors=True)
 
-        warnings = []
         try:
             s_txt = bd.verify_pair(p["sitrep_propre"], p["sitrep_suivi"])
             b_txt = bd.verify_pair(p["brief_propre"], p["brief_suivi"])

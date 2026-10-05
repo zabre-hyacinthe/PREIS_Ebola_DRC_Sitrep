@@ -49,7 +49,7 @@
     overloaded = "API temporairement saturee ou limitee en debit : relancer plus tard (retry).",
     network    = "Probleme reseau transitoire avec l'API : relancer plus tard (retry).",
     timeout    = "Delai depasse : relancer plus tard (retry).",
-    output     = "La reponse du modele n'a pas passe les controles qualite (JSON, index, reponse trop pauvre ou numero d'Issue). Aucun document n'a ete envoye. Relancer (retry) ; si cela se repete, consulter data/africa_cdc_brief/last_response.txt.",
+    output     = "La reponse du modele n'a pas passe les controles qualite (JSON, index, reponse trop pauvre ou numero d'Issue). Aucun document n'a ete envoye. La reponse brute du modele est jointe a ce mail (last_response.txt) pour diagnostic. Relancer (retry) ; si cela se repete, transmettre ce fichier.",
     build      = "Construction ou verification des .docx echouee (gabarit incompatible ?). Consulter le journal du step 06b dans l'onglet Actions.",
     template   = "Lecture des gabarits impossible. Verifier data/africa_cdc_brief/templates/.",
     "Cause inattendue : consulter le journal du step 06b dans l'onglet Actions.")
@@ -184,7 +184,7 @@ send_africacdc_sitrep_brief_full_email <- function(root = NULL, force = FALSE) {
                          sno, cause, .awb_hint(a$last_category[i]))
         ok <- .awb_send_mail(py_bin, list(from = from, to = as.list(ops_to),
               subject = sprintf("PREIS ALERTE - generation Africa CDC SitRep+Brief en echec (SitRep RDC No.%d)", sno),
-              html = html, plain = plain, attachments = list()))
+              html = html, plain = plain, attachments = as.list(Sys.glob("outputs/rapports/africa_cdc_test/last_response.txt"))))
         if (ok) { a$alert_sent_utc[i] <- format(Sys.time(), "%Y-%m-%d %H:%M:%S UTC", tz = "UTC"); changed <- TRUE
                   cat("Alerte operateur envoyee pour le SitRep", sno, "\n")
         } else { all_ok <- FALSE; cat("Echec d'envoi de l'alerte operateur pour le SitRep", sno, "\n") }
@@ -220,7 +220,7 @@ send_africacdc_sitrep_brief_full_email <- function(root = NULL, force = FALSE) {
         if (!is.null(tr$summary_fr) && nzchar(tr$summary_fr)) paste0("<p style='font-size:12px;color:#666'>Resume du modele : ", .awb_esc(tr$summary_fr), "</p>") else ""))
       plain <- "TEST reussi : toute la chaine fonctionne. Documents joints ; rien n'a ete enregistre."
     } else {
-      files <- character(0)
+      files <- Sys.glob("outputs/rapports/africa_cdc_test/last_response.txt")   # reponse brute du modele, pour diagnostic
       subject <- "[TEST] PREIS Africa CDC SitRep + Brief - ECHEC du test"
       html <- wrap(paste0(
         "<div style='background:#9F2241;color:#fff;padding:14px 18px;border-radius:8px'><div style='font-size:16px;font-weight:700'>",

@@ -325,7 +325,7 @@ if (!isTRUE(res$ok)) {
         sprintf("%s (HTTP %s, request-id %s)", .nz(res$message), .nz(res$http_status), .nz(res$request_id)))
 }
 .log("Reponse recue : modele %s, usage %s, request-id %s.", .nz(res$model), .nz(jsonlite::toJSON(res$usage, auto_unbox = TRUE)), .nz(res$request_id))
-if (!IS_TEST) {   # trace de la derniere reponse brute (diagnostic) -- ecrasee a chaque cycle
+{   # trace de la derniere reponse brute (diagnostic, jointe aux e-mails d'echec) -- dossier ignore par git
   if (!dir.exists(TEST_OUT_DIR)) dir.create(TEST_OUT_DIR, recursive = TRUE)
   file.copy(resp_fp, LAST_RESP_FP, overwrite = TRUE)
 }

@@ -293,6 +293,30 @@ class TestE2E(unittest.TestCase):
         self.assertEqual(self.attempts()[0]["last_category"], "request")
         self.assertIn("credit balance", self.attempts()[0]["last_error"])
 
+    def test_issue_number_is_forced_when_model_forgets_it(self):
+        """Cas reel observe : le modele ne touche pas 'Issue No. 131'. Le numero est corrige de facon
+        deterministe (131 -> 132) ; un numero deja change mais FAUX (999) reste refuse."""
+        api = self.api(text=ok_payload(update_issue=False))
+        rc, out = self.r("06b_generate_africa_cdc_sitrep_brief_full.R", api)
+        self.assertEqual(rc, 0, out)
+        self.assertIn("4 documents generes et verifies", out, out)
+        self.assertIn("corrige automatiquement", out)
+        self.assertEqual(self.state_rows()[-1]["issue_no"], "132")
+        p = glob.glob(self.f(RAPPORTS + "/BVD_SitRep_132_*_propre.docx"))[0]
+        root = bd._load_doc(p)[0]
+        self.assertEqual(bd.issue_numbers(bd.paragraph_texts(root)), {132})
+
+    def test_last_response_is_attached_to_failure_mail_in_test_mode(self):
+        api = self.api(text=json.dumps({"sitrep_edits": {"0": {"new": "x", "comment": None}}, "brief_edits": {}}))
+        smtp = self.smtp()
+        rc, out = self.r("06b_generate_africa_cdc_sitrep_brief_full.R", api, smtp, mode="test")
+        self.assertEqual(rc, 0, out)
+        rc, out = self.r("05b_send_africacdc_sitrep_brief_full_email.R", None, smtp, mode="test")
+        self.assertEqual(rc, 0, out)
+        msgs = smtp.parsed()
+        self.assertEqual(len(msgs), 1, out)
+        self.assertIn("last_response.txt", msgs[0]["attachments"])
+
     def test_bad_model_outputs_are_rejected_and_nothing_is_written(self):
         t0, b0 = self.hashes()
         cases = {
