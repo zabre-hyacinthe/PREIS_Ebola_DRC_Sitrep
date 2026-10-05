@@ -220,9 +220,9 @@ def main():
 
         lab = args.issue_label
         names = {
-            "sitrep_propre": "BVD_SitRep_%s_propre.docx" % lab,
+            "sitrep_propre": "BVD_SitRep_%s.docx" % lab,
             "sitrep_suivi": "BVD_SitRep_%s_suivi_modifications.docx" % lab,
-            "brief_propre": "BVD_Executive_Brief_%s_propre.docx" % lab,
+            "brief_propre": "BVD_Executive_Brief_%s.docx" % lab,
             "brief_suivi": "BVD_Executive_Brief_%s_suivi_modifications.docx" % lab,
         }
         p = {k: os.path.join(stage, v) for k, v in names.items()}
@@ -266,10 +266,12 @@ def main():
                                     % (nm, args.prev_issue_no))
 
         os.makedirs(args.out_dir, exist_ok=True)
+        # Seules les versions finales (sans suivi des modifications) sont livrees ; la version suivi
+        # ne sert qu'au controle d'integrite (verify_pair) et reste dans le dossier temporaire.
         final = {}
-        for k, v in p.items():
-            final[k] = os.path.join(args.out_dir, os.path.basename(v))
-            shutil.copy2(v, final[k])
+        for k in ("sitrep_propre", "brief_propre"):
+            final[k] = os.path.join(args.out_dir, os.path.basename(p[k]))
+            shutil.copy2(p[k], final[k])
         for cpath in (c_s, c_b):
             if os.path.exists(cpath):
                 shutil.copy2(cpath, os.path.join(args.out_dir, os.path.basename(cpath)))

@@ -11,11 +11,11 @@
 #     data/africa_cdc_brief/attempts.csv).
 #
 #  2. MODE TEST (PREIS_AFRICACDC_MODE = test) : envoie a ALERT_TO UNIQUEMENT
-#     le resultat du test de 06b (les 4 documents, ou la cause de l'echec).
+#     le resultat du test de 06b (les 2 documents, ou la cause de l'echec).
 #     Rien n'est enregistre, aucun destinataire Africa CDC n'est contacte.
 #
-#  3. ENVOI NORMAL : envoie les 4 documents (SitRep + Executive Brief,
-#     versions propre et suivi_modifications) de la derniere Issue generee,
+#  3. ENVOI NORMAL : envoie les 2 documents (SitRep + Executive Brief,
+#     versions finales, sans suivi des modifications) de la derniere Issue generee,
 #     une seule fois par Issue (anti-doublon :
 #     data/africa_cdc_brief/email_sent_state.csv). Les documents sont lus
 #     dans outputs/rapports/ (commites par le workflow) : un echec SMTP est
@@ -210,12 +210,13 @@ send_africacdc_sitrep_brief_full_email <- function(root = NULL, force = FALSE) {
       html <- wrap(paste0(
         "<div style='background:#2E7D32;color:#fff;padding:14px 18px;border-radius:8px'><div style='font-size:16px;font-weight:700'>",
         "TEST reussi &mdash; toute la chaine fonctionne</div></div>",
-        "<p style='margin-top:14px'>Cle API valide, PDF lu, reponse du modele validee, 4 documents construits et verifies. ",
+        "<p style='margin-top:14px'>Cle API valide, PDF lu, reponse du modele validee, 2 documents construits et verifies. ",
         "Ils sont joints pour que tu juges la qualite. <strong>Rien n'a ete enregistre</strong> (etat et gabarits intacts) et ",
         "<strong>aucun destinataire Africa CDC n'a ete contacte</strong>.</p>",
         "<p>Source : SitRep RDC No. ", tr$sitrep_no, " (le meme que celui deja utilise pour le gabarit : le test ne montre donc ",
         "que peu de differences, ce qui est normal ; il valide la plomberie, pas l'evolution des chiffres). ",
         "Anomalies signalees : ", tr$anomalies_count, ".</p>",
+        if (length(unlist(tr$anomalies)) > 0) paste0("<ul style='font-size:12px'>", paste0("<li>", vapply(unlist(tr$anomalies), .awb_esc, character(1)), "</li>", collapse = ""), "</ul>") else "",
         if (length(warn) > 0) paste0("<p><strong>Avertissements :</strong> ", .awb_esc(paste(warn, collapse = " ; ")), "</p>") else "",
         if (!is.null(tr$summary_fr) && nzchar(tr$summary_fr)) paste0("<p style='font-size:12px;color:#666'>Resume du modele : ", .awb_esc(tr$summary_fr), "</p>") else ""))
       plain <- "TEST reussi : toute la chaine fonctionne. Documents joints ; rien n'a ete enregistre."
@@ -250,9 +251,7 @@ send_africacdc_sitrep_brief_full_email <- function(root = NULL, force = FALSE) {
 
   sitrep_propre_fp <- file.path(rapports_dir, as.character(last$sitrep_propre_file[1]))
   brief_propre_fp  <- file.path(rapports_dir, as.character(last$brief_propre_file[1]))
-  sitrep_suivi_fp <- sub("_propre\\.docx$", "_suivi_modifications.docx", sitrep_propre_fp)
-  brief_suivi_fp  <- sub("_propre\\.docx$", "_suivi_modifications.docx", brief_propre_fp)
-  missing <- Filter(function(p) !file.exists(p), c(sitrep_propre_fp, sitrep_suivi_fp, brief_propre_fp, brief_suivi_fp))
+  missing <- Filter(function(p) !file.exists(p), c(sitrep_propre_fp, brief_propre_fp))
 
   sent_state <- if (file.exists(sent_state_fp)) tryCatch(readr::read_csv(sent_state_fp, show_col_types = FALSE), error = function(e) NULL) else NULL
   already <- !is.null(sent_state) && "issue_no" %in% names(sent_state) && issue_no %in% suppressWarnings(as.integer(sent_state$issue_no))
@@ -267,8 +266,13 @@ send_africacdc_sitrep_brief_full_email <- function(root = NULL, force = FALSE) {
   if (length(pub_to) == 0) { cat("Liste des destinataires vide.\n"); return(invisible(FALSE)) }
 
   subject <- sprintf("PREIS Africa CDC SitRep + Executive Brief - Issue No.%d (DRC SitRep No.%03d)", issue_no, sno)
+  anomaly_items <- tryCatch(readLines(file.path(rapports_dir, "africa_cdc_anomalies_latest.txt"), warn = FALSE, encoding = "UTF-8"), error = function(e) character(0))
+  anomaly_items <- anomaly_items[nzchar(trimws(anomaly_items))]
   anomaly_line <- if (anomalies_count > 0) {
-    sprintf("<p style='font-size:12px;color:#9F2241'><strong>%d data-reliability note(s)</strong> were flagged in this cycle and are recorded as Word comments in the tracked-changes (\u201csuivi_modifications\u201d) files \u2014 nothing was silently corrected or invented.</p>", anomalies_count)
+    paste0("<p style='font-size:12px;color:#9F2241;margin-bottom:4px'><strong>", anomalies_count,
+           " data-reliability note(s)</strong> flagged in this cycle (nothing was silently corrected or invented):</p>",
+           if (length(anomaly_items) > 0) paste0("<ul style='font-size:12px;color:#444;margin-top:0'>",
+             paste0("<li>", vapply(anomaly_items, .awb_esc, character(1)), "</li>", collapse = ""), "</ul>") else "")
   } else ""
   html <- paste0(
     "<div style='font-family:Segoe UI,Arial,sans-serif;color:#252525;max-width:640px;line-height:1.5'>",
@@ -277,16 +281,15 @@ send_africacdc_sitrep_brief_full_email <- function(root = NULL, force = FALSE) {
     "<div style='font-size:13px;margin-top:3px'>Issue No. ", issue_no, " &middot; DRC SitRep No. ", sprintf("%03d", sno), "</div></div>",
     "<p style='margin-top:16px'>Please find attached the full Africa CDC-format SitRep and Executive Brief for Issue No. ",
     issue_no, ", generated automatically by PREIS from DRC SitRep No. ", sprintf("%03d", sno),
-    ". Each document is attached twice: a clean (\u201cpropre\u201d) version with all updates accepted, and a tracked-changes ",
-    "(\u201csuivi_modifications\u201d) version showing every change against the previous Issue, with comments on any missing ",
-    "data, source inconsistencies or calculated values.</p>", anomaly_line,
+    ". Figures are consistent between the two documents (automatic cross-check). ",
+    "Values not present in the DRC SitRep (e.g. Uganda, health-worker figures) are carried over from the previous cycle.</p>", anomaly_line,
     "<p style='font-size:12px;color:#666'>Unlike the DRC quantitative supplement (separate e-mail), these documents follow ",
     "the official Africa CDC template exactly, including Uganda figures and the full operational narrative by pillar. ",
     "They are generated automatically and should be reviewed before onward distribution.</p></div>")
   plain <- sprintf("PREIS Africa CDC SitRep + Executive Brief - Issue No.%d (DRC SitRep No.%03d). See attached documents.", issue_no, sno)
 
   ok <- .awb_send_mail(py_bin, list(from = from, to = as.list(pub_to), subject = subject, html = html, plain = plain,
-        attachments = list(sitrep_propre_fp, sitrep_suivi_fp, brief_propre_fp, brief_suivi_fp)))
+        attachments = list(sitrep_propre_fp, brief_propre_fp)))
   if (!ok) { cat("Echec de l'envoi de l'e-mail Africa CDC SitRep+Brief complet (nouvel essai au prochain cycle).\n"); return(invisible(FALSE)) }
 
   new_row <- data.frame(issue_no = issue_no, sitrep_no_source = sno,
@@ -298,7 +301,7 @@ send_africacdc_sitrep_brief_full_email <- function(root = NULL, force = FALSE) {
   }
   tryCatch(readr::write_csv(sent_state2, sent_state_fp), error = function(e) cat("Avertissement : etat anti-doublon non enregistre.\n"))
   cat("\nE-mail Africa CDC SitRep+Brief (complet) ENVOYE pour Issue No.", issue_no, "->", paste(pub_to, collapse = ", "), "\n")
-  cat("Pieces jointes :", paste(basename(c(sitrep_propre_fp, sitrep_suivi_fp, brief_propre_fp, brief_suivi_fp)), collapse = ", "), "\n")
+  cat("Pieces jointes :", paste(basename(c(sitrep_propre_fp, brief_propre_fp)), collapse = ", "), "\n")
   invisible(all_ok)
 }
 

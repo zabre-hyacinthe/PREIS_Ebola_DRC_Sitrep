@@ -205,11 +205,12 @@ class TestE2E(unittest.TestCase):
         api = self.api()
         rc, out = self.r("06b_generate_africa_cdc_sitrep_brief_full.R", api)
         self.assertEqual(rc, 0, out)
-        self.assertIn("4 documents generes et verifies", out)
+        self.assertIn("2 documents generes et verifies", out)
         rows = self.state_rows()
         self.assertEqual((rows[-1]["sitrep_no_source"], rows[-1]["issue_no"], rows[-1]["anomalies_count"]), ("142", "132", "2"))
         names = sorted(os.path.basename(p) for p in glob.glob(self.f(RAPPORTS + "/BVD_*.docx")))
-        self.assertEqual(len(names), 4, names)
+        self.assertEqual(len(names), 2, names)
+        self.assertFalse([n for n in names if "suivi" in n or "propre" in n], names)
         # Libelle depuis la date du nom de fichier du registre (03/10/2026), mois en anglais
         self.assertTrue(all("132_03_October2026" in n for n in names), names)
         self.assertNotEqual(self.hashes(), (t0, b0), "les gabarits doivent etre remplaces")
@@ -225,13 +226,13 @@ class TestE2E(unittest.TestCase):
         self.assertEqual(rc, 0, out)
         self.assertIn("deja traite", out)
         self.assertEqual(len(api.requests), 1)
-        # integrite Word du suivi : le fichier s'ouvre dans LibreOffice
+        # integrite Word du document final : le fichier s'ouvre dans LibreOffice
         if shutil.which("soffice"):
-            suivi = glob.glob(self.f(RAPPORTS + "/BVD_SitRep_*suivi_modifications.docx"))[0]
+            suivi = glob.glob(self.f(RAPPORTS + "/BVD_SitRep_*.docx"))[0]
             outdir = tempfile.mkdtemp()
             subprocess.run(["soffice", "--headless", "--convert-to", "pdf", "--outdir", outdir, suivi],
                            capture_output=True, timeout=180)
-            self.assertTrue(glob.glob(os.path.join(outdir, "*.pdf")), "LibreOffice n'a pas pu ouvrir le .docx suivi")
+            self.assertTrue(glob.glob(os.path.join(outdir, "*.pdf")), "LibreOffice n'a pas pu ouvrir le .docx final")
 
     def test_transient_errors_then_success_fenced(self):
         api = self.api(["529", "429", "ok_fenced"])
@@ -299,10 +300,10 @@ class TestE2E(unittest.TestCase):
         api = self.api(text=ok_payload(update_issue=False))
         rc, out = self.r("06b_generate_africa_cdc_sitrep_brief_full.R", api)
         self.assertEqual(rc, 0, out)
-        self.assertIn("4 documents generes et verifies", out, out)
+        self.assertIn("2 documents generes et verifies", out, out)
         self.assertIn("corrige automatiquement", out)
         self.assertEqual(self.state_rows()[-1]["issue_no"], "132")
-        p = glob.glob(self.f(RAPPORTS + "/BVD_SitRep_132_*_propre.docx"))[0]
+        p = glob.glob(self.f(RAPPORTS + "/BVD_SitRep_132_*.docx"))[0]
         root = bd._load_doc(p)[0]
         self.assertEqual(bd.issue_numbers(bd.paragraph_texts(root)), {132})
 
@@ -325,7 +326,7 @@ class TestE2E(unittest.TestCase):
         rc, out = self.r("06b_generate_africa_cdc_sitrep_brief_full.R", api)
         self.assertEqual(rc, 0, out)
         for kind, tpl in (("SitRep", t_s), ("Executive_Brief", t_b)):
-            f = glob.glob(self.f(RAPPORTS + "/BVD_%s_132_*_propre.docx" % kind))[0]
+            f = glob.glob(self.f(RAPPORTS + "/BVD_%s_132_*.docx" % kind))[0]
             x = self._xml(f)
             self.assertIn("Dr. R. Hyacinthe ZABRE", x)
             self.assertEqual(x.count('w:jc w:val="both"'), tpl.count('w:jc w:val="both"'))
@@ -342,7 +343,7 @@ class TestE2E(unittest.TestCase):
         rc, out = self.r("06b_generate_africa_cdc_sitrep_brief_full.R", api)
         self.assertEqual(rc, 0, out)
         self.assertIn("remise automatiquement", out)
-        f = glob.glob(self.f(RAPPORTS + "/BVD_SitRep_132_*_propre.docx"))[0]
+        f = glob.glob(self.f(RAPPORTS + "/BVD_SitRep_132_*.docx"))[0]
         self.assertIn("Merawi Aragaw, Dr. R. Hyacinthe ZABRE", self._xml(f))
 
     def test_last_response_is_attached_to_failure_mail_in_test_mode(self):
@@ -423,7 +424,7 @@ class TestE2E(unittest.TestCase):
         m = sm.parsed()
         self.assertEqual(len(m), 1)
         self.assertEqual(sorted(m[0]["rcpts"]), ["africacdc@example.org", "eiu@example.org"])
-        self.assertEqual(len(m[0]["attachments"]), 4)
+        self.assertEqual(len(m[0]["attachments"]), 2)
         self.assertIn("Issue No.132", m[0]["subject"])
         rc, out = self.r("05b_send_africacdc_sitrep_brief_full_email.R", smtp=sm, extra=extra)
         self.assertEqual(len(sm.parsed()), 1, "jamais deux fois la meme Issue")
@@ -480,7 +481,7 @@ class TestE2E(unittest.TestCase):
             api = self.api(text=payload)
             rc, out = self.r("06b_generate_africa_cdc_sitrep_brief_full.R", api)
             self.assertEqual(rc, 0, out)
-            self.assertIn("4 documents generes et verifies", out, out)
+            self.assertIn("2 documents generes et verifies", out, out)
             sh("%s save --store %s --dir data/africa_cdc_brief/templates" % (ps, store), c)
             sh("for f in state.csv attempts.csv email_sent_state.csv private_store.enc private_store.enc.sha256; do "
                "git add data/africa_cdc_brief/$f 2>/dev/null || true; done; git add outputs/rapports/ || true", c)
@@ -523,7 +524,7 @@ class TestE2E(unittest.TestCase):
         self.assertEqual(len(m), 1)
         self.assertEqual(m[0]["rcpts"], ["ops@example.org"], "le test ne doit jamais ecrire aux destinataires Africa CDC")
         self.assertTrue(m[0]["subject"].startswith("[TEST]"))
-        self.assertEqual(len(m[0]["attachments"]), 4)
+        self.assertEqual(len(m[0]["attachments"]), 2)
 
     def test_test_mode_failure_is_reported_by_email(self):
         api = self.api()

@@ -191,6 +191,10 @@ SitRep RDC source, même numéro d'Issue).
 2. Chaque modification en suivi des modifications (auteur « Claude »), avec
    commentaires en français : données manquantes, incohérences de la source,
    valeurs calculées, numéros manquants.
+   (Mode automatisé : seule la version finale, sans suivi, est envoyée par e-mail, sous
+   les noms BVD_SitRep_<n°>_<jj>_<Month><aaaa>.docx et BVD_Executive_Brief_<...>.docx ;
+   la version suivi sert au contrôle d'intégrité. Chaque anomalie/donnée manquante doit
+   donc figurer dans la liste « anomalies » de ta réponse : c'est elle qui est envoyée.)
 3. Produire quatre fichiers (deux par document) :
    - BVD_SitRep_<n°>_<jj>_<Month><aaaa>_suivi_modifications.docx
    - BVD_SitRep_<n°>_<jj>_<Month><aaaa>_propre.docx

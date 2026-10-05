@@ -346,7 +346,7 @@ built <- tryCatch(jsonlite::fromJSON(res_line, simplifyVector = FALSE), error = 
 if (is.null(built)) .fail(latest_sno, "build", paste("sortie de run_build.py illisible :", paste(build_out, collapse = " | ")))
 for (p in unlist(built$paths)) if (!file.exists(p)) .fail(latest_sno, "build", sprintf("fichier attendu absent apres construction : %s", p))
 n_anomalies <- length(built$anomalies)
-.log("4 documents generes et verifies (%d runs SitRep + %d runs Brief modifies, %d anomalie(s) signalee(s)).",
+.log("2 documents generes et verifies (controles d'integrite et de concordance OK ; %d runs SitRep + %d runs Brief modifies, %d anomalie(s) signalee(s)).",
      built$n_sitrep_edits, built$n_brief_edits, n_anomalies)
 for (w in built$warnings) .log("AVERTISSEMENT : %s", w)
 
@@ -354,7 +354,7 @@ for (w in built$warnings) .log("AVERTISSEMENT : %s", w)
 rel <- function(p) if (startsWith(p, BASE_DIR)) sub("^/+", "", substring(p, nchar(BASE_DIR) + 1)) else p
 if (IS_TEST) {
   .write_test_run("ok", sitrep_no = latest_sno, issue_no = new_issue_no, label = issue_label,
-                  anomalies_count = n_anomalies, warnings = I(as.character(unlist(built$warnings))),
+                  anomalies_count = n_anomalies, anomalies = I(as.character(unlist(built$anomalies))), warnings = I(as.character(unlist(built$warnings))),
                   files = I(vapply(built$paths, rel, character(1), USE.NAMES = FALSE)),
                   summary_fr = built$summary_fr)
   .log("MODE TEST : aucun etat ni gabarit modifie. Resultat dans %s ; 05b l'enverra a ALERT_TO.", rel(TEST_RUN_FP))
@@ -364,6 +364,7 @@ if (IS_TEST) {
     tmp <- paste0(dst, ".new")
     if (!file.copy(src, tmp, overwrite = TRUE) || !file.rename(tmp, dst)) stop("remplacement impossible : ", dst)
   }
+  writeLines(as.character(unlist(built$anomalies)), file.path(OUT_DIR, "africa_cdc_anomalies_latest.txt"), useBytes = TRUE)
   .swap(built$paths$sitrep_propre, SITREP_TEMPLATE)
   .swap(built$paths$brief_propre, BRIEF_TEMPLATE)
   new_row <- data.frame(sitrep_no_source = latest_sno, issue_no = new_issue_no, generated_at_utc = date_iso,
@@ -377,7 +378,7 @@ if (IS_TEST) {
   .log("Issue Africa CDC No. %s generee a partir du SitRep RDC %s. Etat mis a jour (%s).", new_issue_no, latest_sno, rel(STATE_FP))
 }
 if (n_anomalies > 0) {
-  .log("Anomalies signalees ce cycle (detail en commentaires des .docx _suivi_modifications) :")
+  .log("Anomalies signalees ce cycle (listees dans l'e-mail) :")
   for (an in built$anomalies) cat("   - ", an, "\n")
 }
 if (nzchar(built$summary_fr)) .log("Resume : %s", built$summary_fr)
