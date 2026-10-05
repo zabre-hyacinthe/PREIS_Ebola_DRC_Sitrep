@@ -1,0 +1,109 @@
+name: PREIS Africa CDC SitRep+Brief (manuel)
+
+# Lancement MANUEL uniquement, independant du monitor (preis_sitrep_monitor_v2.yml).
+# Pourquoi : le monitor dure 20-30 min et se relance toutes les 30 min dans un groupe de
+# concurrence qui n'accepte qu'UN run en attente ; un run manuel y est regulierement remplace
+# par le run planifie suivant et n'est donc jamais execute. Ce workflow a son propre groupe :
+# il demarre tout de suite et dure quelques minutes (R minimal, aucune extraction).
+#
+# Modes :  test  = essai complet, mail [TEST] uniquement a ALERT_TO, rien n'est enregistre
+#          retry = remet le compteur d'echecs a zero puis traite le dernier SitRep RDC
+#          normal = comportement automatique (traite un SitRep RDC plus recent que le dernier Issue)
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "test (essai, mail a ALERT_TO seulement) | retry | normal"
+        required: true
+        default: "test"
+        type: choice
+        options:
+          - "test"
+          - "retry"
+          - "normal"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: preis-africa-cdc-manual
+  cancel-in-progress: false
+
+jobs:
+  africa-cdc:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+    env:
+      PREIS_AFRICACDC_MODE: ${{ inputs.mode }}
+      PREIS_SEND_EMAIL: "true"
+      SMTP_USER: ${{ secrets.SMTP_USER }}
+      SMTP_PASS: ${{ secrets.SMTP_PASS }}
+      SMTP_HOST: ${{ secrets.SMTP_HOST }}
+      SMTP_PORT: ${{ secrets.SMTP_PORT }}
+      ALERT_FROM: ${{ secrets.ALERT_FROM }}
+      ALERT_TO: ${{ secrets.ALERT_TO }}
+      ALERT_CC: ${{ secrets.ALERT_CC }}
+      ALERT_BCC: ${{ secrets.ALERT_BCC }}
+      PREIS_AFRICACDC_TO: ${{ secrets.PREIS_AFRICACDC_TO }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      PREIS_ARCHIVE_KEY: ${{ secrets.PREIS_ARCHIVE_KEY }}
+      ANTHROPIC_MODEL: ${{ vars.ANTHROPIC_MODEL }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: true
+
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v2
+
+      - name: Install R packages (minimal)
+        run: |
+          Rscript --vanilla -e 'install.packages(c("jsonlite","dplyr","readr"), repos="https://packagemanager.posit.co/cran/__linux__/jammy/latest")'
+          Rscript --vanilla -e 'stopifnot(all(vapply(c("jsonlite","dplyr","readr"), requireNamespace, logical(1), quietly=TRUE))); cat("R packages OK\n")'
+
+      - name: Restaurer le coffre des gabarits Africa CDC
+        continue-on-error: true
+        run: |
+          python3 scripts/python/private_store.py restore \
+            --store data/africa_cdc_brief/private_store.enc \
+            --dir data/africa_cdc_brief/templates
+
+      - name: Generer SitRep+Brief Africa CDC (06b)
+        continue-on-error: true
+        timeout-minutes: 15
+        run: Rscript --vanilla scripts/06b_generate_africa_cdc_sitrep_brief_full.R
+
+      - name: Sauvegarder le coffre des gabarits Africa CDC
+        if: always()
+        continue-on-error: true
+        run: |
+          python3 scripts/python/private_store.py save \
+            --store data/africa_cdc_brief/private_store.enc \
+            --dir data/africa_cdc_brief/templates
+
+      - name: Envoyer le mail Africa CDC (05b)
+        if: always()
+        continue-on-error: true
+        timeout-minutes: 6
+        run: Rscript --vanilla scripts/05b_send_africacdc_sitrep_brief_full_email.R
+
+      - name: Enregistrer l'etat (sauf en mode test)
+        if: always() && inputs.mode != 'test'
+        continue-on-error: true
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for f in state.csv attempts.csv email_sent_state.csv private_store.enc private_store.enc.sha256; do
+            git add "data/africa_cdc_brief/$f" 2>/dev/null || true
+          done
+          if git diff --cached --quiet; then
+            echo "Aucun changement d'etat a enregistrer."
+          else
+            git commit -m "PREIS Africa CDC: etat SitRep+Brief (${{ inputs.mode }}) [skip ci]"
+            for i in 1 2 3; do
+              git pull --rebase origin main && git push origin HEAD:main && break
+              echo "push refuse (tentative $i), nouvel essai..."; sleep 5
+            done
+          fi
