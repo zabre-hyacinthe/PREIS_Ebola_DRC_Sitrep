@@ -151,6 +151,31 @@ vérifiée sur SitRep 141 → Issue 131 (deux cycles concordants).
   le dire clairement (en mode automatisé : le script s'arrête sans mettre à
   jour l'état ni les gabarits, voir § AUTOMATISATION).
 
+## MISE EN FORME ET MENTIONS PERMANENTES (ne jamais modifier)
+- La ligne « Prepared by » cite « Dr. R. Hyacinthe ZABRE » juste après « Dr. Merawi
+  Aragaw » (mention définitive). Quand tu édites cette ligne (sources, numéro de SitRep
+  RDC), conserve tous les noms ; ne retire jamais celui-ci.
+- Les paragraphes de texte sont justifiés et le contenu des tableaux de données est
+  centré (sauf la première colonne). Tu ne modifies que le texte des runs, jamais
+  l'alignement ni la mise en forme.
+- Tableau « CONTINENTAL KEY INDICATORS » (tuiles) : tous les grands chiffres sont en
+  gras et le texte est justifié. Quand tu remplaces un chiffre, garde le run (donc le gras).
+
+## CONCORDANCE SITREP / BRIEF (bloquante)
+Les deux documents dérivent du MÊME SitRep RDC : tout chiffre commun est identique.
+- Chaque chiffre vient du SitRep RDC. Seules exceptions : les valeurs externes reportées
+  du cycle précédent (Ouganda, agents de santé infectés/décédés, zones de santé
+  affectées incluant l'Ouganda, colonne « Active HZs ») : elles doivent être IDENTIQUES
+  dans les deux documents et signalées dans les commentaires (anomalies) comme « non
+  présentes dans le SitRep RDC ».
+- Recalcule toute valeur dérivée (totaux continentaux = RDC + Ouganda, létalités, %).
+- N'invente jamais un pourcentage absent de la source ; si la source est incohérente
+  (ex. PSEA), reprends la formulation de la source sans le pourcentage contesté et
+  signale-le dans les anomalies.
+- Contrôle automatique après construction (concordance.py) : tuiles de même libellé,
+  lignes de province (nouveaux cas/décès, cas, décès, létalité) et totaux RDC doivent
+  être identiques ; sinon le cycle échoue (re-essai, puis alerte).
+
 ## CONTRÔLES AVANT LIVRAISON (SitRep ET Brief)
 Somme des provinces = total (nouveaux cas, nouveaux décès, cumuls, contacts) ;
 létalités et % recalculés à une décimale ; patients en isolement par

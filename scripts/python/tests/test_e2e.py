@@ -122,7 +122,7 @@ class TestE2E(unittest.TestCase):
             os.makedirs(os.path.join(self.ws, sub), exist_ok=True)
         for f in ("05b_send_africacdc_sitrep_brief_full_email.R", "06b_generate_africa_cdc_sitrep_brief_full.R"):
             shutil.copy(os.path.join(REPO, "scripts", f), os.path.join(self.ws, "scripts", f))
-        for f in ("africa_cdc_build_docx.py", "claude_call.py", "extract_runs.py", "run_build.py"):
+        for f in ("africa_cdc_build_docx.py", "claude_call.py", "extract_runs.py", "run_build.py", "concordance.py"):
             shutil.copy(os.path.join(REPO, "scripts", "python", f), os.path.join(self.ws, "scripts", "python", f))
         shutil.copy(os.path.join(REPO, "docs", "africa_cdc", "PREIS_procedure_SitRep_AfricaCDC.md"),
                     os.path.join(self.ws, "docs", "africa_cdc"))
@@ -305,6 +305,45 @@ class TestE2E(unittest.TestCase):
         p = glob.glob(self.f(RAPPORTS + "/BVD_SitRep_132_*_propre.docx"))[0]
         root = bd._load_doc(p)[0]
         self.assertEqual(bd.issue_numbers(bd.paragraph_texts(root)), {132})
+
+    def _xml(self, docx):
+        d = tempfile.mkdtemp()
+        try:
+            bd.unzip_docx(docx, d)
+            with open(os.path.join(d, "word", "document.xml"), encoding="utf-8") as fh:
+                return fh.read()
+        finally:
+            shutil.rmtree(d, ignore_errors=True)
+
+    def test_credit_and_formatting_are_permanent(self):
+        """Le nom « Dr. R. Hyacinthe ZABRE » (apres Dr Merawi), le texte justifie et les tableaux centres
+        font partie du gabarit : ils doivent survivre a la generation."""
+        t_s, t_b = self._xml(SITREP_T), self._xml(BRIEF_T)
+        self.assertIn("Merawi Aragaw, Dr. R. Hyacinthe ZABRE, Wazih", t_s)
+        self.assertIn("Merawi Aragaw, Dr. R. Hyacinthe ZABRE, Wazih", t_b)
+        api = self.api()
+        rc, out = self.r("06b_generate_africa_cdc_sitrep_brief_full.R", api)
+        self.assertEqual(rc, 0, out)
+        for kind, tpl in (("SitRep", t_s), ("Executive_Brief", t_b)):
+            f = glob.glob(self.f(RAPPORTS + "/BVD_%s_132_*_propre.docx" % kind))[0]
+            x = self._xml(f)
+            self.assertIn("Dr. R. Hyacinthe ZABRE", x)
+            self.assertEqual(x.count('w:jc w:val="both"'), tpl.count('w:jc w:val="both"'))
+            self.assertEqual(x.count('w:jc w:val="center"'), tpl.count('w:jc w:val="center"'))
+        self.assertGreaterEqual(t_s.count('w:jc w:val="both"'), 15)
+        self.assertGreaterEqual(t_s.count('w:jc w:val="center"'), 40)
+
+    def test_credit_is_restored_if_model_rewrites_prepared_by_without_it(self):
+        payload = json.loads(ok_payload())
+        runs, texts, _ = runs_and_paras(SITREP_T)
+        i = [k for k, t in enumerate(texts) if "Merawi Aragaw" in t][0]
+        payload["sitrep_edits"][str(i)] = {"new": texts[i].replace(", Dr. R. Hyacinthe ZABRE", ""), "comment": None}
+        api = self.api(text=json.dumps(payload))
+        rc, out = self.r("06b_generate_africa_cdc_sitrep_brief_full.R", api)
+        self.assertEqual(rc, 0, out)
+        self.assertIn("remise automatiquement", out)
+        f = glob.glob(self.f(RAPPORTS + "/BVD_SitRep_132_*_propre.docx"))[0]
+        self.assertIn("Merawi Aragaw, Dr. R. Hyacinthe ZABRE", self._xml(f))
 
     def test_last_response_is_attached_to_failure_mail_in_test_mode(self):
         api = self.api(text=json.dumps({"sitrep_edits": {"0": {"new": "x", "comment": None}}, "brief_edits": {}}))

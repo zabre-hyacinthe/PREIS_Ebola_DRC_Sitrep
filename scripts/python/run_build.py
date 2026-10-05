@@ -41,6 +41,7 @@ import tempfile
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import africa_cdc_build_docx as bd
+import concordance
 
 
 def fail(code, msg):
@@ -136,6 +137,31 @@ def ensure_issue_number(template_dir, edits, prev, expected):
     return fixed
 
 
+CREDIT = "Dr. R. Hyacinthe ZABRE"      # mention definitive de la ligne « Prepared by » (demande du proprietaire du projet)
+CREDIT_ANCHOR = "Merawi Aragaw"        # le nom est insere juste apres celui-ci
+
+
+def ensure_credit(template_dir, edits):
+    """Garantit que la ligne « Prepared by » cite CREDIT juste apres CREDIT_ANCHOR. Le gabarit la contient
+    deja ; ceci ne sert que si le modele reecrit la ligne et l'omet. Retourne le nombre de corrections."""
+    with open(os.path.join(template_dir, "word", "document.xml"), encoding="utf-8") as f:
+        xml = f.read()
+    runs = bd.get_runs(xml)
+    texts = []
+    for i, r in enumerate(runs):
+        sp = edits.get(i)
+        texts.append(sp["new"] if sp and sp["new"] is not None else _plain(bd.split_run(r.group(0))[3]))
+    if any("ZABRE" in t for t in texts):
+        return 0
+    for i, t in enumerate(texts):
+        if CREDIT_ANCHOR in t:
+            old = edits.get(i) or {"new": None, "comment": None}
+            edits[i] = {"new": t.replace(CREDIT_ANCHOR, CREDIT_ANCHOR + ", " + CREDIT, 1),
+                        "comment": old["comment"] or "Mention « %s » (definitive) remise automatiquement." % CREDIT}
+            return 1
+    return 0
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--sitrep-template", required=True)
@@ -182,6 +208,9 @@ def main():
             for nm, d, ed in (("SitRep", sitrep_dir, s_edits), ("Brief", brief_dir, b_edits)):
                 for note in ensure_issue_number(d, ed, args.prev_issue_no, args.expected_issue_no):
                     warnings.append("%s : numero d'Issue corrige automatiquement (%s)" % (nm, note))
+        for nm, d, ed in (("SitRep", sitrep_dir, s_edits), ("Brief", brief_dir, b_edits)):
+            if ensure_credit(d, ed):
+                warnings.append("%s : mention « %s » remise automatiquement" % (nm, CREDIT))
         n_s, n_b = changed_count(sitrep_dir, s_edits), changed_count(brief_dir, b_edits)
         if n_s < args.min_sitrep_edits or n_b < args.min_brief_edits:
             fail(2, "reponse trop pauvre : %d run(s) SitRep modifie(s) (minimum %d), %d run(s) Brief "
@@ -215,6 +244,16 @@ def main():
         except Exception as e:
             fail(1, "verification d'integrite echouee : %s" % e)
 
+        for nm, txt in (("SitRep", s_txt), ("Brief", b_txt)):
+            if not any("ZABRE" in t for t in txt):
+                fail(2, "%s : la mention « %s » (definitive) est absente du document genere" % (nm, CREDIT))
+        try:
+            c_err, c_warn = concordance.check(p["sitrep_propre"], p["brief_propre"])
+        except Exception as e:  # le controle ne doit jamais masquer un livrable valide : avertissement
+            c_err, c_warn = [], ["concordance : controle non execute (%s: %s)" % (type(e).__name__, e)]
+        warnings.extend(c_warn)
+        if c_err:
+            fail(2, "concordance SitRep/Brief : " + " ; ".join(c_err[:12]))
         if args.expected_issue_no is not None:
             for nm, txt in (("SitRep", s_txt), ("Brief", b_txt)):
                 nums = bd.issue_numbers(txt)
