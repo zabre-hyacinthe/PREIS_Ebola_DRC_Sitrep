@@ -19,6 +19,15 @@ on:
         options:
           - "true"
           - "false"
+      africa_cdc_mode:
+        description: "Africa CDC SitRep+Brief : normal (auto) | test (essai, mail uniquement a ALERT_TO, aucun etat modifie) | retry (remet le compteur d'echecs a zero)"
+        required: false
+        default: "normal"
+        type: choice
+        options:
+          - "normal"
+          - "test"
+          - "retry"
   repository_dispatch:
     types: [preis_monitor]
   schedule:
@@ -44,7 +53,7 @@ concurrency:
 jobs:
   monitor:
     runs-on: ubuntu-22.04
-    timeout-minutes: 25
+    timeout-minutes: 40
 
     env:
       PREIS_DRY_RUN: 'FALSE'
@@ -58,6 +67,16 @@ jobs:
       ALERT_TO: ${{ secrets.ALERT_TO }}
       ALERT_CC: ${{ secrets.ALERT_CC }}
       ALERT_BCC: ${{ secrets.ALERT_BCC }}
+      PREIS_AFRICACDC_TO: ${{ secrets.PREIS_AFRICACDC_TO }}
+
+      # PREIS AFRICA CDC SITREP+BRIEF (FULL NARRATIVE) -- cle API Claude,
+      # utilisee uniquement par 06b_generate_africa_cdc_sitrep_brief_full.R.
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      # Passphrase du coffre chiffre qui conserve les gabarits .docx (depot public).
+      PREIS_ARCHIVE_KEY: ${{ secrets.PREIS_ARCHIVE_KEY }}
+      # Optionnel : Settings > Secrets and variables > Actions > Variables > ANTHROPIC_MODEL
+      ANTHROPIC_MODEL: ${{ vars.ANTHROPIC_MODEL }}
+      PREIS_AFRICACDC_MODE: "${{ github.event_name == 'workflow_dispatch' && inputs.africa_cdc_mode || 'normal' }}"
 
       WA_ENABLED: ${{ secrets.WA_ENABLED }}
       WA_ACCESS_TOKEN: ${{ secrets.WA_ACCESS_TOKEN }}
@@ -316,6 +335,52 @@ jobs:
             echo "scripts/05_send_africacdc_sitrep_email.R absent - skip"
           fi
       # PREIS AFRICA CDC SUPPLEMENT END
+      # PREIS AFRICA CDC SITREP+BRIEF (FULL NARRATIVE) START
+      # Genere le SitRep + Executive Brief Africa CDC COMPLETS (gabarit
+      # officiel, narration operationnelle, Ouganda inclus -- different du
+      # supplement quantitatif ci-dessus) puis les envoie en email SEPARE.
+      # continue-on-error : un souci de generation (API, gabarit) ne casse
+      # pas le reste du pipeline. Necessite le secret ANTHROPIC_API_KEY.
+      - name: Restaurer le coffre des gabarits Africa CDC
+        if: always()
+        continue-on-error: true
+        timeout-minutes: 3
+        run: |
+          python3 scripts/python/private_store.py restore \
+            --store data/africa_cdc_brief/private_store.enc \
+            --dir data/africa_cdc_brief/templates || echo "coffre non restaure (non bloquant)"
+
+      - name: Generer SitRep+Brief Africa CDC complet (06b_generate_africa_cdc_sitrep_brief_full.R)
+        if: always()
+        continue-on-error: true
+        timeout-minutes: 15
+        run: |
+          if [ -f scripts/06b_generate_africa_cdc_sitrep_brief_full.R ]; then
+            Rscript --vanilla scripts/06b_generate_africa_cdc_sitrep_brief_full.R || echo "06b en erreur (non bloquant)"
+          else
+            echo "scripts/06b_generate_africa_cdc_sitrep_brief_full.R absent - skip"
+          fi
+
+      - name: Sauvegarder le coffre des gabarits Africa CDC
+        if: always()
+        continue-on-error: true
+        timeout-minutes: 3
+        run: |
+          python3 scripts/python/private_store.py save \
+            --store data/africa_cdc_brief/private_store.enc \
+            --dir data/africa_cdc_brief/templates || echo "coffre non sauvegarde (non bloquant)"
+
+      - name: Envoyer SitRep+Brief Africa CDC complet (05b_send_africacdc_sitrep_brief_full_email.R)
+        if: always() && env.PREIS_SEND_EMAIL == 'true'
+        continue-on-error: true
+        timeout-minutes: 6
+        run: |
+          if [ -f scripts/05b_send_africacdc_sitrep_brief_full_email.R ]; then
+            Rscript --vanilla scripts/05b_send_africacdc_sitrep_brief_full_email.R || echo "05b en erreur (non bloquant)"
+          else
+            echo "scripts/05b_send_africacdc_sitrep_brief_full_email.R absent - skip"
+          fi
+      # PREIS AFRICA CDC SITREP+BRIEF (FULL NARRATIVE) END
       # PREIS WATCHDOG START
       # Garde-fou : alerte par email si un SitRep a ete telecharge mais
       # jamais envoye. if: always() -> tourne meme si une etape a echoue.
@@ -355,6 +420,9 @@ jobs:
           git add data/preis_email_enrichi_state.csv || true
           git add data/preis_watchdog_state.csv || true
           git add data/preis_africacdc_email_state.csv || true
+          for f in state.csv attempts.csv email_sent_state.csv private_store.enc private_store.enc.sha256; do
+            git add "data/africa_cdc_brief/$f" 2>/dev/null || true
+          done
           git add outputs/rapports/ || true
           git add dashboard_ebola/data/serie_temporelle_nationale.csv || true
           git add dashboard_ebola/data/tableau_zones_sante.csv || true
