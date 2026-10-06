@@ -129,6 +129,7 @@ def _stream_request(url, key, body_bytes, read_timeout):
 
     rid = resp.headers.get("request-id")
     text_parts, usage, stop_reason, model_used, saw_stop = [], {}, None, None, False
+    think_chars = 0
     try:
         with resp:
             for raw_line in resp:
@@ -151,6 +152,8 @@ def _stream_request(url, key, body_bytes, read_timeout):
                     d = ev.get("delta") or {}
                     if d.get("type") == "text_delta":
                         text_parts.append(d.get("text", ""))
+                    elif d.get("type") == "thinking_delta":
+                        think_chars += len(d.get("thinking", ""))
                 elif t == "message_delta":
                     stop_reason = (ev.get("delta") or {}).get("stop_reason") or stop_reason
                     usage.update(ev.get("usage") or {})
@@ -172,7 +175,7 @@ def _stream_request(url, key, body_bytes, read_timeout):
         raise CallFailure("network", "flux termine sans message_stop (coupure)", retryable=True,
                           request_id=rid)
     return {"text": "".join(text_parts), "model": model_used, "stop_reason": stop_reason,
-            "usage": usage, "request_id": rid}
+            "usage": usage, "request_id": rid, "think_chars": think_chars}
 
 
 def _write_json(path, obj):
@@ -266,7 +269,12 @@ def main():
                 fail(e.category, e.message, e.http_status, e.request_id)
 
             if r["stop_reason"] == "max_tokens":
-                fail("truncated", "reponse tronquee (max_tokens atteint) : JSON incomplet",
+                if args.text_out:   # conserve la reponse partielle : elle est jointe au mail d'echec (diagnostic)
+                    with open(args.text_out, "w", encoding="utf-8") as f:
+                        f.write(r["text"])
+                fail("truncated", "reponse tronquee (max_tokens atteint) : JSON incomplet "
+                     "[sortie=%s tokens, texte=%d car., reflexion=%d car.]"
+                     % ((r["usage"] or {}).get("output_tokens", "?"), len(r["text"]), r.get("think_chars", 0)),
                      None, r["request_id"])
             if r["stop_reason"] == "refusal":
                 fail("refusal", "le modele a refuse de repondre (stop_reason=refusal)", None, r["request_id"])

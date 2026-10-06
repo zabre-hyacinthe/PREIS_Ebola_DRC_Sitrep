@@ -321,6 +321,10 @@ if (length(api_out)) cat(paste0("   ", api_out), sep = "\n")
 res <- tryCatch(jsonlite::fromJSON(res_fp, simplifyVector = FALSE), error = function(e) NULL)
 if (is.null(res)) .fail(latest_sno, "api", "claude_call.py n'a produit aucun resultat lisible")
 if (!isTRUE(res$ok)) {
+  if (file.exists(resp_fp)) {   # reponse partielle (ex. tronquee) : conservee pour le diagnostic, jointe au mail d'echec
+    if (!dir.exists(TEST_OUT_DIR)) dir.create(TEST_OUT_DIR, recursive = TRUE)
+    file.copy(resp_fp, LAST_RESP_FP, overwrite = TRUE)
+  }
   .fail(latest_sno, if (is.null(res$category)) "api" else res$category,
         sprintf("%s (HTTP %s, request-id %s)", .nz(res$message), .nz(res$http_status), .nz(res$request_id)))
 }

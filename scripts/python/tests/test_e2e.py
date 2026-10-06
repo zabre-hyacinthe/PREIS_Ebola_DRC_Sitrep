@@ -377,6 +377,9 @@ class TestE2E(unittest.TestCase):
                 self.assertEqual(self.attempts()[0]["last_category"], cat, out)
                 self.assertEqual(self.attempts()[0]["attempts"], "1")
                 self.assert_untouched(t0, b0)
+                if name == "truncated":   # diagnostic : tailles + reponse partielle conservee pour le mail
+                    self.assertIn("sortie=4321 tokens", self.attempts()[0]["last_error"])
+                    self.assertTrue(os.path.getsize(self.f("outputs/rapports/africa_cdc_test/last_response.txt")) > 0)
 
     def test_missing_key_is_config_problem_not_an_attempt(self):
         rc, out = self.r("06b_generate_africa_cdc_sitrep_brief_full.R", key="")
