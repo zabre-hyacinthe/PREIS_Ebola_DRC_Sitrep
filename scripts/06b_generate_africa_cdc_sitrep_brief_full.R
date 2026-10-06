@@ -313,7 +313,7 @@ work_dir <- file.path(tempdir(), "africa_cdc_work"); dir.create(work_dir, recurs
 spec_fp <- file.path(work_dir, "spec.json"); res_fp <- file.path(work_dir, "api_result.json")
 resp_fp <- file.path(work_dir, "response.txt")
 jsonlite::write_json(list(system = system_prompt, user_text = user_text, pdf_path = pdf_fp,
-                          max_tokens = 48000L, models = I(models)), spec_fp, auto_unbox = TRUE)
+                          max_tokens = 64000L, models = I(models)), spec_fp, auto_unbox = TRUE)
 .log("Appel API Claude (modeles : %s) ...", paste(models, collapse = " puis "))
 api_out <- suppressWarnings(system2(py_bin, c(shQuote(CLAUDE_CALL_PY), "--spec", shQuote(spec_fp), "--out", shQuote(res_fp),
                                               "--text-out", shQuote(resp_fp)), stdout = TRUE, stderr = TRUE))

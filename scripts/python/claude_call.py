@@ -19,12 +19,12 @@ Usage :
 
 spec.json :
   {"system": "...", "user_text": "...", "pdf_path": "chemin.pdf" (optionnel),
-   "max_tokens": 48000, "models": ["claude-sonnet-5-5", "claude-sonnet-5"]}
+   "max_tokens": 64000, "thinking": "disabled" (defaut) | "default", "models": ["claude-sonnet-5-5", "claude-sonnet-5"]}
 
 Environnement :
   ANTHROPIC_API_KEY            obligatoire
   ANTHROPIC_API_URL            (tests) remplace https://api.anthropic.com/v1/messages
-  CLAUDE_CALL_DEADLINE_S       delai global, defaut 540 s
+  CLAUDE_CALL_DEADLINE_S       delai global, defaut 780 s
   CLAUDE_CALL_READ_TIMEOUT_S   attente max entre deux octets, defaut 180 s
   CLAUDE_CALL_BACKOFF_BASE_S   attente de base entre tentatives, defaut 20 s
   CLAUDE_CALL_MAX_RETRIES      tentatives supplementaires par modele, defaut 4
@@ -210,7 +210,7 @@ def main():
     if not url.startswith("https://") and host not in ("localhost", "127.0.0.1", "::1"):
         fail("config", "URL d'API refusee (https obligatoire hors localhost) : %s" % url)
 
-    deadline = time.monotonic() + float(os.environ.get("CLAUDE_CALL_DEADLINE_S", "540"))
+    deadline = time.monotonic() + float(os.environ.get("CLAUDE_CALL_DEADLINE_S", "780"))
     read_timeout = float(os.environ.get("CLAUDE_CALL_READ_TIMEOUT_S", "180"))
     backoff_base = float(os.environ.get("CLAUDE_CALL_BACKOFF_BASE_S", "20"))
     max_retries = int(os.environ.get("CLAUDE_CALL_MAX_RETRIES", "4"))
@@ -235,10 +235,18 @@ def main():
 
     last = None
     for model in models:
-        body = json.dumps({
-            "model": model, "max_tokens": int(spec.get("max_tokens", 48000)), "stream": True,
-            "system": spec.get("system", ""), "messages": [{"role": "user", "content": content}],
-        }, ensure_ascii=False).encode("utf-8")
+        use_thinking_off = spec.get("thinking", "disabled") == "disabled"
+
+        def build_body(model=model):
+            d = {"model": model, "max_tokens": int(spec.get("max_tokens", 64000)), "stream": True,
+                 "system": spec.get("system", ""), "messages": [{"role": "user", "content": content}]}
+            if use_thinking_off:
+                # La reflexion cachee consommait ~75 % du budget de sortie (diagnostic SitRep 143) :
+                # ce travail est une edition mecanique de texte, la reflexion n'est pas necessaire.
+                d["thinking"] = {"type": "disabled"}
+            return json.dumps(d, ensure_ascii=False).encode("utf-8")
+
+        body = build_body()
         retries = 0
         while True:
             if time.monotonic() > deadline:
@@ -254,6 +262,11 @@ def main():
                 if e.next_model:
                     log("modele %s inconnu -> modele suivant" % model)
                     break
+                if e.category == "request" and use_thinking_off and "thinking" in e.message.lower():
+                    log("parametre 'thinking' refuse par l'API (%s) -> nouvel appel sans ce parametre" % e.message[:160])
+                    use_thinking_off = False
+                    body = build_body()
+                    continue
                 if e.retryable and retries < max_retries:
                     wait = e.retry_after if e.retry_after else backoff_base * (2 ** retries)
                     wait = min(wait, 120.0) * random.uniform(0.85, 1.15)

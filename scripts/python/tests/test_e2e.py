@@ -357,6 +357,22 @@ class TestE2E(unittest.TestCase):
         self.assertEqual(len(msgs), 1, out)
         self.assertIn("last_response.txt", msgs[0]["attachments"])
 
+    def test_thinking_is_disabled_and_falls_back_if_api_rejects_it(self):
+        api = self.api()
+        rc, out = self.r("06b_generate_africa_cdc_sitrep_brief_full.R", api)
+        self.assertEqual(rc, 0, out)
+        self.assertEqual(api.requests[0]["thinking"], {"type": "disabled"})
+        self.assertEqual(api.requests[0]["max_tokens"], 64000)
+
+    def test_thinking_param_rejected_by_api_is_dropped_automatically(self):
+        api = self.api(["400_thinking"])
+        rc, out = self.r("06b_generate_africa_cdc_sitrep_brief_full.R", api)
+        self.assertEqual(rc, 0, out)
+        self.assertEqual(len(api.requests), 2, out)
+        self.assertEqual(api.requests[0]["thinking"], {"type": "disabled"})
+        self.assertIsNone(api.requests[1]["thinking"])
+        self.assertEqual(self.state_rows()[-1]["issue_no"], "132", out)
+
     def test_bad_model_outputs_are_rejected_and_nothing_is_written(self):
         t0, b0 = self.hashes()
         cases = {

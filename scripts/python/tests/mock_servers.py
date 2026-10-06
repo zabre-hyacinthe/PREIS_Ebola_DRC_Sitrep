@@ -67,7 +67,7 @@ class MockClaudeAPI:
                     outer.requests.append({"model": body.get("model"), "bytes": n, "stream": body.get("stream"),
                                            "has_pdf": any(c.get("type") == "document" for c in content),
                                            "key": key, "version": self.headers.get("anthropic-version"),
-                                           "max_tokens": body.get("max_tokens")})
+                                           "max_tokens": body.get("max_tokens"), "thinking": body.get("thinking")})
                     sc = outer.scenarios.pop(0) if outer.scenarios else "ok"
                 if key != "sk-test-valid" and sc != "401":
                     return self._json_err(401, "authentication_error", "invalid x-api-key")
@@ -80,6 +80,8 @@ class MockClaudeAPI:
                 if sc == "400_credit":
                     return self._json_err(400, "invalid_request_error",
                                           "Your credit balance is too low to access the Anthropic API.")
+                if sc == "400_thinking" and body.get("thinking"):
+                    return self._json_err(400, "invalid_request_error", "thinking: parametre non pris en charge")
                 if sc == "404_model":
                     return self._json_err(404, "not_found_error", "model: %s" % body.get("model"))
                 self.send_response(200)
