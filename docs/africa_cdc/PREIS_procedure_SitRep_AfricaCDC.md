@@ -161,6 +161,17 @@ vérifiée sur SitRep 141 → Issue 131 (deux cycles concordants).
 - Tableau « CONTINENTAL KEY INDICATORS » (tuiles) : tous les grands chiffres sont en
   gras et le texte est justifié. Quand tu remplaces un chiffre, garde le run (donc le gras).
 
+## HIÉRARCHIE DES SOURCES (règle absolue)
+Le SitRep RDC traité fait TOUJOURS foi. Toute valeur du SitRep RDC prime sur le gabarit,
+sur l'Issue précédente et sur ta mémoire : si une valeur reportée ou un total du gabarit
+contredit le SitRep RDC, la valeur du SitRep RDC est utilisée (puis signalée en anomalie
+si la source elle-même est incohérente : tu la reprends alors telle quelle, sans la
+corriger de toi-même). Une valeur reportée du cycle précédent (Ouganda, agents de santé,
+zones de santé incluant l'Ouganda, colonne « Active HZs ») n'est conservée que si le
+SitRep RDC ne dit rien à ce sujet ; tout total qui la combine à une valeur du SitRep RDC
+(ex. total continental = RDC + Ouganda, zones affectées = RDC + Ouganda) est RECALCULÉ à
+partir des valeurs RDC du SitRep traité.
+
 ## CONCORDANCE SITREP / BRIEF (bloquante)
 Les deux documents dérivent du MÊME SitRep RDC : tout chiffre commun est identique.
 - Chaque chiffre vient du SitRep RDC. Seules exceptions : les valeurs externes reportées
