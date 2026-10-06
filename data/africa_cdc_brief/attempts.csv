@@ -1,2 +1,2 @@
 sitrep_no,attempts,last_category,last_error,last_attempt_utc,alert_sent_utc
-143,3,truncated,"reponse tronquee (max_tokens atteint) : JSON incomplet (HTTP -, request-id req_011CfkshEx7gcYWEHg8QhCU4)",2026-10-06 11:10:12 UTC,2026-10-06 11:10:17 UTC
+143,0,truncated,"reponse tronquee (max_tokens atteint) : JSON incomplet (HTTP -, request-id req_011CfkshEx7gcYWEHg8QhCU4)",2026-10-06 11:10:12 UTC,
