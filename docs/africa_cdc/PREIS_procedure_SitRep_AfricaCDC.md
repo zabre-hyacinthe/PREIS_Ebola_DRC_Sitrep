@@ -161,6 +161,19 @@ vérifiée sur SitRep 141 → Issue 131 (deux cycles concordants).
 - Tableau « CONTINENTAL KEY INDICATORS » (tuiles) : tous les grands chiffres sont en
   gras et le texte est justifié. Quand tu remplaces un chiffre, garde le run (donc le gras).
 
+## LONGUEUR DE L'EXECUTIVE BRIEF : 2 PAGES (limite stricte)
+L'Executive Brief tient sur DEUX pages. Le gabarit actuel est calibré pour cela : le texte
+total du Brief ne doit pas dépasser environ 10 900 caractères (tous paragraphes confondus ;
+le gabarit en compte environ 10 600). Au-delà de 11 800 caractères le document est refusé.
+- Ne rallonge JAMAIS une cellule narrative par rapport au gabarit : si tu ajoutes une
+  information, retire-en une moins prioritaire. Les cellules narratives les plus longues
+  (RCCE/continuité des soins/SMSPS, IPC/EDS/logistique/sécurité/PSEA) restent ≤ 1 550 caractères.
+- Pour raccourcir, SUPPRIME des détails secondaires (chiffres par site, séances individuelles,
+  stocks, actions déjà décrites ailleurs) ; ne reformule pas avec de nouvelles informations
+  et n'invente rien. Garde en priorité : cas, décès, létalité, suivi des contacts, hospitalisation,
+  laboratoire, vaccination, risques et actions prioritaires.
+- Ces limites ne s'appliquent pas au SitRep (3 pages).
+
 ## HIÉRARCHIE DES SOURCES (règle absolue)
 Le SitRep RDC traité fait TOUJOURS foi. Toute valeur du SitRep RDC prime sur le gabarit,
 sur l'Issue précédente et sur ta mémoire : si une valeur reportée ou un total du gabarit

@@ -40,13 +40,16 @@ class TestConcordance(unittest.TestCase):
 
     def test_tile_mismatch_is_an_error(self):
         s2 = os.path.join(self.d, "s.docx")
-        _rewrite(S, s2, ">8,462<", ">8,463<")
+        big = concordance.tiles(concordance.read_tables(S))["confirmed cases"][0]       # ex. 8,623
+        bad = big[:-1] + str((int(big[-1]) + 1) % 10)
+        _rewrite(S, s2, ">%s<" % big, ">%s<" % bad)
         err, _ = concordance.check(s2, B)
-        self.assertTrue(any("8,463" in e or "8,462" in e for e in err), err)
+        self.assertTrue(any(big in e or bad in e for e in err), err)
 
     def test_province_row_mismatch_is_an_error(self):
         s2 = os.path.join(self.d, "s.docx")
-        _rewrite(S, s2, ">6,370<", ">6,371<")
+        cases = concordance.province_table(concordance.read_tables(S))[0]["ituri"]["cases"]   # ex. 6,450
+        _rewrite(S, s2, ">%s<" % cases, ">%s<" % (cases[:-1] + str((int(cases[-1]) + 1) % 10)))
         err, _ = concordance.check(s2, B)
         self.assertTrue(err, "une divergence de cas cumules entre les 2 documents doit bloquer")
 

@@ -33,8 +33,31 @@ import africa_cdc_build_docx as bd          # noqa: E402
 from mock_servers import MockClaudeAPI, MockSMTP   # noqa: E402
 
 TEMPLATES = os.path.join(REPO, "data", "africa_cdc_brief", "templates")
-SITREP_T = os.path.join(TEMPLATES, "BVD_SitRep_latest_propre.docx")
-BRIEF_T = os.path.join(TEMPLATES, "BVD_Executive_Brief_latest_propre.docx")
+
+
+def _normalized_template(name, issue=131):
+    """Copie du gabarit du depot, numero d'Issue ramene a `issue` : les tests ne dependent pas du cycle courant."""
+    src = os.path.join(TEMPLATES, name)
+    if not os.path.exists(src):
+        return src
+    d = os.path.join(tempfile.gettempdir(), "africa_cdc_tpl_norm_%d" % os.getpid())
+    os.makedirs(d, exist_ok=True)
+    dst = os.path.join(d, name)
+    zin = zipfile.ZipFile(src)
+    x = zin.read("word/document.xml").decode("utf-8")
+    split = r"(Issue No\. \d</w:t></w:r><w:r\b[^>]*>(?:<w:rPr>(?:(?!</w:rPr>).)*</w:rPr>)?<w:t[^>]*>)\d+(</w:t>)"
+    if re.search(split, x, flags=re.S):                                                   # numero coupe en deux runs
+        x = re.sub(split, r"\g<1>%s\2" % str(issue)[1:], x, flags=re.S)
+    else:                                                                                 # numero dans un seul run
+        x = re.sub(r"(Issue No\. )\d+(</w:t>)", r"\g<1>%d\2" % issue, x)
+    with zipfile.ZipFile(dst, "w", zipfile.ZIP_DEFLATED) as zo:
+        for it in zin.infolist():
+            zo.writestr(it, x.encode("utf-8") if it.filename == "word/document.xml" else zin.read(it.filename))
+    return dst
+
+
+SITREP_T = _normalized_template("BVD_SitRep_latest_propre.docx")
+BRIEF_T = _normalized_template("BVD_Executive_Brief_latest_propre.docx")
 RAPPORTS = "outputs/rapports"
 
 
@@ -372,6 +395,32 @@ class TestE2E(unittest.TestCase):
         self.assertEqual(api.requests[0]["thinking"], {"type": "disabled"})
         self.assertIsNone(api.requests[1]["thinking"])
         self.assertEqual(self.state_rows()[-1]["issue_no"], "132", out)
+
+    def _payload_with_long_brief(self, extra_chars):
+        d = json.loads(ok_payload())
+        runs, texts, paras = runs_and_paras(BRIEF_T)
+        i = max((k for k in range(len(texts)) if str(k) not in d["brief_edits"]), key=lambda k: len(texts[k]))
+        d["brief_edits"][str(i)] = {"new": texts[i] + " x" * (extra_chars // 2), "comment": None}
+        return json.dumps(d, ensure_ascii=False)
+
+    def test_brief_far_too_long_is_refused_and_slightly_long_only_warns(self):
+        t0, b0 = self.hashes()
+        api = self.api([], self._payload_with_long_brief(3000))
+        rc, out = self.r("06b_generate_africa_cdc_sitrep_brief_full.R", api)
+        self.assertEqual(rc, 0, out)
+        self.assertEqual(self.attempts()[0]["last_category"], "output", out)
+        self.assertIn("Executive Brief trop long", self.attempts()[0]["last_error"])
+        self.assert_untouched(t0, b0)
+        os.remove(self.f("data/africa_cdc_brief/attempts.csv"))
+        api = self.api([], self._payload_with_long_brief(500))
+        rc, out = self.r("06b_generate_africa_cdc_sitrep_brief_full.R", api)
+        self.assertEqual(rc, 0, out)
+        self.assertIn("risque de depasser 2 pages", out)
+        self.assertEqual(self.state_rows()[-1]["issue_no"], "132", out)
+
+    def test_brief_template_itself_fits_two_pages_budget(self):
+        runs, texts, paras = runs_and_paras(BRIEF_T)
+        self.assertLessEqual(sum(len(t) for t in texts), 10900 + 400)
 
     def test_bad_model_outputs_are_rejected_and_nothing_is_written(self):
         t0, b0 = self.hashes()

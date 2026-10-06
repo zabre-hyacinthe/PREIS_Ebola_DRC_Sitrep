@@ -137,6 +137,8 @@ def ensure_issue_number(template_dir, edits, prev, expected):
     return fixed
 
 
+BRIEF_MAX_CHARS_WARN = int(os.environ.get("PREIS_BRIEF_MAX_CHARS", "10900"))
+BRIEF_MAX_CHARS_FAIL = int(os.environ.get("PREIS_BRIEF_MAX_CHARS_FAIL", "11800"))
 CREDIT = "Dr. R. Hyacinthe ZABRE"      # mention definitive de la ligne « Prepared by » (demande du proprietaire du projet)
 CREDIT_ANCHOR = "Merawi Aragaw"        # le nom est insere juste apres celui-ci
 
@@ -254,6 +256,16 @@ def main():
         warnings.extend(c_warn)
         if c_err:
             fail(2, "concordance SitRep/Brief : " + " ; ".join(c_err[:12]))
+        # Executive Brief = 2 pages. Mesure : nombre total de caracteres de texte du document.
+        # References (rendu verifie) : 10 609 = 2 pages avec marge ; 10 896 = limite ; 12 337 = 3 pages.
+        brief_chars = sum(len(t) for t in b_txt)
+        if brief_chars > BRIEF_MAX_CHARS_FAIL:
+            fail(2, "Executive Brief trop long : %d caracteres (limite 2 pages ~ %d, refus au-dela de %d). "
+                    "Raccourcir les paragraphes narratifs sans rien inventer." %
+                 (brief_chars, BRIEF_MAX_CHARS_WARN, BRIEF_MAX_CHARS_FAIL))
+        if brief_chars > BRIEF_MAX_CHARS_WARN:
+            warnings.append("Brief : %d caracteres (limite 2 pages ~ %d) : le document risque de depasser 2 pages, "
+                            "a verifier avant diffusion" % (brief_chars, BRIEF_MAX_CHARS_WARN))
         if args.expected_issue_no is not None:
             for nm, txt in (("SitRep", s_txt), ("Brief", b_txt)):
                 nums = bd.issue_numbers(txt)
