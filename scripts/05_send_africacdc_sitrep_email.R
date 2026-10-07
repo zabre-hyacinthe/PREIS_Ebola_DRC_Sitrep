@@ -25,6 +25,17 @@
 #   send_africacdc_sitrep_email(force = TRUE)
 ############################################################
 
+# --- Signature commune des e-mails (scripts/preis_signature.R ; repli integre si le fichier est absent) ---
+for (.sig_fp in c("scripts/preis_signature.R", file.path(Sys.getenv("GITHUB_WORKSPACE", "."), "scripts", "preis_signature.R"),
+                  "D:/PREIS_Ebola_DRC_Sitrep_FV_12.06.26/scripts/preis_signature.R")) {
+  if (file.exists(.sig_fp)) { try(source(.sig_fp, encoding = "UTF-8"), silent = TRUE); break }
+}
+if (!exists("preis_signature_html", mode = "function")) {
+  preis_signature_text <- function() "\n\n-- \nDr R. Hyacinthe ZABRE\nEpidemio-Biostat, PREIS developer\nEmail: zrhyacinthe@gmail.com\nWhatsApp: +22678088770\n"
+  preis_signature_html <- function() paste0("<div style='margin-top:22px;padding-top:10px;border-top:1px solid #d0d0d0;font-size:13px;line-height:1.5'>",
+    "<b>Dr R. Hyacinthe ZABRE</b><br>Epidemio-Biostat, PREIS developer<br>Email: zrhyacinthe@gmail.com<br>WhatsApp: +22678088770</div>")
+}
+
 .aw_env_get <- function(names, default = "") {
   for (n in names) {
     v <- Sys.getenv(n, "")
@@ -134,13 +145,14 @@ send_africacdc_sitrep_email <- function(root = NULL, force = FALSE) {
     "or Africa CDC operational/coordination updates, which are compiled separately by the EIU team. ",
     "Sections requiring field verification are clearly labelled as such in the document.",
     "</p>",
+    preis_signature_html(),
     "</div>"
   )
 
-  plain <- sprintf(
+  plain <- paste0(sprintf(
     "PREIS Africa CDC Supplement - SitRep No.%03d. See attached document (DRC quantitative indicators only).",
     sno
-  )
+  ), preis_signature_text())
 
   # ---- SMTP (memes identifiants que preis_email_enrichi.R) -----------
   smtp_user <- .aw_env_get(c("SMTP_USER", "SMTP_USERNAME"))

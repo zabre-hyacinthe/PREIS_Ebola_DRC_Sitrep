@@ -92,6 +92,19 @@ jobs:
           fetch-depth: 0
           persist-credentials: true
 
+      # CORRECTIF 2026-10-07 (doublons d'envoi) : un run mis en attente dans le groupe de
+      # concurrence est execute plus tard mais actions/checkout utilise le commit qui etait la
+      # tete de main AU MOMENT OU LE RUN A ETE DECLENCHE. Il repartait donc d'un etat ancien
+      # (sans les fichiers d'etat anti-doublon du run precedent) et renvoyait tous les mails.
+      # On se resynchronise ici sur la VRAIE derniere version de main.
+      - name: Synchroniser sur la derniere version de main
+        run: |
+          git fetch origin main
+          echo "SHA du run (checkout)     : $(git rev-parse HEAD)"
+          echo "SHA de origin/main (reel) : $(git rev-parse origin/main)"
+          git checkout -B main origin/main
+          echo "Depot synchronise sur     : $(git rev-parse HEAD)"
+
       - name: Setup R
         uses: r-lib/actions/setup-r@v2
 
@@ -188,6 +201,17 @@ jobs:
       - name: Run PREIS SitRep monitor
         run: |
           Rscript --vanilla scripts/08_cloud_sitrep_monitor.R
+
+      # Enregistre tout de suite l'etat anti-doublon de l'e-mail de detection (au lieu d'attendre
+      # la fin du run, ~20 min plus tard).
+      - name: Enregistrer l'etat anti-doublon (detection)
+        if: always()
+        continue-on-error: true
+        run: |
+          git config user.name "PREIS Ebola Automation"
+          git config user.email "actions@github.com"
+          git add data/monitor_state/ data/pdf/ data/logs/ || true
+          bash scripts/ci_git_push.sh "PREIS etat: detection SitRep [skip ci]"
 
       # ------------------------------------------------------------
       # PATCH 2026-07-15 P2/P3 : chaine d'extraction, indicateurs,
@@ -381,6 +405,19 @@ jobs:
             echo "scripts/05b_send_africacdc_sitrep_brief_full_email.R absent - skip"
           fi
       # PREIS AFRICA CDC SITREP+BRIEF (FULL NARRATIVE) END
+      # Enregistre tout de suite l'etat anti-doublon des envois (mail enrichi, supplement,
+      # SitRep+Brief Africa CDC) : meme si la fin du run echoue, ils ne seront pas renvoyes.
+      - name: Enregistrer l'etat anti-doublon (envois)
+        if: always()
+        continue-on-error: true
+        run: |
+          git config user.name "PREIS Ebola Automation"
+          git config user.email "actions@github.com"
+          git add data/monitor_state/ data/preis_email_enrichi_state.csv data/preis_africacdc_email_state.csv || true
+          for f in state.csv attempts.csv email_sent_state.csv private_store.enc private_store.enc.sha256; do
+            git add "data/africa_cdc_brief/$f" 2>/dev/null || true
+          done
+          bash scripts/ci_git_push.sh "PREIS etat: envois [skip ci]"
       # PREIS WATCHDOG START
       # Garde-fou : alerte par email si un SitRep a ete telecharge mais
       # jamais envoye. if: always() -> tourne meme si une etape a echoue.
@@ -431,6 +468,4 @@ jobs:
           git add dashboard_ebola/data/curated/rdc_zones_sante_est.geojson || true
           git add dashboard_ebola/data/curated/africa_countries_rcc.geojson || true
           git status --short
-          git commit -m "PREIS pipeline: monitor + extraction + analyse [skip ci]" || echo "No changes to commit"
-          git pull --rebase origin main || echo "No remote changes to rebase"
-          git push || echo "No changes to push"
+          bash scripts/ci_git_push.sh "PREIS pipeline: monitor + extraction + analyse [skip ci]" --strict

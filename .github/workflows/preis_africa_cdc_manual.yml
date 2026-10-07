@@ -52,8 +52,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 1
+          fetch-depth: 0
           persist-credentials: true
+
+      # Voir preis_sitrep_monitor_v2.yml : le checkout peut etre sur un commit ancien.
+      - name: Synchroniser sur la derniere version de main
+        run: |
+          git fetch origin main
+          git checkout -B main origin/main
+          echo "Depot synchronise sur : $(git rev-parse HEAD)"
 
       - name: Setup R
         uses: r-lib/actions/setup-r@v2

@@ -67,7 +67,8 @@ class MockClaudeAPI:
                     outer.requests.append({"model": body.get("model"), "bytes": n, "stream": body.get("stream"),
                                            "has_pdf": any(c.get("type") == "document" for c in content),
                                            "key": key, "version": self.headers.get("anthropic-version"),
-                                           "max_tokens": body.get("max_tokens"), "thinking": body.get("thinking")})
+                                           "max_tokens": body.get("max_tokens"), "thinking": body.get("thinking"),
+                                           "user_text": "".join(c.get("text", "") for c in content if c.get("type") == "text")})
                     sc = outer.scenarios.pop(0) if outer.scenarios else "ok"
                 if key != "sk-test-valid" and sc != "401":
                     return self._json_err(401, "authentication_error", "invalid x-api-key")

@@ -80,7 +80,7 @@ def runs_and_paras(docx):
     return runs, texts, paras
 
 
-def make_edits(docx, new_issue, prev_issue, n_edits, update_issue=True):
+def make_edits(docx, new_issue, prev_issue, n_edits, update_issue=True, tag=""):
     """Edits realistes sur le VRAI gabarit : mise a jour du numero d'Issue + n_edits runs chiffres modifies."""
     runs, texts, paras = runs_and_paras(docx)
     in_para = {}
@@ -109,15 +109,15 @@ def make_edits(docx, new_issue, prev_issue, n_edits, update_issue=True):
             break
         if i in issue_runs or not re.search(r"\d", t) or len(t) > 400:
             continue
-        edits[str(i)] = {"new": t + " (maj)", "comment": "Valeur recalculee depuis le SitRep RDC" if count % 5 == 0 else None}
+        edits[str(i)] = {"new": t + " (maj" + tag + ")", "comment": "Valeur recalculee depuis le SitRep RDC" if count % 5 == 0 else None}
         count += 1
     return edits
 
 
-def ok_payload(new_issue=132, prev_issue=131, n_sitrep=14, n_brief=7, update_issue=True):
+def ok_payload(new_issue=132, prev_issue=131, n_sitrep=14, n_brief=7, update_issue=True, tag=""):
     return json.dumps({
-        "sitrep_edits": make_edits(SITREP_T, new_issue, prev_issue, n_sitrep, update_issue),
-        "brief_edits": make_edits(BRIEF_T, new_issue, prev_issue, n_brief, update_issue),
+        "sitrep_edits": make_edits(SITREP_T, new_issue, prev_issue, n_sitrep, update_issue, tag),
+        "brief_edits": make_edits(BRIEF_T, new_issue, prev_issue, n_brief, update_issue, tag),
         "summary_fr": "SitRep RDC 142 utilise (test).",
         "anomalies": ["Anomalie de test 1", "Anomalie de test 2"]}, ensure_ascii=False)
 
@@ -143,7 +143,8 @@ class TestE2E(unittest.TestCase):
         self.ws = tempfile.mkdtemp(prefix="africa_cdc_ws_")
         for sub in ("scripts/python", "docs/africa_cdc", "data/final", "data/pdf", "data/africa_cdc_brief/templates"):
             os.makedirs(os.path.join(self.ws, sub), exist_ok=True)
-        for f in ("05b_send_africacdc_sitrep_brief_full_email.R", "06b_generate_africa_cdc_sitrep_brief_full.R"):
+        for f in ("05b_send_africacdc_sitrep_brief_full_email.R", "06b_generate_africa_cdc_sitrep_brief_full.R",
+                  "preis_signature.R"):
             shutil.copy(os.path.join(REPO, "scripts", f), os.path.join(self.ws, "scripts", f))
         for f in ("africa_cdc_build_docx.py", "claude_call.py", "extract_runs.py", "run_build.py", "concordance.py"):
             shutil.copy(os.path.join(REPO, "scripts", "python", f), os.path.join(self.ws, "scripts", "python", f))
@@ -185,7 +186,10 @@ class TestE2E(unittest.TestCase):
     def r(self, script, api=None, smtp=None, mode="normal", key="sk-test-valid", extra=None, timeout=300):
         env = dict(os.environ)
         env.update({"PREIS_BASE_DIR": self.ws, "PREIS_AFRICACDC_MODE": mode, "CLAUDE_CALL_BACKOFF_BASE_S": "0",
-                    "CLAUDE_CALL_DEADLINE_S": "60", "ANTHROPIC_API_KEY": key})
+                    "CLAUDE_CALL_DEADLINE_S": "60", "ANTHROPIC_API_KEY": key,
+                    # le gabarit herite fait 3 pages : les tests "generiques" desactivent le plafond SitRep
+                    # (les tests de longueur le remettent explicitement via `extra`)
+                    "PREIS_SITREP_MAX_CHARS": "99999", "PREIS_SITREP_MAX_CHARS_FAIL": "99999"})
         env.pop("GITHUB_WORKSPACE", None)
         if api:
             env["ANTHROPIC_API_URL"] = api.url
@@ -418,6 +422,76 @@ class TestE2E(unittest.TestCase):
         self.assertIn("risque de depasser 2 pages", out)
         self.assertEqual(self.state_rows()[-1]["issue_no"], "132", out)
 
+    # ------------------------------------------------------------ longueur du SitRep (2 pages)
+    def _sitrep_chars(self):
+        runs, texts, paras = runs_and_paras(SITREP_T)
+        return sum(len(t) for t in texts)
+
+    def test_sitrep_over_budget_is_refused(self):
+        """Le gabarit herite (3 pages ~ 17 800 car.) depasse 10 800 : un SitRep non raccourci est refuse."""
+        t0, b0 = self.hashes()
+        api = self.api()
+        rc, out = self.r("06b_generate_africa_cdc_sitrep_brief_full.R", api,
+                         extra={"PREIS_SITREP_MAX_CHARS": "10000", "PREIS_SITREP_MAX_CHARS_FAIL": "10800"})
+        self.assertEqual(rc, 0, out)
+        self.assertEqual(self.attempts()[0]["last_category"], "output", out)
+        self.assertIn("SitRep trop long", self.attempts()[0]["last_error"])
+        self.assert_untouched(t0, b0)
+
+    def test_sitrep_slightly_long_only_warns_and_prompt_states_budget(self):
+        n = self._sitrep_chars()
+        api = self.api()
+        rc, out = self.r("06b_generate_africa_cdc_sitrep_brief_full.R", api,
+                         extra={"PREIS_SITREP_MAX_CHARS": str(n - 2000), "PREIS_SITREP_MAX_CHARS_FAIL": str(n + 3000)})
+        self.assertEqual(rc, 0, out)
+        self.assertIn("risque de depasser", out)
+        self.assertEqual(self.state_rows()[-1]["issue_no"], "132", out)
+        ut = api.requests[0]["user_text"]
+        self.assertIn("BUDGET DE LONGUEUR", ut)
+        self.assertIn("2 pages MAXIMUM", ut)
+
+    # ------------------------------------------------------------ aucun jour manquant
+    def _set_registry(self, rows):
+        """rows : [(no, url_suffix)] ; copie le PDF de test pour chacun."""
+        with open(self.f("data/final/sitrep_registry.csv"), "w", encoding="utf-8") as fh:
+            fh.write("sitrep_no,pdf_url,date_raw,local_pdf\n")
+            for no, suffix in rows:
+                fh.write("%d,https://insp.cd/wp-content/uploads/2026/10/SitRep_MVEBDB_%d_%s.pdf,,"
+                         "/home/runner/work/x/data/pdf/SitRep_%d_2026.pdf\n" % (no, no, suffix, no))
+                shutil.copy(self.pdf, self.f("data/pdf/SitRep_%d_2026.pdf" % no))
+
+    def test_chronological_catchup_never_skips_a_day(self):
+        """Etat = SitRep 141 traite ; 142, 143 et 144 disponibles : un par cycle, du plus ancien au plus recent."""
+        self._set_registry([(144, "05_10_2026-2"), (143, "04_10_2026"), (142, "03_10_2026"), (141, "02_10_2026")])
+        expected = [(142, 132, "03_October2026"), (143, 133, "04_October2026"), (144, 134, "05_October2026")]
+        for k, (sno, issue, label) in enumerate(expected):
+            api = self.api([], ok_payload(new_issue=issue, prev_issue=131, tag=str(issue)))   # memes index de run que le gabarit normalise (Issue 131)
+            rc, out = self.r("06b_generate_africa_cdc_sitrep_brief_full.R", api)
+            self.assertEqual(rc, 0, out)
+            row = self.state_rows()[-1]
+            self.assertEqual((row["sitrep_no_source"], row["issue_no"]), (str(sno), str(issue)), out)
+            names = [os.path.basename(p) for p in glob.glob(self.f(RAPPORTS + "/BVD_SitRep_*.docx"))]
+            self.assertTrue(any("%d_%s" % (issue, label) in n for n in names), (names, label))
+            if k < 2:
+                self.assertIn("RATTRAPAGE CHRONOLOGIQUE", api.requests[0]["user_text"])
+        # 4e execution : tout est a jour
+        api = self.api()
+        rc, out = self.r("06b_generate_africa_cdc_sitrep_brief_full.R", api)
+        self.assertIn("deja traite", out)
+        self.assertEqual(len(api.requests), 0)
+
+    def test_missing_sitrep_number_is_flagged_not_invented(self):
+        """SitRep 142 absent du registre (non publie) : 143 est traite et le prompt impose de signaler le 142."""
+        self._set_registry([(143, "04_10_2026"), (141, "02_10_2026")])
+        api = self.api([], ok_payload(new_issue=132, prev_issue=131))
+        rc, out = self.r("06b_generate_africa_cdc_sitrep_brief_full.R", api)
+        self.assertEqual(rc, 0, out)
+        self.assertEqual(self.state_rows()[-1]["sitrep_no_source"], "143", out)
+        ut = api.requests[0]["user_text"]
+        self.assertIn("JOUR(S) MANQUANT(S)", ut)
+        self.assertIn("No. 142", ut)
+        self.assertNotIn("RATTRAPAGE CHRONOLOGIQUE", ut)
+
     def test_brief_template_itself_fits_two_pages_budget(self):
         runs, texts, paras = runs_and_paras(BRIEF_T)
         self.assertLessEqual(sum(len(t) for t in texts), 10900 + 400)
@@ -494,6 +568,12 @@ class TestE2E(unittest.TestCase):
         self.assertEqual(sorted(m[0]["rcpts"]), ["africacdc@example.org", "eiu@example.org"])
         self.assertEqual(len(m[0]["attachments"]), 2)
         self.assertIn("Issue No.132", m[0]["subject"])
+        # signature commune a tous les e-mails PREIS (HTML et texte brut)
+        for kind in ("html", "plain"):
+            body = m[0]["msg"].get_body(preferencelist=(kind,)).get_content()
+            for needle in ("Dr R. Hyacinthe ZABRE", "Epidemio-Biostat, PREIS developer", "zrhyacinthe@gmail.com",
+                           "+22678088770"):
+                self.assertIn(needle, body, (kind, needle))
         rc, out = self.r("05b_send_africacdc_sitrep_brief_full_email.R", smtp=sm, extra=extra)
         self.assertEqual(len(sm.parsed()), 1, "jamais deux fois la meme Issue")
         # PREIS_FORCE_SEND (vrai par defaut en lancement manuel) ne doit PAS declencher un renvoi externe

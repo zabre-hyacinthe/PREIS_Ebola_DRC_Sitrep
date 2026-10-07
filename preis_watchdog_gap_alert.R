@@ -29,6 +29,17 @@
 # Usage manuel :  Rscript --vanilla preis_watchdog_gap_alert.R
 ############################################################
 
+# --- Signature commune des e-mails (scripts/preis_signature.R ; repli integre si le fichier est absent) ---
+for (.sig_fp in c("scripts/preis_signature.R", file.path(Sys.getenv("GITHUB_WORKSPACE", "."), "scripts", "preis_signature.R"),
+                  "D:/PREIS_Ebola_DRC_Sitrep_FV_12.06.26/scripts/preis_signature.R")) {
+  if (file.exists(.sig_fp)) { try(source(.sig_fp, encoding = "UTF-8"), silent = TRUE); break }
+}
+if (!exists("preis_signature_html", mode = "function")) {
+  preis_signature_text <- function() "\n\n-- \nDr R. Hyacinthe ZABRE\nEpidemio-Biostat, PREIS developer\nEmail: zrhyacinthe@gmail.com\nWhatsApp: +22678088770\n"
+  preis_signature_html <- function() paste0("<div style='margin-top:22px;padding-top:10px;border-top:1px solid #d0d0d0;font-size:13px;line-height:1.5'>",
+    "<b>Dr R. Hyacinthe ZABRE</b><br>Epidemio-Biostat, PREIS developer<br>Email: zrhyacinthe@gmail.com<br>WhatsApp: +22678088770</div>")
+}
+
 options(warn = 1)
 
 .env_get <- function(names, default = "") {
@@ -204,6 +215,7 @@ plain <- paste(
   "",
   paste0("Genere le ", format(Sys.time(), "%Y-%m-%d %H:%M:%S UTC", tz = "UTC"),
          " par preis_watchdog_gap_alert.R"),
+  preis_signature_text(),
   sep = "\n")
 
 html <- paste0(
@@ -220,7 +232,7 @@ html <- paste0(
   "<pre style='background:#F4F6F7;padding:10px 12px;border-radius:6px;font-size:13px;white-space:pre-wrap'>", reco, "</pre>",
   "<p style='font-size:11px;color:#888'>G&eacute;n&eacute;r&eacute; le ",
   format(Sys.time(), "%Y-%m-%d %H:%M:%S UTC", tz = "UTC"),
-  " par preis_watchdog_gap_alert.R</p></div>")
+  " par preis_watchdog_gap_alert.R</p>", preis_signature_html(), "</div>")
 
 subject <- if (length(missing)) {
   sprintf("[PREIS][ALERTE] SitRep non envoye : %s", missing_txt)

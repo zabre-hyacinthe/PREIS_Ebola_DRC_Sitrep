@@ -170,6 +170,21 @@ ATTEMPT_COLS <- c("sitrep_no", "attempts", "last_category", "last_error", "last_
   quit(save = "no", status = 0)
 }
 
+## ---- 0. Resolution du PDF d un SitRep (plusieurs conventions de nom coexistent) ----
+.resolve_pdf <- function(sno, row) {
+  cands <- c(file.path(PDF_DIR, sprintf("SitRep_%02d_2026.pdf", sno)),
+             file.path(PDF_DIR, sprintf("PREIS_DRC_Ebola_SitRep_%03d.pdf", sno)))
+  lp <- if (!is.null(row) && "local_pdf" %in% names(row)) as.character(row$local_pdf[1]) else NA_character_
+  if (!is.na(lp) && nzchar(lp)) cands <- c(cands, file.path(PDF_DIR, basename(lp)))
+  hit <- cands[file.exists(cands)]
+  if (length(hit)) return(hit[1])
+  if (!dir.exists(PDF_DIR)) return(NA_character_)
+  all <- list.files(PDF_DIR, pattern = "\\.pdf$", full.names = TRUE, ignore.case = TRUE)
+  rx <- sprintf("(^|[^0-9])0*%d([^0-9]|$)", sno)
+  hit <- sort(all[grepl(rx, basename(all))])
+  if (length(hit)) hit[1] else NA_character_
+}
+
 ## ---- 1. Dernier SitRep RDC reellement disponible --------------------
 REGISTRY_FP <- file.path(DATA_FINAL, "sitrep_registry.csv")
 if (!file.exists(REGISTRY_FP)) .stop_clean("Registre introuvable : %s", REGISTRY_FP)
@@ -186,6 +201,37 @@ if (file.exists(.serie_fp)) {
 if (is.na(latest_sno)) .stop_clean("Aucun SitRep RDC exploitable dans le registre.")
 latest_sno <- as.integer(latest_sno)
 reg_row <- registry[which(as.integer(registry$sitrep_no) == latest_sno)[1], ]
+
+## ---- 1b. Rattrapage chronologique : ne jamais sauter un jour ------------
+## Demande Africa CDC (Dr Merawi, 07/10/2026) : "Let's not miss a day". Auparavant seul le SitRep RDC le plus
+## recent etait traite : si deux SitRep apparaissaient entre deux traitements (ou si un cycle avait echoue),
+## les jours intermediaires etaient definitivement sautes (ex. SitRep 139 du 30/09, 140 du 01/10).
+## Desormais : le plus ANCIEN SitRep non traite dont le PDF est disponible est traite en premier ; les suivants
+## le sont aux cycles suivants (toutes les 30 min). Un numero ABSENT du registre (non publie par l INSP,
+## ex. SitRep 142) ne peut pas etre invente : il est signale en commentaire et dans les anomalies.
+newest_sno <- latest_sno
+gap_missing <- integer(0)
+catchup_note <- ""
+.state0 <- if (file.exists(STATE_FP)) tryCatch(readr::read_csv(STATE_FP, show_col_types = FALSE), error = function(e) NULL) else NULL
+.last0 <- if (!is.null(.state0) && nrow(.state0) > 0 && "sitrep_no_source" %in% names(.state0))
+  suppressWarnings(max(as.integer(.state0$sitrep_no_source), na.rm = TRUE)) else -Inf
+if (!IS_TEST && is.finite(.last0) && newest_sno > .last0) {
+  .avail <- sort(unique(suppressWarnings(as.integer(registry$sitrep_no))))
+  .avail <- .avail[!is.na(.avail) & .avail > .last0 & .avail <= newest_sno]
+  .has_pdf <- vapply(.avail, function(sn) !is.na(.resolve_pdf(sn, registry[which(suppressWarnings(as.integer(registry$sitrep_no)) == sn)[1], ])), logical(1))
+  .ok <- .avail[.has_pdf]
+  if (length(.ok) > 0) {
+    latest_sno <- min(.ok)
+    reg_row <- registry[which(suppressWarnings(as.integer(registry$sitrep_no)) == latest_sno)[1], ]
+  }
+  .span <- seq.int(.last0 + 1L, latest_sno)
+  gap_missing <- setdiff(.span, .avail[.has_pdf])
+  gap_missing <- gap_missing[gap_missing < latest_sno]
+  if (latest_sno < newest_sno)
+    catchup_note <- sprintf("Ce SitRep est traite en RATTRAPAGE CHRONOLOGIQUE : le plus recent disponible est le No. %d, traite aux cycles suivants. N'utilise AUCUNE donnee d'un SitRep plus recent que le No. %d.", newest_sno, latest_sno)
+  if (latest_sno != newest_sno) .log("Rattrapage chronologique : SitRep RDC %d traite avant le plus recent (%d).", latest_sno, newest_sno)
+  if (length(gap_missing)) .log("SitRep RDC absent(s) du registre ou sans PDF : %s (signales en anomalie).", paste(gap_missing, collapse = ", "))
+}
 
 ## ---- 2. Anti-doublon -----------------------------------------------
 state <- if (file.exists(STATE_FP)) tryCatch(readr::read_csv(STATE_FP, show_col_types = FALSE), error = function(e) NULL) else NULL
@@ -224,33 +270,33 @@ if (!file.exists(SITREP_TEMPLATE) || !file.exists(BRIEF_TEMPLATE))
 if (!nzchar(api_key)) .config_problem(latest_sno, "secret ANTHROPIC_API_KEY absent ou vide (GitHub > Settings > Secrets and variables > Actions)")
 
 ## ---- 5. PDF source (plusieurs conventions de nom coexistent) -------
-.resolve_pdf <- function(sno, row) {
-  cands <- c(file.path(PDF_DIR, sprintf("SitRep_%02d_2026.pdf", sno)),
-             file.path(PDF_DIR, sprintf("PREIS_DRC_Ebola_SitRep_%03d.pdf", sno)))
-  lp <- if (!is.null(row) && "local_pdf" %in% names(row)) as.character(row$local_pdf[1]) else NA_character_
-  if (!is.na(lp) && nzchar(lp)) cands <- c(cands, file.path(PDF_DIR, basename(lp)))
-  hit <- cands[file.exists(cands)]
-  if (length(hit)) return(hit[1])
-  if (!dir.exists(PDF_DIR)) return(NA_character_)
-  all <- list.files(PDF_DIR, pattern = "\\.pdf$", full.names = TRUE, ignore.case = TRUE)
-  rx <- sprintf("(^|[^0-9])0*%d([^0-9]|$)", sno)
-  hit <- sort(all[grepl(rx, basename(all))])
-  if (length(hit)) hit[1] else NA_character_
-}
 pdf_fp <- .resolve_pdf(latest_sno, reg_row)
 if (is.na(pdf_fp)) .stop_clean("PDF du SitRep %s introuvable sous %s (telechargement pas encore abouti ce cycle ?).", latest_sno, PDF_DIR)
 .pdf_head <- tryCatch(rawToChar(readBin(pdf_fp, "raw", 5)), error = function(e) "")
 if (file.size(pdf_fp) < 2000 || !identical(.pdf_head, "%PDF-")) .fail(latest_sno, "input", sprintf("fichier PDF invalide ou incomplet : %s (%d octets)", basename(pdf_fp), file.size(pdf_fp)))
 
 ## ---- 6. Dates, numero d'Issue, libelle ---------------------------------
-.date_from <- function(row) {
-  cand <- c(as.character(row$date_raw[1]), as.character(row$pdf_url[1]))
-  d <- suppressWarnings(as.Date(cand[1], optional = TRUE)); if (length(d) == 1 && !is.na(d)) return(d)
-  m <- regmatches(cand[2], regexec("_(\\d{2})_(\\d{2})_(\\d{4})\\.pdf", cand[2]))[[1]]
-  if (length(m) == 4) { d <- suppressWarnings(as.Date(sprintf("%s-%s-%s", m[4], m[3], m[2]))); if (!is.na(d)) return(d) }
+.date_from <- function(row, sno = NA_integer_) {
+  d <- suppressWarnings(as.Date(as.character(row$date_raw[1]), optional = TRUE)); if (length(d) == 1 && !is.na(d)) return(d)
+  ## CORRECTIF 2026-10-07 : l'ancien motif exigeait "_JJ_MM_AAAA.pdf" ; l'URL du SitRep 144
+  ## ("..._144_05_10_2026-2.pdf") ne correspondait pas -> repli silencieux sur la date du JOUR (07/10 au
+  ## lieu de 05/10), d'ou le faux "contradiction de dates" et le mauvais nom de fichier.
+  for (u in c(as.character(row$pdf_url[1]), as.character(row$local_pdf[1]))) {
+    m <- regmatches(u, regexec("_(\\d{2})_(\\d{2})_(\\d{4})", u))[[1]]
+    if (length(m) == 4) { d <- suppressWarnings(as.Date(sprintf("%s-%s-%s", m[4], m[3], m[2]))); if (!is.na(d)) return(d) }
+  }
+  for (u in c(as.character(row$post_url[1]), as.character(row$source_page[1]))) {
+    m <- regmatches(u, regexec("-(\\d{2})-(\\d{2})-(\\d{4})/?$", u))[[1]]
+    if (length(m) == 4) { d <- suppressWarnings(as.Date(sprintf("%s-%s-%s", m[4], m[3], m[2]))); if (!is.na(d)) return(d) }
+  }
+  if (!is.na(sno) && sno >= 14L) {   # regle d'ancrage PREIS : 1 SitRep par jour depuis le SitRep 14 = 28/05/2026
+    .log("Date du SitRep %s deduite de la regle d'ancrage (aucune date dans l'URL).", sno)
+    return(as.Date("2026-05-28") + (sno - 14L))
+  }
+  .log("ATTENTION : date du SitRep introuvable, repli sur la date du jour.")
   Sys.Date()
 }
-sitrep_date  <- .date_from(reg_row)
+sitrep_date  <- .date_from(reg_row, latest_sno)
 latest_date  <- format(sitrep_date, "%d/%m/%Y")
 new_issue_no <- last_issue_no + 1L
 issue_label  <- sprintf("%d_%02d_%s%d", new_issue_no, as.integer(format(sitrep_date, "%d")),
@@ -298,13 +344,63 @@ system_prompt <- paste0(
   "ci-dessous pour chaque document, a prendre tels quels (ne pas reindexer). ",
   "Le numero d'Issue de chaque document DOIT etre mis a jour (Issue No. ", new_issue_no, ")."
 )
+## Budgets de longueur (07/10/2026) : SitRep <= 2 pages ; Executive Brief <= 2 pages.
+## Memes mesures que run_build.py (nombre de caracteres de texte du document) ; calibres au rendu.
+.runs_chars <- function(json_txt) {
+  r <- tryCatch(jsonlite::fromJSON(json_txt, simplifyVector = FALSE), error = function(e) list())
+  sum(vapply(r, function(x) nchar(if (is.null(x$text)) "" else as.character(x$text)), integer(1)))
+}
+SITREP_TARGET_CHARS <- 9500L;  SITREP_REFUSE_CHARS <- 10800L
+BRIEF_TARGET_CHARS  <- 10400L; BRIEF_REFUSE_CHARS  <- 11800L
+## Budget PAR RUN narratif : sans cela le modele coupe trop peu (le gabarit herite fait ~19 000 caracteres pour
+## un objectif de ~9 500). Les runs courts (titres, tuiles, tableaux) ne sont pas touches.
+.run_budgets <- function(json_txt, target) {
+  r <- tryCatch(jsonlite::fromJSON(json_txt, simplifyVector = FALSE), error = function(e) list())
+  txt <- vapply(r, function(x) if (is.null(x$text)) "" else as.character(x$text), character(1))
+  len <- nchar(txt); idx <- vapply(r, function(x) as.integer(x$index), integer(1))
+  total <- sum(len)
+  if (total <= target) return("")
+  fixed <- grepl("Prepared by|Sources:", txt)             # ligne de credits : jamais raccourcie
+  base <- 350L                                            # les runs courts (titres, tuiles, tableaux) ne bougent pas
+  over <- ifelse(fixed, 0L, pmax(len - base, 0L))
+  g <- (target - (total - sum(over))) / sum(over)          # les runs LONGS absorbent la reduction, au prorata de leur exces
+  g <- max(0.15, min(1, g))
+  big <- which(over > 0L)
+  paste0("Budget par run narratif (index : actuel -> MAXIMUM) : ",
+         paste(sprintf("%d : %d -> %d", idx[big], len[big], as.integer(floor((base + (len[big] - base) * g) / 10) * 10)), collapse = " ; "), ".\n")
+}
+budget_text <- paste0(
+  "\n\n--- BUDGET DE LONGUEUR (OBLIGATOIRE, demande de la direction Africa CDC) ---\n",
+  "SitRep Africa CDC : 2 pages MAXIMUM = visez ", SITREP_TARGET_CHARS, " caracteres de texte au total (le gabarit actuel en compte environ ",
+  .runs_chars(sitrep_runs$json), " ; le document est refuse automatiquement au-dela de ", SITREP_REFUSE_CHARS, ").\n",
+  .run_budgets(sitrep_runs$json, SITREP_TARGET_CHARS),
+  "Executive Brief : 2 pages MAXIMUM = visez ", BRIEF_TARGET_CHARS, " caracteres (gabarit actuel : environ ",
+  .runs_chars(brief_runs$json), " ; refus au-dela de ", BRIEF_REFUSE_CHARS, ").\n",
+  .run_budgets(brief_runs$json, BRIEF_TARGET_CHARS),
+  "Si le gabarit depasse le budget, RACCOURCIS le narratif (reponse operationnelle par pilier, defis, priorites) : garde TOUS les chiffres ",
+  "des tuiles et des tableaux, fusionne les phrases redondantes, retire les details operationnels secondaires et les passages qui repetent ",
+  "un chiffre deja donne ailleurs, sans rien inventer ni omettre un chiffre cle. Respecte le maximum de chaque run narratif.\n")
+## Si la tentative precedente a ete refusee pour sa longueur, le dire au modele.
+prev_fail_text <- local({
+  a0 <- tryCatch(.read_attempts(), error = function(e) NULL)
+  i0 <- if (!is.null(a0) && nrow(a0) > 0) which(a0$sitrep_no == as.character(latest_sno)) else integer(0)
+  if (length(i0) == 1 && grepl("trop long|trop pauvre", a0$last_error[i0]))
+    paste0("\n\nTENTATIVE PRECEDENTE REFUSEE : ", a0$last_error[i0], " Corrige ce point.") else ""
+})
+gap_text <- if (length(gap_missing)) {
+  paste0("\n\nATTENTION - JOUR(S) MANQUANT(S) DANS LA SOURCE : le(s) SitRep RDC No. ", paste(gap_missing, collapse = ", "),
+         " n'existe(nt) pas dans le registre (non publie par l'INSP ou non recupere). N'invente rien pour ce(s) jour(s) ; ",
+         "signale-le(s) en commentaire dans le document ET dans la liste \"anomalies\" (jour manquant dans la serie quotidienne).")
+} else ""
+catchup_text <- if (nzchar(catchup_note)) paste0("\n\n", catchup_note) else ""
 user_text <- paste0(
   "Nouveau SitRep RDC a traiter : No. ", latest_sno, ", date ", latest_date,
   " (fourni en piece jointe PDF -- lis-le nativement, y compris les tableaux et la mise en page, ",
   "pour detecter aussi un texte present mais non visible a l'affichage).\n\n",
   "--- RUNS DU GABARIT SITREP (dernier cycle, Issue ", last_issue_no, ") ---\n", sitrep_runs$json,
   "\n\n--- RUNS DU GABARIT EXECUTIVE BRIEF (dernier cycle) ---\n", brief_runs$json,
-  "\n\nProduis les edits pour generer l'Issue ", new_issue_no, " des deux documents."
+  "\n\nProduis les edits pour generer l'Issue ", new_issue_no, " des deux documents.",
+  budget_text, prev_fail_text, gap_text, catchup_text
 )
 env_model <- trimws(Sys.getenv("ANTHROPIC_MODEL", ""))
 models <- unique(c(if (nzchar(env_model)) env_model, "claude-sonnet-5-5", "claude-sonnet-5"))

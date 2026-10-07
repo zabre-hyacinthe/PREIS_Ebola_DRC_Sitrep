@@ -1,0 +1,6 @@
+# Fichiers d'etat anti-doublon : ajout de lignes uniquement -> en cas de rebase/merge concurrent,
+# on garde les lignes des DEUX cotes (aucun envoi oublie, aucun renvoi).
+data/preis_*state.csv merge=union
+data/monitor_state/*.csv merge=union
+data/africa_cdc_brief/state.csv merge=union
+data/africa_cdc_brief/email_sent_state.csv merge=union

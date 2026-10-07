@@ -626,7 +626,16 @@ tryCatch(
   }
 )
 
-subject <- paste0("[PREIS Ebola DRC] Nouveau SitRep INSP â€” N", latest_no)
+# --- Signature commune des e-mails (scripts/preis_signature.R ; repli integre si le fichier est absent) ---
+for (.sig_fp in c("scripts/preis_signature.R", file.path(Sys.getenv("GITHUB_WORKSPACE", "."), "scripts", "preis_signature.R"),
+                  "D:/PREIS_Ebola_DRC_Sitrep_FV_12.06.26/scripts/preis_signature.R")) {
+  if (file.exists(.sig_fp)) { try(source(.sig_fp, encoding = "UTF-8"), silent = TRUE); break }
+}
+if (!exists("preis_signature_text", mode = "function")) {
+  preis_signature_text <- function() "\n\n-- \nDr R. Hyacinthe ZABRE\nEpidemio-Biostat, PREIS developer\nEmail: zrhyacinthe@gmail.com\nWhatsApp: +22678088770\n"
+}
+
+subject <- paste0("[PREIS Ebola DRC] Nouveau SitRep INSP - N", latest_no)
 
 body <- paste0(
   "Dear colleagues,\n\n",
@@ -639,10 +648,9 @@ body <- paste0(
   "PDF source: ", latest_pdf_url, "\n\n",
   "The official PDF is attached as received from INSP.\n",
   "Automated analytical outputs will follow once generated and validated.\n\n",
-  "For urgent follow-up, please contact Dr Hyacinthe Zabre on WhatsApp: ",
-  "+226 78 08 87 70.\n\n",
   "Best regards,\n",
-  "PREIS Ebola DRC Automation\n"
+  "PREIS Ebola DRC Automation",
+  preis_signature_text()
 )
 
 writeLines(

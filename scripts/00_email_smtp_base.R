@@ -310,19 +310,8 @@ preis_send_email <- function(
       body
     )
 
-    body <- gsub(
-      "Best regards,\\s*\\nPREIS Ebola DRC Automation\\s*\\.?\\s*$",
-      "Best regards,\\nPREIS Ebola DRC Automation\\n\\nFor urgent follow-up, please contact Dr Hyacinthe Zabré on WhatsApp: +226 78 08 87 70.",
-      body,
-      perl = TRUE
-    )
-
-    if (!grepl("+226 78 08 87 70", body, fixed = TRUE)) {
-      body <- paste0(
-        body,
-        "\\n\\nFor urgent follow-up, please contact Dr Hyacinthe Zabré on WhatsApp: +226 78 08 87 70."
-      )
-    }
+    # La signature commune (Dr R. Hyacinthe ZABRE ...) est ajoutee par scripts/08_cloud_sitrep_monitor.R
+    # via preis_signature_text() ; plus de ligne de contact separee ici.
   }
 
   writeLines(body, body_file, useBytes = TRUE)

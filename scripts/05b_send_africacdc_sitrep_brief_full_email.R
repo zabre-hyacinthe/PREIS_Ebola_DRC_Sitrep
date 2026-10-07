@@ -29,6 +29,17 @@
 #   send_africacdc_sitrep_brief_full_email(force = TRUE)
 ############################################################
 
+# --- Signature commune des e-mails (scripts/preis_signature.R ; repli integre si le fichier est absent) ---
+for (.sig_fp in c("scripts/preis_signature.R", file.path(Sys.getenv("GITHUB_WORKSPACE", "."), "scripts", "preis_signature.R"),
+                  "D:/PREIS_Ebola_DRC_Sitrep_FV_12.06.26/scripts/preis_signature.R")) {
+  if (file.exists(.sig_fp)) { try(source(.sig_fp, encoding = "UTF-8"), silent = TRUE); break }
+}
+if (!exists("preis_signature_html", mode = "function")) {
+  preis_signature_text <- function() "\n\n-- \nDr R. Hyacinthe ZABRE\nEpidemio-Biostat, PREIS developer\nEmail: zrhyacinthe@gmail.com\nWhatsApp: +22678088770\n"
+  preis_signature_html <- function() paste0("<div style='margin-top:22px;padding-top:10px;border-top:1px solid #d0d0d0;font-size:13px;line-height:1.5'>",
+    "<b>Dr R. Hyacinthe ZABRE</b><br>Epidemio-Biostat, PREIS developer<br>Email: zrhyacinthe@gmail.com<br>WhatsApp: +22678088770</div>")
+}
+
 .awb_env_get <- function(names, default = "") {
   for (n in names) {
     v <- Sys.getenv(n, "")
@@ -147,7 +158,7 @@ send_africacdc_sitrep_brief_full_email <- function(root = NULL, force = FALSE) {
 
   all_ok <- TRUE
   wrap <- function(inner) paste0(
-    "<div style='font-family:Segoe UI,Arial,sans-serif;color:#252525;max-width:640px;line-height:1.5'>", inner, "</div>")
+    "<div style='font-family:Segoe UI,Arial,sans-serif;color:#252525;max-width:640px;line-height:1.5'>", inner, preis_signature_html(), "</div>")
 
   # =====================================================================
   # 1. ALERTE OPERATEUR (modes normal / retry)
@@ -285,8 +296,8 @@ send_africacdc_sitrep_brief_full_email <- function(root = NULL, force = FALSE) {
     "Values not present in the DRC SitRep (e.g. Uganda, health-worker figures) are carried over from the previous cycle.</p>", anomaly_line,
     "<p style='font-size:12px;color:#666'>Unlike the DRC quantitative supplement (separate e-mail), these documents follow ",
     "the official Africa CDC template exactly, including Uganda figures and the full operational narrative by pillar. ",
-    "They are generated automatically and should be reviewed before onward distribution.</p></div>")
-  plain <- sprintf("PREIS Africa CDC SitRep + Executive Brief - Issue No.%d (DRC SitRep No.%03d). See attached documents.", issue_no, sno)
+    "They are generated automatically and should be reviewed before onward distribution.</p>", preis_signature_html(), "</div>")
+  plain <- paste0(sprintf("PREIS Africa CDC SitRep + Executive Brief - Issue No.%d (DRC SitRep No.%03d). See attached documents.", issue_no, sno), preis_signature_text())
 
   ok <- .awb_send_mail(py_bin, list(from = from, to = as.list(pub_to), subject = subject, html = html, plain = plain,
         attachments = list(sitrep_propre_fp, brief_propre_fp)))

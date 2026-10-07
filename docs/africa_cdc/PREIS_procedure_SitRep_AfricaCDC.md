@@ -172,7 +172,35 @@ le gabarit en compte environ 10 600). Au-delà de 11 800 caractères le document
   stocks, actions déjà décrites ailleurs) ; ne reformule pas avec de nouvelles informations
   et n'invente rien. Garde en priorité : cas, décès, létalité, suivi des contacts, hospitalisation,
   laboratoire, vaccination, risques et actions prioritaires.
-- Ces limites ne s'appliquent pas au SitRep (3 pages).
+- Ces limites sont propres au Brief ; le SitRep a sa propre limite (section suivante).
+
+## LONGUEUR DU SITREP AFRICA CDC : 2 PAGES MAXIMUM (limite stricte, demande du propriétaire 07/10/2026)
+Dr Merawi : « not more than 2 and a half pages » ; le propriétaire a fixé la cible à 2 PAGES pour le SitRep
+comme pour le Brief. Le gabarit hérité fait 3 à 4 pages (17 800–19 300 caractères) : il faut le RACCOURCIR.
+- Mesure : nombre total de caractères de texte du document (même mesure que le Brief). Visé : ≈ 9 500.
+  Avertissement au-dessus de 10 000 (≈ 2 pages) ; document REFUSÉ au-delà de 10 800.
+  Chaque paragraphe reçoit un budget individuel (« BUDGET DE LONGUEUR » du prompt) ; les lignes de crédit
+  et de sources sont exemptées. Les paragraphes vides avant la ligne « Prepared by » sont compactés
+  automatiquement (un seul conservé) pour éviter une ligne orpheline en page 3.
+- Raccourcis d'abord le narratif : « Response highlights » (4 paragraphes les plus longs), « Key challenges »,
+  « Priorities ». Fusionne les phrases redondantes, retire les détails secondaires (chiffres par site,
+  séances individuelles, stocks, actions déjà décrites ailleurs). Ne reformule pas avec de nouvelles
+  informations, n'invente rien.
+- Ne retire JAMAIS un chiffre clé : tuiles, tableau par province, cas, décès, létalité, guéris, patients en
+  isolement, suivi des contacts, alertes, laboratoire, vaccination, risques et actions prioritaires.
+- Même une fois sous la limite, ne rallonge jamais un paragraphe par rapport au cycle précédent.
+
+## AUCUN JOUR MANQUANT (demande Dr Merawi, 07/10/2026)
+« Let's not miss a day — there is no 3rd of October and 30 of September. » La série des Issues est
+quotidienne : un Issue par SitRep RDC, dans l'ordre chronologique.
+- Le pipeline traite le SitRep RDC non traité le plus ANCIEN dont le PDF est disponible (rattrapage
+  chronologique), puis les suivants aux cycles suivants. Il ne saute plus un jour parce qu'un SitRep plus
+  récent est apparu entre deux cycles.
+- La date de l'Issue est celle du rapport figurant dans le SitRep RDC traité (jamais la date du jour).
+- Un SitRep RDC ABSENT de la série (ex. No. 142 du 03/10, non publié par l'INSP) ne peut pas être inventé :
+  signale « jour manquant dans la série quotidienne » en commentaire ET dans la liste « anomalies », et
+  n'utilise aucune donnée d'un autre jour pour le combler.
+- Les chiffres « dernières 24 h » ne couvrent que le dernier jour ; les cumuls couvrent tous les jours.
 
 ## HIÉRARCHIE DES SOURCES (règle absolue)
 Le SitRep RDC traité fait TOUJOURS foi. Toute valeur du SitRep RDC prime sur le gabarit,

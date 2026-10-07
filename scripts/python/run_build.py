@@ -137,6 +137,47 @@ def ensure_issue_number(template_dir, edits, prev, expected):
     return fixed
 
 
+# SitRep Africa CDC = 2 pages (demande du proprietaire du projet 07/10/2026, apres la limite de 2,5 pages de
+# Dr Merawi). Meme mesure que le Brief (total des caracteres de texte). References (rendu LibreOffice, apres
+# compactage des paragraphes vides finaux) : 9 776 car. = 2 pages, derniere ligne a y=671/731 ; 12 506 = 2,4 pages ;
+# 17 780 = 3 pages pleines.
+SITREP_MAX_CHARS_WARN = int(os.environ.get("PREIS_SITREP_MAX_CHARS", "10000"))
+SITREP_MAX_CHARS_FAIL = int(os.environ.get("PREIS_SITREP_MAX_CHARS_FAIL", "10800"))
+_P_RE = re.compile(r"<w:p\b[^>]*?(?:/>|>.*?</w:p>)", re.S)
+
+
+def compact_filler_before_credit(template_dir, anchor="Prepared by", keep=1):
+    """Le gabarit SitRep pousse la ligne « Prepared by » en bas de la page 3 avec une dizaine de paragraphes
+    VIDES. Des que le SitRep tient sur 2 pages, ces paragraphes vides debordent seuls sur une page 3 (cas du
+    05/10/2026 : une ligne isolee). On n'en garde que `keep`. Ne touche a aucun texte. Retourne le nombre
+    de paragraphes vides retires."""
+    fp = os.path.join(template_dir, "word", "document.xml")
+    with open(fp, encoding="utf-8") as f:
+        xml = f.read()
+    paras = list(_P_RE.finditer(xml))
+    idx = None
+    for i, m in enumerate(paras):
+        if anchor in "".join(re.findall(r"<w:t[^>]*>([^<]*)</w:t>", m.group(0))):
+            idx = i
+    if idx is None:
+        return 0
+    def empty(m):
+        g = m.group(0)
+        return "<w:t" not in g and "<w:drawing" not in g and "<w:pict" not in g and "<w:br" not in g
+    j = idx - 1
+    run = []
+    while j >= 0 and empty(paras[j]) and xml[paras[j].end():paras[j + 1].start()].strip() == "":
+        run.append(paras[j]); j -= 1
+    drop = run[:-keep] if keep else run          # run est dans l'ordre inverse : on garde les `keep` plus ANCIENS
+    drop = sorted(drop, key=lambda m: m.start(), reverse=True)
+    for m in drop:
+        xml = xml[:m.start()] + xml[m.end():]
+    if drop:
+        with open(fp, "w", encoding="utf-8") as f:
+            f.write(xml)
+    return len(drop)
+
+
 BRIEF_MAX_CHARS_WARN = int(os.environ.get("PREIS_BRIEF_MAX_CHARS", "10900"))
 BRIEF_MAX_CHARS_FAIL = int(os.environ.get("PREIS_BRIEF_MAX_CHARS_FAIL", "11800"))
 CREDIT = "Dr. R. Hyacinthe ZABRE"      # mention definitive de la ligne « Prepared by » (demande du proprietaire du projet)
@@ -213,6 +254,7 @@ def main():
         for nm, d, ed in (("SitRep", sitrep_dir, s_edits), ("Brief", brief_dir, b_edits)):
             if ensure_credit(d, ed):
                 warnings.append("%s : mention « %s » remise automatiquement" % (nm, CREDIT))
+        compact_filler_before_credit(sitrep_dir)
         n_s, n_b = changed_count(sitrep_dir, s_edits), changed_count(brief_dir, b_edits)
         if n_s < args.min_sitrep_edits or n_b < args.min_brief_edits:
             fail(2, "reponse trop pauvre : %d run(s) SitRep modifie(s) (minimum %d), %d run(s) Brief "
@@ -266,6 +308,14 @@ def main():
         if brief_chars > BRIEF_MAX_CHARS_WARN:
             warnings.append("Brief : %d caracteres (limite 2 pages ~ %d) : le document risque de depasser 2 pages, "
                             "a verifier avant diffusion" % (brief_chars, BRIEF_MAX_CHARS_WARN))
+        sitrep_chars = sum(len(t) for t in s_txt)
+        if sitrep_chars > SITREP_MAX_CHARS_FAIL:
+            fail(2, "SitRep trop long : %d caracteres (limite 2 pages ~ %d, refus au-dela de %d). "
+                    "Raccourcir les paragraphes narratifs (piliers, defis, priorites) sans rien inventer "
+                    "ni omettre un chiffre cle." % (sitrep_chars, SITREP_MAX_CHARS_WARN, SITREP_MAX_CHARS_FAIL))
+        if sitrep_chars > SITREP_MAX_CHARS_WARN:
+            warnings.append("SitRep : %d caracteres (limite 2 pages ~ %d) : le document risque de depasser "
+                            "2 pages, a verifier avant diffusion" % (sitrep_chars, SITREP_MAX_CHARS_WARN))
         if args.expected_issue_no is not None:
             for nm, txt in (("SitRep", s_txt), ("Brief", b_txt)):
                 nums = bd.issue_numbers(txt)
