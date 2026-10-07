@@ -122,3 +122,4 @@ sitrep_no,cfr,cas_cumules,deces_cumules,suspects,nouveaux_cas,date,nouveaux_cas_
 140,48.4,8224,3982,NA,NA,2026-09-04,NA,NA,NA,0,extrapolated_unreliable
 141,48.4,8224,3982,NA,0,2026-09-04,0,0,0,0,extrapolated_unreliable
 143,48.3,8442,4080,NA,NA,2026-09-04,NA,NA,NA,0,extrapolated_unreliable
+144,48.2,8603,4148,NA,161,2026-09-04,161,68,161,80.5,extrapolated_unreliable
