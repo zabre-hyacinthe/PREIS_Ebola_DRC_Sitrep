@@ -105,7 +105,11 @@ if (nrow(row) == 0) {
   if (nrow(cand) == 0) reject(sprintf("aucune donnee INRB a/avant %s", target_date))
   row <- cand[nrow(cand), , drop = FALSE]
   lag_days <- as.numeric(target_date - row$date)
-  if (lag_days > 3) reject(sprintf("source INRB en retard de %d j (dernier=%s, cible=%s)",
+  # Tolerance par defaut 0 jour : jamais de total d'un autre jour sous le numero d'un SitRep
+  # (cas du SitRep 145 : total du 05/10 affiche comme celui du 06/10). Variable pour ajuster.
+  max_lag <- suppressWarnings(as.numeric(Sys.getenv("PREIS_INRB_MAX_LAG_DAYS", "0")))
+  if (is.na(max_lag)) max_lag <- 0
+  if (lag_days > max_lag) reject(sprintf("source INRB en retard de %d j (dernier=%s, cible=%s)",
                                     as.integer(lag_days), row$date, target_date))
   cat(sprintf("[extract-cloud] Date exacte absente ; utilise le point INRB du %s (%d j avant).\n",
               row$date, as.integer(lag_days)))

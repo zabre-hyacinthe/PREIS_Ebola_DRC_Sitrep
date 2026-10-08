@@ -45,6 +45,8 @@ jobs:
       ALERT_CC: ${{ secrets.ALERT_CC }}
       ALERT_BCC: ${{ secrets.ALERT_BCC }}
       PREIS_AFRICACDC_TO: ${{ secrets.PREIS_AFRICACDC_TO }}
+      PREIS_SUPPLEMENT_TO: ${{ secrets.PREIS_SUPPLEMENT_TO }}
+      PREIS_DRC_SITREP_TO: ${{ secrets.PREIS_DRC_SITREP_TO }}
       ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
       PREIS_ARCHIVE_KEY: ${{ secrets.PREIS_ARCHIVE_KEY }}
       ANTHROPIC_MODEL: ${{ vars.ANTHROPIC_MODEL }}

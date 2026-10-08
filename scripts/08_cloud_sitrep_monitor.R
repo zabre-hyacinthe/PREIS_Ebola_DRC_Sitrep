@@ -646,8 +646,7 @@ body <- paste0(
                     "Not available on the INSP page", latest_title), "\n",
   "INSP page: ", latest_page_url, "\n",
   "PDF source: ", latest_pdf_url, "\n\n",
-  "The official PDF is attached as received from INSP.\n",
-  "Automated analytical outputs will follow once generated and validated.\n\n",
+  "The official PDF is attached as received from INSP.\n\n",
   "Best regards,\n",
   "PREIS Ebola DRC Automation",
   preis_signature_text()
@@ -677,10 +676,16 @@ if (!MONITOR_EMAIL_ENABLED) {
 
   tryCatch(
     {
+      # Le SitRep INSP officiel (PDF tel que recu, aucun calcul) part a l'operateur (ALERT_TO)
+      # ET au groupe PREIS_DRC_SITREP_TO (secret facultatif ; doublons ignores).
       preis_send_email(
         subject = subject,
         body = body,
-        attachment = pdf_file
+        attachment = pdf_file,
+        to = unique(c(
+          preis_split_emails(preis_env("ALERT_TO")),
+          preis_split_emails(preis_env("PREIS_DRC_SITREP_TO"))
+        ))
       )
 
       email_status <- "sent"

@@ -159,11 +159,10 @@ send_africacdc_sitrep_email <- function(root = NULL, force = FALSE) {
   smtp_pass <- .aw_env_get(c("SMTP_PASS", "SMTP_PASSWORD"))
   from <- .aw_env_get(c("ALERT_FROM", "EMAIL_FROM", "SMTP_FROM", "MAIL_FROM"), smtp_user)
 
-  # Liste de destinataires DEDIEE (peut differer de l'email officiel) --
-  # si PREIS_AFRICACDC_TO n'est pas defini, retombe sur la meme liste
-  # que l'email enrichi pour ne pas bloquer le premier envoi.
+  # Supplement quantitatif : PREIS_SUPPLEMENT_TO (par defaut ALERT_TO = l'operateur).
+  # N'utilise PLUS PREIS_AFRICACDC_TO (reserve au SitRep + Brief Africa CDC).
   to <- .aw_env_get(
-    c("PREIS_AFRICACDC_TO", "ALERT_TO", "EMAIL_TO", "PREIS_ALERT_TO", "PREIS_EMAIL_TO", "SMTP_TO", "MAIL_TO"),
+    c("PREIS_SUPPLEMENT_TO", "ALERT_TO", "EMAIL_TO", "PREIS_ALERT_TO", "PREIS_EMAIL_TO", "SMTP_TO", "MAIL_TO"),
     from
   )
 
