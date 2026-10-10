@@ -62,6 +62,17 @@ if (!file.exists(SCRIPT_EMAIL)) {
 
 source(SCRIPT_EMAIL, encoding = "UTF-8")
 
+# Decouverte des SitRep hors de la page de categorie (correctif 10/10/2026,
+# SitRep 146 publie hors de /category/sitrep/). Facultatif : si le fichier est
+# absent ou en erreur, le moniteur garde son comportement historique.
+SCRIPT_DISCOVERY <- file.path(ROOT, "scripts", "preis_sitrep_discovery.R")
+if (file.exists(SCRIPT_DISCOVERY)) {
+  tryCatch(
+    source(SCRIPT_DISCOVERY, encoding = "UTF-8"),
+    error = function(e) message("Decouverte SitRep non chargee: ", conditionMessage(e))
+  )
+}
+
 SCRIPT_WHATSAPP <- file.path(ROOT, "scripts", "10_whatsapp_notify.R")
 
 if (file.exists(SCRIPT_WHATSAPP)) {
@@ -325,6 +336,24 @@ scrape_latest_sitrep <- function() {
 
   posts <- dplyr::bind_rows(all_posts)
 
+  # Sources supplementaires (recherche du site, RSS, API WordPress, accueil,
+  # URL manuelles, sondage du numero suivant). Ne peut jamais faire echouer
+  # le moniteur : en cas d'erreur, la liste issue de la categorie est conservee.
+  if (exists("sd_augment", mode = "function")) {
+    posts <- tryCatch(
+      {
+        n_before <- nrow(posts)
+        out <- sd_augment(posts, log = log_msg)
+        log_msg("Decouverte supplementaire: ", n_before, " -> ", nrow(out), " SitRep candidat(s)")
+        out
+      },
+      error = function(e) {
+        log_msg("Decouverte supplementaire en erreur (ignoree): ", conditionMessage(e))
+        posts
+      }
+    )
+  }
+
   if (nrow(posts) == 0) {
     stop("Aucun SitRep MVB dÃ©tectÃ© sur INSP.", call. = FALSE)
   }
@@ -340,7 +369,12 @@ scrape_latest_sitrep <- function() {
   log_msg("Latest SitRep online: N", latest$sitrep_no)
   log_msg("SitRep page: ", latest$post_url)
 
-  latest$pdf_url <- resolve_pdf_url(latest$post_url)
+  # Lien direct vers un PDF (SitRep trouve sans page d'article) : utilise tel quel.
+  latest$pdf_url <- if (grepl("\\.pdf($|\\?)", latest$post_url, ignore.case = TRUE)) {
+    latest$post_url
+  } else {
+    resolve_pdf_url(latest$post_url)
+  }
 
   if (is.na(latest$pdf_url) || !nzchar(latest$pdf_url)) {
     stop("PDF URL could not be resolved for SitRep N", latest$sitrep_no, call. = FALSE)
