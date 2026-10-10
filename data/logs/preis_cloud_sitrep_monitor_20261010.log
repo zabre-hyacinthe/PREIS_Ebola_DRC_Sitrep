@@ -32,3 +32,20 @@
 [2026-10-10 00:32:08 UTC] SitRep page: https://insp.cd/sitrep-n145-mve-bdbv-06-10-2026/ 
 [2026-10-10 00:32:11 UTC] PDF URL resolved: https://insp.cd/wp-content/uploads/2026/10/SitRep_MVEBDB_145_06_10_2026.pdf 
 [2026-10-10 00:32:11 UTC] SitRep N145 already handled. No duplicate notification. 
+[2026-10-10 01:06:14 UTC] ============================================================ 
+[2026-10-10 01:06:14 UTC] PREIS Ebola RDC â€” Cloud SitRep Monitor started 
+[2026-10-10 01:06:14 UTC] ROOT: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep 
+[2026-10-10 01:06:14 UTC] DRY_RUN: FALSE 
+[2026-10-10 01:06:14 UTC] MONITOR_EMAIL_ENABLED: TRUE 
+[2026-10-10 01:06:14 UTC] MAX_PAGES: 6 
+[2026-10-10 01:06:14 UTC] Scanning INSP category page: https://insp.cd/category/sitrep/ 
+[2026-10-10 01:06:18 UTC] Page 1: 13 SitRep candidate(s) 
+[2026-10-10 01:06:22 UTC] Page 2: 12 SitRep candidate(s) 
+[2026-10-10 01:06:25 UTC] Page 3: 14 SitRep candidate(s) 
+[2026-10-10 01:06:29 UTC] Page 4: 15 SitRep candidate(s) 
+[2026-10-10 01:06:33 UTC] Page 5: 15 SitRep candidate(s) 
+[2026-10-10 01:06:37 UTC] Page 6: 15 SitRep candidate(s) 
+[2026-10-10 01:06:37 UTC] Latest SitRep online: N145 
+[2026-10-10 01:06:37 UTC] SitRep page: https://insp.cd/sitrep-n145-mve-bdbv-06-10-2026/ 
+[2026-10-10 01:06:40 UTC] PDF URL resolved: https://insp.cd/wp-content/uploads/2026/10/SitRep_MVEBDB_145_06_10_2026.pdf 
+[2026-10-10 01:06:41 UTC] SitRep N145 already handled. No duplicate notification. 
