@@ -149,12 +149,45 @@ scrape_insp_sitrep_list <- function(
     dplyr::distinct(sitrep_no, .keep_all = TRUE) %>%
     dplyr::arrange(dplyr::desc(sitrep_no))
 
-  cat("   Found", nrow(posts), "unique SitRep posts\n")
+  cat("   Found", nrow(posts), "unique SitRep posts (page categorie)\n")
+
+  # CORRECTIF 2026-10-10 : la page categorie ne liste pas toujours le dernier SitRep
+  # (preuve : SitRep 146 publie le 07/10 absent de la categorie ; le moniteur 08 l'a
+  # trouve par la decouverte supplementaire mais ce scraper non -> aucune ligne 146 au
+  # registre -> extraction, supplement et Brief Africa CDC restes sur le SitRep 145).
+  # On applique ici la MEME decouverte que le moniteur. Ne peut jamais faire echouer le
+  # scraping : en cas d'erreur, la liste issue de la categorie est conservee.
+  if (!exists("sd_augment", mode = "function")) {
+    for (.sdf in c(if (exists("SCRIPT_DIR")) file.path(SCRIPT_DIR, "preis_sitrep_discovery.R"),
+                   file.path("scripts", "preis_sitrep_discovery.R"))) {
+      if (file.exists(.sdf)) {
+        try(source(.sdf, encoding = "UTF-8"), silent = TRUE)
+        break
+      }
+    }
+  }
+  if (exists("sd_augment", mode = "function")) {
+    posts <- tryCatch({
+      n_before <- nrow(posts)
+      out <- sd_augment(posts, log = function(...) cat("   [decouverte]", ..., "\n", sep = ""))
+      if (!"date_raw" %in% names(out)) out$date_raw <- NA_character_
+      out$epidemic <- EPIDEMIC_LABEL
+      cat("   Decouverte supplementaire:", n_before, "->", nrow(out), "SitRep\n")
+      dplyr::arrange(out, dplyr::desc(sitrep_no))
+    }, error = function(e) {
+      cat("   Decouverte supplementaire en erreur (ignoree):", conditionMessage(e), "\n")
+      posts
+    })
+  }
+
   cat("   SitRep numbers:", paste(sort(posts$sitrep_no), collapse = ", "), "\n")
 
   cat("   Resolving embedded PDF URLs...\n")
 
-  posts$pdf_url <- purrr::map_chr(posts$post_url, resolve_pdf_url)
+  posts$pdf_url <- purrr::map_chr(
+    posts$post_url,
+    function(u) if (grepl("\\.pdf($|\\?)", u, ignore.case = TRUE)) u else resolve_pdf_url(u)
+  )
 
   posts <- posts %>%
     dplyr::filter(!is.na(pdf_url)) %>%

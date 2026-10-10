@@ -101,6 +101,23 @@ send_africacdc_sitrep_email <- function(root = NULL, force = FALSE) {
     return(invisible(FALSE))
   }
 
+  # GARDE 2026-10-10 : le supplement est quantitatif (serie nationale). Si le registre
+  # connait deja le SitRep N mais que la serie est encore au SitRep < N (source INRB du
+  # jour pas encore disponible), le document porterait le numero N avec les totaux d'un
+  # jour anterieur. On n'envoie donc pas, et on le dit ; l'envoi part au run suivant des
+  # que la serie contient le SitRep N (le .docx est regenere a chaque run).
+  if (file.exists(.serie_fp)) {
+    .s2 <- tryCatch(readr::read_csv(.serie_fp, show_col_types = FALSE), error = function(e) NULL)
+    if (!is.null(.s2) && "sitrep_no" %in% names(.s2)) {
+      .ser_max <- suppressWarnings(max(as.integer(.s2$sitrep_no), na.rm = TRUE))
+      if (is.finite(.ser_max) && .ser_max < sno && !isTRUE(force)) {
+        cat(sprintf("Supplement SitRep %d en attente : la serie nationale n'est qu'au SitRep %d (aucun envoi avec des totaux d'un autre jour).\n",
+                    sno, .ser_max))
+        return(invisible(FALSE))
+      }
+    }
+  }
+
   docx_fp <- file.path(rapports_dir, sprintf("PREIS_AfricaCDC_SitRep_%03d_FINAL.docx", sno))
 
   if (!file.exists(docx_fp)) {
