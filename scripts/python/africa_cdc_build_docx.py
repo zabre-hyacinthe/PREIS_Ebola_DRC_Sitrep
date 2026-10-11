@@ -322,3 +322,25 @@ def issue_numbers(paragraphs):
         for m in _ISSUE_RE.finditer(t):
             found.add(int(m.group(1)))
     return found
+
+# PREIS DOCX HYGIENE START (docx_package.py) -- ne pas modifier a la main
+import docx_package as _dp
+
+_zip_docx_raw = zip_docx
+_verify_pair_raw = verify_pair
+
+
+def zip_docx(src_dir, out_path):
+    """Nettoie (parties orphelines, taches Word orphelines), zippe ([Content_Types].xml en premier), puis verifie."""
+    removed = _dp.sanitize_dir(src_dir)
+    if removed:
+        print("docx : parties retirees du paquet -> %s" % ", ".join(removed))
+    _dp.zip_dir(src_dir, out_path)
+    _dp.check_package(out_path)
+
+
+def verify_pair(propre_path, suivi_path):
+    _dp.check_package(propre_path)
+    _dp.check_package(suivi_path)
+    return _verify_pair_raw(propre_path, suivi_path)
+# PREIS DOCX HYGIENE END
