@@ -272,5 +272,30 @@ class Workflow(unittest.TestCase):
             self.assertEqual(open(os.path.join(d, ".gitignore")).read().count("outputs/deck_private/"), 1)
 
 
+class TestFormulationsSitrep148(unittest.TestCase):
+    """SitRep 148 : « 1 nouveau resultat positif » (singulier), « Aucune sortie n'a ete rapportee » -> plantage du generateur (code 1)."""
+
+    def test_lab_singulier_et_sortie_zero(self):
+        import subprocess
+        import shutil
+        pdf = os.path.join(os.path.dirname(DECK), "..", "..", "data", "pdf", "SitRep_148_2026.pdf")
+        if not (os.path.isfile(pdf) and shutil.which("pdftotext")):
+            self.skipTest("PDF 148 ou pdftotext absent")
+        t = subprocess.run(["pdftotext", "-layout", pdf, "-"], capture_output=True).stdout.decode("utf-8", "replace")
+        S = sp.parse_sitrep(t)
+        self.assertEqual(S["lab"]["Haut-Uélé"]["positives"], 1)
+        self.assertEqual(S["lab"]["Bas-Uélé"]["positives"], 2)
+        self.assertEqual((S["care"]["Tshopo"]["admissions"], S["care"]["Tshopo"]["exits"]), (1, 0))
+
+    def test_rapport_ecrit_en_cas_d_erreur_interne(self):
+        import subprocess
+        with tempfile.TemporaryDirectory() as d:
+            r = subprocess.run([sys.executable, os.path.join(DECK, "build_deck.py"), "--sitrep", "999", "--pdf-dir", d, "--out-dir", d, "--text", os.path.join(d, "absent.txt")], capture_output=True)
+            rep = json.load(open(os.path.join(d, "deck_report.json"), encoding="utf-8"))
+            self.assertEqual(rep["status"], "error")
+            self.assertIn("erreur interne", rep["reason"])
+            self.assertNotEqual(r.returncode, 0)
+
+
 if __name__ == "__main__":
     unittest.main()

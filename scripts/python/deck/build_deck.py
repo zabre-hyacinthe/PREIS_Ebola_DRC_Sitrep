@@ -208,7 +208,7 @@ def verify_deck(path, S, P, cx_week):
     return ok, fails
 
 
-def main():
+def _main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--sitrep", type=int, required=True)
     ap.add_argument("--pdf-dir", default="data/pdf")
@@ -305,6 +305,30 @@ def main():
         os.makedirs(os.path.dirname(a.state) or ".", exist_ok=True)
         json.dump(st, open(a.state, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     return finish(code)
+
+
+def main():
+    """Filet de securite : toute erreur imprevue ecrit quand meme un deck_report.json explicite (code 5)
+    au lieu de quitter sans rapport (l'alerte operateur dit alors la vraie cause, pas « pas de rapport »)."""
+    try:
+        return _main()
+    except SystemExit:
+        raise
+    except Exception as e:  # noqa: BLE001
+        import traceback
+        tb = traceback.extract_tb(sys.exc_info()[2])
+        where = "%s:%d" % (os.path.basename(tb[-1].filename), tb[-1].lineno) if tb else "?"
+        ap = argparse.ArgumentParser(add_help=False)
+        ap.add_argument("--sitrep", type=int, default=0)
+        ap.add_argument("--out-dir", default="outputs/deck_private")
+        a, _ = ap.parse_known_args()
+        os.makedirs(a.out_dir, exist_ok=True)
+        rep = {"status": "error", "sitrep_no": a.sitrep,
+               "reason": "erreur interne du generateur (%s: %s) a %s - SitRep probablement a formulation nouvelle, aucun deck produit" % (type(e).__name__, str(e)[:160], where)}
+        json.dump(rep, open(os.path.join(a.out_dir, "deck_report.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+        traceback.print_exc()
+        print("[deck] %s" % json.dumps({"status": "error", "sitrep_no": a.sitrep}), flush=True)
+        return 5
 
 
 if __name__ == "__main__":

@@ -593,7 +593,7 @@ def _parse_lab(S):
     for pn, t in _by_prov(sec).items():
         s = p = None
         neg = re.search(r"tous\s+(?:sont\s+)?revenus?\s+n[ée]gatifs", t)
-        m = re.search(r"(\d+)\s+nouveaux r[ée]sultats positifs", t)
+        m = re.search(r"(\d+)\s+nouveaux?\s+r[ée]sultats?\s+positifs?", t)
         if m:
             p = int(m.group(1))
         m = re.search(r"sur\s+(\d+)\s+[ée]ch\w+", t)
@@ -630,6 +630,8 @@ def _parse_care(S):
         d["admissions"] = num(m.group(1)) if m else None
         m = re.search(r"contre\s+(\d[\d ]*?)\s+sorties?", t)
         d["exits"] = num(m.group(1)) if m else None
+        if d["exits"] is None and d["admissions"] is not None and re.search(r"aucune\s+sortie\s+n.a\s+[ée]t[ée]\s+rapport[ée]e|sans\s+aucune\s+sortie", t, re.I):
+            d["exits"] = 0  # le SitRep l'ecrit explicitement : « Aucune sortie n'a ete rapportee »
         m = re.search(r"dont\s+(\d+)\s+gu[ée]risons?", t)
         d["recovered"] = int(m.group(1)) if m else (0 if re.search(r"aucune gu[ée]rison", t) else None)
         m = re.search(r"(\d[\d ]*?)\s+patients?(?:\s*\([^)]*\))?\s+demeuraient\s+en\s+isolement", t)
