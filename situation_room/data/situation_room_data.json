@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-11T22:50:36Z",
+  "generated_at": "2026-10-11T23:14:02Z",
   "asof": "2026-09-04",
   "sitrep": "146",
   "sitrep_date": "2026-09-04",
@@ -2028,7 +2028,7 @@
     },
     {
       "k": "Detection scraper (INSP)",
-      "v": "-2 SitRep(s) de retard sur le registre",
+      "v": "-3 SitRep(s) de retard sur le registre",
       "rule": "Le scraper suit le rythme du numero courant.",
       "level": "info",
       "detected_on": "2026-10-11"
