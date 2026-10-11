@@ -157,3 +157,8 @@ outputs/qc/
 # Exception : donnees AGREGEES DHIS2 publiables (aucune ligne individuelle)
 !dashboard_ebola/data/dhis2_public/
 !dashboard_ebola/data/dhis2_public/**
+
+# deck BDBV : gabarit confidentiel (coffre chiffre) et sorties privees
+data/africa_cdc_deck/templates/
+outputs/deck_private/
+outputs/deck_private_test/

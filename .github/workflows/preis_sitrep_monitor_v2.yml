@@ -420,6 +420,57 @@ jobs:
             git add "data/africa_cdc_brief/$f" 2>/dev/null || true
           done
           bash scripts/ci_git_push.sh "PREIS etat: envois [skip ci]"
+      # PREIS DECK START
+      # Deck BDBV (diapositives) mis a jour a chaque nouveau SitRep : lecture du PDF, remplissage du gabarit, verification
+      # independante, envoi par mail, etat anti-doublon. Gabarit confidentiel : coffre chiffre (depot public).
+      # continue-on-error : n'interrompt jamais le reste du pipeline.
+      - name: Deck BDBV - dependances (poppler-utils, python-pptx)
+        if: always()
+        continue-on-error: true
+        timeout-minutes: 5
+        run: |
+          sudo apt-get install -y poppler-utils
+          python3 -m pip install --quiet python-pptx
+
+      - name: Deck BDBV - restaurer le gabarit (coffre chiffre)
+        if: always()
+        continue-on-error: true
+        timeout-minutes: 3
+        run: |
+          python3 scripts/python/private_store.py restore \
+            --store data/africa_cdc_deck/private_store.enc \
+            --dir data/africa_cdc_deck/templates || echo "coffre deck non restaure (non bloquant)"
+
+      - name: Deck BDBV - generer, verifier, envoyer (run_deck.py)
+        if: always() && env.PREIS_SEND_EMAIL == 'true'
+        continue-on-error: true
+        timeout-minutes: 12
+        env:
+          PREIS_DECK_TO: ${{ secrets.PREIS_DECK_TO }}
+        run: |
+          if [ -f scripts/python/deck/run_deck.py ]; then
+            python3 scripts/python/deck/run_deck.py ${{ github.event_name == 'workflow_dispatch' && inputs.africa_cdc_mode == 'test' && '--test' || '' }} || echo "deck en erreur (non bloquant)"
+          else
+            echo "run_deck.py absent - skip"
+          fi
+
+      - name: Deck BDBV - committer l'etat anti-doublon
+        if: always()
+        continue-on-error: true
+        run: |
+          set +e
+          git config user.name "PREIS Ebola Automation"
+          git config user.email "actions@github.com"
+          git add data/africa_cdc_deck/state.json data/africa_cdc_deck/email_sent_state.csv data/africa_cdc_deck/alerts.csv 2>/dev/null
+          git diff --cached --quiet && echo "Pas de changement d'etat deck" && exit 0
+          git commit -m "PREIS deck: etat anti-doublon [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin main && git push && exit 0
+            sleep 5
+          done
+          echo "push de l'etat deck impossible (risque de renvoi au prochain passage)"
+          exit 0
+      # PREIS DECK END
       # PREIS WATCHDOG START
       # Garde-fou : alerte par email si un SitRep a ete telecharge mais
       # jamais envoye. if: always() -> tourne meme si une etape a echoue.
