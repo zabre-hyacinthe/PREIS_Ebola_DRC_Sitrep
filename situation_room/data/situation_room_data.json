@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-12T09:59:02Z",
+  "generated_at": "2026-10-12T10:22:18Z",
   "asof": "2026-09-04",
   "sitrep": "146",
   "sitrep_date": "2026-09-04",
@@ -1778,13 +1778,13 @@
       "days_since": 4
     },
     {
-      "name": "Gety",
+      "name": "Kilo",
       "province": "Ituri",
-      "last_case_date": "2026-10-04",
-      "days_since": 2
+      "last_case_date": "2026-10-03",
+      "days_since": 3
     },
     {
-      "name": "Kilo",
+      "name": "Gety",
       "province": "Ituri",
       "last_case_date": "2026-10-04",
       "days_since": 2
