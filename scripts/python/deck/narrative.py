@@ -24,6 +24,9 @@ KEYS = {
 }
 
 
+LAST_WHY = {}  # cle -> raison du refus (lu par build_deck.py pour le mail)
+
+
 def _norm_num(tok):
     t = re.sub(r"[\s  ]", "", tok)
     if re.fullmatch(r"\d{1,3}(,\d{3})+", t):
@@ -107,6 +110,7 @@ def generate(S, text, prior, log_path, call=None):
     """renvoie {cle: texte_verifie} (cles absentes = non rafraichies)."""
     call = call or _call
     log = {"requested": list(KEYS), "accepted": {}, "rejected": {}}
+    LAST_WHY.clear()
     try:
         user = ["SitRep text (French, pdftotext):\n" + text[:60000], "\nTasks (one entry per key, same style/length as the previous text shown):"]
         for k, hint in KEYS.items():
@@ -115,12 +119,14 @@ def generate(S, text, prior, log_path, call=None):
                     "models": ["claude-sonnet-5-5", "claude-sonnet-5"]}, log_path + ".result.json")
         if not res.get("ok"):
             log["error"] = "%s: %s" % (res.get("category"), res.get("message"))
+            LAST_WHY["*"] = "appel au modele en echec : " + log["error"][:120]
             return {}
         raw = res["text"].strip()
         raw = re.sub(r"^```(?:json)?|```$", "", raw, flags=re.M).strip()
         data = json.loads(raw)
     except Exception as e:  # noqa
         log["error"] = "%s: %s" % (type(e).__name__, e)
+        LAST_WHY["*"] = "reponse du modele inutilisable : " + log["error"][:120]
         return {}
     finally:
         try:
@@ -136,6 +142,7 @@ def generate(S, text, prior, log_path, call=None):
             log["accepted"][k] = out[k]
         else:
             log["rejected"][k] = why
+            LAST_WHY[k] = "verification refusee : " + str(why)[:140]
     try:
         json.dump(log, open(log_path, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     except Exception:

@@ -418,11 +418,12 @@ def _parse_table3(lines, S):
 def _parse_contacts(text, S):
     flat = re.sub(r"\s+", " ", text)
     out = {"contacts": None}
-    m = re.search(r"Parmi\s+(\d[\d ]*?)\s+contacts en cours de suivi,\s+(\d[\d ]*?)\s+ont [ée]t[ée] vus.*?proportion de suivi de\s+([\d,]+)\s*%(?:.*?\(([\d,]+)\s*%\))?", flat)
+    m = re.search(r"Parmis?\s+(\d[\d ]*?)\s+contacts en cours de suivi([^,]{0,90}),\s+(\d[\d ]*?)\s+ont [ée]t[ée] vus.*?proportion de suivi de\s+([\d,]+)\s*%(?:.*?\(([\d,]+)\s*%\))?", flat)
     if not m:
         _warn(S, "phrase de suivi des contacts introuvable")
         return out
-    listed, seen, pct = num(m.group(1)), num(m.group(2)), num(m.group(3))
+    listed, seen, pct = num(m.group(1)), num(m.group(3)), num(m.group(4))
+    cov = m.group(2) or ""
     if abs(100.0 * seen / listed - pct) > 0.06:
         _warn(S, "suivi des contacts : %s/%s = %.1f != %.1f publie" % (seen, listed, 100.0 * seen / listed, pct))
     if S.get("contacts_pct_kpi") is not None and abs(S["contacts_pct_kpi"] - pct) > 0.06:
@@ -430,9 +431,9 @@ def _parse_contacts(text, S):
     byp = {}
     seg = flat[m.end(): m.end() + 900]
     seg = re.split(r"\s2\.2\.\s", seg)[0]
-    mm = re.search(r"(?:Par province, )?[Cc]ette proportion [ée]tait de (.*?)\. (?:Aucune|Les ZS|Le |La |Au |En |\d)", seg + " . 0")
+    mm = re.search(r"(?:Par province, )?[Cc]ette proportion [ée]tait de (.*?)\. (?:Aucune|Seul|Les ZS|Le |La |Au |En |\d)", seg + " . 0")
     if mm:
-        for p_, s_, l_, name in re.findall(r"([\d,]+)\s*%\s*\((\d[\d ]*?)/(\d[\d ]*?)\)\s+(?:au|à la|a la|en|à|a)\s+([A-Za-zÀ-ÿ\- ]+?)(?=,| et |$)", mm.group(1)):
+        for p_, s_, l_, name in re.findall(r"([\d,]+)\s*%\s*\((\d[\d ]*?)/(\d[\d ]*?)\)\s+(?:au|à la|a la|en|à|a)\s+([A-Za-zÀ-ÿ\- ]+?)(?=\s*[,;]| et |$)", mm.group(1)):
             pn = prov_name(name.strip())
             if pn:
                 byp[pn] = dict(pct=num(p_), seen=num(s_), listed=num(l_))
@@ -452,6 +453,19 @@ def _parse_contacts(text, S):
     m2 = re.search(r"ZS de ([A-Za-zÀ-ÿ\-]+) \(([A-Za-zÀ-ÿ\- ]+),\s*(\d[\d ]*?) contacts\)", nonrep.group(1)) if nonrep else None
     out["contacts"]["nonreporting_zs"] = [z for z in re.findall(r"(?:ZS de|et de)\s+([A-Za-zÀ-ÿ\-]+)", nonrep.group(1))] if nonrep else []
     out["contacts"]["nonreporting_contacts"] = (m2.group(1), num(m2.group(3))) if m2 else None
+    # couverture partielle : « Parmi N contacts ... dans les provinces ayant transmis leurs donnees » (SitRep 149 : Ituri absent)
+    mp = re.search(r";\s*([^;.]{3,80}?)\s+n[\u2019'](?:a|ont)\s+pas\s+transmis", seg)
+    missing = []
+    if mp:
+        for piece in re.split(r"\s+et\s+", mp.group(1)):
+            pn_ = prov_name(re.sub(r"^(?:l[\u2019']|le\s+|la\s+|les\s+)", "", piece.strip(), flags=re.I))
+            if pn_:
+                missing.append(pn_)
+    if "transmis" in cov:
+        part = out["contacts"]
+        part["missing_prov"] = missing
+        _warn(S, "suivi des contacts : couverture partielle (%s sans donnees) : %s/%s = %.1f %% non comparable a la veille -> blocs nationaux conserves, blocs provinciaux rafraichis" % (", ".join(missing) or "provinces non precisees", seen, listed, pct))
+        return {"contacts": None, "contacts_partial": part}
     return out
 
 

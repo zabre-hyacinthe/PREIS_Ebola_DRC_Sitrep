@@ -25,6 +25,7 @@ from pptx import Presentation
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import sitrep_parse as sp  # noqa: E402
 
+NARR_WHY = {}  # cle narrative -> raison du refus (renseigne par build_deck.py)
 MONTHS = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 NUMW = {1: "One", 2: "Two", 3: "Three", 4: "Four", 5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine", 10: "Ten", 11: "Eleven", 12: "Twelve"}
 TOP_PROV = 4  # « X reported none » : parmi les 4 provinces les plus touchees (cumul)
@@ -790,7 +791,7 @@ def _daily_new(cx, wk):
 # ---------------------------------------------------------------------------------------------
 def _province_slides(dk, cx, narrative):
     S, P = cx.S, cx.P
-    t1, t3, t4, care, lab, ipc, ct = S["t1"], S.get("t3") or {}, S.get("t4") or {}, S.get("care") or {}, S.get("lab") or {}, S.get("ipc") or {}, S.get("contacts") or {}
+    t1, t3, t4, care, lab, ipc, ct = S["t1"], S.get("t3") or {}, S.get("t4") or {}, S.get("care") or {}, S.get("lab") or {}, S.get("ipc") or {}, S.get("contacts") or S.get("contacts_partial") or {}
     cb = (ct.get("by_prov") or {})
     c = S["cases_cum"]
     zones = S["t2"]["zones"] if S.get("t2") and S["t2"]["ok"] else {}
@@ -847,7 +848,7 @@ def _province_slides(dk, cx, narrative):
     cm, ctt, tt = deaths_split(p)
     rc = (care.get(p) or {}).get("recovered")
     if v["new"] > 0 and zn and tt is not None:
-        dk.setp(12, 3, "%s: %d new cases (%s); %d deaths, %s" % (p, v["new"], ", ".join("%s %d" % z for z in zn), tt, "no recoveries" if rc == 0 else ("%d recoveries" % rc) if rc is not None else "recoveries ND"))
+        dk.setp(12, 3, "%s: %d new case%s (%s); %d deaths, %s" % (p, v["new"], "" if v["new"] == 1 else "s", ", ".join("%s %d" % z for z in zn), tt, "no recoveries" if rc == 0 else ("%d recoveries" % rc) if rc is not None else "recoveries ND"))
     dk.setp(12, 9, n0(v["cases"])); dk.setp(12, 11, "%.1f%% of national" % (rh(100.0 * v["cases"] / c))); dk.setp(12, 12, n0(v["deaths"]))
     dk.setp(12, 14, "%.1f%%" % v["cfr"]); dk.setp(12, 16, "%d / %d" % (v["hz_aff"], v["hz_tot"])); dk.setp(12, 18, "%.1f%% affected" % (rh(100.0 * v["hz_aff"] / v["hz_tot"])))
     _pulse(dk, 12, 21, 22, 26, 29, 32, p, S, t1, t3, care, lab, cb, t4, deaths_split, tshare, kind="hu")
@@ -903,7 +904,7 @@ def _pulse(dk, sn, id_a, id_b, id_s, id_l, id_p, p, S, t1, t3, care, lab, cb, t4
     lb = lab.get(p) if (lab := S.get("lab")) else None
     cr = (S.get("care") or {}).get(p) or {}
     a = (S.get("t3") or {}).get(p)
-    cbp = (S.get("contacts") or {}).get("by_prov") or {}
+    cbp = (S.get("contacts") or S.get("contacts_partial") or {}).get("by_prov") or {}
     ctp = cbp.get(p)
     # ---- ligne 1 (id_a) : nouveaux cas / positifs / deces ----
     if kind == "full":
@@ -913,7 +914,7 @@ def _pulse(dk, sn, id_a, id_b, id_s, id_l, id_p, p, S, t1, t3, care, lab, cb, t4
             dk.setp(sn, id_b, "%d deaths (%d community, %d CTE) · %s recovered · %.1f%% of new cases" % (tt, cm, cte, rc if rc is not None else "ND", tshare(p)) if (cm is not None and cte is not None) else None, note="deces communautaires/CTE non lus")
     elif kind == "hu":
         if lb and lb["samples"] is not None and tt is not None:
-            dk.setp(sn, id_a, "%d new cases · %d positives / %d samples · %d deaths" % (v["new"], lb["positives"], lb["samples"], tt))
+            dk.setp(sn, id_a, "%d new case%s · %d positive%s / %d samples · %d deaths" % (v["new"], "" if v["new"] == 1 else "s", lb["positives"], "" if lb["positives"] == 1 else "s", lb["samples"], tt))
             rc = cr.get("recovered")
             dk.setp(sn, id_b, "%d total deaths (%d community, %d CTE) · %s recoveries · %.1f%% of new cases" % (tt, cm, cte, rc if rc is not None else "ND", tshare(p)) if (cm is not None and cte is not None) else None)
     elif kind == "ts":
@@ -1096,7 +1097,7 @@ def _slide16(dk, cx, narrative, trc):
         mv = "down from" if ct["pct"] < P["contacts"]["pct"] else "up from" if ct["pct"] > P["contacts"]["pct"] else "unchanged from"
         dk.setp(16, 15, "%s of %s listed contacts were seen (%.1f%%), %s %.1f%%. %s is now lowest at %.1f%%, followed by %s. %s%s" % (
             n0(ct["seen"]), n0(ct["listed"]), ct["pct"], mv, P["contacts"]["pct"], low[0], low[1]["pct"], join_and(rest),
-            "No province reaches the %d%% target;" % thr if not reach else "%s reach%s the %d%% target;" % (join_and(reach), "" if len(reach) > 1 else "es", thr), nrt.replace(" did not", " did not", 1) if not nrt else nrt.replace("", "", 1)))
+            ("No province reaches the %d%% target%s" % (thr, ";" if nrt else ".")) if not reach else ("%s reach%s the %d%% target%s" % (join_and(reach), "" if len(reach) > 1 else "es", thr, ";" if nrt else ".")), nrt.replace(" did not", " did not", 1) if not nrt else nrt.replace("", "", 1)))
     # laboratoire
     if lab and S.get("samples") is not None:
         parts = []
@@ -1172,4 +1173,4 @@ def _narr(dk, narrative, sn, sid, key):
     prior = getattr(dk, "prior_narr", {}).get(key)
     if prior:
         dk.setp(sn, sid, prior, note="dernier texte verifie (etat)")
-    dk.retained.append((sn, "paragraphe narratif \u00ab %s \u00bb" % key, "NON rafraichi (pas de cle API ou verification refusee) : texte du %s conserve" % ("dernier SitRep traite" if prior else "gabarit")))
+    dk.retained.append((sn, "paragraphe narratif \u00ab %s \u00bb" % key, "NON rafraichi (%s) : texte du %s conserve" % (NARR_WHY.get(key) or NARR_WHY.get("*") or "texte propose non retenu", "dernier SitRep traite" if prior else "gabarit")))

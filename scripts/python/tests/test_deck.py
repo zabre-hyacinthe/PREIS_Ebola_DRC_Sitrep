@@ -297,5 +297,24 @@ class TestFormulationsSitrep148(unittest.TestCase):
             self.assertNotEqual(r.returncode, 0)
 
 
+class TestContactsCouverturePartielle(unittest.TestCase):
+    """SitRep 149 : « Parmis ... dans les provinces ayant transmis leurs donnees » (Ituri et Sud-Ubangi absents)."""
+
+    def test_149_partiel_provinces_lues(self):
+        import subprocess
+        import shutil
+        pdf = os.path.join(os.path.dirname(DECK), "..", "..", "data", "pdf", "SitRep_149_2026.pdf")
+        if not (os.path.isfile(pdf) and shutil.which("pdftotext")):
+            self.skipTest("PDF 149 ou pdftotext absent")
+        t = subprocess.run(["pdftotext", "-layout", pdf, "-"], capture_output=True).stdout.decode("utf-8", "replace")
+        S = sp.parse_sitrep(t)
+        self.assertIsNone(S["contacts"])
+        part = S["contacts_partial"]
+        self.assertEqual((part["seen"], part["listed"]), (15672, 19346))
+        self.assertEqual(sorted(part["missing_prov"]), ["Ituri", "Sud Ubangi"])
+        self.assertEqual(part["by_prov"]["Nord-Kivu"]["pct"], 78.9)
+        self.assertEqual(sum(v["seen"] for v in part["by_prov"].values()), 15672)
+
+
 if __name__ == "__main__":
     unittest.main()

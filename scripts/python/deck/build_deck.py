@@ -259,10 +259,12 @@ def _main():
     H = load_history(a.pdf_dir) if not a.text else {}
     H[D.isoformat()] = (S["cases_cum"], S["deaths_cum"])
     narrative = {}
+    db.NARR_WHY = {"*": "pas de cle API" if a.narrative == "auto" else "narratif desactive"}
     if a.narrative == "auto" and os.environ.get("ANTHROPIC_API_KEY"):
         try:
             import narrative as nv
             narrative = nv.generate(S, text, state.get("narr") or {}, os.path.join(a.out_dir, "narrative_log.json"))
+            db.NARR_WHY = dict(nv.LAST_WHY)
         except Exception as e:  # jamais bloquant
             print("[deck] narratif indisponible : %s" % e, flush=True)
             narrative = {}

@@ -73,11 +73,11 @@ def texts(S, rh):
     c = S["cases_cum"]
     out, why = {}, {}
     cfrs = {p: v["cfr"] for p, v in S["t1"].items() if v.get("cfr") is not None}
-    ct = (S.get("contacts") or {}).get("by_prov") or {}
+    ct = (S.get("contacts") or S.get("contacts_partial") or {}).get("by_prov") or {}
     ctp = ct.get(PROV)
     hi = " highest CFR" if cfrs and t1["cfr"] >= max(cfrs.values()) else ""
     if ctp:
-        lowest = ctp["pct"] <= min(v["pct"] for v in ct.values())
+        lowest = ctp["pct"] <= min(v["pct"] for v in ct.values()) and not S.get("contacts_partial")
         fu = ("lowest contact follow-up at %.1f%%" if lowest else "contact follow-up at %.1f%%") % ctp["pct"]
         out["title"] = "Nord-Kivu: %s cases;%s, %s" % (n0(t1["cases"]), hi, fu) if hi else "Nord-Kivu: %s cases; %s" % (n0(t1["cases"]), fu)
     else:
@@ -217,7 +217,7 @@ def verify(prs, S, rh):
             ok += 1
         else:
             fails.append("Nord-Kivu diapo %d : %s %r absent" % (sn, label, frag))
-    ctp = ((S.get("contacts") or {}).get("by_prov") or {}).get(PROV)
+    ctp = ((S.get("contacts") or S.get("contacts_partial") or {}).get("by_prov") or {}).get(PROV)
     if ctp and ("%.1f%%" % ctp["pct"]) not in alltext:
         fails.append("Nord-Kivu diapo %d : suivi %.1f%% absent" % (sn, ctp["pct"]))
     elif ctp:
