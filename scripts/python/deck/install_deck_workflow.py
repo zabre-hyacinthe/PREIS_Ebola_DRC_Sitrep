@@ -45,7 +45,7 @@ BLOCK = '''      # PREIS DECK START
           set +e
           git config user.name "PREIS Ebola Automation"
           git config user.email "actions@github.com"
-          git add data/africa_cdc_deck/state.json data/africa_cdc_deck/email_sent_state.csv data/africa_cdc_deck/alerts.csv 2>/dev/null
+          for f in data/africa_cdc_deck/state.json data/africa_cdc_deck/email_sent_state.csv data/africa_cdc_deck/alerts.csv; do [ -f "$f" ] && git add "$f"; done
           git diff --cached --quiet && echo "Pas de changement d'etat deck" && exit 0
           git commit -m "PREIS deck: etat anti-doublon [skip ci]"
           for i in 1 2 3; do
