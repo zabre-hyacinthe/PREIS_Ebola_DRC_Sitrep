@@ -30,7 +30,7 @@ MOIS_FR = ["", "Janvier", "Fevrier", "Mars", "Avril", "Mai", "Juin", "Juillet", 
 DEFAULT_CONFIG = {
     # valeurs RETENUES des publications precedentes (absentes des SitRep RDC) ; a mettre a jour a la main si Africa CDC publie du nouveau
     "uganda": {"cases": 20, "deaths": 2, "recoveries": 18},
-    "hcw": {"drc_infections": 266, "uganda_infections": 4, "deaths": 49},
+    "hcw": {"drc_infections": 266, "uganda_infections": 4, "deaths": 50},
 }
 
 

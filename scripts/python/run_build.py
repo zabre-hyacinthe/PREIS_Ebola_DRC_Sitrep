@@ -42,6 +42,7 @@ import tempfile
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import africa_cdc_build_docx as bd
 import concordance
+import house_rules
 
 
 def fail(code, msg):
@@ -218,6 +219,7 @@ def main():
     ap.add_argument("--prev-issue-no", type=int, default=None)
     ap.add_argument("--min-sitrep-edits", type=int, default=10)
     ap.add_argument("--min-brief-edits", type=int, default=5)
+    ap.add_argument("--values", default=None, help="external_values.json (HCW impose, section Kenya)")
     args = ap.parse_args()
 
     src = args.response_text or args.edits_json
@@ -261,6 +263,22 @@ def main():
                     "(minimum %d). Un nouveau SitRep change beaucoup plus de chiffres : reponse "
                     "refusee plutot que d'envoyer un document quasi inchange."
                  % (n_s, args.min_sitrep_edits, n_b, args.min_brief_edits))
+
+        # Regles de maison (Dr Merawi, 12-13/10/2026) : appliquees APRES le controle de pauvrete ci-dessus,
+        # pour que leurs corrections deterministes ne masquent jamais une reponse du modele trop pauvre.
+        vals = house_rules.load_values(args.values) if args.values else {}
+        rules_applied = []
+        for nm, d, ed in (("SitRep", sitrep_dir, s_edits), ("Brief", brief_dir, b_edits)):
+            try:
+                if nm == "SitRep" and house_rules.lock_kenya(d, ed):
+                    rules_applied.append("SitRep : edits du modele sur la section Kenya ignores (texte impose)")
+                for note in house_rules.enforce_hcw(d, ed, vals):
+                    (warnings if "non reconnue" in note or "incompletes" in note else rules_applied).append(
+                        "%s : agents de sante : %s" % (nm, note))
+                for note in house_rules.enforce_title_colons(d, ed):
+                    rules_applied.append("%s : %s" % (nm, note))
+            except Exception as e:     # une regle de forme ne doit jamais empecher un livrable valide
+                warnings.append("%s : regles de maison non appliquees (%s: %s)" % (nm, type(e).__name__, e))
 
         lab = args.issue_label
         names = {
@@ -309,13 +327,16 @@ def main():
             warnings.append("Brief : %d caracteres (limite 2 pages ~ %d) : le document risque de depasser 2 pages, "
                             "a verifier avant diffusion" % (brief_chars, BRIEF_MAX_CHARS_WARN))
         sitrep_chars = sum(len(t) for t in s_txt)
-        if sitrep_chars > SITREP_MAX_CHARS_FAIL:
+        # La section Kenya (imposee) occupe de la place reelle : elle N'ELARGIT PAS le plafond de 2 pages
+        # (mesure : 9 230 car. dont Kenya = page 2 remplie a ~85 %), le narratif du modele se raccourcit d'autant.
+        s_warn, s_fail = SITREP_MAX_CHARS_WARN, SITREP_MAX_CHARS_FAIL
+        if sitrep_chars > s_fail:
             fail(2, "SitRep trop long : %d caracteres (limite 2 pages ~ %d, refus au-dela de %d). "
                     "Raccourcir les paragraphes narratifs (piliers, defis, priorites) sans rien inventer "
-                    "ni omettre un chiffre cle." % (sitrep_chars, SITREP_MAX_CHARS_WARN, SITREP_MAX_CHARS_FAIL))
-        if sitrep_chars > SITREP_MAX_CHARS_WARN:
+                    "ni omettre un chiffre cle." % (sitrep_chars, s_warn, s_fail))
+        if sitrep_chars > s_warn:
             warnings.append("SitRep : %d caracteres (limite 2 pages ~ %d) : le document risque de depasser "
-                            "2 pages, a verifier avant diffusion" % (sitrep_chars, SITREP_MAX_CHARS_WARN))
+                            "2 pages, a verifier avant diffusion" % (sitrep_chars, s_warn))
         if args.expected_issue_no is not None:
             for nm, txt in (("SitRep", s_txt), ("Brief", b_txt)):
                 nums = bd.issue_numbers(txt)
@@ -344,11 +365,15 @@ def main():
     if not isinstance(anomalies, list):
         anomalies = [anomalies]
     anomalies = [bd.clean_text(str(a))[:600] for a in anomalies if isinstance(a, (str, int, float))][:50]
+    stale = house_rules.kenya_stale_warning(vals) if args.values else None
+    if stale:
+        anomalies.append(stale)
     summary = payload.get("summary_fr")
     summary = bd.clean_text(summary)[:2000] if isinstance(summary, str) else ""
 
     print(json.dumps({"paths": final, "n_sitrep_edits": n_s, "n_brief_edits": n_b,
-                      "anomalies": anomalies, "summary_fr": summary, "warnings": warnings},
+                      "anomalies": anomalies, "summary_fr": summary, "warnings": warnings,
+                      "rules_applied": rules_applied},
                      ensure_ascii=False))
 
 

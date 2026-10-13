@@ -161,6 +161,31 @@ vérifiée sur SitRep 141 → Issue 131 (deux cycles concordants).
 - Tableau « CONTINENTAL KEY INDICATORS » (tuiles) : tous les grands chiffres sont en
   gras et le texte est justifié. Quand tu remplaces un chiffre, garde le run (donc le gras).
 
+## VALEURS ET SECTIONS IMPOSÉES PAR AFRICA CDC (remarques du Dr Merawi Aragaw, 12-13/10/2026)
+Appliquées DÉTERMINISTEMENT par `scripts/python/house_rules.py` (après le modèle ; une valeur ou un texte
+imposé écrit par le modèle est écrasé) et alimentées par `data/africa_cdc_brief/external_values.json`.
+- **Agents de santé (HCW)** : alignés sur le weekly briefing d'Africa CDC, « at least for now » :
+  **270 infectés / 50 décès**. Tuile « HCW infected » = 270, détail « DRC 266 · Uganda 4 » (266 = 270 − 4,
+  VALEUR CALCULÉE) ; tuile « HCW deaths » = 50, détail « DRC 50 · Uganda 0 ». Même valeur dans le SitRep et le Brief
+  (pour le Brief : tuile « HCW infected »). Ces valeurs ne sont PAS dans le SitRep RDC : ne les modifie pas, ne les
+  recalcule pas ; si le SitRep RDC rapporte un chiffre d'agents de santé, signale l'écart dans les anomalies sans
+  changer la valeur imposée.
+- **Titres collés au texte** : quand un titre est fusionné avec le texte dans le même paragraphe (« Surveillance and
+  PoE/PoC. In the last… », « Case management. DRC reports… »), le titre se termine par **deux-points + espace**
+  (« Surveillance and PoE/PoC: In the last… »). Applicable à tout nouveau titre de ce type que tu écris.
+- **Section Kenya (SitRep uniquement)** : le SitRep contient une section « Kenya update » (titre + paragraphe
+  « First imported case: … ») insérée avant « Response highlights ». Son texte vient d'`external_values.json`
+  (clé `kenya.body`, daté par `kenya.as_of`) : **ne le modifie pas** (tes edits sur ces runs sont ignorés). Le
+  texte est mis à jour à la main dans ce fichier quand la situation au Kenya change ; une date de plus de 7 jours
+  est signalée dans les anomalies du mail. Ce paragraphe compte dans le budget de longueur du SitRep (il n'élargit
+  pas le plafond de 2 pages) : raccourcis le narratif d'autant.
+- **« Active HZs » (Brief)** : le Dr Merawi indique (12/10/2026) que l'analyse actuelle d'Africa CDC donne
+  **46 zones actives sur les 21 derniers jours** ; la valeur reportée « 56 in 6 provinces » (fenêtre de 42 jours) n'a
+  aucune base dans le SitRep RDC (aucun passage ne la définit ni ne la donne : vérifié sur les SitRep 138, 148 et 149).
+  Tant que le tableau par province de cette analyse n'est pas fourni, ne recalcule rien, n'invente aucune valeur par
+  province, garde les valeurs du gabarit et signale en anomalie : « fenêtre et valeur à confirmer par Africa CDC
+  (46 / 21 jours selon le Dr Merawi) ». Ne cite jamais le SitRep RDC comme source de la définition de cette colonne.
+
 ## LONGUEUR DE L'EXECUTIVE BRIEF : 2 PAGES (limite stricte)
 L'Executive Brief tient sur DEUX pages. Le gabarit actuel est calibré pour cela : le texte
 total du Brief ne doit pas dépasser environ 10 900 caractères (tous paragraphes confondus ;

@@ -30,6 +30,7 @@ REPO = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
 sys.path.insert(0, os.path.join(REPO, "scripts", "python"))
 sys.path.insert(0, HERE)
 import africa_cdc_build_docx as bd          # noqa: E402
+import house_rules                       # noqa: E402
 from mock_servers import MockClaudeAPI, MockSMTP   # noqa: E402
 
 TEMPLATES = os.path.join(REPO, "data", "africa_cdc_brief", "templates")
@@ -56,7 +57,22 @@ def _normalized_template(name, issue=131):
     return dst
 
 
-SITREP_T = _normalized_template("BVD_SitRep_latest_propre.docx")
+def _with_kenya(path):
+    """Le gabarit SitRep des cycles reels CONTIENT la section Kenya (inseree par house_rules.py puis conservee dans le
+    gabarit du cycle suivant) : les tests, qui indexent les runs, doivent partir du meme document que 06b."""
+    vals = house_rules.load_values(os.path.join(REPO, "data", "africa_cdc_brief", "external_values.json"))
+    if not os.path.exists(path) or not vals:
+        return path
+    work = tempfile.mkdtemp(prefix="tpl_kenya_")
+    d = bd.unzip_docx(path, os.path.join(work, "src"))
+    changed, _t, _w = house_rules.ensure_kenya_section(d, vals)
+    if changed:
+        bd.zip_docx(d, path)
+    shutil.rmtree(work, ignore_errors=True)
+    return path
+
+
+SITREP_T = _with_kenya(_normalized_template("BVD_SitRep_latest_propre.docx"))
 BRIEF_T = _normalized_template("BVD_Executive_Brief_latest_propre.docx")
 RAPPORTS = "outputs/rapports"
 
@@ -146,10 +162,13 @@ class TestE2E(unittest.TestCase):
         for f in ("05b_send_africacdc_sitrep_brief_full_email.R", "06b_generate_africa_cdc_sitrep_brief_full.R",
                   "preis_signature.R"):
             shutil.copy(os.path.join(REPO, "scripts", f), os.path.join(self.ws, "scripts", f))
-        for f in ("africa_cdc_build_docx.py", "claude_call.py", "extract_runs.py", "run_build.py", "concordance.py"):
+        for f in ("africa_cdc_build_docx.py", "claude_call.py", "extract_runs.py", "run_build.py", "concordance.py",
+                  "docx_package.py", "house_rules.py"):
             shutil.copy(os.path.join(REPO, "scripts", "python", f), os.path.join(self.ws, "scripts", "python", f))
         shutil.copy(os.path.join(REPO, "docs", "africa_cdc", "PREIS_procedure_SitRep_AfricaCDC.md"),
                     os.path.join(self.ws, "docs", "africa_cdc"))
+        shutil.copy(os.path.join(REPO, "data", "africa_cdc_brief", "external_values.json"),
+                    os.path.join(self.ws, "data/africa_cdc_brief"))
         shutil.copy(SITREP_T, os.path.join(self.ws, "data/africa_cdc_brief/templates"))
         shutil.copy(BRIEF_T, os.path.join(self.ws, "data/africa_cdc_brief/templates"))
         shutil.copy(self.pdf, os.path.join(self.ws, "data/pdf/SitRep_142_2026.pdf"))

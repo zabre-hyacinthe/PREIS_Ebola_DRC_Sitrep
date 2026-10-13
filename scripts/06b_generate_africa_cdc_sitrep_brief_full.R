@@ -306,6 +306,34 @@ date_iso <- format(Sys.time(), "%Y-%m-%dT%H:%M:%SZ", tz = "UTC")
 out_dir  <- if (IS_TEST) TEST_OUT_DIR else OUT_DIR
 .log("Mode %s : SitRep RDC No. %s (%s) -> Issue Africa CDC No. %s [%s].", MODE, latest_sno, latest_date, new_issue_no, basename(pdf_fp))
 
+## ---- 6b. Regles de maison (Dr Merawi, 12-13/10/2026) : section Kenya du SitRep ------------------------
+## La section Kenya est inseree (ou mise a jour) dans une COPIE du gabarit SitRep, AVANT l'extraction des runs :
+## le modele la voit mais ne peut pas la modifier (run_build.py ignore ses edits dessus). Le vrai gabarit du coffre
+## n'est remplace qu'apres succes complet (SITREP_TEMPLATE_STORE). Jamais bloquant : en cas de souci, le cycle
+## continue sans la section Kenya et le dit dans le journal. Valeurs : data/africa_cdc_brief/external_values.json.
+SITREP_TEMPLATE_STORE <- SITREP_TEMPLATE
+VALUES_FP       <- file.path(BRIEF_DIR, "external_values.json")
+HOUSE_RULES_PY  <- file.path(PY_DIR, "house_rules.py")
+kenya_texts <- character(0)
+if (file.exists(HOUSE_RULES_PY) && file.exists(VALUES_FP)) {
+  pf_dir <- file.path(tempdir(), "africa_cdc_preflight"); dir.create(pf_dir, recursive = TRUE, showWarnings = FALSE)
+  pf_out <- file.path(pf_dir, basename(SITREP_TEMPLATE))
+  pf <- suppressWarnings(system2(py_bin, c(shQuote(HOUSE_RULES_PY), "preflight", "--sitrep", shQuote(SITREP_TEMPLATE),
+                                           "--values", shQuote(VALUES_FP), "--out", shQuote(pf_out)), stdout = TRUE, stderr = TRUE))
+  pf_st <- attr(pf, "status"); if (is.null(pf_st)) pf_st <- 0
+  pf_line <- tail(pf[grepl("^\\{", pf)], 1)
+  pf_info <- if (pf_st == 0 && length(pf_line) == 1 && file.exists(pf_out))
+    tryCatch(jsonlite::fromJSON(pf_line, simplifyVector = FALSE), error = function(e) NULL) else NULL
+  if (is.null(pf_info)) {
+    .log("AVERTISSEMENT : section Kenya non appliquee (house_rules.py : %s).", .clean_msg(pf))
+  } else {
+    SITREP_TEMPLATE <- pf_out
+    kenya_texts <- as.character(unlist(pf_info$texts))
+    for (w in unlist(pf_info$warnings)) .log("AVERTISSEMENT : %s", w)
+    if (length(kenya_texts)) .log("Section Kenya du SitRep %s (%s caracteres).", if (isTRUE(pf_info$changed)) "inseree/mise a jour" else "deja a jour", .nz(pf_info$chars))
+  }
+}
+
 ## ---- 7. Runs des gabarits (meme logique que le constructeur) -------------
 .extract_runs <- function(docx_path) {
   out <- suppressWarnings(system2(py_bin, c(shQuote(EXTRACT_RUNS_PY), shQuote(docx_path)), stdout = TRUE, stderr = TRUE))
@@ -354,13 +382,13 @@ SITREP_TARGET_CHARS <- 9500L;  SITREP_REFUSE_CHARS <- 10800L
 BRIEF_TARGET_CHARS  <- 10400L; BRIEF_REFUSE_CHARS  <- 11800L
 ## Budget PAR RUN narratif : sans cela le modele coupe trop peu (le gabarit herite fait ~19 000 caracteres pour
 ## un objectif de ~9 500). Les runs courts (titres, tuiles, tableaux) ne sont pas touches.
-.run_budgets <- function(json_txt, target) {
+.run_budgets <- function(json_txt, target, locked = character(0)) {
   r <- tryCatch(jsonlite::fromJSON(json_txt, simplifyVector = FALSE), error = function(e) list())
   txt <- vapply(r, function(x) if (is.null(x$text)) "" else as.character(x$text), character(1))
   len <- nchar(txt); idx <- vapply(r, function(x) as.integer(x$index), integer(1))
   total <- sum(len)
   if (total <= target) return("")
-  fixed <- grepl("Prepared by|Sources:", txt)             # ligne de credits : jamais raccourcie
+  fixed <- grepl("Prepared by|Sources:", txt) | txt %in% locked   # credits et section Kenya (imposee) : jamais raccourcis
   base <- 350L                                            # les runs courts (titres, tuiles, tableaux) ne bougent pas
   over <- ifelse(fixed, 0L, pmax(len - base, 0L))
   g <- (target - (total - sum(over))) / sum(over)          # les runs LONGS absorbent la reduction, au prorata de leur exces
@@ -373,7 +401,7 @@ budget_text <- paste0(
   "\n\n--- BUDGET DE LONGUEUR (OBLIGATOIRE, demande de la direction Africa CDC) ---\n",
   "SitRep Africa CDC : 2 pages MAXIMUM = visez ", SITREP_TARGET_CHARS, " caracteres de texte au total (le gabarit actuel en compte environ ",
   .runs_chars(sitrep_runs$json), " ; le document est refuse automatiquement au-dela de ", SITREP_REFUSE_CHARS, ").\n",
-  .run_budgets(sitrep_runs$json, SITREP_TARGET_CHARS),
+  .run_budgets(sitrep_runs$json, SITREP_TARGET_CHARS, kenya_texts),
   "Executive Brief : 2 pages MAXIMUM = visez ", BRIEF_TARGET_CHARS, " caracteres (gabarit actuel : environ ",
   .runs_chars(brief_runs$json), " ; refus au-dela de ", BRIEF_REFUSE_CHARS, ").\n",
   .run_budgets(brief_runs$json, BRIEF_TARGET_CHARS),
@@ -434,6 +462,7 @@ if (!isTRUE(res$ok)) {
 build_out <- suppressWarnings(system2(py_bin, c(
   shQuote(RUN_BUILD_PY),
   "--sitrep-template", shQuote(SITREP_TEMPLATE), "--brief-template", shQuote(BRIEF_TEMPLATE),
+  if (file.exists(VALUES_FP)) c("--values", shQuote(VALUES_FP)),
   "--response-text", shQuote(resp_fp), "--out-dir", shQuote(out_dir),
   "--issue-label", shQuote(issue_label), "--date-iso", shQuote(date_iso),
   "--expected-issue-no", new_issue_no, "--prev-issue-no", last_issue_no,
@@ -449,6 +478,7 @@ n_anomalies <- length(built$anomalies)
 .log("2 documents generes et verifies (controles d'integrite et de concordance OK ; %d runs SitRep + %d runs Brief modifies, %d anomalie(s) signalee(s)).",
      built$n_sitrep_edits, built$n_brief_edits, n_anomalies)
 for (w in built$warnings) .log("AVERTISSEMENT : %s", w)
+for (w in built$rules_applied) .log("Regle de maison : %s", w)
 
 ## ---- 10. Persistance (uniquement apres succes COMPLET) ------------------
 rel <- function(p) if (startsWith(p, BASE_DIR)) sub("^/+", "", substring(p, nchar(BASE_DIR) + 1)) else p
@@ -465,7 +495,7 @@ if (IS_TEST) {
     if (!file.copy(src, tmp, overwrite = TRUE) || !file.rename(tmp, dst)) stop("remplacement impossible : ", dst)
   }
   writeLines(as.character(unlist(built$anomalies)), file.path(OUT_DIR, "africa_cdc_anomalies_latest.txt"), useBytes = TRUE)
-  .swap(built$paths$sitrep_propre, SITREP_TEMPLATE)
+  .swap(built$paths$sitrep_propre, SITREP_TEMPLATE_STORE)
   .swap(built$paths$brief_propre, BRIEF_TEMPLATE)
   new_row <- data.frame(sitrep_no_source = latest_sno, issue_no = new_issue_no, generated_at_utc = date_iso,
                         anomalies_count = n_anomalies, sitrep_propre_file = basename(built$paths$sitrep_propre),

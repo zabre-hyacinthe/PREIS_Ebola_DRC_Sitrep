@@ -1,0 +1,20 @@
+{
+  "_note": "Valeurs NON presentes dans le SitRep RDC, fournies par Africa CDC. Lues par scripts/python/house_rules.py a chaque cycle. Public (aucune donnee confidentielle).",
+  "hcw": {
+    "source": "Africa CDC weekly briefing (demande du Dr Merawi Aragaw, 12/10/2026 : alignement 270 / 50 \"at least for now\")",
+    "infected_total": 270,
+    "infected_drc": 266,
+    "infected_uganda": 4,
+    "deaths_total": 50,
+    "deaths_drc": 50,
+    "deaths_uganda": 0
+  },
+  "kenya": {
+    "as_of": "2026-10-11",
+    "sources": [
+      "WHO AFRO news release, Nairobi, 6 October 2026 (afro.who.int)",
+      "Al Jazeera, 11 October 2026 (no further developments reported)"
+    ],
+    "body": "Kenya confirmed on 6 October 2026, and notified WHO under the IHR, its first imported BVD case. The patient, a Kenyan national who fell ill in DRC, travelled by road via Beni to Kampala (2 October) and flew to Nairobi (3 October); isolated on arrival and confirmed positive, the patient died on 5 October. Twenty-eight contacts are listed (family members and health workers), and 23 passengers and 4 crew of the flight are being traced. No further confirmed case had been reported as of 11 October."
+  }
+}
