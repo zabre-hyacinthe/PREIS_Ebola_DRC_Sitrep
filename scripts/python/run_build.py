@@ -275,6 +275,9 @@ def main():
                 for note in house_rules.enforce_hcw(d, ed, vals):
                     (warnings if "non reconnue" in note or "incompletes" in note else rules_applied).append(
                         "%s : agents de sante : %s" % (nm, note))
+                for note in house_rules.enforce_active_hz_note(d, ed, vals):
+                    (warnings if "non reconnue" in note or "introuvables" in note else rules_applied).append(
+                        "%s : %s" % (nm, note))
                 for note in house_rules.enforce_title_colons(d, ed):
                     rules_applied.append("%s : %s" % (nm, note))
             except Exception as e:     # une regle de forme ne doit jamais empecher un livrable valide

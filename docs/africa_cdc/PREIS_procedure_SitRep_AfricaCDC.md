@@ -173,18 +173,18 @@ imposé écrit par le modèle est écrasé) et alimentées par `data/africa_cdc_
 - **Titres collés au texte** : quand un titre est fusionné avec le texte dans le même paragraphe (« Surveillance and
   PoE/PoC. In the last… », « Case management. DRC reports… »), le titre se termine par **deux-points + espace**
   (« Surveillance and PoE/PoC: In the last… »). Applicable à tout nouveau titre de ce type que tu écris.
-- **Section Kenya (SitRep uniquement)** : le SitRep contient une section « Kenya update » (titre + paragraphe
-  « First imported case: … ») insérée avant « Response highlights ». Son texte vient d'`external_values.json`
-  (clé `kenya.body`, daté par `kenya.as_of`) : **ne le modifie pas** (tes edits sur ces runs sont ignorés). Le
-  texte est mis à jour à la main dans ce fichier quand la situation au Kenya change ; une date de plus de 7 jours
-  est signalée dans les anomalies du mail. Ce paragraphe compte dans le budget de longueur du SitRep (il n'élargit
-  pas le plafond de 2 pages) : raccourcis le narratif d'autant.
-- **« Active HZs » (Brief)** : le Dr Merawi indique (12/10/2026) que l'analyse actuelle d'Africa CDC donne
-  **46 zones actives sur les 21 derniers jours** ; la valeur reportée « 56 in 6 provinces » (fenêtre de 42 jours) n'a
-  aucune base dans le SitRep RDC (aucun passage ne la définit ni ne la donne : vérifié sur les SitRep 138, 148 et 149).
-  Tant que le tableau par province de cette analyse n'est pas fourni, ne recalcule rien, n'invente aucune valeur par
-  province, garde les valeurs du gabarit et signale en anomalie : « fenêtre et valeur à confirmer par Africa CDC
-  (46 / 21 jours selon le Dr Merawi) ». Ne cite jamais le SitRep RDC comme source de la définition de cette colonne.
+- **Section Kenya (SitRep uniquement)** : ajoutée À LA MAIN dans le gabarit par Dativa Aliddeki (Africa CDC), à la
+  demande du Dr Merawi. **Ne la modifie pas, n'y mêle aucune donnée du SitRep RDC** : son texte est géré par
+  Africa CDC (le script ignore tes edits sur ses runs). Elle compte dans le budget de longueur : raccourcis le
+  narratif d'autant. (Mécanisme optionnel : une clé `kenya` dans `external_values.json` permettrait au script de
+  l'insérer lui-même.)
+- **Note « Active HZs » (Brief)** : texte IMPOSÉ par le script (`active_hz.note`), ne le réécris pas. Raison : le
+  Dr Merawi indique (12/10/2026) que l'analyse actuelle d'Africa CDC donne **46 zones actives sur les 21 derniers
+  jours**, alors que la valeur reportée « 56 in 6 provinces » (fenêtre de 42 jours) n'a aucune base dans le SitRep RDC
+  (aucun passage ne la définit ni ne la donne : vérifié sur les SitRep 138, 148 et 149). La note le dit, sans citer le
+  SitRep RDC comme source de la définition. Tant que le tableau par province de cette analyse n'est pas fourni :
+  ne recalcule rien, n'invente aucune valeur par province, garde les valeurs du gabarit et signale en anomalie
+  « fenêtre et valeur à confirmer par Africa CDC (46 / 21 jours selon le Dr Merawi) ».
 
 ## LONGUEUR DE L'EXECUTIVE BRIEF : 2 PAGES (limite stricte)
 L'Executive Brief tient sur DEUX pages. Le gabarit actuel est calibré pour cela : le texte

@@ -42,7 +42,10 @@ def runs_of(d):
     return [bd.split_run(r.group(0))[3] for r in bd.get_runs(xml)], xml
 
 
+NOTE = ("*Active HZs: not reported in the DRC SitRep. Carried over, unverified; Africa CDC's analysis indicates 46 active "
+        "health zones over the last 21 days. The province table reports {hz} historically affected health zones (SitRep No. {n}).")
 VALUES = {
+    "active_hz": {"note": NOTE},
     "hcw": {"source": "Weekly briefing", "infected_total": 270, "infected_drc": 266, "infected_uganda": 4,
             "deaths_total": 50, "deaths_drc": 50, "deaths_uganda": 0},
     "kenya": {"as_of": "2026-10-11", "body": "Kenya confirmed its first imported case on 6 October 2026."},
@@ -96,6 +99,44 @@ class HCW(unittest.TestCase):
         self.assertEqual(hr.enforce_hcw(d, ed, VALUES), [])
         self.assertEqual(hr.enforce_hcw(d, ed, {}), [])
         self.assertEqual(hr.enforce_hcw(d, ed, {"hcw": {"infected_total": 1}})[0].startswith("HCW : valeurs"), True)
+
+
+class ActiveHZNote(unittest.TestCase):
+    OLD = ("*Active HZs reflect zones that reported at least one confirmed case during the previous 42 days, as defined in "
+           "SitRep No. 139. The province table reports 65/167 historically affected health zones (SitRep No. 149); the "
+           "42-day count could not be recalculated and the previous count (56 in 6 provinces) is retained without verification.")
+
+    def test_note_is_rewritten_with_current_hz_and_sitrep_number(self):
+        d = make_dir(P(R("DRC total", True)) + P(R(self.OLD)))
+        ed = {}
+        notes = hr.enforce_active_hz_note(d, ed, VALUES)
+        (i, e), = ed.items()
+        self.assertEqual(e["new"], NOTE.replace("{hz}", "65/167").replace("{n}", "149"))
+        self.assertNotIn("as defined in", e["new"])
+        self.assertIn("NOTE IMPOSEE", e["comment"])
+        self.assertEqual(notes, ["note Active HZs mise a jour"])
+
+    def test_numbers_come_from_the_model_edit_when_it_updated_them(self):
+        d = make_dir(P(R(self.OLD)))
+        ed = {0: {"new": self.OLD.replace("65/167", "66/167").replace("No. 149", "No. 150"), "comment": None}}
+        hr.enforce_active_hz_note(d, ed, VALUES)
+        self.assertIn("66/167", ed[0]["new"])
+        self.assertIn("SitRep No. 150", ed[0]["new"])
+
+    def test_idempotent_on_next_cycle(self):
+        done = NOTE.replace("{hz}", "65/167").replace("{n}", "149")
+        d = make_dir(P(R(done)))
+        ed = {}
+        self.assertEqual(hr.enforce_active_hz_note(d, ed, VALUES), [])
+        self.assertEqual(ed, {})
+
+    def test_unrecognised_note_is_not_written_blindly(self):
+        d = make_dir(P(R("*Active HZs: something else entirely.")))
+        ed = {}
+        notes = hr.enforce_active_hz_note(d, ed, VALUES)
+        self.assertEqual(ed, {})
+        self.assertTrue(notes and "introuvables" in notes[0])
+        self.assertEqual(hr.enforce_active_hz_note(d, {}, {}), [])
 
 
 class Titles(unittest.TestCase):
@@ -215,6 +256,23 @@ class Kenya(unittest.TestCase):
               i + 4: {"new": "Keep", "comment": None}}
         self.assertEqual(hr.lock_kenya(d, ed), 2)
         self.assertEqual(list(ed), [i + 4])
+
+    def test_hand_added_kenya_section_is_protected(self):
+        """Section Kenya ajoutee a la main (Dativa) : titre seul + paragraphes ; ou paragraphe « Kenya: texte »."""
+        d = make_dir(P(R("Latest update", True)) + P(R("Uganda:", True), R(" no new cases." + " x" * 30))
+                     + P(R("Kenya:", True), R(" imported case." + " y" * 30))
+                     + P(R("Kenya situation", True)) + P(R("Alert. ", True), R("Text A." + " a" * 30)) + P(R("Text B."))
+                     + P(R("Response highlights", True)) + P(R("Keep this", True), R(" text." + " z" * 30)))
+        runs, _ = runs_of(d)
+        ed = {i: {"new": "X", "comment": None} for i in range(len(runs))}
+        n = hr.lock_kenya(d, ed)
+        kept = sorted(runs[i] for i in ed)
+        self.assertEqual(n, 6)     # "Kenya:"+texte (2) ; titre (1) ; "Alert."+texte (2) ; "Text B." (1)
+        self.assertNotIn("Kenya:", kept)
+        self.assertNotIn("Kenya situation", kept)
+        self.assertNotIn("Text B.", kept)
+        for r in ("Uganda:", "Response highlights", "Keep this", "Latest update"):
+            self.assertIn(r, kept)
 
     def test_titles_rule_leaves_kenya_untouched(self):
         d = make_dir(self.body)

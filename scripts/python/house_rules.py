@@ -10,7 +10,10 @@ Trois regles DETERMINISTES, appliquees apres le modele (jamais laissees a son se
   2. TITRES COLLES AU TEXTE : « Titre.Texte » / « Titre. Texte » / « Titre:Texte »  ->  « Titre: Texte »
      (deux-points + espace). SitRep : titres en gras suivis du texte dans le meme paragraphe.
      Brief : paragraphes de la section « Response operations » dont le titre est dans le meme run.
-  3. SECTION KENYA (SitRep) : un titre « Kenya update » + un court paragraphe, inseres avant
+  3. NOTE « ACTIVE HZs » (Brief) : la note sous le tableau des provinces est ecrite de facon deterministe
+     (texte : external_values.json, cle active_hz.note) ; elle ne cite plus le SitRep RDC comme source d'une
+     definition qu'il ne contient pas et signale la valeur de 46 zones / 21 jours indiquee par le Dr Merawi.
+  4. SECTION KENYA (SitRep) : un titre « Kenya update » + un court paragraphe, inseres avant
      « Response highlights » et alimentes par external_values.json (jamais par le modele : ses edits
      sur ces runs sont ignores). Une date de mise a jour trop ancienne est signalee.
 
@@ -225,7 +228,42 @@ def enforce_title_colons(template_dir, edits):
     return notes
 
 
-# ------------------------------------------------------------------ 3. Kenya
+# ------------------------------------------------------------------ 3. note Active HZs
+_HZ_RE = re.compile(r"(\d+/\d+)\s+historically affected health zones?\s*\(SitRep No\.\s*(\d+)\)")
+
+
+def enforce_active_hz_note(template_dir, edits, values):
+    """Note sous le tableau des provinces (Brief) : texte impose, avec le « HZ historiques » et le n° de SitRep RDC
+    repris du texte COURANT. Structure non reconnue -> rien d'ecrit a l'aveugle, signale."""
+    a = (values or {}).get("active_hz")
+    notes = []
+    if not isinstance(a, dict) or not a.get("note"):
+        return notes
+    d = Doc(template_dir, edits)
+    for k in range(len(d.paras)):
+        if not d.optext(k).strip().startswith("*Active HZs"):
+            continue
+        idx = d.para_runs[k]
+        if len(idx) != 1:
+            notes.append("note Active HZs : structure non reconnue (plusieurs runs), texte non impose")
+            continue
+        m = _HZ_RE.search(d.text(idx[0])) or _HZ_RE.search(d.orig(idx[0]))
+        if not m:
+            notes.append("note Active HZs : valeurs « HZ historiques / n\u00b0 SitRep » introuvables, texte non impose")
+            continue
+        new = str(a["note"]).replace("{hz}", m.group(1)).replace("{n}", m.group(2))
+        cur = d.text(idx[0])
+        if cur != new:
+            com = None
+            if d.orig(idx[0]) != new:
+                com = ("NOTE IMPOSEE \u2014 « Active HZs » : aucune base dans le SitRep RDC ; le Dr Merawi (12/10/2026) indique "
+                       "46 zones actives sur 21 jours selon l'analyse actuelle d'Africa CDC. A reconcilier avec le tableau par province.")
+            d.set(idx[0], new, com)
+            notes.append("note Active HZs mise a jour")
+    return notes
+
+
+# ------------------------------------------------------------------ 4. Kenya
 def kenya_texts(values):
     k = (values or {}).get("kenya")
     if not isinstance(k, dict) or not k.get("body"):
@@ -241,14 +279,36 @@ def _find_kenya(d):
     return None
 
 
+def _kenya_paragraphs(d):
+    """Paragraphes d'une section Kenya (inseree par le script OU ajoutee a la main dans le gabarit) :
+    - paragraphe dont le 1er run est en gras et commence par « Kenya » (titre seul -> on y ajoute les
+      paragraphes suivants jusqu'au prochain titre en gras seul) ou « Kenya: texte » (paragraphe unique)."""
+    out = []
+    n = len(d.paras)
+    k = 0
+    while k < n:
+        idx = d.para_runs[k]
+        if idx and d.bold[idx[0]] and re.match(r"^\s*Kenya\b", d.orig(idx[0])):
+            out.append(k)
+            if len(idx) == 1 and len(d.orig(idx[0]).strip()) <= 60:      # titre seul : on verrouille son contenu
+                m = k + 1
+                while m < n:
+                    jdx = d.para_runs[m]
+                    if len(jdx) == 1 and d.bold[jdx[0]] and d.orig(jdx[0]).strip():
+                        break                                             # prochain titre
+                    out.append(m)
+                    m += 1
+                k = m
+                continue
+        k += 1
+    return out
+
+
 def lock_kenya(template_dir, edits):
-    """Supprime les edits du modele sur la section Kenya (texte impose par external_values.json)."""
+    """Supprime les edits du modele sur la section Kenya (texte fourni par Africa CDC / external_values.json)."""
     d = Doc(template_dir, edits)
-    pos = _find_kenya(d)
-    if not pos:
-        return 0
     n = 0
-    for k in pos:
+    for k in _kenya_paragraphs(d):
         for i in d.para_runs[k]:
             if i in edits:
                 del edits[i]
