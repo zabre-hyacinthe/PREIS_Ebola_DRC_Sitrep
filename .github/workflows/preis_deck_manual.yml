@@ -63,7 +63,8 @@ jobs:
 
       - name: Dependances (poppler-utils, python-pptx)
         run: |
-          sudo apt-get install -y poppler-utils
+          sudo apt-get update
+          sudo apt-get install -y --fix-missing poppler-utils
           python3 -m pip install --quiet python-pptx
 
       - name: Restaurer le gabarit (coffre chiffre)
