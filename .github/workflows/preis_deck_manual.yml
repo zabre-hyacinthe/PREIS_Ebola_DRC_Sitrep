@@ -1,0 +1,107 @@
+name: PREIS Deck BDBV (manuel)
+
+# Lancement MANUEL uniquement, independant du monitor (qui dure 20-30 min et dont un run manuel
+# est souvent remplace par le run planifie suivant). Demarre tout de suite, dure quelques minutes.
+# Le deck (.pptx) est aussi depose en "Artifacts" du run : telechargeable meme si le mail echoue.
+#
+# mode = test   : mail [TEST] a ALERT_TO seulement, aucun etat modifie (a utiliser en premier)
+# mode = resend : renvoie aux destinataires reels meme si deja envoye, et enregistre l'etat
+# sitrep        : numero du SitRep RDC (ex. 150 ou 151) ; vide = le dernier SitRep disponible
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "test (ALERT_TO seulement) | resend (destinataires reels)"
+        required: true
+        default: "test"
+        type: choice
+        options:
+          - "test"
+          - "resend"
+      sitrep:
+        description: "Numero du SitRep (150, 151...) ; vide = dernier"
+        required: false
+        default: ""
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: preis-deck-manual
+  cancel-in-progress: false
+
+jobs:
+  deck:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 25
+    env:
+      SMTP_USER: ${{ secrets.SMTP_USER }}
+      SMTP_PASS: ${{ secrets.SMTP_PASS }}
+      SMTP_HOST: ${{ secrets.SMTP_HOST }}
+      SMTP_PORT: ${{ secrets.SMTP_PORT }}
+      ALERT_FROM: ${{ secrets.ALERT_FROM }}
+      ALERT_TO: ${{ secrets.ALERT_TO }}
+      ALERT_CC: ${{ secrets.ALERT_CC }}
+      ALERT_BCC: ${{ secrets.ALERT_BCC }}
+      PREIS_DECK_TO: ${{ secrets.PREIS_DECK_TO }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      PREIS_ARCHIVE_KEY: ${{ secrets.PREIS_ARCHIVE_KEY }}
+      ANTHROPIC_MODEL: ${{ vars.ANTHROPIC_MODEL }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Synchroniser sur la derniere version de main
+        run: |
+          git fetch origin main
+          git checkout -B main origin/main
+          echo "Depot synchronise sur : $(git rev-parse HEAD)"
+
+      - name: Dependances (poppler-utils, python-pptx)
+        run: |
+          sudo apt-get install -y poppler-utils
+          python3 -m pip install --quiet python-pptx
+
+      - name: Restaurer le gabarit (coffre chiffre)
+        run: |
+          python3 scripts/python/private_store.py restore \
+            --store data/africa_cdc_deck/private_store.enc \
+            --dir data/africa_cdc_deck/templates
+
+      - name: Generer, verifier, envoyer (run_deck.py)
+        timeout-minutes: 15
+        run: |
+          ARGS=""
+          if [ "${{ inputs.mode }}" = "test" ]; then ARGS="--test"; else ARGS="--resend"; fi
+          if [ -n "${{ inputs.sitrep }}" ]; then ARGS="$ARGS --sitrep ${{ inputs.sitrep }}"; fi
+          echo "run_deck.py $ARGS"
+          python3 scripts/python/deck/run_deck.py $ARGS
+
+      - name: Deposer le deck en Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: deck-bdbv
+          path: |
+            outputs/deck_private*/*.pptx
+            outputs/deck_private*/*.csv
+            outputs/deck_private*/deck_report.json
+          if-no-files-found: warn
+
+      - name: Enregistrer l'etat (mode resend seulement)
+        if: always() && inputs.mode == 'resend'
+        continue-on-error: true
+        run: |
+          git config user.name "PREIS Ebola Automation"
+          git config user.email "actions@github.com"
+          for f in data/africa_cdc_deck/state.json data/africa_cdc_deck/email_sent_state.csv data/africa_cdc_deck/alerts.csv; do [ -f "$f" ] && git add "$f"; done
+          git diff --cached --quiet && echo "Pas de changement d'etat deck" && exit 0
+          git commit -m "PREIS deck: etat (manuel) [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin main && git push && exit 0
+            sleep 5
+          done
