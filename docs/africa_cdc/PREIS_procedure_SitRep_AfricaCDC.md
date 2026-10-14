@@ -49,6 +49,11 @@ que des indicateurs RDC et reste inchangé par cette procédure).
 3. Ouganda : non couvert par le SitRep RDC. Garder 20 cas, 2 décès, 18 guéris
    (épidémie déclarée terminée le 28/07/2026), avec un commentaire, dans les
    deux documents, tant qu'aucune source RDC ne dit le contraire.
+   Kenya : non couvert par le SitRep RDC. 1 cas importé confirmé, 1 décès, 0 guéri
+   (valeur fournie par l'équipe Africa CDC, déjà dans le BVD SitRep 139 en ligne) : à
+   INCLURE dans les totaux continentaux, avec un commentaire, dans les deux documents,
+   tant qu'aucune source ne dit le contraire. Le nombre de contacts suivis au Kenya
+   n'est pas dans le SitRep RDC : ne pas le reprendre sans nouvelle source.
 
 ## CONTRÔLE DU NUMÉRO
 Lire la ligne « Sources » du modèle SitRep (« DRC MVE SitRep No. X »). Si le
@@ -67,7 +72,7 @@ Brief (même numéro, cf. note ci-dessus).
   intra-CTE, zones et aires de santé touchées, cumuls, guéris, patients en
   isolement, part de l'Ituri).
 - Indicateurs : cas, décès, létalité, guéris, en isolement (bandeau du
-  SitRep RDC) ; totaux continentaux = RDC + Ouganda, létalité = décès / cas ;
+  SitRep RDC) ; totaux continentaux = RDC + Ouganda + Kenya, létalité = décès / cas ;
   occupation des lits Ituri et Nord-Kivu (§2.5) ; suivi des contacts
   (§2.1.1) ; alertes 24h « reçues · vérifiées · suspects » (§2.1.1, comparées
   au Tableau 3) ; agents de santé infectés ou décédés seulement s'ils sont
@@ -96,8 +101,9 @@ vérifiée sur SitRep 141 → Issue 131 (deux cycles concordants).
 - « Bottom line for decision-makers » : une phrase de synthèse (cas/décès/
   guéris cumulés continentaux + létalité), reprise/actualisée du modèle.
 - Grille des indicateurs continentaux (« Continental cumulative indicators ») :
-  chaque case = RDC (SitRep RDC, bandeau + Tableau 1/2) + Ouganda (valeur
-  fixe, cf. SOURCES §3) ; létalité continentale recalculée = décès
+  chaque case = RDC (SitRep RDC, bandeau + Tableau 1/2) + Ouganda + Kenya (valeurs
+  fixes, cf. SOURCES §3 ; sous-libellé « DRC x · Uganda y · Kenya z » ; ligne « Kenya »
+  du tableau du SitRep, comme la ligne Ouganda) ; létalité continentale recalculée = décès
   continentaux / cas continentaux ; part par province des nouveaux cas
   (ex. « Ituri 32 · North Kivu 17 · Haut-Uélé 4 ») reprise du Tableau 1 ;
   part communautaire/intra-CTE des décès du jour reprise du Tableau 2.
@@ -235,7 +241,7 @@ si la source elle-même est incohérente : tu la reprends alors telle quelle, sa
 corriger de toi-même). Une valeur reportée du cycle précédent (Ouganda, agents de santé,
 zones de santé incluant l'Ouganda, colonne « Active HZs ») n'est conservée que si le
 SitRep RDC ne dit rien à ce sujet ; tout total qui la combine à une valeur du SitRep RDC
-(ex. total continental = RDC + Ouganda, zones affectées = RDC + Ouganda) est RECALCULÉ à
+(ex. total continental = RDC + Ouganda + Kenya, zones affectées = RDC + Ouganda) est RECALCULÉ à
 partir des valeurs RDC du SitRep traité.
 
 ## CONCORDANCE SITREP / BRIEF (bloquante)
@@ -245,7 +251,7 @@ Les deux documents dérivent du MÊME SitRep RDC : tout chiffre commun est ident
   affectées incluant l'Ouganda, colonne « Active HZs ») : elles doivent être IDENTIQUES
   dans les deux documents et signalées dans les commentaires (anomalies) comme « non
   présentes dans le SitRep RDC ».
-- Recalcule toute valeur dérivée (totaux continentaux = RDC + Ouganda, létalités, %).
+- Recalcule toute valeur dérivée (totaux continentaux = RDC + Ouganda + Kenya, létalités, %).
 - N'invente jamais un pourcentage absent de la source ; si la source est incohérente
   (ex. PSEA), reprends la formulation de la source sans le pourcentage contesté et
   signale-le dans les anomalies.

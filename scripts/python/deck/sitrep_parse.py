@@ -87,7 +87,19 @@ def parse_sitrep(text, expected_no=None):
     mo = [v for k, v in _MONTHS.items() if _fold(k) == _fold(m2.group(2))][0]
     S["report_date"] = _dt.date(int(m2.group(3)), mo, int(m2.group(1)))
     fn = _dt.date(int(m.group(4)), int(m.group(3)), int(m.group(2)))
-    _need(fn == S["report_date"], "date du titre (%s) differente de la date du rapport (%s)" % (fn, S["report_date"]))
+    S["date_warning"] = None
+    if fn != S["report_date"]:
+        # 14/10/2026 : l'INSP imprime parfois « Date du rapport » = J+1 alors que l'identifiant et les tableaux sont de J
+        # (SitRep 150 : titre 11/10, en-tete 12/10, « Tableau 1 ... au 11 octobre »). Arbitrage strict : on n'accepte que si la
+        # legende du Tableau 1 porte la date du TITRE ; la date retenue est alors celle du titre et l'ecart est signale.
+        mt = re.search(r"Tableau\s*1\..{0,160}?\bau\s+(\d{1,2})\s+([A-Za-zéûô]+)\s+(\d{4})", re.sub(r"\s+", " ", text))
+        td = None
+        if mt and _fold(mt.group(2)) in {_fold(k) for k in _MONTHS}:
+            tmo = [v for k, v in _MONTHS.items() if _fold(k) == _fold(mt.group(2))][0]
+            td = _dt.date(int(mt.group(3)), tmo, int(mt.group(1)))
+        _need(td == fn, "date du titre (%s) differente de la date du rapport (%s)" % (fn, S["report_date"]))
+        S["date_warning"] = "en-tete : date du rapport %s ; identifiant et Tableau 1 : %s (date retenue : %s)" % (S["report_date"], fn, fn)
+        S["report_date"] = fn
     m3 = re.search(r"Date de publication\s*:\s*(\d{1,2})\s+([A-Za-zéûô]+)\s+(\d{4})", text)
     if m3:
         mo3 = [v for k, v in _MONTHS.items() if _fold(k) == _fold(m3.group(2))]
@@ -103,9 +115,16 @@ def parse_sitrep(text, expected_no=None):
 
     # ---- faits saillants --------------------------------------------------------------------
     flat = re.sub(r"\s+", " ", head)
-    m = re.search(r"\((\d+)\)\s+nouveaux cas confirm[ée]s.*?dont\s+(\d+)\s+d[ée]c[èe]s\s+communautaires", flat)
-    _need(m, "nouveaux cas / deces communautaires introuvables dans les faits saillants")
-    S["new_cases"], S["new_comm_deaths"] = int(m.group(1)), int(m.group(2))
+    m = re.search(r"\((\d+)\)\s+nouveaux.{0,30}?cas confirm[ée]s.*?dont\s+(\d+)\s+d[ée]c[èe]s\s+communautaires", flat)
+    if m:
+        S["new_cases"], S["new_comm_deaths"] = int(m.group(1)), int(m.group(2))
+    else:
+        # PDF a l'ordre de lecture melange (SitRep 150 publie : « ... dont 37 deces communautaires, ont (88) nouveaux ete notifies »).
+        # Repli : les deux nombres sont cherches separement ; le recoupement avec le total du Tableau 1 (plus bas) reste bloquant.
+        ma = re.search(r"\((\d+)\)\s+nouveaux", flat)
+        mb = re.search(r"dont\s+(\d+)\s+d[ée]c[èe]s\s+communautaires", flat)
+        _need(ma and mb, "nouveaux cas / deces communautaires introuvables dans les faits saillants")
+        S["new_cases"], S["new_comm_deaths"] = int(ma.group(1)), int(mb.group(1))
     m = re.search(r"(\d+)\s+d[ée]c[èe]s\s+ont\s+[ée]t[ée]\s+enregistr[ée]s\s+dans\s+les\s+CTE", flat)
     _need(m, "deces intra-CTE introuvables dans les faits saillants")
     S["new_cte_deaths"] = int(m.group(1))
@@ -152,6 +171,18 @@ def parse_sitrep(text, expected_no=None):
             if mm:
                 tot["hz_aff"], tot["hz_tot"] = int(mm.group(1)), int(mm.group(2))
             break
+    if tot is None:
+        # variante (SitRep 151) : « cas  deces  letalite% » sur une ligne, puis « Total  <nouveaux cas> ... <zones touchees> » sur la suivante
+        for k, l in enumerate(lines[i1 + 1: i1e]):
+            c = _cells(l)
+            if len(c) == 3 and c[0].replace(" ", "").isdigit() and re.fullmatch(r"[\d,]+%", c[2].replace(" ", "")) and not prov_name(c[0]):
+                nxt = _cells(lines[i1 + 1 + k + 1]) if i1 + 2 + k < len(lines) else []
+                if len(nxt) >= 2 and nxt[0] == "Total" and nxt[1].replace(" ", "").isdigit():
+                    tot = dict(new=num(nxt[1]), cases=num(c[0]), deaths=num(c[1]), cfr=num(c[2].rstrip("%")))
+                    mm = re.match(r"(\d+)/(\d+)", nxt[-1])
+                    if mm:
+                        tot["hz_aff"], tot["hz_tot"] = int(mm.group(1)), int(mm.group(2))
+                    break
     _need(len(t1) >= 3 and tot, "Tableau 1 incomplet (provinces ou ligne Total)")
     S["t1"], S["t1_total"] = t1, tot
     _need(sum(v["cases"] for v in t1.values()) == tot["cases"], "Tableau 1 : somme des cas par province != total")
@@ -752,4 +783,16 @@ def quick_kpi(text):
                 break
     if cases is None:
         return None
-    return int(m.group(1)), _dt.date(int(d.group(3)), mo[0], int(d.group(1))), cases, deaths
+    rd = _dt.date(int(d.group(3)), mo[0], int(d.group(1)))
+    # meme arbitrage que parse_sitrep : en-tete J+1 mais identifiant et legende du Tableau 1 de J -> date = J
+    mt_ = re.search(r"/\s*MVE[- ]?BDBV\s*/\s*(\d{2})/(\d{2})/(\d{4})", text)
+    mc_ = re.search(r"Tableau\s*1\..{0,160}?\bau\s+(\d{1,2})\s+([A-Za-zéûô]+)\s+(\d{4})", re.sub(r"\s+", " ", text))
+    if mt_ and mc_:
+        try:
+            fn_ = _dt.date(int(mt_.group(3)), int(mt_.group(2)), int(mt_.group(1)))
+            mo_ = [v for k, v in _MONTHS.items() if _fold(k) == _fold(mc_.group(2))]
+            if mo_ and fn_ != rd and _dt.date(int(mc_.group(3)), mo_[0], int(mc_.group(1))) == fn_:
+                rd = fn_
+        except ValueError:
+            pass
+    return int(m.group(1)), rd, cases, deaths

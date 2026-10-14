@@ -64,7 +64,7 @@ def tiles(tables):
 
 
 def _prov_key(s):
-    s = re.sub(r"^(drc|uganda)\s*[·\-]\s*", "", s.strip(), flags=re.I)
+    s = re.sub(r"^(drc|uganda|kenya)\s*[·\-]\s*", "", s.strip(), flags=re.I)
     return re.sub(r"[\s\-_]+", "", s).lower()
 
 
@@ -93,7 +93,7 @@ def province_table(tables):
             cells = [" ".join(c).strip() for c in row]
             if not cells or not cells[0]:
                 continue
-            rec = {"name": cells[0], "uganda": cells[0].lower().startswith("uganda")}
+            rec = {"name": cells[0], "uganda": cells[0].lower().startswith(("uganda", "kenya"))}
             for k, i in col.items():
                 rec[k] = cells[i] if i < len(cells) else None
             first = cells[0].lower()
@@ -180,12 +180,13 @@ def check(sitrep_docx, brief_docx):
     for tag, t in (("SitRep", a), ("Brief", b)):
         for lab in ("confirmed cases", "deaths", "recovered"):
             if lab in t:
-                m = re.search(r"DRC\s*([\d,]+)\s*·\s*Uganda\s*([\d,]+)", t[lab][1])
+                m = re.search(r"DRC\s*([\d,]+)\s*·\s*Uganda\s*([\d,]+)(?:\s*·?\s*Kenya\s*([\d,]+))?", t[lab][1])
                 if m:
                     tot = _num(t[lab][0])
-                    if tot is not None and _num(m.group(1)) + _num(m.group(2)) != tot:
-                        warnings.append("%s, tuile « %s » : RDC %s + Ouganda %s != %s" %
-                                        (tag, lab, m.group(1), m.group(2), t[lab][0]))
+                    ke = _num(m.group(3)) if m.group(3) else 0
+                    if tot is not None and _num(m.group(1)) + _num(m.group(2)) + ke != tot:
+                        warnings.append("%s, tuile « %s » : RDC %s + Ouganda %s + Kenya %s != %s" %
+                                        (tag, lab, m.group(1), m.group(2), ke, t[lab][0]))
     return errors, warnings
 
 
