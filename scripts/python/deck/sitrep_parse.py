@@ -418,7 +418,8 @@ def _parse_table3(lines, S):
         elif c[0] == "Total":
             total = d
     for pn, d in res.items():
-        if d["alive"] + d["dead"] != d["total"] or d["val_alive"] + d["val_dead"] + d["inv_alive"] + d["inv_dead"] != d["total"]:
+        # vivants + decedes = total ; validees + invalidees <= total (des alertes peuvent ne pas etre encore verifiees : SitRep 151 Haut-Uele 98/149)
+        if d["alive"] + d["dead"] != d["total"] or d["val_alive"] + d["val_dead"] + d["inv_alive"] + d["inv_dead"] > d["total"]:
             _warn(S, "Tableau 3 %s : colonnes incoherentes" % pn)
     if total is None:
         # ligne Total Général : chiffres puis le mot "Général" sur la ligne suivante
@@ -449,7 +450,7 @@ def _parse_table3(lines, S):
 def _parse_contacts(text, S):
     flat = re.sub(r"\s+", " ", text)
     out = {"contacts": None}
-    m = re.search(r"Parmis?\s+(\d[\d ]*?)\s+contacts en cours de suivi([^,]{0,90}),\s+(\d[\d ]*?)\s+ont [ée]t[ée] vus.*?proportion de suivi de\s+([\d,]+)\s*%(?:.*?\(([\d,]+)\s*%\))?", flat)
+    m = re.search(r"Parmis?\s+(?:les\s+)?(\d[\d ]*?)\s+contacts en cours de suivi([^,]{0,90}),\s+(\d[\d ]*?)\s+(?:contacts\s+)?ont [ée]t[ée] vus.*?(?:proportion|taux) de suivi de\s+([\d,]+)\s*%(?:.*?\(([\d,]+)\s*%\))?", flat)
     if not m:
         _warn(S, "phrase de suivi des contacts introuvable")
         return out
@@ -462,9 +463,9 @@ def _parse_contacts(text, S):
     byp = {}
     seg = flat[m.end(): m.end() + 900]
     seg = re.split(r"\s2\.2\.\s", seg)[0]
-    mm = re.search(r"(?:Par province, )?[Cc]ette proportion [ée]tait de (.*?)\. (?:Aucune|Seul|Les ZS|Le |La |Au |En |\d)", seg + " . 0")
+    mm = re.search(r"(?:Par province, )?[Cc]e(?:tte)? (?:proportion|taux) [ée]tait de (.*?)\. (?:Aucune|Seul|Les ZS|Le |La |Au |En |\d)", seg + " . 0")
     if mm:
-        for p_, s_, l_, name in re.findall(r"([\d,]+)\s*%\s*\((\d[\d ]*?)/(\d[\d ]*?)\)\s+(?:au|à la|a la|en|à|a)\s+([A-Za-zÀ-ÿ\- ]+?)(?=\s*[,;]| et |$)", mm.group(1)):
+        for p_, s_, l_, name in re.findall(r"([\d,]+)\s*%\s*\((\d[\d ]*?)/(\d[\d ]*?)\)\s+(?:au|à la|a la|en|à|a)\s+([A-Za-zÀ-ÿ\- ]+?)(?=\s*[,;.]| et |$)", mm.group(1)):
             pn = prov_name(name.strip())
             if pn:
                 byp[pn] = dict(pct=num(p_), seen=num(s_), listed=num(l_))
@@ -492,7 +493,12 @@ def _parse_contacts(text, S):
             pn_ = prov_name(re.sub(r"^(?:l[\u2019']|le\s+|la\s+|les\s+)", "", piece.strip(), flags=re.I))
             if pn_:
                 missing.append(pn_)
-    if "transmis" in cov:
+    mp2 = re.search(r"Aucune\s+donn[ée]es?\s+n[\u2019']a\s+[ée]t[ée]\s+transmises?\s+par\s+(?:le\s+|la\s+|l[\u2019'])?([A-Za-zÀ-ÿ\- ]+?)\s*(?:[.;,]|$)", seg)
+    if mp2:
+        pn_ = prov_name(mp2.group(1).strip())
+        if pn_ and pn_ not in missing:
+            missing.append(pn_)
+    if "transmis" in cov and missing:
         part = out["contacts"]
         part["missing_prov"] = missing
         _warn(S, "suivi des contacts : couverture partielle (%s sans donnees) : %s/%s = %.1f %% non comparable a la veille -> blocs nationaux conserves, blocs provinciaux rafraichis" % (", ".join(missing) or "provinces non precisees", seen, listed, pct))
@@ -570,14 +576,16 @@ _SEC_RE = [
     ("poe", r"2\.2\.?\s*Point sur les activit"),
     ("lab", r"2\.3\.?\s*Laboratoire"),
     ("pci", r"2\.4\.?\s*Pr[ée]vention et Contr"),
-    ("care", r"2\.4\.3\.?\s*Prise en charge"),
-    ("vacc", r"2\.5\.?\s*Vaccination"),
-    ("cont", r"2\.6\.?\s*Continuit"),
-    ("crec", r"2\.7\.?\s*Communication"),
-    ("smsps", r"2\.8\.?\s*Sant[ée] mentale"),
-    ("log", r"2\.9\.?\s*Logistique"),
-    ("sec", r"2\.10\.?\s*S[ée]curit"),
-    ("psea", r"2\.12\.?\s*PSEA|2\.11\.?\s*PSEA"),
+    # numerotation variable d'un SitRep a l'autre (SitRep 151 : 2.5 Prise en charge, 2.6 Vaccination... 2.13 PSEA) :
+    # on reconnait les titres par leur libelle, quel que soit le numero
+    ("care", r"(?<![\d.])2\.\d{1,2}(?:\.\d)?\.?\s*Prise en charge"),
+    ("vacc", r"(?<![\d.])2\.\d{1,2}\.?\s*Vaccination"),
+    ("cont", r"(?<![\d.])2\.\d{1,2}\.?\s*Continuit"),
+    ("crec", r"(?<![\d.])2\.\d{1,2}\.?\s*Communication"),
+    ("smsps", r"(?<![\d.])2\.\d{1,2}\.?\s*Sant[ée] mentale"),
+    ("log", r"(?<![\d.])2\.\d{1,2}\.?\s*Logistique"),
+    ("sec", r"(?<![\d.])2\.\d{1,2}\.?\s*S[ée]curit"),
+    ("psea", r"(?<![\d.])2\.\d{1,2}\.?\s*PSEA"),
     ("msg", r"MESSAGES CLES|MESSAGES CL[ÉE]S"),
 ]
 
@@ -637,11 +645,11 @@ def _parse_lab(S):
     res = {}
     for pn, t in _by_prov(sec).items():
         s = p = None
-        neg = re.search(r"tous\s+(?:sont\s+)?revenus?\s+n[ée]gatifs", t)
+        neg = re.search(r"tous\s+(?:sont\s+)?(?:revenus?|r[ée]v[ée]l[ée]s?)\s+n[ée]gatifs?", t)
         m = re.search(r"(\d+)\s+nouveaux?\s+r[ée]sultats?\s+positifs?", t)
         if m:
             p = int(m.group(1))
-        m = re.search(r"sur\s+(\d+)\s+[ée]ch\w+", t)
+        m = re.search(r"(?:sur\s+)?(\d+)\s+[ée]ch\w+", t)
         if m:
             s = int(m.group(1))
         if neg:
@@ -667,7 +675,7 @@ def _parse_care(S):
     if not sec:
         return None
     # n'utiliser que les puces "Principales actions" (avant 'Défis')
-    body = re.split(r"2\.4\.5\.?\s*D[ée]fis", sec)[0]
+    body = re.split(r"2\.\d{1,2}\.\d{1,2}\.?\s*D[ée]fis", sec)[0]
     res = {}
     for pn, t in _by_prov(body).items():
         d = {}
@@ -677,9 +685,10 @@ def _parse_care(S):
         d["exits"] = num(m.group(1)) if m else None
         if d["exits"] is None and d["admissions"] is not None and re.search(r"aucune\s+sortie\s+n.a\s+[ée]t[ée]\s+rapport[ée]e|sans\s+aucune\s+sortie", t, re.I):
             d["exits"] = 0  # le SitRep l'ecrit explicitement : « Aucune sortie n'a ete rapportee »
-        m = re.search(r"dont\s+(\d+)\s+gu[ée]risons?", t)
-        d["recovered"] = int(m.group(1)) if m else (0 if re.search(r"aucune gu[ée]rison", t) else None)
-        m = re.search(r"(\d[\d ]*?)\s+patients?(?:\s*\([^)]*\))?\s+demeuraient\s+en\s+isolement", t)
+        m = re.search(r"(?:dont|contre)\s+(\d+)\s+gu[ée]risons?", t) or re.search(r"\bsorties?,\s+(une)\s+gu[ée]rison", t)
+        d["recovered"] = (1 if m.group(1) == "une" else int(m.group(1))) if m else (0 if re.search(r"aucune gu[ée]rison|sans\s+gu[ée]rison", t) else None)
+        # SitRep <= 149 : « N patients demeuraient en isolement » ; SitRep 151 : « Ainsi, N patients (x confirmes et y suspects) sont hospitalises / restent en isolement »
+        m = re.search(r"(\d[\d ]*?)\s+patients?(?:\s*\([^)]*\))?\s+(?:demeuraient\s+en\s+isolement|sont\s+hospitalis[ée]s|restent\s+en\s+isolement)", t)
         d["isolation"] = num(m.group(1)) if m else None
         m = re.search(r"taux d.occupation\s+(?:global\s+)?(?:des lits\s+)?de\s+([\d,]+)\s*%", t)
         d["bed_pct"] = num(m.group(1)) if m else None
@@ -687,6 +696,11 @@ def _parse_care(S):
         d["critical"] = int(m.group(1)) if m else None
         m = re.search(r"(\d+)\s+patients\s*\(([\d,]+)\s*%\)\s+sont pris en charge dans des ESS", t)
         d["outside_cte"] = (int(m.group(1)), num(m.group(2))) if m else None
+        # Bas-Uele (SitRep 151) : « aucun nouveau cas confirme n'a ete admis ; 11 nouveaux suspects ont ete admis ... contre 3 sorties »
+        if d["admissions"] is None and pn == "Bas-Uélé":
+            ms = re.search(r"(\d+)\s+nouveaux?\s+suspects?\s+ont\s+[ée]t[ée]\s+admis", t)
+            if ms and re.search(r"aucun\s+nouveau\s+cas\s+confirm[ée]\s+n.a\s+[ée]t[ée]\s+admis", t):
+                d["admissions"] = int(ms.group(1))
         # Bas-Uélé : "10 cas suspects sont isolés" (isolement de suspects en centres de transit)
         if d["isolation"] is None and pn == "Bas-Uélé":
             m = re.search(r"(\d+)\s+cas suspects sont isol[ée]s", t)

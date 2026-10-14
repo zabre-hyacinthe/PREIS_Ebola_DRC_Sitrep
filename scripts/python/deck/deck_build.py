@@ -957,7 +957,7 @@ def _pulse(dk, sn, id_a, id_b, id_s, id_l, id_p, p, S, t1, t3, care, lab, cb, t4
     elif kind == "hu":
         if lb and lb["samples"] and cr.get("admissions") is not None and cr.get("isolation") is not None and cr.get("bed_pct") is not None:
             dk.setall(sn, id_l, ["Tests %d · positive %d (%.1f%%)" % (lb["samples"], lb["positives"], rh(100.0 * lb["positives"] / lb["samples"])),
-                                 "Admissions %d / exits %d · recovered %s" % (cr["admissions"], cr["exits"], cr["recovered"] if cr.get("recovered") is not None else "ND"),
+                                 "Admissions %d / exits %s · recovered %s" % (cr["admissions"], cr["exits"] if cr.get("exits") is not None else "ND", cr["recovered"] if cr.get("recovered") is not None else "ND"),
                                  "Isolation %d (beds %.1f%%)" % (cr["isolation"], cr["bed_pct"])])
         else:
             dk.retained.append((sn, "bandeau LABORATORY & CARE %s" % p, "donnees illisibles"))

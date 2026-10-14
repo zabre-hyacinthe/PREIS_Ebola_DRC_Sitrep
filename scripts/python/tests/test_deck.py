@@ -316,5 +316,51 @@ class TestContactsCouverturePartielle(unittest.TestCase):
         self.assertEqual(sum(v["seen"] for v in part["by_prov"].values()), 15672)
 
 
+class TestSitrep151(unittest.TestCase):
+    """SitRep 151 : numerotation decalee (2.5 Prise en charge, 2.6 Vaccination...), « Parmi les N contacts »,
+    « taux de suivi », alertes non toutes verifiees (Tableau 3), coquilles du laboratoire (Tshopo, Bas-Uele)."""
+
+    @classmethod
+    def setUpClass(cls):
+        import subprocess
+        import shutil
+        pdf = os.path.join(os.path.dirname(DECK), "..", "..", "data", "pdf", "SitRep_151_2026.pdf")
+        if not (os.path.isfile(pdf) and shutil.which("pdftotext")):
+            raise unittest.SkipTest("PDF 151 ou pdftotext absent")
+        t = subprocess.run(["pdftotext", "-layout", pdf, "-"], capture_output=True).stdout.decode("utf-8", "replace")
+        cls.S = sp.parse_sitrep(t)
+
+    def test_seul_avertissement_couverture_partielle(self):
+        w = self.S["warnings"]
+        self.assertEqual(len(w), 1, w)
+        self.assertIn("couverture partielle (Sud Ubangi sans donnees)", w[0])
+
+    def test_table3_alertes_non_verifiees_acceptees(self):
+        self.assertFalse([w for w in self.S["warnings"] if "Tableau 3" in w])
+        self.assertEqual(self.S["t3"]["Haut-Uélé"]["total"], 149)
+
+    def test_contacts_partiel_cinq_provinces(self):
+        part = self.S["contacts_partial"]
+        self.assertIsNone(self.S["contacts"])
+        self.assertEqual((part["seen"], part["listed"], part["pct"]), (25469, 32811, 77.6))
+        self.assertEqual(part["missing_prov"], ["Sud Ubangi"])
+        self.assertEqual(sum(v["seen"] for v in part["by_prov"].values()), 25469)
+        self.assertEqual(sum(v["listed"] for v in part["by_prov"].values()), 32811)
+
+    def test_laboratoire_cinq_provinces(self):
+        lab = self.S["lab"]
+        self.assertEqual(sum(v["samples"] for v in lab.values()), 419)
+        self.assertEqual(sum(v["positives"] for v in lab.values()), 79)
+        self.assertEqual((lab["Tshopo"]["samples"], lab["Tshopo"]["positives"]), (12, 4))
+        self.assertEqual((lab["Bas-Uélé"]["samples"], lab["Bas-Uélé"]["positives"]), (3, 0))
+
+    def test_prise_en_charge_isolement_et_guerisons(self):
+        care = self.S["care"]
+        self.assertEqual(sum(v["isolation"] for v in care.values()), 899)
+        self.assertEqual(sum(v["recovered"] for v in care.values()), 29)
+        self.assertEqual(care["Bas-Uélé"]["admissions"], 11)
+        self.assertIsNone(care["Haut-Uélé"]["exits"])  # non publie : jamais deduit
+
+
 if __name__ == "__main__":
     unittest.main()
