@@ -1,1 +1,22 @@
-{}
+{
+ "config": {
+  "uganda": {
+   "cases": 20,
+   "deaths": 2,
+   "recoveries": 18
+  },
+  "hcw": {
+   "drc_infections": 266,
+   "uganda_infections": 4,
+   "deaths": 50
+  }
+ },
+ "last_built": {
+  "sitrep_no": 151,
+  "report_date": "2026-10-12",
+  "file": "BDBV_SitRep_141_Dashboard_12_Octobre_2026.pptx"
+ },
+ "narr": {
+  "coordination": "The SitRep states that response activities in the affected provinces are being supported through the technical pillars. On vaccination, 470 contacts at high risk (PPL) have been vaccinated in Haut-Uélé and 938 in Ituri, where 5,900 doses of Ervebo vaccine were received; in Bas-Uélé the provincial Ervebo stock is at 0 doses."
+ }
+}
