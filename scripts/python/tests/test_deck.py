@@ -364,3 +364,21 @@ class TestSitrep151(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestTracingSansVeille(unittest.TestCase):
+    """SitRep 152 : la veille (151) a une couverture partielle des contacts (P['contacts'] = None).
+    _tracing ne doit plus planter ni inventer de comparaison."""
+
+    def test_tracing_sans_contacts_de_la_veille(self):
+        import types
+        from deck import deck_build as db
+        ct = {"pct": 81.8, "seen": 26870, "listed": 32864, "threshold": 95.0,
+              "by_prov": {"Ituri": {"pct": 83.2}, "Nord-Kivu": {"pct": 79.2}, "Bas-Uélé": {"pct": 98.3}}}
+        cx = types.SimpleNamespace(S={"contacts": ct}, P={"contacts": None})
+        r = db._tracing(cx)
+        self.assertIsNotNone(r)
+        self.assertIn("81.8%", r["s2"])
+        self.assertIn("no comparison", r["s3"])
+        self.assertNotIn("rose", r["s2"] + r["s3"])
+        self.assertNotIn("fell", r["s2"] + r["s3"])

@@ -358,7 +358,7 @@ def build(S, P, H, C, template, out_path, narrative=None, prior_narr=None):
     dk.notes(2, "Executive summary, %s: %d new confirmed cases and %d deaths; cumulative %s cases and %s deaths (CFR %.1f%%). Positivity %s to %.1f%% on %s%% %s samples; contact follow-up %s to %.1f%%; isolation %s to %s." % (
         dstr(D), new, nd, n0(c), n0(d), cfr, word(pos or 0, ppos or 0, "rose", "fell", "held"), pos or 0,
         "%d" % round(abs(chg(S["samples"], P["samples"]))) if S.get("samples") else "ND", "fewer" if S["samples"] < P["samples"] else "more",
-        word(ct["pct"], P["contacts"]["pct"], "rose", "fell", "held") if ct else "ND", ct["pct"] if ct else 0, word(iso, piso, "rose", "fell", "held"), n0(iso)) if (S.get("samples") and ct) else "Executive summary, %s." % dstr(D))
+        word(ct["pct"], P["contacts"]["pct"], "rose", "fell", "held") if ct else "ND", ct["pct"] if ct else 0, word(iso, piso, "rose", "fell", "held"), n0(iso)) if (S.get("samples") and ct and P.get("contacts")) else "Executive summary, %s." % dstr(D))
 
     # =========================== diapo 3 : dernieres 24 h ===================================
     dk.setp(3, 502, "Changes in the Last 24 Hours: Cases %s %d, Deaths %s %d" % (cw, new, dw, nd))
@@ -612,9 +612,18 @@ def _set_week_tiles(dk, wl, wk):
 def _tracing(cx):
     S, P = cx.S, cx.P
     ct, pct_ = S.get("contacts"), P.get("contacts")
-    if not ct or not ct.get("by_prov") or not pct_:
+    if not ct or not ct.get("by_prov"):
         return None
     bp = ct["by_prov"]
+    if not pct_:
+        # SitRep precedent a couverture partielle : pas de comparaison (rien n'est invente)
+        low = min(bp.items(), key=lambda kv: kv[1]["pct"])
+        thr = ct.get("threshold") or 95.0
+        rel = "below" if ct["pct"] < thr else "above"
+        s2 = "%s of %s contacts were seen (%.1f%%), %s the %d%% target. %s is lowest at %.1f%%." % (n0(ct["seen"]), n0(ct["listed"]), ct["pct"], rel, thr, low[0], low[1]["pct"])
+        s3 = "Follow-up stands at %.1f%% (%s/%s contacts under follow-up). %s is lowest at %.1f%%; previous-day coverage was partial, so no comparison is shown." % (
+            ct["pct"], n0(ct["seen"]), n0(ct["listed"]), low[0], low[1]["pct"])
+        return {"s2": s2, "s3": s3, "low": low, "bp": bp}
     pb = {k: v["pct"] for k, v in (pct_.get("by_prov") or {}).items()}
     low = min(bp.items(), key=lambda kv: kv[1]["pct"])
     plow = min(pb.items(), key=lambda kv: kv[1]) if pb else None
@@ -1094,9 +1103,10 @@ def _slide16(dk, cx, narrative, trc):
             nc = ct.get("nonreporting_contacts")
             nrt = " %s did not submit follow-up reports." % join_and([("%s (%s contacts)" % (nc[0], n0(nc[1]))) if (nc and z == nc[0]) else z for z in nonrep])
         reach = [p for p, v in bp.items() if v["pct"] >= thr]
-        mv = "down from" if ct["pct"] < P["contacts"]["pct"] else "up from" if ct["pct"] > P["contacts"]["pct"] else "unchanged from"
-        dk.setp(16, 15, "%s of %s listed contacts were seen (%.1f%%), %s %.1f%%. %s is now lowest at %.1f%%, followed by %s. %s%s" % (
-            n0(ct["seen"]), n0(ct["listed"]), ct["pct"], mv, P["contacts"]["pct"], low[0], low[1]["pct"], join_and(rest),
+        pc_ = P.get("contacts")
+        mv = ("down from" if ct["pct"] < pc_["pct"] else "up from" if ct["pct"] > pc_["pct"] else "unchanged from") if pc_ else None
+        dk.setp(16, 15, "%s of %s listed contacts were seen (%.1f%%)%s. %s is %slowest at %.1f%%, followed by %s. %s%s" % (
+            n0(ct["seen"]), n0(ct["listed"]), ct["pct"], (", %s %.1f%%" % (mv, pc_["pct"])) if pc_ else " (previous-day coverage was partial, so no comparison is shown)", low[0], "now " if pc_ else "", low[1]["pct"], join_and(rest),
             ("No province reaches the %d%% target%s" % (thr, ";" if nrt else ".")) if not reach else ("%s reach%s the %d%% target%s" % (join_and(reach), "" if len(reach) > 1 else "es", thr, ";" if nrt else ".")), nrt.replace(" did not", " did not", 1) if not nrt else nrt.replace("", "", 1)))
     # laboratoire
     if lab and S.get("samples") is not None:
