@@ -17,6 +17,8 @@
   "file": "BDBV_SitRep_142_Dashboard_13_Octobre_2026.pptx"
  },
  "narr": {
-  "coordination": "The SitRep states that response activities in the affected provinces are being supported through the technical pillars. On vaccination, 470 contacts at high risk (PPL) have been vaccinated in Haut-Uélé and 938 in Ituri, where 5,900 doses of Ervebo vaccine were received; in Bas-Uélé the provincial Ervebo stock is at 0 doses."
+  "coordination": "The SitRep states that response activities in the affected provinces are being supported through the technical pillars. On vaccination, 470 contacts at high risk (PPL) have been vaccinated in Haut-Uélé and 938 in Ituri, where 5,900 doses of Ervebo vaccine were received; in Bas-Uélé the provincial Ervebo stock is at 0 doses.",
+  "resistance": "32 EDS failures due to resistance in Ituri (Bambu, Nia-Nia, Tchomia, Mangala, Mandima)",
+  "security": "The Avakubi PoC in Ituri remains non-functional due to insecurity, the Butuhe PoC in Nord-Kivu has been non-functional since the security incident of 26/09/2026 with the threat against providers on the Butembo axis persisting, and in Bas-Uélé insufficient support from security services to PoE/PoC activities was noted."
  }
 }
