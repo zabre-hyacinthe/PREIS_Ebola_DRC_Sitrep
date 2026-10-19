@@ -1435,3 +1435,27 @@
 [2026-10-19 20:06:17 UTC] SitRep page: https://insp.cd/sitrep-n156-mve-bdbv-17-10-2026/ 
 [2026-10-19 20:06:22 UTC] PDF URL resolved: https://insp.cd/wp-content/uploads/2026/10/SitRep_MVEBDB_156_17_10_2026.pdf 
 [2026-10-19 20:06:22 UTC] SitRep N156 already handled. No duplicate notification. 
+[2026-10-19 20:29:52 UTC] ============================================================ 
+[2026-10-19 20:29:52 UTC] PREIS Ebola RDC â€” Cloud SitRep Monitor started 
+[2026-10-19 20:29:52 UTC] ROOT: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep 
+[2026-10-19 20:29:52 UTC] DRY_RUN: FALSE 
+[2026-10-19 20:29:52 UTC] MONITOR_EMAIL_ENABLED: TRUE 
+[2026-10-19 20:29:52 UTC] MAX_PAGES: 6 
+[2026-10-19 20:29:52 UTC] Scanning INSP category page: https://insp.cd/category/sitrep/ 
+[2026-10-19 20:29:59 UTC] Page 1: 13 SitRep candidate(s) 
+[2026-10-19 20:30:03 UTC] Page 2: 13 SitRep candidate(s) 
+[2026-10-19 20:30:08 UTC] Page 3: 13 SitRep candidate(s) 
+[2026-10-19 20:30:13 UTC] Page 4: 15 SitRep candidate(s) 
+[2026-10-19 20:30:18 UTC] Page 5: 15 SitRep candidate(s) 
+[2026-10-19 20:30:23 UTC] Page 6: 15 SitRep candidate(s) 
+[2026-10-19 20:30:28 UTC] Source https://insp.cd/?s=sitrep: 10 candidat(s), max N157 
+[2026-10-19 20:30:53 UTC] Source https://insp.cd/?s=sitrep+mve: inaccessible 
+[2026-10-19 20:31:18 UTC] Source https://insp.cd/?s=sitrep&paged=2: inaccessible 
+[2026-10-19 20:31:43 UTC] Source https://insp.cd/feed/: inaccessible 
+[2026-10-19 20:32:03 UTC] Source https://insp.cd/wp-json/wp/v2/posts?search=sitrep&per_page=50&orderby=date&order=desc: inaccessible 
+[2026-10-19 20:32:22 UTC] Source https://insp.cd/wp-json/wp/v2/posts?per_page=50&orderby=date&order=desc: inaccessible 
+[2026-10-19 20:32:42 UTC] Source https://insp.cd/: inaccessible 
+[2026-10-19 20:32:42 UTC] Sondage de 10 URL probable(s) pour N158 et N159 
+[2026-10-19 20:35:57 UTC] Decouverte supplementaire: 84 -> 67 SitRep candidat(s) 
+[2026-10-19 20:35:57 UTC] Latest SitRep online: N157 
+[2026-10-19 20:35:57 UTC] SitRep page: https://insp.cd/sitrep-n157-mve-bdbv-18-10-2026/ 
