@@ -1,21 +1,21 @@
 {
-  "generated_at": "2026-10-19T09:01:11Z",
+  "generated_at": "2026-10-19T09:25:33Z",
   "asof": "2026-09-04",
-  "sitrep": "155",
+  "sitrep": "156",
   "sitrep_date": "2026-09-04",
   "kpi": {
-    "cases": 9415,
-    "deaths": 4536,
+    "cases": 9455,
+    "deaths": 4561,
     "cfr": 48.2,
-    "new": 67,
-    "ma7": 67.7,
+    "new": 40,
+    "ma7": 59.3,
     "doubling": 53.9,
-    "growth7": 73,
-    "cases_7d": 559,
+    "growth7": 38,
+    "cases_7d": 477,
     "cases_trend": "INCREASING",
     "cases_trend_persisted": false,
-    "deaths_7d": 264,
-    "deaths_growth7": 67,
+    "deaths_7d": 225,
+    "deaths_growth7": 39,
     "deaths_trend": "INCREASING",
     "deaths_trend_persisted": false,
     "recovered": 68,
@@ -59,19 +59,19 @@
       "alerts_validated": 36
     },
     "staleness_sitreps": {
-      "alerts_reported": 105,
-      "alerts_investigated": 138,
-      "investigation_rate": 138,
-      "contacts_followed": 94,
-      "contacts_listed": 74,
-      "suspects": 125,
-      "samples_analyzed": 107,
-      "lab_positivity": 137,
-      "vaccine": 143,
-      "community_deaths": 74,
-      "recovered": 81,
-      "isolation": 75,
-      "alerts_validated": 119
+      "alerts_reported": 106,
+      "alerts_investigated": 139,
+      "investigation_rate": 139,
+      "contacts_followed": 95,
+      "contacts_listed": 75,
+      "suspects": 126,
+      "samples_analyzed": 108,
+      "lab_positivity": 138,
+      "vaccine": 144,
+      "community_deaths": 75,
+      "recovered": 82,
+      "isolation": 76,
+      "alerts_validated": 120
     }
   },
   "response_scorecard": [
@@ -83,7 +83,7 @@
       "unit": "%",
       "status": "warn",
       "sitrep_src": 17,
-      "staleness_sitreps": 138,
+      "staleness_sitreps": 139,
       "note": null
     },
     {
@@ -94,7 +94,7 @@
       "unit": "contacts/cas",
       "status": "bad",
       "sitrep_src": 81,
-      "staleness_sitreps": 74,
+      "staleness_sitreps": 75,
       "note": "Cadre CDC original : moyenne glissante 3 semaines, non reconstructible ici -- ratio cumule au SitRep source a la place -- valeur inhabituellement basse (contacts_listed=78 pour 3874 cas cumules a ce SitRep) : a verifier, peut refleter un probleme d'extraction plutot qu'une performance reelle."
     },
     {
@@ -105,7 +105,7 @@
       "unit": "%",
       "status": "nodata",
       "sitrep_src": 61,
-      "staleness_sitreps": 94,
+      "staleness_sitreps": 95,
       "note": "Non calcule : numerateur (SitRep 61) et denominateur (SitRep 81) viennent de rapports differents -- un ratio entre points non comparables serait trompeur."
     },
     {
@@ -127,7 +127,7 @@
       "unit": "%",
       "status": "nodata",
       "sitrep_src": 48,
-      "staleness_sitreps": 107,
+      "staleness_sitreps": 108,
       "note": "Non calcule : numerateur (SitRep 48) et denominateur (SitRep 36) viennent de rapports differents -- un ratio entre points non comparables serait trompeur."
     },
     {
@@ -138,7 +138,7 @@
       "unit": "%",
       "status": "bad",
       "sitrep_src": 18,
-      "staleness_sitreps": 137,
+      "staleness_sitreps": 138,
       "note": null
     },
     {
@@ -171,7 +171,7 @@
       "unit": "%",
       "status": "bad",
       "sitrep_src": 81,
-      "staleness_sitreps": 74,
+      "staleness_sitreps": 75,
       "note": "Compare au cumul de deces TEL QUE CONNU a ce SitRep, pas au cumul actuel -- sinon ratio faussement bas"
     },
     {
@@ -996,6 +996,12 @@
       "nc": 67,
       "ma7": 67.67,
       "cum": 9415
+    },
+    {
+      "d": "2026-09-04",
+      "nc": 40,
+      "ma7": 59.33,
+      "cum": 9455
     }
   ],
   "provinces": [
@@ -2052,7 +2058,7 @@
     },
     {
       "k": "Fraicheur pipeline",
-      "v": "45 j depuis SitRep 155",
+      "v": "45 j depuis SitRep 156",
       "rule": "Aucun nouveau SitRep detecte depuis 45 jours -- verifier le cron GitHub Actions (habituellement ~quotidien).",
       "level": "bad",
       "detected_on": "2026-10-19"
@@ -2066,15 +2072,15 @@
     },
     {
       "k": "Reference INRB",
-      "v": "42 SitReps de retard",
-      "rule": "La reference nationale INRB utilisee pour la contre-validation independante des cumuls n'a plus ete mise a jour depuis le SitRep 113 (2026-09-04) -- 42 SitReps plus tard, les cumuls officiels ne sont plus contre-verifies (validation = 'no_ref').",
+      "v": "43 SitReps de retard",
+      "rule": "La reference nationale INRB utilisee pour la contre-validation independante des cumuls n'a plus ete mise a jour depuis le SitRep 113 (2026-09-04) -- 43 SitReps plus tard, les cumuls officiels ne sont plus contre-verifies (validation = 'no_ref').",
       "level": "bad",
       "detected_on": "2026-10-19"
     },
     {
       "k": "Repartition par province",
-      "v": "ecart 18%",
-      "rule": "La somme des cumuls par province (7,723) ne correspond pas exactement au total national (9,415) -- ecart de 18%. La ventilation par province extraite des SitReps est probablement incomplete pour certaines lignes ; ne pas sur-interpreter de petits ecarts entre provinces.",
+      "v": "ecart 18.3%",
+      "rule": "La somme des cumuls par province (7,723) ne correspond pas exactement au total national (9,455) -- ecart de 18.3%. La ventilation par province extraite des SitReps est probablement incomplete pour certaines lignes ; ne pas sur-interpreter de petits ecarts entre provinces.",
       "level": "warn",
       "detected_on": "2026-10-19"
     },
@@ -2109,14 +2115,14 @@
     {
       "k": "Zones par province",
       "v": "Ituri",
-      "rule": "Ituri : 28 zones extraites du texte SitRep 81 vs 20 calculees depuis le detail par zone (SitRep 155). Ecart possible du a un decalage temporel entre les deux extractions ou a une zone frontaliere reclassee.",
+      "rule": "Ituri : 28 zones extraites du texte SitRep 81 vs 20 calculees depuis le detail par zone (SitRep 156). Ecart possible du a un decalage temporel entre les deux extractions ou a une zone frontaliere reclassee.",
       "level": "info",
       "detected_on": "2026-10-19"
     },
     {
       "k": "Zones par province",
       "v": "Nord-Kivu",
-      "rule": "Nord-Kivu : 12 zones extraites du texte SitRep 81 vs 11 calculees depuis le detail par zone (SitRep 155). Ecart possible du a un decalage temporel entre les deux extractions ou a une zone frontaliere reclassee.",
+      "rule": "Nord-Kivu : 12 zones extraites du texte SitRep 81 vs 11 calculees depuis le detail par zone (SitRep 156). Ecart possible du a un decalage temporel entre les deux extractions ou a une zone frontaliere reclassee.",
       "level": "info",
       "detected_on": "2026-10-19"
     },
@@ -2140,7 +2146,7 @@
       "name": "SitRep (INSP)",
       "cadence": "Per report",
       "last": "2026-09-04",
-      "detail": "N°155"
+      "detail": "N°156"
     },
     {
       "name": "INRB reference",
@@ -2155,7 +2161,7 @@
       "detail": "Province/zone"
     }
   ],
-  "highlights": ["67 new confirmed cases in the latest report; 7-day average 68/day (+73% vs. the prior 7 days).", "Cumulative cases doubling approximately every 53.9 days (trailing 14-day growth).", "Case-fatality ratio 48.2% (provisional); 68 recovered, 25 in isolation.", "51 health zones affected across 3 provinces.", "Operational watch: 7 zone(s) RED, 7 ORANGE for priority verification."],
+  "highlights": ["40 new confirmed cases in the latest report; 7-day average 59/day (+38% vs. the prior 7 days).", "Cumulative cases doubling approximately every 53.9 days (trailing 14-day growth).", "Case-fatality ratio 48.2% (provisional); 68 recovered, 25 in isolation.", "51 health zones affected across 3 provinces.", "Operational watch: 7 zone(s) RED, 7 ORANGE for priority verification."],
   "manual": {
     "beds": null,
     "bed_sites": [],
@@ -2176,7 +2182,7 @@
     "build_version": "v5.0-auto",
     "build_date": "2026-10-19",
     "generator": "scripts/16_generate_situation_room_data.R",
-    "latest_sitrep_no": 155,
+    "latest_sitrep_no": 156,
     "zones_missing_coords": ["Adja", "Alimbongo", "Ariwara", "Bafwasende", "Biena", "Boga", "Boma Mangbetu", "Bulu", "Buta", "Drodro", "Dungu", "Ganga", "Gombari", "Isiro", "Kabondo", "Kayna", "Lolwa", "Lubero", "Lubunga", "Mahagi", "Makiso-Kisangani", "Mandima", "Mangobo", "Musienene", "Mutwanga", "Nia-Nia", "Pawa", "Rumba", "Rungu", "Tshopo", "Viadana", "Wamba", "Wanierukula"]
   }
 }
