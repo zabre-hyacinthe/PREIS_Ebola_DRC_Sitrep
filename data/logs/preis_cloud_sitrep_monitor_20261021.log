@@ -421,3 +421,29 @@
 [2026-10-21 05:18:20 UTC] Email status: sent 
 [2026-10-21 05:18:20 UTC] WhatsApp disabled 
 [2026-10-21 05:18:20 UTC] PREIS cloud monitor finished. 
+[2026-10-21 05:43:41 UTC] ============================================================ 
+[2026-10-21 05:43:41 UTC] PREIS Ebola RDC â€” Cloud SitRep Monitor started 
+[2026-10-21 05:43:41 UTC] ROOT: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep 
+[2026-10-21 05:43:41 UTC] DRY_RUN: FALSE 
+[2026-10-21 05:43:41 UTC] MONITOR_EMAIL_ENABLED: TRUE 
+[2026-10-21 05:43:41 UTC] MAX_PAGES: 6 
+[2026-10-21 05:43:41 UTC] Scanning INSP category page: https://insp.cd/category/sitrep/ 
+[2026-10-21 05:43:44 UTC] Page 1: 13 SitRep candidate(s) 
+[2026-10-21 05:43:48 UTC] Page 2: 13 SitRep candidate(s) 
+[2026-10-21 05:43:52 UTC] Page 3: 13 SitRep candidate(s) 
+[2026-10-21 05:43:55 UTC] Page 4: 15 SitRep candidate(s) 
+[2026-10-21 05:43:58 UTC] Page 5: 15 SitRep candidate(s) 
+[2026-10-21 05:44:02 UTC] Page 6: 15 SitRep candidate(s) 
+[2026-10-21 05:44:06 UTC] Source https://insp.cd/?s=sitrep: 10 candidat(s), max N158 
+[2026-10-21 05:44:09 UTC] Source https://insp.cd/?s=sitrep+mve: 10 candidat(s), max N14 
+[2026-10-21 05:44:13 UTC] Source https://insp.cd/?s=sitrep&paged=2: 9 candidat(s), max N148 
+[2026-10-21 05:44:15 UTC] Source https://insp.cd/feed/: 9 candidat(s), max N158 
+[2026-10-21 05:44:18 UTC] Source https://insp.cd/wp-json/wp/v2/posts?search=sitrep&per_page=50&orderby=date&order=desc: 48 candidat(s), max N158 
+[2026-10-21 05:44:21 UTC] Source https://insp.cd/wp-json/wp/v2/posts?per_page=50&orderby=date&order=desc: 35 candidat(s), max N158 
+[2026-10-21 05:44:25 UTC] Source https://insp.cd/: 14 candidat(s), max N157 
+[2026-10-21 05:44:25 UTC] Sondage de 10 URL probable(s) pour N159 et N160 
+[2026-10-21 05:44:58 UTC] Decouverte supplementaire: 84 -> 75 SitRep candidat(s) 
+[2026-10-21 05:44:58 UTC] Latest SitRep online: N158 
+[2026-10-21 05:44:58 UTC] SitRep page: https://insp.cd/sitrep-n158-mve-bdbv-19-10-2026/ 
+[2026-10-21 05:45:01 UTC] PDF URL resolved: https://insp.cd/wp-content/uploads/2026/10/SitRep_MVEBDB_158_19_10_2026.pdf 
+[2026-10-21 05:45:01 UTC] SitRep N158 already handled. No duplicate notification. 
