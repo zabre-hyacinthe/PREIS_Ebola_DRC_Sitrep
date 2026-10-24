@@ -494,7 +494,7 @@ def build(S, P, H, C, template, out_path, narrative=None, prior_narr=None):
     dk.setp(8, 18, "%d" % S["recovered_new"] if S.get("recovered_new") is not None else None, note="gueris du jour non lus")
     dk.setp(8, 19, "Cum. %s" % n0(rec))
     dk.setp(8, 35, n0(c))
-    order = [("Ituri", "Ituri"), ("Nord-Kivu", "NK"), ("Haut-Uélé", "Haut-Uélé"), ("Tshopo", "Tshopo"), ("Sud-Kivu", "SK"), ("Bas-Uélé", "Bas-Uélé"), ("Sud Ubangi", "Sud Ubangi")]
+    order = [("Ituri", "Ituri"), ("Nord-Kivu", "NK"), ("Haut-Uélé", "Haut-Uélé"), ("Tshopo", "Tshopo"), ("Sud-Kivu", "SK"), ("Bas-Uélé", "Bas-Uélé"), ("Sud Ubangi", "Sud Ubangi"), ("Nord Ubangi", "Nord Ubangi")]
     dk.setp(8, 36, " · ".join("%s %s" % (lab, n0(S["t1"][p]["cases"])) for p, lab in order if p in S["t1"]))
     dk.setp(8, 39, n0(d)); dk.setp(8, 40, "CFR %.1f%% · %d HZ affected" % (cfr, hz))
     dk.setp(8, 43, n0(iso))
@@ -656,7 +656,7 @@ def _tracing(cx):
 
 def _iso_short(S):
     care = S.get("care") or {}
-    lab = {"Ituri": "Ituri", "Nord-Kivu": "NK", "Haut-Uélé": "HU", "Tshopo": "Tshopo", "Sud-Kivu": "SK", "Bas-Uélé": "Bas-Uélé", "Sud Ubangi": "Sud Ubangi"}
+    lab = {"Ituri": "Ituri", "Nord-Kivu": "NK", "Haut-Uélé": "HU", "Tshopo": "Tshopo", "Sud-Kivu": "SK", "Bas-Uélé": "Bas-Uélé", "Sud Ubangi": "Sud Ubangi", "Nord Ubangi": "Nord Ubangi"}
     parts = []
     for p in sp.PROVINCES:
         d = care.get(p)
@@ -1078,7 +1078,7 @@ def _slide16(dk, cx, narrative, trc):
     if t3t:
         val = t3t["val_alive"] + t3t["val_dead"]
         order = sorted(t3.items(), key=lambda kv: -kv[1]["total"])
-        lab_p = {"Sud Ubangi": "Sud-Ubangi"}
+        lab_p = {"Sud Ubangi": "Sud-Ubangi", "Nord Ubangi": "Nord-Ubangi"}
         det = "; ".join("%s %s / %d / %d / %d" % (lab_p.get(p, p), n0(a["total"]), a["val_alive"] + a["val_dead"], a["investigated"], a["transferred"]) for p, a in order)
         t4g = t4.get("Global") or {}
         poe_txt = ""
@@ -1144,7 +1144,7 @@ def _slide16(dk, cx, narrative, trc):
 
 
 def lab_p_(p):
-    return {"Sud Ubangi": "Sud-Ubangi"}.get(p, p)
+    return {"Sud Ubangi": "Sud-Ubangi", "Nord Ubangi": "Nord-Ubangi"}.get(p, p)
 
 
 def _slide17(dk, cx, narrative, trc):

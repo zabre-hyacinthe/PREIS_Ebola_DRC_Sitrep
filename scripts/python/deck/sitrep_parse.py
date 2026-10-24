@@ -15,7 +15,7 @@ import datetime as _dt
 import re
 import unicodedata
 
-PROVINCES = ["Ituri", "Nord-Kivu", "Haut-Uélé", "Tshopo", "Sud-Kivu", "Bas-Uélé", "Sud Ubangi"]
+PROVINCES = ["Ituri", "Nord-Kivu", "Haut-Uélé", "Tshopo", "Sud-Kivu", "Bas-Uélé", "Sud Ubangi", "Nord Ubangi"]
 _MONTHS = {"janvier": 1, "février": 2, "fevrier": 2, "mars": 3, "avril": 4, "mai": 5, "juin": 6,
            "juillet": 7, "août": 8, "aout": 8, "septembre": 9, "octobre": 10, "novembre": 11, "décembre": 12,
            "decembre": 12}
@@ -32,7 +32,7 @@ def _fold(s):
 
 
 _PROV_KEYS = {_fold(p): p for p in PROVINCES}
-_PROV_KEYS.update({"haut uele": "Haut-Uélé", "bas uele": "Bas-Uélé", "sud ubangi": "Sud Ubangi",
+_PROV_KEYS.update({"haut uele": "Haut-Uélé", "bas uele": "Bas-Uélé", "sud ubangi": "Sud Ubangi", "nord ubangi": "Nord Ubangi",
                    "nord kivu": "Nord-Kivu", "sud kivu": "Sud-Kivu"})
 
 
@@ -82,7 +82,7 @@ def parse_sitrep(text, expected_no=None):
     S["sitrep_no"] = int(m.group(1))
     if expected_no is not None:
         _need(S["sitrep_no"] == int(expected_no), "le PDF est le SitRep %d et non %s" % (S["sitrep_no"], expected_no))
-    m2 = re.search(r"Date du rapport\s*:\s*(\d{1,2})\s+([A-Za-zéûô]+)\s+(\d{4})", text)
+    m2 = re.search(r"Date d[eu] rapport\w*\s*:\s*(\d{1,2})\s+([A-Za-zéûô]+)\s+(\d{4})", text)
     _need(m2 and _fold(m2.group(2)) in {_fold(k) for k in _MONTHS}, "date du rapport introuvable")
     mo = [v for k, v in _MONTHS.items() if _fold(k) == _fold(m2.group(2))][0]
     S["report_date"] = _dt.date(int(m2.group(3)), mo, int(m2.group(1)))
@@ -115,8 +115,14 @@ def parse_sitrep(text, expected_no=None):
 
     # ---- faits saillants --------------------------------------------------------------------
     flat = re.sub(r"\s+", " ", head)
+    # SitRep 159+ (22/10/2026) : formulation compacte « Au total, 51 nouveaux cas confirmes et 30 deces (12 deces communautaires et 18 intra-CTE) »
+    mn = re.search(r"(\d+)\s+nouveaux\s+cas\s+confirm[ée]s\s+et\s+(\d+)\s+d[ée]c[èe]s\s*\(\s*(\d+)\s+d[ée]c[èe]s\s+communautaires\s+et\s+(\d+)\s+(?:d[ée]c[èe]s\s+)?intra[- ]?CTE\s*\)", flat)
+    if mn:
+        _need(int(mn.group(3)) + int(mn.group(4)) == int(mn.group(2)), "faits saillants incoherents : deces communautaires + intra-CTE != total des deces")
     m = re.search(r"\((\d+)\)\s+nouveaux.{0,30}?cas confirm[ée]s.*?dont\s+(\d+)\s+d[ée]c[èe]s\s+communautaires", flat)
-    if m:
+    if mn:
+        S["new_cases"], S["new_comm_deaths"] = int(mn.group(1)), int(mn.group(3))
+    elif m:
         S["new_cases"], S["new_comm_deaths"] = int(m.group(1)), int(m.group(2))
     else:
         # PDF a l'ordre de lecture melange (SitRep 150 publie : « ... dont 37 deces communautaires, ont (88) nouveaux ete notifies »).
@@ -126,8 +132,8 @@ def parse_sitrep(text, expected_no=None):
         _need(ma and mb, "nouveaux cas / deces communautaires introuvables dans les faits saillants")
         S["new_cases"], S["new_comm_deaths"] = int(ma.group(1)), int(mb.group(1))
     m = re.search(r"(\d+)\s+d[ée]c[èe]s\s+ont\s+[ée]t[ée]\s+enregistr[ée]s\s+dans\s+les\s+CTE", flat)
-    _need(m, "deces intra-CTE introuvables dans les faits saillants")
-    S["new_cte_deaths"] = int(m.group(1))
+    _need(m or mn, "deces intra-CTE introuvables dans les faits saillants")
+    S["new_cte_deaths"] = int(mn.group(4)) if mn else int(m.group(1))
     S["new_deaths"] = S["new_comm_deaths"] + S["new_cte_deaths"]
     m = re.search(r"total de\s+(\d[\d ]*?)\s+nouveaux [ée]chantillons.*?(\d+)\s+de ces [ée]chantillons se sont r[ée]v[ée]l[ée]s positifs.*?([\d,]+)\s*%\s+de positivit", flat)
     S["samples"], S["positives"], S["positivity"] = (num(m.group(1)), num(m.group(2)), num(m.group(3))) if m else (None, None, None)
@@ -409,7 +415,7 @@ def _parse_table3(lines, S):
             continue
         pn = prov_name(c[0])
         vals = [num(x) for x in c[1:10]]
-        if None in vals:
+        if len(vals) < 9 or None in vals:
             continue
         d = dict(alive=vals[0], dead=vals[1], total=vals[2], val_alive=vals[3], val_dead=vals[4], inv_alive=vals[5],
                  inv_dead=vals[6], investigated=vals[7], transferred=vals[8])
@@ -427,6 +433,16 @@ def _parse_table3(lines, S):
             c = _cells(l)
             if len(c) >= 9 and c[0] == "Total":
                 pass
+    if total is None:
+        # variante (SitRep 159+) : 9 chiffres sur une ligne sans libelle, « Total Général » sur la suivante
+        for k, l in enumerate(lines[i3 + 1: i3 + 44]):
+            c = _cells(l)
+            nxt = lines[i3 + 2 + k] if i3 + 2 + k < len(lines) else ""
+            vals = [num(x) for x in c]
+            if len(c) == 9 and None not in vals and re.match(r"\s*Total\b", nxt):
+                total = dict(alive=vals[0], dead=vals[1], total=vals[2], val_alive=vals[3], val_dead=vals[4], inv_alive=vals[5],
+                             inv_dead=vals[6], investigated=vals[7], transferred=vals[8])
+                break
     if total is None:
         for l in lines[i3 + 1: i3 + 45]:
             if re.match(r"\s*Total\b", l):
@@ -625,7 +641,7 @@ def _bullets(sec_text):
     res = []
     for it in items:
         it = re.sub(r"\s+", " ", it)
-        m = re.match(r"^(?:(?:En|Au|À|A|Dans)\s+(?:la\s+)?)?(Ituri|Nord[- ]Kivu|Haut[- ]U[ée]l[ée]|Tshopo|Bas[- ]U[ée]l[ée]|Sud[- ]Ubangi|Sud[- ]Kivu)\b", it, re.I)
+        m = re.match(r"^(?:(?:En|Au|À|A|Dans)\s+(?:la\s+)?)?(Ituri|Nord[- ]Kivu|Haut[- ]U[ée]l[ée]|Tshopo|Bas[- ]U[ée]l[ée]|Sud[- ]Ubangi|Nord[- ]Ubangi|Sud[- ]Kivu)\b", it, re.I)
         res.append((prov_name(m.group(1)) if m else None, it))
     return res
 
