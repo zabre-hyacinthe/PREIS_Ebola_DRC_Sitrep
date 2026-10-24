@@ -1095,3 +1095,6 @@
 "160","cumulative_confirmed_cases","cases","9765","cloud_inrb_daily","observed","inrb_validated","1"
 "160","cumulative_deaths","deaths","4727","cloud_inrb_daily","observed","inrb_validated","1"
 "160","case_fatality_ratio","deaths","48.4","cloud_inrb_daily","observed","inrb_validated","1"
+"161","cumulative_confirmed_cases","cases","9816","pdf_banner_xcheck","observed","sitrep_pdf_xcheck","1"
+"161","cumulative_deaths","deaths","4757","pdf_banner_xcheck","observed","sitrep_pdf_xcheck","1"
+"161","case_fatality_ratio","deaths","48.5","pdf_banner_xcheck","observed","sitrep_pdf_xcheck","1"
