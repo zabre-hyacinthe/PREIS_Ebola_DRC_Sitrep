@@ -1,4 +1,4 @@
 sitrep_no,attempts,last_category,last_error,last_attempt_utc,alert_sent_utc
 143,0,truncated,"reponse tronquee (max_tokens atteint) : JSON incomplet (HTTP -, request-id req_011CfkshEx7gcYWEHg8QhCU4)",2026-10-06 11:10:12 UTC,
 151,1,output,"ERREUR run_build: JSON invalide (Expecting ',' delimiter: line 1 column 30902 (char 30901)) ; debut : '{""sitrep_edits"":{""0"":{""new"":""Situation Report · Issue No. 141"",""comment"":""Numéro d\'Issue = 140 + 1 (SitRep RDC No. 151 > No. 150 du modèle, aucun numéro manquant).""},""2"":{""new"":null,""comment"":""Dates i'",2026-10-14 08:57:19 UTC,
-162,1,request,"HTTP 400 invalid_request_error : Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits. (HTTP 400, request-id req_011CgNomXixHVsTTfkyNK9S7)",2026-10-25 10:35:39 UTC,
+162,2,request,"HTTP 400 invalid_request_error : Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits. (HTTP 400, request-id req_011CgNqM6LJDKvjp4zo6BTA5)",2026-10-25 10:56:21 UTC,
