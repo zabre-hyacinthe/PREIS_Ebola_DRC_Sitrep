@@ -138,6 +138,10 @@ def parse_sitrep(text, expected_no=None):
     m = re.search(r"total de\s+(\d[\d ]*?)\s+nouveaux [ée]chantillons.*?(\d+)\s+de ces [ée]chantillons se sont r[ée]v[ée]l[ée]s positifs.*?([\d,]+)\s*%\s+de positivit", flat)
     S["samples"], S["positives"], S["positivity"] = (num(m.group(1)), num(m.group(2)), num(m.group(3))) if m else (None, None, None)
     m = re.search(r"(\d+)\s+Zones de sant[ée]\s+touch[ée]es\s+sur\s+(\d+)\s+\(([\d,]+)\s*%\)", flat)
+    if not m:
+        # SitRep 159+ : le bandeau est decoupe par la mise en page ; la phrase de synthese donne la meme valeur
+        # (« ... 66 zones de santé sur 178 (37,1 %), réparties dans huit provinces, ont été touchées »)
+        m = re.search(r"(\d+)\s+zones de sant[ée]\s+sur\s+(\d+)\s+\(([\d,]+)\s*%\)", flat, re.I)
     S["hz_affected"], S["hz_total"] = (int(m.group(1)), int(m.group(2))) if m else (None, None)
     S["hz_pct"] = num(m.group(3)) if m else None
     m = re.search(r"(\d+)\s+Provinces touch[ée]es", flat)
@@ -468,6 +472,9 @@ def _parse_contacts(text, S):
     out = {"contacts": None}
     m = re.search(r"Parmis?\s+(?:les\s+)?(\d[\d ]*?)\s+contacts en cours de suivi([^,]{0,90}),\s+(\d[\d ]*?)\s+(?:contacts\s+)?ont [ée]t[ée] vus.*?(?:proportion|taux) de suivi de\s+([\d,]+)\s*%(?:.*?\(([\d,]+)\s*%\))?", flat)
     if not m:
+        # SitRep 159+ : « 36 218 contacts étaient sous suivi dans les cinq provinces ayant transmis leurs données ; 32 023 ont été vus ..., soit un taux de suivi de 88,4 % »
+        m = re.search(r"(\d[\d ]*?)\s+contacts [ée]taient sous suivi([^;]{0,120});\s+(\d[\d ]*?)\s+(?:contacts\s+)?ont [ée]t[ée] vus.*?taux de suivi de\s+([\d,]+)\s*%", flat)
+    if not m:
         _warn(S, "phrase de suivi des contacts introuvable")
         return out
     listed, seen, pct = num(m.group(1)), num(m.group(3)), num(m.group(4))
@@ -480,8 +487,16 @@ def _parse_contacts(text, S):
     seg = flat[m.end(): m.end() + 900]
     seg = re.split(r"\s2\.2\.\s", seg)[0]
     mm = re.search(r"(?:Par province, )?[Cc]e(?:tte)? (?:proportion|taux) [ée]tait de (.*?)\. (?:Aucune|Seul|Les ZS|Le |La |Au |En |\d)", seg + " . 0")
+    pairs = []
     if mm:
-        for p_, s_, l_, name in re.findall(r"([\d,]+)\s*%\s*\((\d[\d ]*?)/(\d[\d ]*?)\)\s+(?:au|à la|a la|en|à|a)\s+([A-Za-zÀ-ÿ\- ]+?)(?=\s*[,;.]| et |$)", mm.group(1)):
+        pairs = re.findall(r"([\d,]+)\s*%\s*\((\d[\d ]*?)/(\d[\d ]*?)\)\s+(?:au|à la|a la|en|à|a)\s+([A-Za-zÀ-ÿ\- ]+?)(?=\s*[,;.]| et |$)", mm.group(1))
+    else:
+        # SitRep 159+ : « Par province, le taux de suivi est de 97,7 % au Bas-Uélé (758/776), 93,8 % en Ituri (13 450/14 333), ... »
+        mm = re.search(r"Par province, le taux de suivi est de (.*?)\.\s", seg + ". ")
+        if mm:
+            pairs = [(p_, s_, l_, n_) for p_, n_, s_, l_ in re.findall(r"([\d,]+)\s*%\s+(?:au|à la|a la|en|à|a)\s+([A-Za-zÀ-ÿ\- ]+?)\s*\((\d[\d ]*?)/(\d[\d ]*?)\)", mm.group(1))]
+    if mm:
+        for p_, s_, l_, name in pairs:
             pn = prov_name(name.strip())
             if pn:
                 byp[pn] = dict(pct=num(p_), seen=num(s_), listed=num(l_))
@@ -661,11 +676,11 @@ def _parse_lab(S):
     res = {}
     for pn, t in _by_prov(sec).items():
         s = p = None
-        neg = re.search(r"tous\s+(?:sont\s+)?(?:revenus?|r[ée]v[ée]l[ée]s?)\s+n[ée]gatifs?", t)
+        neg = re.search(r"(?:tous\s+(?:sont\s+)?|les\s+r[ée]sultats\s+sont\s+)(?:revenus?|r[ée]v[ée]l[ée]s?)\s+n[ée]gatifs?", t)
         m = re.search(r"(\d+)\s+nouveaux?\s+r[ée]sultats?\s+positifs?", t)
         if m:
             p = int(m.group(1))
-        m = re.search(r"(?:sur\s+)?(\d+)\s+[ée]ch\w+", t)
+        m = re.search(r"(?:sur\s+)?(\d+)\s+(?:nouveaux\s+)?[ée]ch\w+", t)
         if m:
             s = int(m.group(1))
         if neg:
