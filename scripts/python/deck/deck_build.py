@@ -135,6 +135,7 @@ class Deck:
         if new is None:
             self.retained.append((slide_no, "forme %d" % shape_id, note or "valeur indisponible : ancien texte conserve"))
             return
+        self.nset = getattr(self, "nset", 0) + 1
         sh = self.shp(slide_no, shape_id, nth)
         pr = sh.text_frame.paragraphs[para]
         old = "".join(r.text for r in pr.runs)
@@ -524,6 +525,7 @@ def build(S, P, H, C, template, out_path, narrative=None, prior_narr=None):
         dstr(D), new, pnew, nd, "up from" if nd > pnd else "down from" if nd < pnd else "unchanged from", pnd,
         ("%d recoveries" % S["recovered_new"]) if S.get("recovered_new") is not None else "recoveries ND", "unchanged" if hz == P["hz_affected"] else "changed", hz, lastw, sfx,
         n0(c), n0(d), cfr, n0(iso), " (provincial split reported)" if isoprov else "", ct["pct"], n0(ct["seen"]), n0(ct["listed"])) if ct else "DRC dashboard as of %s." % dstr(D))
+    dk.setp(8, 67, "Total Affected %d" % hz)  # le nom de la ZS (ex. Alimbongo) etait une information datee : retire, jamais conserve perime
     # tuile « nouvelles ZS » : conservee sauf nouvelle ZS enregistree (voir etat)
     if nh and hz != P["hz_affected"]:
         dk.retained.append((8, "tuile NEW HZ · LAST 7 DAYS / Total Affected", "nouvelle ZS : tuile a verifier manuellement (historique des ZS non suivi)"))
@@ -612,6 +614,19 @@ def _set_week_tiles(dk, wl, wk):
 def _tracing(cx):
     S, P = cx.S, cx.P
     ct, pct_ = S.get("contacts"), P.get("contacts")
+    if ct and not ct.get("by_prov") and ct.get("by_prov_pct"):
+        # SitRep 163+ : seuls les taux par province sont publies -> aucun effectif par province, aucune comparaison provinciale inventee
+        bpp = ct["by_prov_pct"]
+        low = min(bpp.items(), key=lambda kv: kv[1])
+        thr = ct.get("threshold") or 95.0
+        rel = "below" if ct["pct"] < thr else "above"
+        pp = (pct_ or {}).get("pct") if pct_ else ct.get("prev_pct_stated")
+        mv = (" (%s %.1f%%)" % ("down from" if ct["pct"] < pp else "up from" if ct["pct"] > pp else "unchanged from", pp)) if pp is not None else ""
+        s2 = "%s of %s contacts were seen (%.1f%%)%s, %s the %d%% target. %s is lowest at %.1f%%." % (n0(ct["seen"]), n0(ct["listed"]), ct["pct"], mv, rel, thr, low[0], low[1])
+        s3 = ("Follow-up %s from %.1f%% to %.1f%% (%s/%s contacts under follow-up). %s is lowest at %.1f%%; provincial contact counts are not published, so no provincial comparison is shown." % (
+            "fell" if ct["pct"] < pp else "rose" if ct["pct"] > pp else "held", pp, ct["pct"], n0(ct["seen"]), n0(ct["listed"]), low[0], low[1])) if pp is not None else (
+            "Follow-up stands at %.1f%% (%s/%s contacts under follow-up). %s is lowest at %.1f%%." % (ct["pct"], n0(ct["seen"]), n0(ct["listed"]), low[0], low[1]))
+        return {"s2": s2, "s3": s3, "low": (low[0], {"pct": low[1]}), "bp": {k: {"pct": v} for k, v in bpp.items()}, "pct_only": True}
     if not ct or not ct.get("by_prov"):
         return None
     bp = ct["by_prov"]
@@ -884,7 +899,7 @@ def _province_slides(dk, cx, narrative):
     vac = (S.get("vacc") or {}).get("bas_uele")
     susp = cb_.get("isolation")
     dk.setp(14, 3, "Bas-Uélé: %s; %s" % ("no new cases" if v["new"] == 0 else "%d new cases" % v["new"],
-                                          ("%d suspects isolated in non-standard transit centres" % susp) if (susp is not None and cb_.get("isolation_suspects_only")) else "isolation ND"))
+                                          (("%d suspects isolated in non-standard transit centres" if cb_.get("isolation_suspects_only") else "%d patients in isolation") % susp) if susp is not None else "isolation ND"))
     _tiles(dk, 14, v, c)
     _bas_uele(dk, S, vac)
     _pulse(dk, 14, 23, 24, 28, 31, 34, p, S, t1, t3, care, lab, cb, t4, deaths_split, tshare, kind="bu")
@@ -915,6 +930,10 @@ def _pulse(dk, sn, id_a, id_b, id_s, id_l, id_p, p, S, t1, t3, care, lab, cb, t4
     a = (S.get("t3") or {}).get(p)
     cbp = (S.get("contacts") or S.get("contacts_partial") or {}).get("by_prov") or {}
     ctp = cbp.get(p)
+    if ctp is None:
+        _pp = ((S.get("contacts") or {}).get("by_prov_pct") or {}).get(p)
+        if _pp is not None:
+            ctp = {"pct": _pp, "seen": None, "listed": None}  # taux seul (SitRep 163+)
     # ---- ligne 1 (id_a) : nouveaux cas / positifs / deces ----
     if kind == "full":
         if lb and lb["samples"] is not None and tt is not None:
@@ -946,13 +965,16 @@ def _pulse(dk, sn, id_a, id_b, id_s, id_l, id_p, p, S, t1, t3, care, lab, cb, t4
         if kind in ("full", "hu", "ts"):
             sep = " · "
             lab_seen = {"full": "contacts seen %s / %s", "hu": "seen %s/%s", "ts": "contacts seen %s/%s"}[kind]
-            seen_txt = lab_seen % ((n0(ctp["seen"]), n0(ctp["listed"])))
-            if kind == "full":
-                seen_txt = "contacts seen %s / %s" % (n0(ctp["seen"]), n0(ctp["listed"]))
-            dk.setp(sn, id_s, "Alerts %s · suspects %d · investigated %d · transferred %d · follow-up %.1f%% · %s" % (n0(a["total"]), val, a["investigated"], a["transferred"], ctp["pct"], seen_txt))
+            if ctp["seen"] is None:
+                seen_txt = None
+            else:
+                seen_txt = lab_seen % ((n0(ctp["seen"]), n0(ctp["listed"])))
+                if kind == "full":
+                    seen_txt = "contacts seen %s / %s" % (n0(ctp["seen"]), n0(ctp["listed"]))
+            dk.setp(sn, id_s, "Alerts %s · suspects %d · investigated %d · transferred %d · follow-up %.1f%%%s" % (n0(a["total"]), val, a["investigated"], a["transferred"], ctp["pct"], (" · " + seen_txt) if seen_txt else ""))
         else:
             dk.setall(sn, id_s, ["Alerts %s · suspects %d" % (n0(a["total"]), val), "Investigated %d (%s)" % (a["investigated"], "100%" if a["investigated"] == val else "%.0f%%" % (rh(100.0 * a["investigated"] / val))),
-                                 "Transferred %d" % a["transferred"], "Follow-up %.1f%%" % ctp["pct"], "Contacts seen %s/%s" % (n0(ctp["seen"]), n0(ctp["listed"]))])
+                                 "Transferred %d" % a["transferred"], "Follow-up %.1f%%" % ctp["pct"], ("Contacts seen %s/%s" % (n0(ctp["seen"]), n0(ctp["listed"]))) if ctp["seen"] is not None else "Contact counts not published"])
     else:
         dk.retained.append((sn, "bandeau SURVEILLANCE %s" % p, "alertes ou suivi illisibles"))
     # ---- laboratoire & soins ----
@@ -993,10 +1015,17 @@ def _pulse(dk, sn, id_a, id_b, id_s, id_l, id_p, p, S, t1, t3, care, lab, cb, t4
 
 
 def _poe(dk, sn, id_p, p, t4, kind, S):
+    n_ret, n_set = len(dk.retained), getattr(dk, "nset", 0)
+    _poe_inner(dk, sn, id_p, p, t4, kind, S)
+    if len(dk.retained) == n_ret and getattr(dk, "nset", 0) == n_set:  # jamais de texte perime conserve en silence
+        dk.retained.append((sn, "bandeau POINTS OF ENTRY %s" % p, "tableau 4 illisible pour cette province : ancien texte conserve"))
+
+
+def _poe_inner(dk, sn, id_p, p, t4, kind, S):
     col = t4.get(p) if t4 else None
     g = (lambda k: sp.t4_value(t4, p, k)) if col else (lambda k: None)
     comp = sp.t4_ratio(g("completeness")) if col else None
-    if kind in ("full", "ts") and comp:
+    if (kind in ("full", "ts") or (kind == "hu" and col)) and comp:
         trv, scr, hw, sens = _thou(g("travellers")), sp.t4_pct(g("screened") or ""), sp.t4_pct(g("handwashing") or ""), sp.t4_pct(g("sensitised") or "")
         if None in (trv, scr, hw, sens) or g("alerts") is None or g("validated") is None:
             dk.retained.append((sn, "bandeau POINTS OF ENTRY %s" % p, "valeurs du tableau 4 incompletes"))
@@ -1065,7 +1094,10 @@ def _bas_uele(dk, S, vac):
         trained = bool(re.search(r"formation.*PCI.*Viadana", re.sub(r"\s+", " ", S["sections"].get("pci", ""))))
         dk.setp(14, 10, "Response: %s of %s vaccinated (%.1f%%): %s%s." % (n0(vac["vaccinated"]), n0(vac["target"]), vac["pct"], zt, "; IPC training continued in Viadana" if trained else ""))
     else:
-        dk.retained.append((14, "ligne Response Bas-Uele", "vaccination non retrouvee"))
+        if re.search(r"donn[ée]es\s+du\s+Nord-Kivu\s+et\s+du\s+Bas-Uélé\s+ne\s+sont\s+pas\s+parvenues", re.sub(r"\s+", " ", (S.get("sections") or {}).get("vacc", ""))):
+            dk.setp(14, 10, "Response: vaccination data not received in SitRep %d." % S["sitrep_no"])  # le SitRep l'ecrit explicitement
+        else:
+            dk.retained.append((14, "ligne Response Bas-Uele", "vaccination non retrouvee"))
 
 
 # ---------------------------------------------------------------------------------------------
@@ -1134,7 +1166,7 @@ def _slide16(dk, cx, narrative, trc):
     bu = care.get("Bas-Uélé") or {}
     rbp = S.get("recovered_by_prov")
     if isoprov and bu.get("isolation") is not None and rbp and S.get("recovered_new") is not None:
-        isot = ", ".join(isoprov) + " and %d suspects in Bas-Uélé non-standard transit centres" % bu["isolation"]
+        isot = ", ".join(isoprov) + (" and %d suspects in Bas-Uélé non-standard transit centres" if bu.get("isolation_suspects_only") else " and %d patients in Bas-Uélé") % bu["isolation"]
         rec_t = " and ".join("%d in %s" % (n, p) for p, n in sorted(rbp.items(), key=lambda kv: -kv[1]))
         dk.setp(16, 21, "%s patients were in isolation, %s %s: %s. There were %d recoveries: %s; cumulative recoveries reach %s." % (
             n0(S["isolation_total"]), "down from" if S["isolation_total"] < P["isolation_total"] else "up from" if S["isolation_total"] > P["isolation_total"] else "unchanged from", n0(P["isolation_total"]), isot, S["recovered_new"], rec_t, n0(S["recovered_cum"])))

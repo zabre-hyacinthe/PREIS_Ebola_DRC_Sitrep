@@ -116,7 +116,7 @@ def parse_sitrep(text, expected_no=None):
     # ---- faits saillants --------------------------------------------------------------------
     flat = re.sub(r"\s+", " ", head)
     # SitRep 159+ (22/10/2026) : formulation compacte « Au total, 51 nouveaux cas confirmes et 30 deces (12 deces communautaires et 18 intra-CTE) »
-    mn = re.search(r"(\d+)\s+nouveaux\s+cas\s+confirm[ée]s\s+et\s+(\d+)\s+d[ée]c[èe]s\s*\(\s*(\d+)\s+d[ée]c[èe]s\s+communautaires\s+et\s+(\d+)\s+(?:d[ée]c[èe]s\s+)?intra[- ]?CTE\s*\)", flat)
+    mn = re.search(r"\(?(\d+)\)?\s+nouveaux\s+cas\s+confirm[ée]s\s+et\s+(\d+)\s+d[ée]c[èe]s\s*\(\s*(\d+)\s+d[ée]c[èe]s\s+communautaires\s+et\s+(\d+)\s+(?:d[ée]c[èe]s\s+)?intra[- ]?CTE\s*\)", flat)
     if mn:
         _need(int(mn.group(3)) + int(mn.group(4)) == int(mn.group(2)), "faits saillants incoherents : deces communautaires + intra-CTE != total des deces")
     m = re.search(r"\((\d+)\)\s+nouveaux.{0,30}?cas confirm[ée]s.*?dont\s+(\d+)\s+d[ée]c[èe]s\s+communautaires", flat)
@@ -474,9 +474,19 @@ def _parse_contacts(text, S):
     if not m:
         # SitRep 159+ : « 36 218 contacts étaient sous suivi dans les cinq provinces ayant transmis leurs données ; 32 023 ont été vus ..., soit un taux de suivi de 88,4 % »
         m = re.search(r"(\d[\d ]*?)\s+contacts [ée]taient sous suivi([^;]{0,120});\s+(\d[\d ]*?)\s+(?:contacts\s+)?ont [ée]t[ée] vus.*?taux de suivi de\s+([\d,]+)\s*%", flat)
+    alt = None
     if not m:
+        # SitRep 163 : « 32 697 contacts sur 37 552 ont ete vus au cours des dernieres 24 heures, soit un taux de suivi de 87,1 % »
+        alt = re.search(r"(\d[\d ]*?)\s+contacts\s+sur\s+(\d[\d ]*?)\s+ont\s+[ée]t[ée]\s+vus.*?taux de suivi de\s+([\d,]+)\s*%", flat)
+    if not m and not alt:
         _warn(S, "phrase de suivi des contacts introuvable")
         return out
+    if alt:
+        class _M:  # meme interface que le motif principal
+            def __init__(s_, a): s_.a = a
+            def group(s_, i): return {1: s_.a.group(2), 2: "", 3: s_.a.group(1), 4: s_.a.group(3)}.get(i)
+            def end(s_): return s_.a.end()
+        m = _M(alt)
     listed, seen, pct = num(m.group(1)), num(m.group(3)), num(m.group(4))
     cov = m.group(2) or ""
     if abs(100.0 * seen / listed - pct) > 0.06:
@@ -509,7 +519,20 @@ def _parse_contacts(text, S):
     prev = re.search(r"par rapport [àa] la veille\s*\(([\d,]+)\s*%\)", flat)
     thr = re.search(r"seuil requis de\s*([\d,]+)\s*%", flat)
     nonrep = re.search(r"(Les ZS de [^.]*n.ont pas transmis leur rapport de suivi)", flat)
-    out["contacts"] = dict(listed=listed, seen=seen, pct=pct, prev_pct_stated=num(prev.group(1)) if prev else None,
+    bypp = {}
+    if not byp and alt:  # SitRep 163 : seuls les taux par province sont publies (pas les effectifs)
+        k_ = seg.find("le plus faible")
+        sent = ""
+        if k_ >= 0:
+            pre = seg[max(0, k_ - 80):k_]
+            pre = pre[pre.rfind(". ") + 2:] if ". " in pre else pre
+            sent = re.split(r"\.\s+[A-ZÉ]", seg[k_:k_ + 300])[0]
+            sent = pre + sent
+        for pn_ in PROVINCES:
+            mq = re.search(r"(?:%s|%s)[^()]{0,60}\(([\d,]+)\s*%%\)" % (re.escape(pn_), re.escape(pn_.replace(" ", "-"))), sent)
+            if mq:
+                bypp[pn_] = num(mq.group(1))
+    out["contacts"] = dict(listed=listed, seen=seen, pct=pct, by_prov_pct=bypp or None, prev_pct_stated=num(prev.group(1)) if prev else None,
                            threshold=num(thr.group(1)) if thr else None, by_prov=byp or None,
                            nonreporting_text=nonrep.group(1) if nonrep else None)
     zs = re.findall(r"(Mutwanga|Makiso-Kisangani)", nonrep.group(1)) if nonrep else []
@@ -553,7 +576,7 @@ T4_ROWS = [
 ]
 
 
-def _parse_table4(lines):
+def _parse_table4_legacy(lines):
     i4 = next((i for i, l in enumerate(lines) if re.search(r"Tableau\s*4\.", l)), None)
     if i4 is None:
         return None
@@ -581,6 +604,99 @@ def _parse_table4(lines):
     return res
 
 
+_T4_VAL = re.compile(r"^(?:\d[\d ]*|\d+(?:,\d+)?%(?: \(\d+/\d+\))?|\(\d+/\d+\)|ND|NA)$")
+_T4_PATS = [
+    ("completeness", r"compl[ée]tude des rapports"),
+    ("functional", r"%\s*des\s+poe/poc\s+strat"),  # « PoC/PoE stratégiques » (SitRep 161+) = effectif, pas un % : non interprete
+    ("travellers", r"nombre (?:de personnes|des? voyageurs) pass"),
+    ("screened", r"(?:%|proportion)\s*des voyageurs scre+n"),
+    ("handwashing", r"%\s*des voyageurs ayant lav"),
+    ("sensitised", r"%\s*des voyageurs sensibilis"),
+    ("alerts", r"nombre d.alertes notifi"),
+    ("validated", r"nombre d.alertes vivantes valid"),
+    ("bodies", r"nombre (?:de|des) corps sans vie intercept"),
+    ("transferred_pct", r"%\s*des cas suspects transf"),
+    ("bodies_swabbed_pct", r"%\s*des? corps sans vie swab"),
+    ("invest4h", r"%\s*des cas suspects investigu"),
+]
+
+
+def _t4_split(line):
+    """[(texte, centre)] des cellules separees par 2 espaces ou plus."""
+    return [(m.group(0), (m.start() + m.end()) / 2.0) for m in re.finditer(r"\S+(?: \S+)*", line)
+            if True] if False else [(m.group(0), (m.start() + m.end()) / 2.0) for m in re.finditer(r"(?:\S+ ?)+(?=\s{2,}|\s*$)", line)]
+
+
+def _parse_table4(lines):
+    """Tableau 4 (PoE/PoC). Mise en page variable d'un SitRep a l'autre (libelle avant/apres les valeurs, ratio sur la ligne suivante) :
+    une ligne a autant de valeurs que de colonnes ouvre une rangee ; les lignes suivantes (ratios, suite du libelle) lui sont rattachees
+    jusqu'a la rangee suivante. Une valeur n'est retenue que si le libelle de la rangee est reconnu : sinon la cle reste absente."""
+    i4 = next((i for i, l in enumerate(lines) if re.search(r"Tableau\s*4\.", l)), None)
+    if i4 is None:
+        return None
+    hdr = None
+    hi = None
+    for k, l in enumerate(lines[i4 + 1: i4 + 8], start=i4 + 1):
+        c = _cells(l)
+        if c and re.match(r"Indicateurs", c[0]):
+            hdr = [("Global" if x.lower().startswith("global") else (prov_name(x) or x)) for x in c[1:]]
+            hi = k
+            break
+    if not hdr:
+        return None
+    n = len(hdr)
+    rows = []  # {"label": [..], "vals": [(txt, centre)], "extra": [(txt, centre)]}
+    for l in lines[hi + 1: hi + 60]:
+        if not l.strip():
+            continue
+        if re.match(r"\s*(?:\d+(?:\.\d+)+\.?\s*\S|[▪•])", l):  # fin du tableau : titre de section ou puce
+            break
+        cells = _t4_split(l)
+        if cells and not _T4_VAL.match(cells[0][0].strip()):
+            # SitRep 163 : libelle et 1re valeur separes par un seul espace (« Nombre des voyageurs 161 879 »)
+            mp = re.match(r"^(.*?[A-Za-zÀ-ÿ)]) +(\d[\d ]*|\d+(?:,\d+)?%(?: \(\d+/\d+\))?)\s*$", cells[0][0])
+            if mp and _T4_VAL.match(mp.group(2)):
+                cut = len(mp.group(1))
+                cells[0:1] = [(mp.group(1), cells[0][1] - (len(cells[0][0]) - cut) / 2.0 - 1), (mp.group(2), cells[0][1] + cut / 2.0 + 1)] if False else [(mp.group(1), 0.0), (mp.group(2), cells[0][1] + (cut - len(cells[0][0])) / 2.0 + len(cells[0][0]) / 2.0)]
+        lab = []
+        vals = []
+        for t, ctr in cells:
+            if _T4_VAL.match(t.strip()) and (vals or lab or True):
+                vals.append((t.strip(), ctr))
+            else:
+                if vals:  # texte apres des valeurs : hors tableau
+                    lab = None
+                    break
+                lab.append(t.strip())
+        if lab is None:
+            break
+        if len(vals) == n:
+            rows.append({"label": list(lab), "vals": vals, "extra": []})
+        elif rows:
+            rows[-1]["label"] += lab
+            rows[-1]["extra"] += vals
+        # lignes avant la 1re rangee : libelle isole ignore
+    res = {h: {} for h in hdr}
+    for r in rows:
+        label = re.sub(r"\s+", " ", " ".join(r["label"])).strip().lower()
+        key = next((k for k, pat in _T4_PATS if re.search(pat, label)), None)
+        if not key:
+            continue
+        cols = [list(v) for v in r["vals"]]
+        for t, ctr in r["extra"]:
+            j = min(range(n), key=lambda q: abs(cols[q][1] - ctr))
+            if re.match(r"^\(\d+/\d+\)$", t) and re.match(r"^\d+(?:,\d+)?%$", cols[j][0]):
+                cols[j][0] = cols[j][0] + " " + t
+        for h, c in zip(hdr, cols):
+            res[h][key] = c[0]
+    # repli par cle sur l'ancienne lecture (mise en page libelle + valeurs sur la meme ligne)
+    leg = _parse_table4_legacy(lines) or {}
+    for h in res:
+        for k, v in (leg.get(h) or {}).items():
+            res[h].setdefault(k, v)
+    return res
+
+
 def t4_value(t4, col, key):
     """valeur brute de la cellule (texte) ou None."""
     try:
@@ -603,20 +719,20 @@ def t4_ratio(v):
 # ----------------------------------------------------------------------------------------------
 _SEC_RE = [
     ("coord", r"^\s*(?:1\.\s*)?COORDINATION"),
-    ("surv", r"2\.1\.?\s*Surveillance"),
-    ("poe", r"2\.2\.?\s*Point sur les activit"),
-    ("lab", r"2\.3\.?\s*Laboratoire"),
-    ("pci", r"2\.4\.?\s*Pr[ée]vention et Contr"),
+    ("surv", r"(?<![\d.])\d\.\d{1,2}(?:\.\d{1,2})?\.?\s*Surveillance"),
+    ("poe", r"(?<![\d.])\d\.\d{1,2}(?:\.\d{1,2})?\.?\s*Point sur les activit"),
+    ("lab", r"(?<![\d.])\d\.\d{1,2}(?:\.\d{1,2})?\.?\s*Laboratoire"),
+    ("pci", r"(?<![\d.])\d\.\d{1,2}(?:\.\d{1,2})?\.?\s*Pr[ée]vention et Contr"),
     # numerotation variable d'un SitRep a l'autre (SitRep 151 : 2.5 Prise en charge, 2.6 Vaccination... 2.13 PSEA) :
     # on reconnait les titres par leur libelle, quel que soit le numero
-    ("care", r"(?<![\d.])2\.\d{1,2}(?:\.\d)?\.?\s*Prise en charge"),
-    ("vacc", r"(?<![\d.])2\.\d{1,2}\.?\s*Vaccination"),
-    ("cont", r"(?<![\d.])2\.\d{1,2}\.?\s*Continuit"),
-    ("crec", r"(?<![\d.])2\.\d{1,2}\.?\s*Communication"),
-    ("smsps", r"(?<![\d.])2\.\d{1,2}\.?\s*Sant[ée] mentale"),
-    ("log", r"(?<![\d.])2\.\d{1,2}\.?\s*Logistique"),
-    ("sec", r"(?<![\d.])2\.\d{1,2}\.?\s*S[ée]curit"),
-    ("psea", r"(?<![\d.])2\.\d{1,2}\.?\s*PSEA"),
+    ("care", r"(?<![\d.])\d\.\d{1,2}(?:\.\d{1,2})?\.?\s*Prise en charge"),
+    ("vacc", r"(?<![\d.])\d\.\d{1,2}(?:\.\d{1,2})?\.?\s*Vaccination"),
+    ("cont", r"(?<![\d.])\d\.\d{1,2}(?:\.\d{1,2})?\.?\s*Continuit"),
+    ("crec", r"(?<![\d.])\d\.\d{1,2}(?:\.\d{1,2})?\.?\s*Communication"),
+    ("smsps", r"(?<![\d.])\d\.\d{1,2}(?:\.\d{1,2})?\.?\s*Sant[ée] mentale"),
+    ("log", r"(?<![\d.])\d\.\d{1,2}(?:\.\d{1,2})?\.?\s*Logistique"),
+    ("sec", r"(?<![\d.])\d\.\d{1,2}(?:\.\d{1,2})?\.?\s*S[ée]curit"),
+    ("psea", r"(?<![\d.])\d\.\d{1,2}(?:\.\d{1,2})?\.?\s*PSEA"),
     ("msg", r"MESSAGES CLES|MESSAGES CL[ÉE]S"),
 ]
 
@@ -676,7 +792,7 @@ def _parse_lab(S):
     res = {}
     for pn, t in _by_prov(sec).items():
         s = p = None
-        neg = re.search(r"(?:tous\s+(?:sont\s+)?|les\s+r[ée]sultats\s+sont\s+)(?:revenus?|r[ée]v[ée]l[ée]s?)\s+n[ée]gatifs?", t)
+        neg = re.search(r"(?:tous\s+(?:sont\s+)?|les\s+r[ée]sultats\s+(?:sont|se\s+sont)\s+)(?:revenus?|r[ée]v[ée]l[ée]s?)\s+n[ée]gatifs?", t)
         m = re.search(r"(\d+)\s+nouveaux?\s+r[ée]sultats?\s+positifs?", t)
         if m:
             p = int(m.group(1))
@@ -706,7 +822,7 @@ def _parse_care(S):
     if not sec:
         return None
     # n'utiliser que les puces "Principales actions" (avant 'Défis')
-    body = re.split(r"2\.\d{1,2}\.\d{1,2}\.?\s*D[ée]fis", sec)[0]
+    body = re.split(r"\d\.\d{1,2}\.\d{1,2}(?:\.\d{1,2})?\.?\s*D[ée]fis", sec)[0]
     res = {}
     for pn, t in _by_prov(body).items():
         d = {}
@@ -716,17 +832,22 @@ def _parse_care(S):
         d["exits"] = num(m.group(1)) if m else None
         if d["exits"] is None and d["admissions"] is not None and re.search(r"aucune\s+sortie\s+n.a\s+[ée]t[ée]\s+rapport[ée]e|sans\s+aucune\s+sortie", t, re.I):
             d["exits"] = 0  # le SitRep l'ecrit explicitement : « Aucune sortie n'a ete rapportee »
-        m = re.search(r"(?:dont|contre)\s+(\d+)\s+gu[ée]risons?", t) or re.search(r"\bsorties?,\s+(une)\s+gu[ée]rison", t)
+        m = re.search(r"(?:dont|contre)\s+(\d+)\s+gu[ée]ri(?:sons?|s)\b", t) or re.search(r"\bsorties?,\s+(une)\s+gu[ée]rison", t)
         d["recovered"] = (1 if m.group(1) == "une" else int(m.group(1))) if m else (0 if re.search(r"aucune gu[ée]rison|sans\s+gu[ée]rison", t) else None)
         # SitRep <= 149 : « N patients demeuraient en isolement » ; SitRep 151 : « Ainsi, N patients (x confirmes et y suspects) sont hospitalises / restent en isolement »
-        m = re.search(r"(\d[\d ]*?)\s+patients?(?:\s*\([^)]*\))?\s+(?:demeuraient\s+en\s+isolement|sont\s+hospitalis[ée]s|restent\s+en\s+isolement)", t)
+        m = re.search(r"(\d[\d ]*?)\s+patients?(?:\s*\([^)]*\))?\s+(?:demeur(?:aient|ent)\s+en\s+isolement|sont\s+hospitalis[ée]s|restent\s+en\s+isolement|sont\s+pris\s+en\s+charge)", t)
+        if not m:  # SitRep 161 (Bas-Uele) : « portant a 106 le nombre de patients en isolement »
+            m = re.search(r"portant\s+[àa]\s+(\d[\d ]*?)\s+le\s+nombre\s+de\s+patients\s+en\s+isolement", t)
         d["isolation"] = num(m.group(1)) if m else None
-        m = re.search(r"taux d.occupation\s+(?:global\s+)?(?:des lits\s+)?de\s+([\d,]+)\s*%", t)
+        m = re.search(r"taux d.occupation\s+(?:global\s+)?(?:des\s+(?:lits|CTE/CT)\s+)?de\s+([\d,]+)\s*%", t)
         d["bed_pct"] = num(m.group(1)) if m else None
         m = re.search(r"dont\s+(\d+)\s+malades critiques", t)
         d["critical"] = int(m.group(1)) if m else None
         m = re.search(r"(\d+)\s+patients\s*\(([\d,]+)\s*%\)\s+sont pris en charge dans des ESS", t)
         d["outside_cte"] = (int(m.group(1)), num(m.group(2))) if m else None
+        if d["outside_cte"] is None:  # SitRep 161 : « 138 patients sur 477 (28,9 %) sont pris en charge hors CTE/CT » (rubrique Defis du meme paragraphe province)
+            m = re.search(r"(\d+)\s+patients\s+sur\s+\d+\s*\(([\d,]+)\s*%\)\s+sont\s+pris\s+en\s+charge\s+hors\s+CTE/CT", re.sub(r"\s+", " ", sec)) if pn == "Nord-Kivu" else None
+            d["outside_cte"] = (int(m.group(1)), num(m.group(2))) if m else None
         # Bas-Uele (SitRep 151) : « aucun nouveau cas confirme n'a ete admis ; 11 nouveaux suspects ont ete admis ... contre 3 sorties »
         if d["admissions"] is None and pn == "Bas-Uélé":
             ms = re.search(r"(\d+)\s+nouveaux?\s+suspects?\s+ont\s+[ée]t[ée]\s+admis", t)
@@ -760,7 +881,7 @@ def _parse_ipc(S):
     sec = S["sections"].get("pci")
     if not sec:
         return None
-    body = re.split(r"2\.4\.2\.?\s*D[ée]fis", sec)[0]
+    body = re.split(r"\d\.\d{1,2}\.\d{1,2}(?:\.\d{1,2})?\.?\s*D[ée]fis", sec)[0]
     res = {}
     for pn, t in _by_prov(body).items():
         d = {}
