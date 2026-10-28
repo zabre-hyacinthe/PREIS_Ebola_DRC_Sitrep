@@ -263,7 +263,8 @@
 "Province","Ituri",NA,"2026-10-18",6216,2341,34,15,37.7,FALSE,26
 "Province","Ituri",NA,"2026-10-19",6247,2358,31,17,37.7,FALSE,26.4
 "Province","Ituri",NA,"2026-10-21",6286,2386,39,28,38,FALSE,26.4
-"Province","Ituri",NA,NA,93,NA,-6193,NA,NA,TRUE,23.1
+"Province","Ituri",NA,"2026-10-25",6363,2423,77,37,38.1,FALSE,34.1
+"Province","Ituri",NA,NA,93,NA,-6270,NA,NA,TRUE,31.3
 "Province","Nord-Kivu",NA,"2026-05-18",3,NA,NA,NA,NA,FALSE,NA
 "Province","Nord-Kivu",NA,"2026-05-19",3,NA,0,NA,NA,FALSE,NA
 "Province","Nord-Kivu",NA,"2026-05-20",3,NA,0,NA,NA,FALSE,NA
@@ -391,6 +392,7 @@
 "Province","Nord-Kivu",NA,"2026-10-18",1841,1073,46,19,58.3,FALSE,22.1
 "Province","Nord-Kivu",NA,"2026-10-19",1866,1083,25,10,58,FALSE,22.4
 "Province","Nord-Kivu",NA,"2026-10-21",1907,1102,41,19,57.8,FALSE,24.9
+"Province","Nord-Kivu",NA,"2026-10-25",2035,1178,128,76,57.9,FALSE,39.9
 "Province","Sud-Kivu",NA,"2026-07-11",3,1,NA,NA,33.3,FALSE,NA
 "Province","Sud-Kivu",NA,"2026-07-13",3,1,0,0,33.3,FALSE,NA
 "Province","Sud-Kivu",NA,"2026-07-15",3,1,0,0,33.3,FALSE,NA
@@ -469,6 +471,7 @@
 "Province","Sud-Kivu",NA,"2026-10-18",3,1,0,0,33.3,FALSE,0
 "Province","Sud-Kivu",NA,"2026-10-19",3,1,0,0,33.3,FALSE,0
 "Province","Sud-Kivu",NA,"2026-10-21",3,1,0,0,33.3,FALSE,0
+"Province","Sud-Kivu",NA,"2026-10-25",3,1,0,0,33.3,FALSE,0
 "Zone","Ituri","Aru","2026-05-22",1,NA,NA,NA,NA,FALSE,NA
 "Zone","Ituri","Aru","2026-05-23",1,NA,0,NA,NA,FALSE,NA
 "Zone","Ituri","Aru","2026-05-24",1,NA,0,NA,NA,FALSE,NA
@@ -592,6 +595,7 @@
 "Zone","Ituri","Aru","2026-10-18",12,6,1,0,50,FALSE,0.4
 "Zone","Ituri","Aru","2026-10-19",13,6,1,0,46.2,FALSE,0.6
 "Zone","Ituri","Aru","2026-10-21",17,6,4,0,35.3,FALSE,1.1
+"Zone","Ituri","Aru","2026-10-25",25,6,8,0,24,FALSE,2.3
 "Zone","Ituri","Aungba","2026-05-28",1,0,NA,NA,0,FALSE,NA
 "Zone","Ituri","Aungba","2026-05-29",1,0,0,0,0,FALSE,NA
 "Zone","Ituri","Aungba","2026-05-30",1,0,0,0,0,FALSE,NA
@@ -709,6 +713,7 @@
 "Zone","Ituri","Aungba","2026-10-18",12,5,0,0,41.7,FALSE,0
 "Zone","Ituri","Aungba","2026-10-19",12,5,0,0,41.7,FALSE,0
 "Zone","Ituri","Aungba","2026-10-21",12,5,0,0,41.7,FALSE,0
+"Zone","Ituri","Aungba","2026-10-25",12,5,0,0,41.7,FALSE,0
 "Zone","Ituri","Bambu","2026-05-20",1,NA,NA,NA,NA,FALSE,NA
 "Zone","Ituri","Bambu","2026-05-21",1,0,0,NA,0,FALSE,NA
 "Zone","Ituri","Bambu","2026-05-22",1,0,0,0,0,FALSE,NA
@@ -834,6 +839,7 @@
 "Zone","Ituri","Bambu","2026-10-18",216,48,0,0,22.2,FALSE,0.3
 "Zone","Ituri","Bambu","2026-10-19",216,48,0,0,22.2,FALSE,0.3
 "Zone","Ituri","Bambu","2026-10-21",216,48,0,0,22.2,FALSE,0
+"Zone","Ituri","Bambu","2026-10-25",218,48,2,0,22,FALSE,0.3
 "Zone","Ituri","Bunia","2026-05-15",0,NA,NA,NA,NA,FALSE,NA
 "Zone","Ituri","Bunia","2026-05-18",6,NA,6,NA,NA,FALSE,NA
 "Zone","Ituri","Bunia","2026-05-19",6,0,0,NA,0,FALSE,NA
@@ -962,6 +968,7 @@
 "Zone","Ituri","Bunia","2026-10-18",1895,633,14,5,33.4,FALSE,9
 "Zone","Ituri","Bunia","2026-10-19",1905,638,10,5,33.5,FALSE,8.1
 "Zone","Ituri","Bunia","2026-10-21",1923,649,18,11,33.7,FALSE,9.1
+"Zone","Ituri","Bunia","2026-10-25",1949,664,26,15,34.1,FALSE,11.9
 "Zone","Ituri","Damas","2026-05-26",0,NA,NA,NA,NA,FALSE,NA
 "Zone","Ituri","Damas","2026-05-27",0,NA,0,NA,NA,FALSE,NA
 "Zone","Ituri","Damas","2026-05-28",1,0,1,NA,0,FALSE,NA
@@ -1081,6 +1088,7 @@
 "Zone","Ituri","Damas","2026-10-18",41,10,1,1,24.4,FALSE,0.1
 "Zone","Ituri","Damas","2026-10-19",41,10,0,0,24.4,FALSE,0.1
 "Zone","Ituri","Damas","2026-10-21",41,10,0,0,24.4,FALSE,0.1
+"Zone","Ituri","Damas","2026-10-25",41,10,0,0,24.4,FALSE,0.1
 "Zone","Ituri","Fataki","2026-05-26",0,NA,NA,NA,NA,FALSE,NA
 "Zone","Ituri","Fataki","2026-05-27",0,NA,0,NA,NA,FALSE,NA
 "Zone","Ituri","Fataki","2026-06-16",1,NA,1,NA,NA,FALSE,NA
@@ -1183,6 +1191,7 @@
 "Zone","Ituri","Fataki","2026-10-18",84,31,0,0,36.9,FALSE,0
 "Zone","Ituri","Fataki","2026-10-19",84,31,0,0,36.9,FALSE,0
 "Zone","Ituri","Fataki","2026-10-21",84,31,0,0,36.9,FALSE,0
+"Zone","Ituri","Fataki","2026-10-25",84,31,0,0,36.9,FALSE,0
 "Zone","Ituri","Gety","2026-05-28",1,0,NA,NA,0,FALSE,NA
 "Zone","Ituri","Gety","2026-05-29",1,0,0,0,0,FALSE,NA
 "Zone","Ituri","Gety","2026-05-30",1,0,0,0,0,FALSE,NA
@@ -1300,6 +1309,7 @@
 "Zone","Ituri","Gety","2026-10-18",11,7,0,0,63.6,FALSE,0
 "Zone","Ituri","Gety","2026-10-19",11,7,0,0,63.6,FALSE,0
 "Zone","Ituri","Gety","2026-10-21",11,7,0,0,63.6,FALSE,0
+"Zone","Ituri","Gety","2026-10-25",11,7,0,0,63.6,FALSE,0
 "Zone","Ituri","Kambala","2026-06-10",1,1,NA,NA,100,FALSE,NA
 "Zone","Ituri","Kambala","2026-06-11",1,1,0,0,100,FALSE,NA
 "Zone","Ituri","Kambala","2026-06-13",1,1,0,0,100,FALSE,NA
@@ -1405,6 +1415,7 @@
 "Zone","Ituri","Kambala","2026-10-18",2,0,0,0,0,FALSE,0
 "Zone","Ituri","Kambala","2026-10-19",2,0,0,0,0,FALSE,0
 "Zone","Ituri","Kambala","2026-10-21",2,0,0,0,0,FALSE,0
+"Zone","Ituri","Kambala","2026-10-25",2,0,0,0,0,FALSE,0
 "Zone","Ituri","Kilo","2026-05-21",1,0,NA,NA,0,FALSE,NA
 "Zone","Ituri","Kilo","2026-05-22",1,0,0,0,0,FALSE,NA
 "Zone","Ituri","Kilo","2026-05-23",1,0,0,0,0,FALSE,NA
@@ -1529,6 +1540,7 @@
 "Zone","Ituri","Kilo","2026-10-18",38,12,0,0,31.6,FALSE,0
 "Zone","Ituri","Kilo","2026-10-19",38,12,0,0,31.6,FALSE,0
 "Zone","Ituri","Kilo","2026-10-21",38,12,0,0,31.6,FALSE,0
+"Zone","Ituri","Kilo","2026-10-25",38,12,0,0,31.6,FALSE,0
 "Zone","Ituri","Komanda","2026-05-22",NA,1,NA,NA,NA,FALSE,NA
 "Zone","Ituri","Komanda","2026-05-23",NA,1,NA,0,NA,FALSE,NA
 "Zone","Ituri","Komanda","2026-05-24",NA,1,NA,0,NA,FALSE,NA
@@ -1652,6 +1664,7 @@
 "Zone","Ituri","Komanda","2026-10-18",188,113,0,0,60.1,FALSE,1.3
 "Zone","Ituri","Komanda","2026-10-19",191,115,3,2,60.2,FALSE,1.3
 "Zone","Ituri","Komanda","2026-10-21",191,117,0,2,61.3,FALSE,0.9
+"Zone","Ituri","Komanda","2026-10-25",193,118,2,1,61.1,FALSE,1.1
 "Zone","Ituri","Lita","2026-05-28",1,0,NA,NA,0,FALSE,NA
 "Zone","Ituri","Lita","2026-05-29",1,0,0,0,0,FALSE,NA
 "Zone","Ituri","Lita","2026-05-30",1,0,0,0,0,FALSE,NA
@@ -1769,6 +1782,7 @@
 "Zone","Ituri","Lita","2026-10-18",309,156,0,0,50.5,FALSE,1
 "Zone","Ituri","Lita","2026-10-19",313,158,4,2,50.5,FALSE,1.3
 "Zone","Ituri","Lita","2026-10-21",315,158,2,0,50.2,FALSE,1.4
+"Zone","Ituri","Lita","2026-10-25",322,162,7,4,50.3,FALSE,2.1
 "Zone","Ituri","Logo","2026-06-01",1,0,NA,NA,0,FALSE,NA
 "Zone","Ituri","Logo","2026-06-02",1,0,0,0,0,FALSE,NA
 "Zone","Ituri","Logo","2026-06-04",2,0,1,0,0,FALSE,NA
@@ -1882,6 +1896,7 @@
 "Zone","Ituri","Logo","2026-10-18",14,9,0,0,64.3,FALSE,0
 "Zone","Ituri","Logo","2026-10-19",14,9,0,0,64.3,FALSE,0
 "Zone","Ituri","Logo","2026-10-21",14,9,0,0,64.3,FALSE,0
+"Zone","Ituri","Logo","2026-10-25",14,9,0,0,64.3,FALSE,0
 "Zone","Ituri","Mambasa","2026-05-26",0,NA,NA,NA,NA,FALSE,NA
 "Zone","Ituri","Mambasa","2026-05-27",0,NA,0,NA,NA,FALSE,NA
 "Zone","Ituri","Mambasa","2026-06-01",2,1,2,NA,50,FALSE,NA
@@ -1997,6 +2012,7 @@
 "Zone","Ituri","Mambasa","2026-10-18",74,32,6,4,43.2,FALSE,4.4
 "Zone","Ituri","Mambasa","2026-10-19",74,32,0,0,43.2,FALSE,4.1
 "Zone","Ituri","Mambasa","2026-10-21",77,33,3,1,42.9,FALSE,2.4
+"Zone","Ituri","Mambasa","2026-10-25",83,37,6,4,44.6,FALSE,3
 "Zone","Ituri","Mangala","2026-05-28",1,0,NA,NA,0,FALSE,NA
 "Zone","Ituri","Mangala","2026-05-29",1,0,0,0,0,FALSE,NA
 "Zone","Ituri","Mangala","2026-05-30",1,0,0,0,0,FALSE,NA
@@ -2114,6 +2130,7 @@
 "Zone","Ituri","Mangala","2026-10-18",382,164,3,2,42.9,FALSE,1.7
 "Zone","Ituri","Mangala","2026-10-19",382,164,0,0,42.9,FALSE,1.7
 "Zone","Ituri","Mangala","2026-10-21",382,166,0,2,43.5,FALSE,1.4
+"Zone","Ituri","Mangala","2026-10-25",387,168,5,2,43.4,FALSE,2.1
 "Zone","Ituri","Mongbwalu","2026-05-14",0,NA,NA,NA,NA,FALSE,NA
 "Zone","Ituri","Mongbwalu","2026-05-15",0,NA,0,NA,NA,FALSE,NA
 "Zone","Ituri","Mongbwalu","2026-05-18",1,NA,1,NA,NA,FALSE,NA
@@ -2243,6 +2260,7 @@
 "Zone","Ituri","Mongbwalu","2026-10-18",715,343,2,1,48,FALSE,0.4
 "Zone","Ituri","Mongbwalu","2026-10-19",716,345,1,2,48.2,FALSE,0.6
 "Zone","Ituri","Mongbwalu","2026-10-21",717,346,1,1,48.3,FALSE,0.6
+"Zone","Ituri","Mongbwalu","2026-10-25",717,346,0,0,48.3,FALSE,0.6
 "Zone","Ituri","Nizi","2026-05-21",1,0,NA,NA,0,FALSE,NA
 "Zone","Ituri","Nizi","2026-05-22",2,0,1,0,0,FALSE,NA
 "Zone","Ituri","Nizi","2026-05-23",2,0,0,0,0,FALSE,NA
@@ -2367,6 +2385,7 @@
 "Zone","Ituri","Nizi","2026-10-18",827,298,0,0,36,FALSE,2
 "Zone","Ituri","Nizi","2026-10-19",832,301,5,3,36.2,FALSE,2.3
 "Zone","Ituri","Nizi","2026-10-21",836,306,4,5,36.6,FALSE,2.4
+"Zone","Ituri","Nizi","2026-10-25",839,306,3,0,36.5,FALSE,2.4
 "Zone","Ituri","Nyankunde","2026-05-18",4,NA,NA,NA,NA,FALSE,NA
 "Zone","Ituri","Nyankunde","2026-05-19",4,0,0,NA,0,FALSE,NA
 "Zone","Ituri","Nyankunde","2026-05-20",5,0,1,0,0,FALSE,NA
@@ -2494,7 +2513,8 @@
 "Zone","Ituri","Nyankunde","2026-10-18",134,41,0,1,30.6,FALSE,0.1
 "Zone","Ituri","Nyankunde","2026-10-19",134,41,0,0,30.6,FALSE,0.1
 "Zone","Ituri","Nyankunde","2026-10-21",134,41,0,0,30.6,FALSE,0.1
-"Zone","Ituri","Nyankunde",NA,93,NA,-41,NA,NA,TRUE,0
+"Zone","Ituri","Nyankunde","2026-10-25",136,42,2,1,30.9,FALSE,0.3
+"Zone","Ituri","Nyankunde",NA,93,NA,-43,NA,NA,TRUE,0.3
 "Zone","Ituri","Rimba","2026-05-26",0,NA,NA,NA,NA,FALSE,NA
 "Zone","Ituri","Rimba","2026-05-27",0,NA,0,NA,NA,FALSE,NA
 "Zone","Ituri","Rimba","2026-06-02",3,0,3,NA,0,FALSE,NA
@@ -2608,6 +2628,7 @@
 "Zone","Ituri","Rimba","2026-10-18",19,5,0,0,26.3,FALSE,0.1
 "Zone","Ituri","Rimba","2026-10-19",19,5,0,0,26.3,FALSE,0.1
 "Zone","Ituri","Rimba","2026-10-21",19,5,0,0,26.3,FALSE,0
+"Zone","Ituri","Rimba","2026-10-25",22,6,3,1,27.3,FALSE,0.4
 "Zone","Ituri","Rwampara","2026-05-15",13,NA,NA,NA,NA,FALSE,NA
 "Zone","Ituri","Rwampara","2026-05-18",19,NA,6,NA,NA,FALSE,NA
 "Zone","Ituri","Rwampara","2026-05-19",25,0,6,NA,0,FALSE,NA
@@ -2736,6 +2757,7 @@
 "Zone","Ituri","Rwampara","2026-10-18",1167,403,7,1,34.5,FALSE,5
 "Zone","Ituri","Rwampara","2026-10-19",1171,406,4,3,34.7,FALSE,5.3
 "Zone","Ituri","Rwampara","2026-10-21",1175,412,4,6,35.1,FALSE,5.9
+"Zone","Ituri","Rwampara","2026-10-25",1185,419,10,7,35.4,FALSE,6.1
 "Zone","Ituri","Tchomia","2026-06-09",2,0,NA,NA,0,FALSE,NA
 "Zone","Ituri","Tchomia","2026-06-10",2,0,0,0,0,FALSE,NA
 "Zone","Ituri","Tchomia","2026-06-11",2,0,0,0,0,FALSE,NA
@@ -2842,6 +2864,7 @@
 "Zone","Ituri","Tchomia","2026-10-18",76,25,0,0,32.9,FALSE,0
 "Zone","Ituri","Tchomia","2026-10-19",79,25,3,0,31.6,FALSE,0.4
 "Zone","Ituri","Tchomia","2026-10-21",82,25,3,0,30.5,FALSE,0.9
+"Zone","Ituri","Tchomia","2026-10-25",85,27,3,2,31.8,FALSE,1.3
 "Zone","Nord-Kivu","Beni","2026-05-28",2,0,NA,NA,0,FALSE,NA
 "Zone","Nord-Kivu","Beni","2026-05-29",2,0,0,0,0,FALSE,NA
 "Zone","Nord-Kivu","Beni","2026-05-30",2,0,0,0,0,FALSE,NA
@@ -2959,6 +2982,7 @@
 "Zone","Nord-Kivu","Beni","2026-10-18",524,354,18,13,67.6,FALSE,9.4
 "Zone","Nord-Kivu","Beni","2026-10-19",537,359,13,5,66.9,FALSE,9.4
 "Zone","Nord-Kivu","Beni","2026-10-21",552,372,15,13,67.4,FALSE,10
+"Zone","Nord-Kivu","Beni","2026-10-25",621,417,69,45,67.1,FALSE,18.6
 "Zone","Nord-Kivu","Butembo","2026-05-18",1,NA,NA,NA,NA,FALSE,NA
 "Zone","Nord-Kivu","Butembo","2026-05-19",1,NA,0,NA,NA,FALSE,NA
 "Zone","Nord-Kivu","Butembo","2026-05-20",1,NA,0,NA,NA,FALSE,NA
@@ -3086,6 +3110,7 @@
 "Zone","Nord-Kivu","Butembo","2026-10-18",312,188,1,1,60.3,FALSE,2.1
 "Zone","Nord-Kivu","Butembo","2026-10-19",315,188,3,0,59.7,FALSE,2.6
 "Zone","Nord-Kivu","Butembo","2026-10-21",323,190,8,2,58.8,FALSE,3.3
+"Zone","Nord-Kivu","Butembo","2026-10-25",332,194,9,4,58.4,FALSE,3.6
 "Zone","Nord-Kivu","Goma","2026-05-18",1,NA,NA,NA,NA,FALSE,NA
 "Zone","Nord-Kivu","Goma","2026-05-19",1,NA,0,NA,NA,FALSE,NA
 "Zone","Nord-Kivu","Goma","2026-05-20",1,NA,0,NA,NA,FALSE,NA
@@ -3213,6 +3238,7 @@
 "Zone","Nord-Kivu","Goma","2026-10-18",1,0,0,0,0,FALSE,0
 "Zone","Nord-Kivu","Goma","2026-10-19",1,0,0,0,0,FALSE,0
 "Zone","Nord-Kivu","Goma","2026-10-21",1,0,0,0,0,FALSE,0
+"Zone","Nord-Kivu","Goma","2026-10-25",1,0,0,0,0,FALSE,0
 "Zone","Nord-Kivu","Kalunguta","2026-05-24",1,NA,NA,NA,NA,FALSE,NA
 "Zone","Nord-Kivu","Kalunguta","2026-05-25",1,NA,0,NA,NA,FALSE,NA
 "Zone","Nord-Kivu","Kalunguta","2026-05-26",1,NA,0,NA,NA,FALSE,NA
@@ -3334,6 +3360,7 @@
 "Zone","Nord-Kivu","Kalunguta","2026-10-18",79,30,3,1,38,FALSE,1.3
 "Zone","Nord-Kivu","Kalunguta","2026-10-19",79,31,0,1,39.2,FALSE,1
 "Zone","Nord-Kivu","Kalunguta","2026-10-21",84,31,5,0,36.9,FALSE,1.6
+"Zone","Nord-Kivu","Kalunguta","2026-10-25",90,37,6,6,41.1,FALSE,2.3
 "Zone","Nord-Kivu","Katwa","2026-05-18",1,NA,NA,NA,NA,FALSE,NA
 "Zone","Nord-Kivu","Katwa","2026-05-19",1,NA,0,NA,NA,FALSE,NA
 "Zone","Nord-Kivu","Katwa","2026-05-20",1,NA,0,NA,NA,FALSE,NA
@@ -3461,6 +3488,7 @@
 "Zone","Nord-Kivu","Katwa","2026-10-18",644,393,5,1,61,FALSE,2.3
 "Zone","Nord-Kivu","Katwa","2026-10-19",647,395,3,2,61.1,FALSE,2.4
 "Zone","Nord-Kivu","Katwa","2026-10-21",651,398,4,3,61.1,FALSE,2.7
+"Zone","Nord-Kivu","Katwa","2026-10-25",661,405,10,7,61.3,FALSE,4
 "Zone","Nord-Kivu","Kyondo","2026-05-25",1,NA,NA,NA,NA,FALSE,NA
 "Zone","Nord-Kivu","Kyondo","2026-05-26",1,NA,0,NA,NA,FALSE,NA
 "Zone","Nord-Kivu","Kyondo","2026-05-28",1,0,0,NA,0,FALSE,NA
@@ -3580,6 +3608,7 @@
 "Zone","Nord-Kivu","Kyondo","2026-10-18",44,21,0,0,47.7,FALSE,1
 "Zone","Nord-Kivu","Kyondo","2026-10-19",44,21,0,0,47.7,FALSE,0.9
 "Zone","Nord-Kivu","Kyondo","2026-10-21",44,21,0,0,47.7,FALSE,0.6
+"Zone","Nord-Kivu","Kyondo","2026-10-25",45,21,1,0,46.7,FALSE,0.7
 "Zone","Nord-Kivu","Mabalako","2026-06-13",1,0,NA,NA,0,FALSE,NA
 "Zone","Nord-Kivu","Mabalako","2026-06-14",1,0,0,0,0,FALSE,NA
 "Zone","Nord-Kivu","Mabalako","2026-06-15",1,0,0,0,0,FALSE,NA
@@ -3683,6 +3712,7 @@
 "Zone","Nord-Kivu","Mabalako","2026-10-18",75,30,1,0,40,FALSE,1.7
 "Zone","Nord-Kivu","Mabalako","2026-10-19",79,31,4,1,39.2,FALSE,2.1
 "Zone","Nord-Kivu","Mabalako","2026-10-21",86,31,7,0,36,FALSE,2.9
+"Zone","Nord-Kivu","Mabalako","2026-10-25",100,36,14,5,36,FALSE,4.4
 "Zone","Nord-Kivu","Manguredjipa","2026-05-29",0,NA,NA,NA,NA,FALSE,NA
 "Zone","Nord-Kivu","Manguredjipa","2026-05-30",0,NA,0,NA,NA,FALSE,NA
 "Zone","Nord-Kivu","Manguredjipa","2026-08-26",1,0,1,NA,0,FALSE,NA
@@ -3737,6 +3767,7 @@
 "Zone","Nord-Kivu","Manguredjipa","2026-10-18",16,5,1,0,31.2,FALSE,0.1
 "Zone","Nord-Kivu","Manguredjipa","2026-10-19",16,5,0,0,31.2,FALSE,0.1
 "Zone","Nord-Kivu","Manguredjipa","2026-10-21",16,5,0,0,31.2,FALSE,0.1
+"Zone","Nord-Kivu","Manguredjipa","2026-10-25",16,5,0,0,31.2,FALSE,0.1
 "Zone","Nord-Kivu","Masereka","2026-06-10",1,0,NA,NA,0,FALSE,NA
 "Zone","Nord-Kivu","Masereka","2026-06-11",1,1,0,1,100,FALSE,NA
 "Zone","Nord-Kivu","Masereka","2026-06-13",1,0,0,-1,0,FALSE,NA
@@ -3842,6 +3873,7 @@
 "Zone","Nord-Kivu","Masereka","2026-10-18",39,13,0,0,33.3,FALSE,0.4
 "Zone","Nord-Kivu","Masereka","2026-10-19",39,13,0,0,33.3,FALSE,0.3
 "Zone","Nord-Kivu","Masereka","2026-10-21",39,13,0,0,33.3,FALSE,0.3
+"Zone","Nord-Kivu","Masereka","2026-10-25",39,13,0,0,33.3,FALSE,0
 "Zone","Nord-Kivu","Oicha","2026-05-24",1,NA,NA,NA,NA,FALSE,NA
 "Zone","Nord-Kivu","Oicha","2026-05-25",1,NA,0,NA,NA,FALSE,NA
 "Zone","Nord-Kivu","Oicha","2026-05-26",1,NA,0,NA,NA,FALSE,NA
@@ -3963,6 +3995,7 @@
 "Zone","Nord-Kivu","Oicha","2026-10-18",52,23,2,1,44.2,FALSE,1.4
 "Zone","Nord-Kivu","Oicha","2026-10-19",54,24,2,1,44.4,FALSE,1.3
 "Zone","Nord-Kivu","Oicha","2026-10-21",56,25,2,1,44.6,FALSE,1.3
+"Zone","Nord-Kivu","Oicha","2026-10-25",74,32,18,7,43.2,FALSE,3.9
 "Zone","Nord-Kivu","Vuhovi","2026-06-10",1,1,NA,NA,100,FALSE,NA
 "Zone","Nord-Kivu","Vuhovi","2026-06-11",1,1,0,0,100,FALSE,NA
 "Zone","Nord-Kivu","Vuhovi","2026-06-13",1,1,0,0,100,FALSE,NA
@@ -4068,6 +4101,7 @@
 "Zone","Nord-Kivu","Vuhovi","2026-10-18",55,16,15,2,29.1,FALSE,2.3
 "Zone","Nord-Kivu","Vuhovi","2026-10-19",55,16,0,0,29.1,FALSE,2.3
 "Zone","Nord-Kivu","Vuhovi","2026-10-21",55,16,0,0,29.1,FALSE,2.1
+"Zone","Nord-Kivu","Vuhovi","2026-10-25",56,18,1,2,32.1,FALSE,2.3
 "Zone","Sud-Kivu","Miti-Murhesa","2026-07-11",3,1,NA,NA,33.3,FALSE,NA
 "Zone","Sud-Kivu","Miti-Murhesa","2026-07-13",3,1,0,0,33.3,FALSE,NA
 "Zone","Sud-Kivu","Miti-Murhesa","2026-07-15",3,1,0,0,33.3,FALSE,NA
@@ -4146,3 +4180,4 @@
 "Zone","Sud-Kivu","Miti-Murhesa","2026-10-18",3,1,0,0,33.3,FALSE,0
 "Zone","Sud-Kivu","Miti-Murhesa","2026-10-19",3,1,0,0,33.3,FALSE,0
 "Zone","Sud-Kivu","Miti-Murhesa","2026-10-21",3,1,0,0,33.3,FALSE,0
+"Zone","Sud-Kivu","Miti-Murhesa","2026-10-25",3,1,0,0,33.3,FALSE,0
