@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-28T09:06:27Z",
+  "generated_at": "2026-10-28T09:31:02Z",
   "asof": "2026-09-04",
   "sitrep": "165",
   "sitrep_date": "2026-09-04",
@@ -1659,15 +1659,6 @@
       "deaths_last21d": 0
     },
     {
-      "name": "Dakwa",
-      "cum": 1,
-      "new": 0,
-      "lat": null,
-      "lon": null,
-      "cases_last21d": 0,
-      "deaths_last21d": 0
-    },
-    {
       "name": "Dungu",
       "cum": 1,
       "new": 0,
@@ -2308,6 +2299,6 @@
     "build_date": "2026-10-28",
     "generator": "scripts/16_generate_situation_room_data.R",
     "latest_sitrep_no": 165,
-    "zones_missing_coords": ["Adja", "Alimbongo", "Ango", "Ariwara", "Bafwasende", "Biena", "Boga", "Boma Mangbetu", "Bulu", "Buta", "Dakwa", "Drodro", "Dungu", "Ganga", "Gombari", "Isiro", "Kabondo", "Kayna", "Lolwa", "Lubero", "Lubunga", "Mahagi", "Makiso-Kisangani", "Mandima", "Mangobo", "Musienene", "Mutwanga", "Nia-Nia", "Pawa", "Rumba", "Rungu", "Tshopo", "Viadana", "Wamba", "Wanierukula", "Wapinda"]
+    "zones_missing_coords": ["Adja", "Alimbongo", "Ango", "Ariwara", "Bafwasende", "Biena", "Boga", "Boma Mangbetu", "Bulu", "Buta", "Drodro", "Dungu", "Ganga", "Gombari", "Isiro", "Kabondo", "Kayna", "Lolwa", "Lubero", "Lubunga", "Mahagi", "Makiso-Kisangani", "Mandima", "Mangobo", "Musienene", "Mutwanga", "Nia-Nia", "Pawa", "Rumba", "Rungu", "Tshopo", "Viadana", "Wamba", "Wanierukula", "Wapinda"]
   }
 }
