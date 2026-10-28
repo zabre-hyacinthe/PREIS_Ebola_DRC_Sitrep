@@ -440,3 +440,31 @@
 [2026-10-28 06:02:51 UTC] SitRep page: https://insp.cd/sitrep-n164-mve-bdbv-25-10-2026/ 
 [2026-10-28 06:02:55 UTC] PDF URL resolved: https://insp.cd/wp-content/uploads/2026/10/SitRep_MVEBDB_164_25_10_2026.pdf 
 [2026-10-28 06:02:55 UTC] SitRep N164 already handled. No duplicate notification. 
+[2026-10-28 06:27:16 UTC] ============================================================ 
+[2026-10-28 06:27:16 UTC] PREIS Ebola RDC â€” Cloud SitRep Monitor started 
+[2026-10-28 06:27:16 UTC] ROOT: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep 
+[2026-10-28 06:27:16 UTC] DRY_RUN: FALSE 
+[2026-10-28 06:27:16 UTC] MONITOR_EMAIL_ENABLED: TRUE 
+[2026-10-28 06:27:16 UTC] MAX_PAGES: 6 
+[2026-10-28 06:27:16 UTC] Scanning INSP category page: https://insp.cd/category/sitrep/ 
+[2026-10-28 06:27:55 UTC] Page 1: 13 SitRep candidate(s) 
+[2026-10-28 06:29:25 UTC] GET error attempt 1: Timeout was reached [insp.cd]:
+Operation timed out after 90001 milliseconds with 0 bytes received 
+[2026-10-28 06:29:34 UTC] Page 2: 13 SitRep candidate(s) 
+[2026-10-28 06:29:37 UTC] Page 3: 14 SitRep candidate(s) 
+[2026-10-28 06:29:41 UTC] Page 4: 14 SitRep candidate(s) 
+[2026-10-28 06:29:45 UTC] Page 5: 15 SitRep candidate(s) 
+[2026-10-28 06:30:29 UTC] Page 6: 15 SitRep candidate(s) 
+[2026-10-28 06:30:34 UTC] Source https://insp.cd/?s=sitrep: 10 candidat(s), max N164 
+[2026-10-28 06:30:38 UTC] Source https://insp.cd/?s=sitrep+mve: 10 candidat(s), max N14 
+[2026-10-28 06:30:42 UTC] Source https://insp.cd/?s=sitrep&paged=2: 9 candidat(s), max N154 
+[2026-10-28 06:30:45 UTC] Source https://insp.cd/feed/: 9 candidat(s), max N164 
+[2026-10-28 06:30:49 UTC] Source https://insp.cd/wp-json/wp/v2/posts?search=sitrep&per_page=50&orderby=date&order=desc: 48 candidat(s), max N164 
+[2026-10-28 06:30:52 UTC] Source https://insp.cd/wp-json/wp/v2/posts?per_page=50&orderby=date&order=desc: 35 candidat(s), max N164 
+[2026-10-28 06:30:57 UTC] Source https://insp.cd/: 14 candidat(s), max N164 
+[2026-10-28 06:30:57 UTC] Sondage de 10 URL probable(s) pour N165 et N166 
+[2026-10-28 06:31:36 UTC] Decouverte supplementaire: 84 -> 74 SitRep candidat(s) 
+[2026-10-28 06:31:36 UTC] Latest SitRep online: N164 
+[2026-10-28 06:31:36 UTC] SitRep page: https://insp.cd/sitrep-n164-mve-bdbv-25-10-2026/ 
+[2026-10-28 06:31:41 UTC] PDF URL resolved: https://insp.cd/wp-content/uploads/2026/10/SitRep_MVEBDB_164_25_10_2026.pdf 
+[2026-10-28 06:31:41 UTC] SitRep N164 already handled. No duplicate notification. 
