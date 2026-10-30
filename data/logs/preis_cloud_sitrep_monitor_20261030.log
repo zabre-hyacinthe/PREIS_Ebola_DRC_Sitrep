@@ -1227,3 +1227,36 @@
 [2026-10-30 19:16:53 UTC] SitRep page: https://insp.cd/sitrep-n167-mve-bdbv-28-10-2026/ 
 [2026-10-30 19:16:58 UTC] PDF URL resolved: https://insp.cd/wp-content/uploads/2026/10/SitRep_MVEBDB_167_28_10_2026_VF.pdf 
 [2026-10-30 19:16:58 UTC] SitRep N167 already handled. No duplicate notification. 
+[2026-10-30 19:44:08 UTC] ============================================================ 
+[2026-10-30 19:44:08 UTC] PREIS Ebola RDC â€” Cloud SitRep Monitor started 
+[2026-10-30 19:44:08 UTC] ROOT: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep 
+[2026-10-30 19:44:08 UTC] DRY_RUN: FALSE 
+[2026-10-30 19:44:08 UTC] MONITOR_EMAIL_ENABLED: TRUE 
+[2026-10-30 19:44:08 UTC] MAX_PAGES: 6 
+[2026-10-30 19:44:08 UTC] Scanning INSP category page: https://insp.cd/category/sitrep/ 
+[2026-10-30 19:44:15 UTC] Page 1: 13 SitRep candidate(s) 
+[2026-10-30 19:44:20 UTC] Page 2: 13 SitRep candidate(s) 
+[2026-10-30 19:44:25 UTC] Page 3: 14 SitRep candidate(s) 
+[2026-10-30 19:44:30 UTC] Page 4: 14 SitRep candidate(s) 
+[2026-10-30 19:44:35 UTC] Page 5: 15 SitRep candidate(s) 
+[2026-10-30 19:44:39 UTC] Page 6: 15 SitRep candidate(s) 
+[2026-10-30 19:44:44 UTC] Source https://insp.cd/?s=sitrep: 10 candidat(s), max N168 
+[2026-10-30 19:44:50 UTC] Source https://insp.cd/?s=sitrep+mve: 10 candidat(s), max N14 
+[2026-10-30 19:44:55 UTC] Source https://insp.cd/?s=sitrep&paged=2: 10 candidat(s), max N158 
+[2026-10-30 19:44:58 UTC] Source https://insp.cd/feed/: 7 candidat(s), max N168 
+[2026-10-30 19:45:05 UTC] Source https://insp.cd/wp-json/wp/v2/posts?search=sitrep&per_page=50&orderby=date&order=desc: 48 candidat(s), max N168 
+[2026-10-30 19:45:14 UTC] Source https://insp.cd/wp-json/wp/v2/posts?per_page=50&orderby=date&order=desc: 38 candidat(s), max N168 
+[2026-10-30 19:45:22 UTC] Source https://insp.cd/: 13 candidat(s), max N168 
+[2026-10-30 19:45:22 UTC] Sondage de 10 URL probable(s) pour N169 et N170 
+[2026-10-30 19:46:09 UTC] Decouverte supplementaire: 84 -> 74 SitRep candidat(s) 
+[2026-10-30 19:46:09 UTC] Latest SitRep online: N168 
+[2026-10-30 19:46:09 UTC] SitRep page: https://insp.cd/sitrep-n168-mve-bdbv-29-10-2026/ 
+[2026-10-30 19:46:14 UTC] PDF URL resolved: https://insp.cd/wp-content/uploads/2026/10/final_draft_SitRep_MVEBDB_168_29_10_2026.pdf 
+[2026-10-30 19:46:14 UTC] PDF already exists locally: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/pdf/PREIS_DRC_Ebola_SitRep_168.pdf 
+[2026-10-30 19:46:14 UTC] PDF SHA256: 07e0f754a8a1f1b29ee27f803d30c0a9af6fa90c98d6436ab61395407839e83f 
+[2026-10-30 19:46:14 UTC] Sending email for SitRep N168 
+[2026-10-30 19:46:17 UTC] Email sent successfully. 
+[2026-10-30 19:46:17 UTC] State updated: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep/data/monitor_state/preis_sitrep_email_state.csv 
+[2026-10-30 19:46:17 UTC] Email status: sent 
+[2026-10-30 19:46:17 UTC] WhatsApp disabled 
+[2026-10-30 19:46:17 UTC] PREIS cloud monitor finished. 
