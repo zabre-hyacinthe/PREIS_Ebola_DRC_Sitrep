@@ -1,5 +1,5 @@
 orig,target,action,size_before,size_after
-PREIS_DRC_Ebola_SitRep_167.pdf,SitRep_167_2026.pdf,renamed,574782,574782
+PREIS_DRC_Ebola_SitRep_167.pdf,SitRep_167_2026.pdf,kept_existing,574782,574782
 SitRep_01_2026.pdf,SitRep_01_2026.pdf,already_ok,4722765,4722765
 SitRep_02_2026.pdf,SitRep_02_2026.pdf,already_ok,1098745,1098745
 SitRep_04_2026.pdf,SitRep_04_2026.pdf,already_ok,1489626,1489626
@@ -81,6 +81,7 @@ SitRep_163_2026.pdf,SitRep_163_2026.pdf,already_ok,711973,711973
 SitRep_164_2026.pdf,SitRep_164_2026.pdf,already_ok,953525,953525
 SitRep_165_2026.pdf,SitRep_165_2026.pdf,already_ok,890863,890863
 SitRep_166_2026.pdf,SitRep_166_2026.pdf,already_ok,573186,573186
+SitRep_167_2026.pdf,SitRep_167_2026.pdf,already_ok,574782,574782
 SitRep_17_2026.pdf,SitRep_17_2026.pdf,already_ok,1323030,1323030
 SitRep_18_2026.pdf,SitRep_18_2026.pdf,already_ok,1430480,1430480
 SitRep_19_2026.pdf,SitRep_19_2026.pdf,already_ok,6227269,6227269
