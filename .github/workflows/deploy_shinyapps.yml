@@ -62,6 +62,8 @@ jobs:
 
       - name: Setup R
         uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: '4.5'
 
       - name: Install system dependencies
         run: |
@@ -74,7 +76,7 @@ jobs:
 
       - name: Install R packages
         run: |
-          Rscript --vanilla -e 'options(repos = c(P3M = "https://packagemanager.posit.co/cran/__linux__/jammy/latest", CRAN = "https://cloud.r-project.org")); pkgs <- c("rsconnect","shiny","shinydashboard","dplyr","tidyr","readr","stringr","lubridate","ggplot2","plotly","DT","leaflet","sf","base64enc","tibble","purrr","httr"); miss <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly=TRUE)]; if(length(miss)>0) install.packages(miss)'
+          Rscript --vanilla -e 'options(repos = c(P3M = "https://packagemanager.posit.co/cran/__linux__/jammy/latest", CRAN = "https://cloud.r-project.org")); pkgs <- c("rsconnect","shiny","shinyWidgets","shinydashboard","dplyr","tidyr","readr","stringr","lubridate","ggplot2","plotly","DT","leaflet","sf","base64enc","tibble","purrr","httr"); miss <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly=TRUE)]; if(length(miss)>0) install.packages(miss)'
 
       # PATCH 2026-07-23 : terra 1.9-34 exige GDAL >= 3.8, or shinyapps.io tourne
       # encore sous GDAL 3.4 -> la compilation de terra echoue sur le serveur.
