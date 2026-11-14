@@ -993,3 +993,29 @@
 [2026-11-14 15:04:35 UTC] SitRep page: https://insp.cd/sitrep-n182-mve-bdbv-12-11-2026/ 
 [2026-11-14 15:04:39 UTC] PDF URL resolved: https://insp.cd/wp-content/uploads/2026/11/SitRep_N182_12-11-2026_corrige.pdf 
 [2026-11-14 15:04:39 UTC] SitRep N182 already handled. No duplicate notification. 
+[2026-11-14 15:25:23 UTC] ============================================================ 
+[2026-11-14 15:25:23 UTC] PREIS Ebola RDC â€” Cloud SitRep Monitor started 
+[2026-11-14 15:25:23 UTC] ROOT: /home/runner/work/PREIS_Ebola_DRC_Sitrep/PREIS_Ebola_DRC_Sitrep 
+[2026-11-14 15:25:23 UTC] DRY_RUN: FALSE 
+[2026-11-14 15:25:23 UTC] MONITOR_EMAIL_ENABLED: TRUE 
+[2026-11-14 15:25:23 UTC] MAX_PAGES: 6 
+[2026-11-14 15:25:23 UTC] Scanning INSP category page: https://insp.cd/category/sitrep/ 
+[2026-11-14 15:25:29 UTC] Page 1: 13 SitRep candidate(s) 
+[2026-11-14 15:25:34 UTC] Page 2: 13 SitRep candidate(s) 
+[2026-11-14 15:25:38 UTC] Page 3: 14 SitRep candidate(s) 
+[2026-11-14 15:25:43 UTC] Page 4: 15 SitRep candidate(s) 
+[2026-11-14 15:25:48 UTC] Page 5: 15 SitRep candidate(s) 
+[2026-11-14 15:25:52 UTC] Page 6: 15 SitRep candidate(s) 
+[2026-11-14 15:25:57 UTC] Source https://insp.cd/?s=sitrep: 10 candidat(s), max N182 
+[2026-11-14 15:26:01 UTC] Source https://insp.cd/?s=sitrep+mve: 10 candidat(s), max N14 
+[2026-11-14 15:26:06 UTC] Source https://insp.cd/?s=sitrep&paged=2: 10 candidat(s), max N171 
+[2026-11-14 15:26:09 UTC] Source https://insp.cd/feed/: 8 candidat(s), max N182 
+[2026-11-14 15:26:15 UTC] Source https://insp.cd/wp-json/wp/v2/posts?search=sitrep&per_page=50&orderby=date&order=desc: 49 candidat(s), max N182 
+[2026-11-14 15:26:20 UTC] Source https://insp.cd/wp-json/wp/v2/posts?per_page=50&orderby=date&order=desc: 40 candidat(s), max N182 
+[2026-11-14 15:26:25 UTC] Source https://insp.cd/: 1 candidat(s), max N182 
+[2026-11-14 15:26:25 UTC] Sondage de 10 URL probable(s) pour N183 et N184 
+[2026-11-14 15:27:33 UTC] Decouverte supplementaire: 85 -> 73 SitRep candidat(s) 
+[2026-11-14 15:27:33 UTC] Latest SitRep online: N182 
+[2026-11-14 15:27:33 UTC] SitRep page: https://insp.cd/sitrep-n182-mve-bdbv-12-11-2026/ 
+[2026-11-14 15:27:38 UTC] PDF URL resolved: https://insp.cd/wp-content/uploads/2026/11/SitRep_N182_12-11-2026_corrige.pdf 
+[2026-11-14 15:27:38 UTC] SitRep N182 already handled. No duplicate notification. 
